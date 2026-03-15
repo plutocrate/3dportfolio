@@ -11,7 +11,6 @@ import { useAmbientMusic } from '@/hooks/useAmbientMusic'
 export default function App() {
   const [loading,    setLoading]    = useState(true)
   const [showHint,   setShowHint]   = useState(false)
-  const [introSweep, setIntroSweep] = useState(false)
 
   const activeSection    = useSceneStore((s) => s.activeSection)
   const setActiveSection = useSceneStore((s) => s.setActiveSection)
@@ -29,8 +28,7 @@ export default function App() {
     setLoading(false)
     // Brief delay then trigger sweep + hint together
     setTimeout(() => {
-      setIntroSweep(true)
-      setShowHint(true)
+setShowHint(true)
       // Hide hint after sweep completes (~5s total)
       setTimeout(() => setShowHint(false), 5200)
     }, 400)
@@ -53,7 +51,6 @@ export default function App() {
         <MainScene
           onAnnotationClick={handleAnnotationClick}
           onModelLoaded={() => {}}
-          doIntroSweep={introSweep}
         />
       </div>
 

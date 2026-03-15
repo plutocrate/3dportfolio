@@ -17,7 +17,7 @@ function AnnotationLayer({ onAnnotationClick }) {
   )
 }
 
-export function MainScene({ onAnnotationClick, onModelLoaded, doIntroSweep }) {
+export function MainScene({ onAnnotationClick, onModelLoaded }) {
   return (
     <Canvas
       camera={{ position: [0, 1.05, 2.6], fov: 52, near: 0.05, far: 100 }}
@@ -33,7 +33,7 @@ export function MainScene({ onAnnotationClick, onModelLoaded, doIntroSweep }) {
       resize={{ scroll: false, debounce: { scroll: 50, resize: 0 } }}
       performance={{ min: 0.7 }}
     >
-      <CameraController doIntroSweep={doIntroSweep} />
+      <CameraController />
       <SceneLighting />
       <SceneEnvironment />
       <Suspense fallback={null}>
