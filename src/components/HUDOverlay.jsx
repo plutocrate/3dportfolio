@@ -115,10 +115,10 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
         {/* ── BOTTOM BAR ── */}
         <div className="absolute bottom-0 inset-x-0 flex items-end justify-between px-4 sm:px-8 pb-4 sm:pb-6">
 
-          {/* Left: dot nav (mobile) / text nav (desktop) + uptime */}
-          <div className="flex flex-col gap-2 pointer-events-auto">
+          {/* Left: nav + uptime — single tight column, all left-aligned */}
+          <div className="flex flex-col pointer-events-auto">
             {/* Desktop text nav */}
-            <div className="hidden sm:flex flex-col gap-1.5 mb-1">
+            <div className="hidden sm:flex flex-col gap-1.5">
               {ANNOTATIONS.map((ann) => (
                 <button
                   key={ann.id}
@@ -129,7 +129,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
                   className="flex items-center gap-2 group text-left"
                 >
                   <div className={cn(
-                    'w-1.5 h-1.5 rounded-full transition-all duration-200',
+                    'w-1.5 h-1.5 rounded-full transition-all duration-200 shrink-0',
                     activeSection === ann.id ? 'bg-white' : 'bg-white/18 group-hover:bg-white/55'
                   )} />
                   <span className={cn(
@@ -143,7 +143,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
             </div>
 
             {/* Mobile dot nav */}
-            <div className="flex sm:hidden items-center gap-2 mb-1 pointer-events-auto">
+            <div className="flex sm:hidden items-center gap-2 pointer-events-auto">
               {ANNOTATIONS.map((ann) => (
                 <button
                   key={ann.id}
@@ -160,7 +160,10 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
               ))}
             </div>
 
-            {/* Uptime */}
+            {/* Divider */}
+            <div className="w-14 h-px bg-white/8 my-2" />
+
+            {/* Uptime — same left edge as nav items */}
             <div className="flex flex-col gap-0.5">
               <span className="font-mono text-[7px] sm:text-[8px] text-white/18 uppercase tracking-[0.2em]">Uptime</span>
               <Uptime />
