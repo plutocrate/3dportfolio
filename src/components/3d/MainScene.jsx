@@ -6,10 +6,8 @@ import { SceneLighting } from './SceneLighting'
 import { SceneEnvironment } from './SceneEnvironment'
 import { CameraController } from './CameraController'
 import { ANNOTATIONS } from '@/data/portfolio'
-import { useSceneStore } from '@/hooks/useSceneStore'
 
 function AnnotationLayer({ onAnnotationClick }) {
-  const activeSection = useSceneStore((s) => s.activeSection)
   return (
     <>
       {ANNOTATIONS.map((ann) => (
@@ -19,7 +17,7 @@ function AnnotationLayer({ onAnnotationClick }) {
   )
 }
 
-export function MainScene({ onAnnotationClick, onModelLoaded }) {
+export function MainScene({ onAnnotationClick, onModelLoaded, doIntroSweep }) {
   return (
     <Canvas
       camera={{ position: [0, 1.05, 2.6], fov: 52, near: 0.05, far: 100 }}
@@ -35,7 +33,7 @@ export function MainScene({ onAnnotationClick, onModelLoaded }) {
       resize={{ scroll: false, debounce: { scroll: 50, resize: 0 } }}
       performance={{ min: 0.7 }}
     >
-      <CameraController />
+      <CameraController doIntroSweep={doIntroSweep} />
       <SceneLighting />
       <SceneEnvironment />
       <Suspense fallback={null}>

@@ -16,13 +16,12 @@ export function AnnotationMarker({ annotation, onClick }) {
   const playClick = useClickSound()
   const { size }  = useThree()
 
-  const isMobile  = size.width < 600
-  const isTablet  = size.width >= 600 && size.width < 900
+  const isMobile = size.width < 600
+  const isTablet = size.width >= 600 && size.width < 900
 
-  // On mobile: very short line so label stays on screen
-  const lineOffset   = isMobile ? 0.22 : isTablet ? 0.45 : 0.72
-  // distanceFactor: larger = label appears smaller in screen space
-  const distFactor   = isMobile ? 7.0  : isTablet ? 5.5  : 4.0
+  // Short lines on mobile so label stays on screen, longer on desktop
+  const lineOffset = isMobile ? 0.20 : isTablet ? 0.45 : 0.72
+  const distFactor = isMobile ? 7.5  : isTablet ? 5.5  : 4.0
 
   const pulseRef = useRef()
   useFrame(({ clock }) => {
@@ -38,7 +37,6 @@ export function AnnotationMarker({ annotation, onClick }) {
 
   return (
     <group>
-      {/* Connector line — thinner on mobile */}
       <Line
         points={[pos, lineEnd]}
         color={isActive ? '#ffffff' : isHovered ? '#cccccc' : '#383838'}
@@ -47,7 +45,6 @@ export function AnnotationMarker({ annotation, onClick }) {
         dashScale={isActive ? 0 : 50}
       />
 
-      {/* Dot */}
       <group position={pos}>
         <mesh ref={pulseRef}>
           <ringGeometry args={[0.016, 0.024, 24]} />
@@ -60,14 +57,10 @@ export function AnnotationMarker({ annotation, onClick }) {
         </mesh>
         <mesh>
           <circleGeometry args={[0.010, 24]} />
-          <meshBasicMaterial
-            color={isActive ? '#ffffff' : '#888888'}
-            side={THREE.DoubleSide}
-          />
+          <meshBasicMaterial color={isActive ? '#ffffff' : '#888888'} side={THREE.DoubleSide} />
         </mesh>
       </group>
 
-      {/* Label */}
       <Html
         position={[lineEnd.x, lineEnd.y, lineEnd.z]}
         center={false}
@@ -75,14 +68,11 @@ export function AnnotationMarker({ annotation, onClick }) {
         zIndexRange={[10, 100]}
         occlude={false}
         style={{
-          // Flip anchor so label doesn't escape screen edge
           transform: side === 'right'
             ? 'translateX(4px)'
             : 'translateX(calc(-100% - 4px))',
           pointerEvents: 'auto',
           userSelect: 'none',
-          // Prevent any label from exceeding half the viewport
-          maxWidth: isMobile ? '28vw' : '18vw',
         }}
       >
         <div
@@ -94,25 +84,23 @@ export function AnnotationMarker({ annotation, onClick }) {
           onPointerEnter={() => !isMobile && setHovered(id)}
           onPointerLeave={() => !isMobile && setHovered(null)}
         >
-          {/* Chip */}
+          {/* Full label — never truncated */}
           <div className={cn(
-            'font-mono uppercase tracking-wider border whitespace-nowrap transition-all duration-200',
-            // Tiny on mobile, normal on desktop
+            'font-mono uppercase border whitespace-nowrap transition-all duration-200',
             isMobile
-              ? 'px-1.5 py-0.5 text-[7px] tracking-[0.12em]'
-              : 'px-2.5 py-1 text-[10px] tracking-[0.2em]',
+              ? 'px-1.5 py-0.5 text-[7px] tracking-[0.10em]'
+              : 'px-2.5 py-1 text-[10px] tracking-[0.20em]',
             isActive
               ? 'bg-white text-black border-white'
               : 'bg-black/85 text-white/60 border-white/20'
           )}>
-            {/* On mobile show abbreviated label to save space */}
-            {isMobile ? label.slice(0, 3) : label}
+            {label}
           </div>
 
-          {/* Description — desktop only */}
+          {/* Description — desktop only, still full text */}
           {!isMobile && (
             <div className={cn(
-              'font-mono text-[8px] mt-0.5 transition-colors duration-200',
+              'font-mono text-[8px] mt-0.5 transition-colors duration-200 whitespace-nowrap',
               isActive ? 'text-white/55' : 'text-white/22',
               side === 'right' ? 'pl-0.5' : 'pr-0.5'
             )}>

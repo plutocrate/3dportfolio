@@ -4,12 +4,14 @@ import { SectionPanel } from '@/components/SectionPanel'
 import { HUDOverlay } from '@/components/HUDOverlay'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { SunCorner } from '@/components/SunCorner'
+import { SwipeHint } from '@/components/SwipeHint'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useAmbientMusic } from '@/hooks/useAmbientMusic'
 
 export default function App() {
-  // Single gate: loading=true until user clicks ENTER
-  const [loading, setLoading] = useState(true)
+  const [loading,    setLoading]    = useState(true)
+  const [showHint,   setShowHint]   = useState(false)
+  const [introSweep, setIntroSweep] = useState(false)
 
   const activeSection    = useSceneStore((s) => s.activeSection)
   const setActiveSection = useSceneStore((s) => s.setActiveSection)
@@ -21,10 +23,17 @@ export default function App() {
     else setActiveSection(annotation.id)
   }
 
-  // Called when user clicks ENTER on the loading screen
+  // Called when user clicks ENTER
   const handleEnter = () => {
-    start()           // start ambient music on user gesture
-    setLoading(false) // reveal the scene
+    start()
+    setLoading(false)
+    // Brief delay then trigger sweep + hint together
+    setTimeout(() => {
+      setIntroSweep(true)
+      setShowHint(true)
+      // Hide hint after sweep completes (~5s total)
+      setTimeout(() => setShowHint(false), 5200)
+    }, 400)
   }
 
   return (
@@ -32,26 +41,31 @@ export default function App() {
       <div className="noise-overlay" />
       <div className="scan-overlay" />
 
-      {/* Single loading + entry screen */}
-      {loading && <LoadingScreen onComplete={handleEnter} />}
-
-      {/* Sun glow top-left */}
       <SunCorner visible={!loading} />
 
-      {/* 3D Canvas — mounted immediately so model loads while boot log runs */}
-      <div className="absolute inset-0" style={{ touchAction: "none" }}>
+      {loading && <LoadingScreen onComplete={handleEnter} />}
+
+      {/* Canvas — always mounted so model loads during boot */}
+      <div
+        className="absolute inset-0"
+        style={{ touchAction: 'none' }}
+      >
         <MainScene
           onAnnotationClick={handleAnnotationClick}
           onModelLoaded={() => {}}
+          doIntroSweep={introSweep}
         />
       </div>
 
-      {/* HUD + panels — only after ENTER */}
       <HUDOverlay
         visible={!loading}
         musicPlaying={playing}
         onMusicToggle={toggle}
       />
+
+      {/* Swipe hint appears after entering, disappears after ~5s */}
+      <SwipeHint visible={showHint} />
+
       <SectionPanel />
     </div>
   )
