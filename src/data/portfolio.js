@@ -5,11 +5,11 @@
 export const PERSONAL = {
   name: "Manas Purohit",
   title: "Software Engineer",
-  tagline: "GenAI · LLMs · Agentic-AI · Full Stack",
+  tagline: "LLMS · Agentic-AI · Gen-AI · Full Stack",
   location: "Indore, MP",
-  email: "manaspurohit00@gmail.com",
-  phone: "+91 62327-62572",
-  website: "manaspurohit28.com",
+  email: "manaspurohit28@gmail.com",
+  phone: "+916232762572",
+  website: "manaspurohit28.github.io/3dportfolio",
   linkedin: "linkedin.com/in/Manaspurohit28",
   summary:
     "A versatile Software Engineer with hands-on experience in GenAI tools, LLMs, Agentic-AI frameworks, and RAG systems. Fast vibe-coding learning style with strong problem-solving. Passionate about exploring emerging technologies and building impactful, real-world solutions.",
