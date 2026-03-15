@@ -2,17 +2,26 @@ import { useEffect, useRef, useCallback } from 'react'
 import gsap from 'gsap'
 
 export function SwipeHint({ visible }) {
-  const ref     = useRef()
-  const handRef = useRef()
-  const tl      = useRef(null)
+  const ref       = useRef()
+  const handRef   = useRef()
+  const tl        = useRef(null)
   const dismissed = useRef(false)
 
   const dismiss = useCallback(() => {
     if (dismissed.current) return
     dismissed.current = true
-    if (tl.current) tl.current.kill()
+
+    // Kill timeline immediately — stops all pending tweens
+    if (tl.current) {
+      tl.current.kill()
+      tl.current = null
+    }
+
+    // Snap out instantly — no duration, no delay
     if (ref.current) {
-      gsap.to(ref.current, { opacity: 0, y: -6, duration: 0.25, ease: 'power2.in' })
+      gsap.killTweensOf(ref.current)
+      gsap.killTweensOf(handRef.current)
+      gsap.set(ref.current, { opacity: 0 })
     }
   }, [])
 
@@ -31,13 +40,19 @@ export function SwipeHint({ visible }) {
       .to(handRef.current, { x: 0,   duration: 1.0, ease: 'power2.out' })
       .to(ref.current, { opacity: 0, y: -4, duration: 0.45, ease: 'power2.in' }, '+=0.3')
 
-    // Any user interaction → dismiss immediately
-    const events = ['pointerdown', 'touchstart', 'wheel', 'keydown']
-    events.forEach((e) => window.addEventListener(e, dismiss, { once: true, passive: true }))
+    // capture:true intercepts events before they reach canvas/OrbitControls
+    const opts = { capture: true, passive: true }
+    document.addEventListener('pointerdown', dismiss, opts)
+    document.addEventListener('touchstart',  dismiss, opts)
+    document.addEventListener('wheel',       dismiss, opts)
+    document.addEventListener('keydown',     dismiss, opts)
 
     return () => {
-      events.forEach((e) => window.removeEventListener(e, dismiss))
-      if (tl.current) tl.current.kill()
+      document.removeEventListener('pointerdown', dismiss, { capture: true })
+      document.removeEventListener('touchstart',  dismiss, { capture: true })
+      document.removeEventListener('wheel',       dismiss, { capture: true })
+      document.removeEventListener('keydown',     dismiss, { capture: true })
+      if (tl.current) { tl.current.kill(); tl.current = null }
     }
   }, [visible, dismiss])
 
