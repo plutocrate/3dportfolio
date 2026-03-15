@@ -93,3 +93,4 @@ All portfolio content is in **`src/data/portfolio.js`**.
 
 The character model (`NikitaMesh_A_Pose.gltf`) is a low-poly tactical soldier in A-pose.
 Drop a replacement `.gltf` into `public/models/` and update the path in `CharacterModel.jsx`.
+# 3dportfolio
