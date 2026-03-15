@@ -14,52 +14,60 @@ export function AnnotationMarker({ annotation, onClick }) {
   const isActive  = activeSection === id
   const isHovered = hoveredAnnotation === id
   const playClick = useClickSound()
+  const { size }  = useThree()
 
-  // Responsive: get viewport size to scale line length + font
-  const { size } = useThree()
-  const isMobile = size.width < 600
-  const isTablet = size.width < 900 && size.width >= 600
-  const lineOffset = isMobile ? 0.38 : isTablet ? 0.52 : 0.72
-  const distFactor = isMobile ? 5.5 : isTablet ? 4.8 : 4.0
+  const isMobile  = size.width < 600
+  const isTablet  = size.width >= 600 && size.width < 900
+
+  // On mobile: very short line so label stays on screen
+  const lineOffset   = isMobile ? 0.22 : isTablet ? 0.45 : 0.72
+  // distanceFactor: larger = label appears smaller in screen space
+  const distFactor   = isMobile ? 7.0  : isTablet ? 5.5  : 4.0
 
   const pulseRef = useRef()
-
   useFrame(({ clock }) => {
     if (!pulseRef.current) return
     const t = clock.getElapsedTime()
-    const base = isActive ? 1.5 : isHovered ? 1.25 : 1.0
-    pulseRef.current.scale.setScalar(base + Math.sin(t * 2.8) * 0.1)
+    const base = isActive ? 1.4 : isHovered ? 1.2 : 1.0
+    pulseRef.current.scale.setScalar(base + Math.sin(t * 2.8) * 0.08)
   })
 
   const pos     = new THREE.Vector3(...position)
   const offset  = side === 'right' ? lineOffset : -lineOffset
-  const lineEnd = new THREE.Vector3(position[0] + offset, position[1] + 0.06, position[2])
+  const lineEnd = new THREE.Vector3(position[0] + offset, position[1] + 0.04, position[2])
 
   return (
     <group>
+      {/* Connector line — thinner on mobile */}
       <Line
         points={[pos, lineEnd]}
-        color={isActive ? '#ffffff' : isHovered ? '#dddddd' : '#444444'}
-        lineWidth={isActive ? 1.5 : 0.9}
+        color={isActive ? '#ffffff' : isHovered ? '#cccccc' : '#383838'}
+        lineWidth={isActive ? (isMobile ? 0.8 : 1.4) : (isMobile ? 0.5 : 0.8)}
         dashed={!isActive}
-        dashScale={isActive ? 0 : 60}
+        dashScale={isActive ? 0 : 50}
       />
 
+      {/* Dot */}
       <group position={pos}>
         <mesh ref={pulseRef}>
-          <ringGeometry args={[0.022, 0.032, 32]} />
+          <ringGeometry args={[0.016, 0.024, 24]} />
           <meshBasicMaterial
-            color={isActive ? '#ffffff' : '#777777'}
-            transparent opacity={isActive ? 0.9 : isHovered ? 0.7 : 0.4}
+            color={isActive ? '#ffffff' : '#666666'}
+            transparent
+            opacity={isActive ? 0.9 : isHovered ? 0.65 : 0.35}
             side={THREE.DoubleSide}
           />
         </mesh>
         <mesh>
-          <circleGeometry args={[0.014, 32]} />
-          <meshBasicMaterial color={isActive ? '#ffffff' : '#999999'} side={THREE.DoubleSide} />
+          <circleGeometry args={[0.010, 24]} />
+          <meshBasicMaterial
+            color={isActive ? '#ffffff' : '#888888'}
+            side={THREE.DoubleSide}
+          />
         </mesh>
       </group>
 
+      {/* Label */}
       <Html
         position={[lineEnd.x, lineEnd.y, lineEnd.z]}
         center={false}
@@ -67,34 +75,46 @@ export function AnnotationMarker({ annotation, onClick }) {
         zIndexRange={[10, 100]}
         occlude={false}
         style={{
-          transform: side === 'right' ? 'translateX(6px)' : 'translateX(calc(-100% - 6px))',
+          // Flip anchor so label doesn't escape screen edge
+          transform: side === 'right'
+            ? 'translateX(4px)'
+            : 'translateX(calc(-100% - 4px))',
           pointerEvents: 'auto',
           userSelect: 'none',
+          // Prevent any label from exceeding half the viewport
+          maxWidth: isMobile ? '28vw' : '18vw',
         }}
       >
         <div
           className={cn(
-            'group cursor-pointer transition-all duration-300 select-none flex flex-col gap-0.5',
+            'cursor-pointer transition-all duration-200 select-none flex flex-col',
             side === 'right' ? 'items-start' : 'items-end'
           )}
           onClick={() => { playClick(); onClick(annotation) }}
-          onPointerEnter={() => setHovered(id)}
-          onPointerLeave={() => setHovered(null)}
+          onPointerEnter={() => !isMobile && setHovered(id)}
+          onPointerLeave={() => !isMobile && setHovered(null)}
         >
+          {/* Chip */}
           <div className={cn(
-            'px-2 py-0.5 font-mono uppercase tracking-[0.2em] transition-all duration-300 border whitespace-nowrap',
-            isMobile ? 'text-[8px]' : 'text-[10px] sm:text-[11px]',
+            'font-mono uppercase tracking-wider border whitespace-nowrap transition-all duration-200',
+            // Tiny on mobile, normal on desktop
+            isMobile
+              ? 'px-1.5 py-0.5 text-[7px] tracking-[0.12em]'
+              : 'px-2.5 py-1 text-[10px] tracking-[0.2em]',
             isActive
               ? 'bg-white text-black border-white'
-              : 'bg-black/80 text-white/65 border-white/22 group-hover:border-white/65 group-hover:text-white'
+              : 'bg-black/85 text-white/60 border-white/20'
           )}>
-            {label}
+            {/* On mobile show abbreviated label to save space */}
+            {isMobile ? label.slice(0, 3) : label}
           </div>
+
+          {/* Description — desktop only */}
           {!isMobile && (
             <div className={cn(
-              'font-mono text-[8px] transition-colors duration-300',
-              isActive ? 'text-white/65' : 'text-white/28 group-hover:text-white/50',
-              side === 'right' ? 'pl-1' : 'pr-1'
+              'font-mono text-[8px] mt-0.5 transition-colors duration-200',
+              isActive ? 'text-white/55' : 'text-white/22',
+              side === 'right' ? 'pl-0.5' : 'pr-0.5'
             )}>
               {description}
             </div>

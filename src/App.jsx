@@ -39,7 +39,7 @@ export default function App() {
       <SunCorner visible={!loading} />
 
       {/* 3D Canvas — mounted immediately so model loads while boot log runs */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0" style={{ touchAction: "none" }}>
         <MainScene
           onAnnotationClick={handleAnnotationClick}
           onModelLoaded={() => {}}

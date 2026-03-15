@@ -5,25 +5,23 @@ import gsap from 'gsap'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { ANNOTATIONS } from '@/data/portfolio'
 
-// Responsive default positions based on viewport width
 function getDefaults(width) {
-  if (width < 600)  return { pos: [0, 1.0, 3.8], target: [0, 0.85, 0] } // mobile: pulled back
-  if (width < 900)  return { pos: [0, 1.0, 3.1], target: [0, 0.88, 0] } // tablet
-  return                  { pos: [0, 1.05, 2.6], target: [0, 0.9,  0] } // desktop
+  if (width < 480)  return { pos: [0, 1.0, 4.2], target: [0, 0.85, 0] }
+  if (width < 768)  return { pos: [0, 1.0, 3.6], target: [0, 0.88, 0] }
+  if (width < 1024) return { pos: [0, 1.0, 3.1], target: [0, 0.88, 0] }
+  return                  { pos: [0, 1.05, 2.6], target: [0, 0.9,  0] }
 }
 
 export function CameraController() {
   const { camera, size } = useThree()
-  const controlsRef  = useRef()
+  const controlsRef   = useRef()
   const activeSection = useSceneStore((s) => s.activeSection)
   const setAnimating  = useSceneStore((s) => s.setAnimating)
-  const tl = useRef(null)
-  const initialized = useRef(false)
-  const prevWidth   = useRef(size.width)
+  const tl            = useRef(null)
+  const initialized   = useRef(false)
+  const prevWidth     = useRef(size.width)
+  const defaults      = getDefaults(size.width)
 
-  const defaults = getDefaults(size.width)
-
-  // Init — place camera immediately, no tween
   useEffect(() => {
     if (initialized.current) return
     initialized.current = true
@@ -36,7 +34,6 @@ export function CameraController() {
     setAnimating(false)
   }, []) // eslint-disable-line
 
-  // Responsive resize — snap camera to new default if not in section view
   useEffect(() => {
     if (Math.abs(size.width - prevWidth.current) < 20) return
     prevWidth.current = size.width
@@ -48,15 +45,15 @@ export function CameraController() {
     }
   }, [size.width, activeSection, camera])
 
-  // Section transitions
   useEffect(() => {
     if (!controlsRef.current) return
     if (tl.current) tl.current.kill()
     setAnimating(true)
 
+    const d = getDefaults(size.width)
     const ann = activeSection ? ANNOTATIONS.find((a) => a.id === activeSection) : null
-    const targetPos    = ann ? ann.cameraPosition : defaults.pos
-    const targetLookAt = ann ? ann.cameraTarget   : defaults.target
+    const targetPos    = ann ? ann.cameraPosition : d.pos
+    const targetLookAt = ann ? ann.cameraTarget   : d.target
 
     const fromPos = { x: camera.position.x, y: camera.position.y, z: camera.position.z }
     const fromTarget = {
@@ -69,28 +66,44 @@ export function CameraController() {
     tl.current.to(fromPos, {
       x: targetPos[0], y: targetPos[1], z: targetPos[2],
       duration: 1.4, ease: 'power3.inOut',
-      onUpdate: () => { camera.position.set(fromPos.x, fromPos.y, fromPos.z); controlsRef.current?.update() },
+      onUpdate: () => {
+        camera.position.set(fromPos.x, fromPos.y, fromPos.z)
+        controlsRef.current?.update()
+      },
     }, 0)
     tl.current.to(fromTarget, {
       x: targetLookAt[0], y: targetLookAt[1], z: targetLookAt[2],
       duration: 1.4, ease: 'power3.inOut',
-      onUpdate: () => { controlsRef.current?.target.set(fromTarget.x, fromTarget.y, fromTarget.z); controlsRef.current?.update() },
+      onUpdate: () => {
+        controlsRef.current?.target.set(fromTarget.x, fromTarget.y, fromTarget.z)
+        controlsRef.current?.update()
+      },
     }, 0)
-  }, [activeSection, camera, setAnimating]) // eslint-disable-line
+  }, [activeSection, camera, setAnimating, size.width]) // eslint-disable-line
+
+  const isMobile = size.width < 768
 
   return (
     <OrbitControls
       ref={controlsRef}
       target={defaults.target}
-      enablePan={false}
-      enableZoom={false}
+      enablePan={true}            // allow panning on all devices
+      enableZoom={true}           // allow pinch-zoom on mobile, scroll on desktop
       enableRotate={true}
-      rotateSpeed={0.4}
+      rotateSpeed={isMobile ? 0.5 : 0.4}
+      zoomSpeed={0.7}
+      panSpeed={0.5}
+      minDistance={1.2}           // don't zoom too close
+      maxDistance={8.0}           // don't zoom too far out
       minPolarAngle={Math.PI / 8}
       maxPolarAngle={Math.PI / 1.5}
-      minAzimuthAngle={-Math.PI / 2}
-      maxAzimuthAngle={Math.PI / 2}
-      touches={{ ONE: 1 }} // enable single-touch rotate on mobile
+      // No azimuth limits on mobile — let them spin freely
+      minAzimuthAngle={isMobile ? -Infinity : -Math.PI / 2}
+      maxAzimuthAngle={isMobile ?  Infinity :  Math.PI / 2}
+      touches={{
+        ONE: 1,   // TOUCH_ROTATE
+        TWO: 2,   // TOUCH_DOLLY_PAN
+      }}
       makeDefault
     />
   )
