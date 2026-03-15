@@ -18,7 +18,7 @@ async function loadBuffer() {
   if (bufferCache) return bufferCache
   if (loadPromise) return loadPromise
 
-  loadPromise = fetch('/clicked.mp3')
+  loadPromise = fetch(import.meta.env.BASE_URL + 'clicked.mp3')
     .then((r) => r.arrayBuffer())
     .then((ab) => getAudioCtx().decodeAudioData(ab))
     .then((buf) => { bufferCache = buf; return buf })

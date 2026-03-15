@@ -54,7 +54,7 @@ function getPalette(name) {
 export function CharacterModel({ onLoaded }) {
   const group  = useRef()
   const floatY = useRef(0)   // accumulated float offset
-  const { scene } = useGLTF('/models/NikitaMesh_A_Pose.gltf')
+  const { scene } = useGLTF(import.meta.env.BASE_URL + 'models/NikitaMesh_A_Pose.gltf')
   const ready  = useRef(false)
 
   useEffect(() => {
@@ -98,4 +98,4 @@ export function CharacterModel({ onLoaded }) {
   return <group ref={group}><primitive object={scene} /></group>
 }
 
-useGLTF.preload('/models/NikitaMesh_A_Pose.gltf')
+useGLTF.preload(import.meta.env.BASE_URL + 'models/NikitaMesh_A_Pose.gltf')

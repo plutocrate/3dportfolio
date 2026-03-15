@@ -7,7 +7,7 @@ export function useAmbientMusic() {
 
   const init = useCallback(() => {
     if (audioRef.current) return
-    const a = new Audio('/amb.mp3')
+    const a = new Audio(import.meta.env.BASE_URL + 'amb.mp3')
     a.loop   = true
     a.volume = 0.35
     audioRef.current = a
