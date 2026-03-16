@@ -161,7 +161,7 @@ export const BLOG_POSTS = [
     title: "Why I Build Things That Break",
     subtitle: "On learning by shipping, not studying.",
     date: "Mar 2026",
-    categories: ["Reflection", "Engineering"],
+    categories: ["Reflection"],
     body: [
       "Every project I've shipped has had at least one catastrophic failure before it worked. That's not a bug in my process — it's the whole point.",
       "The fastest way I've found to understand a system is to break it intentionally, then fix it. You learn more from a failed deployment at 2am than from any tutorial.",
