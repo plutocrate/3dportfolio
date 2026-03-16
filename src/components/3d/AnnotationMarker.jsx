@@ -16,12 +16,12 @@ export function AnnotationMarker({ annotation, onClick }) {
   const playClick = useClickSound()
   const { size }  = useThree()
 
-  const isMobile = size.width < 600
-  const isTablet = size.width >= 600 && size.width < 900
+  const isMobile = size.width < 1024  // treat tablet same as mobile
+  const isTablet = false                  // no longer separate
 
-  // Short lines on mobile so label stays on screen, longer on desktop
-  const lineOffset = isMobile ? 0.20 : isTablet ? 0.45 : 0.72
-  const distFactor = isMobile ? 7.5  : isTablet ? 5.5  : 4.0
+  // Short lines on mobile/tablet, longer on desktop
+  const lineOffset = isMobile ? 0.20 : 0.72
+  const distFactor = isMobile ? 7.5  : 4.0
 
   const pulseRef = useRef()
   useFrame(({ clock }) => {
