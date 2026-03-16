@@ -11,5 +11,5 @@ export default defineConfig({
   },
   // GitHub Pages serves from https://<username>.github.io/<repo-name>/
   // IMPORTANT: change 'portfolio' below to match your actual GitHub repo name
-  base: '/3dportfolio/',
+  base: '/',
 })
