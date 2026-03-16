@@ -162,6 +162,19 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "sixth-post",
+    title: "No Good Night",
+    subtitle: "Sighs, I must build a project first.",
+    date: "17 Mar 2026",
+    categories: ["reflection"],
+    body: [
+      "I have high chances of landing a job at Adani, I must make every minute count.",
+      "I'm making a data analytics project right now, it's a new domain to me, but I'm doing good, I think I'll make it through.",
+    ],
+		media: ["/media/shinnerd.jpg"],
+    link: "",
+  },
+  {
     id: "fifth-post",
     title: "Good Night",
     subtitle: "good night",
