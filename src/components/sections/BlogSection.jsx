@@ -107,11 +107,6 @@ function MediaItem({ src }) {
                   </div>
                 </button>
               )}
-
-              {/* Duration / type label */}
-              <div className="absolute bottom-2 left-2 bg-black/60 px-1.5 py-0.5">
-                <span className="font-mono text-[7px] text-white/30 uppercase tracking-wider">▶ video</span>
-              </div>
             </>
           )}
         </div>
