@@ -44,6 +44,8 @@ function MediaItem({ src }) {
               <img
                 src={src}
                 alt=""
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
                 style={{ display: 'block' }}
               />
@@ -57,6 +59,7 @@ function MediaItem({ src }) {
                 style={{ display: 'block' }}
                 loop
                 playsInline
+                preload="none"
                 onPlay={() => { setPlaying(true); pauseMusicForVideo() }}
                 onPause={() => { setPlaying(false); resumeMusicAfterVideo() }}
                 onEnded={() => { setPlaying(false); resumeMusicAfterVideo() }}
