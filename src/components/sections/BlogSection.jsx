@@ -59,7 +59,6 @@ function MediaItem({ src }) {
                 style={{ display: 'block' }}
                 loop
                 playsInline
-                preload="none"
                 onPlay={() => { setPlaying(true); pauseMusicForVideo() }}
                 onPause={() => { setPlaying(false); resumeMusicAfterVideo() }}
                 onEnded={() => { setPlaying(false); resumeMusicAfterVideo() }}
