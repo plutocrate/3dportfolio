@@ -1,30 +1,30 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// PORTFOLIO DATA — Edit this file to update content without touching components
+// PORTFOLIO DATA — Edit this file to update content
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const PERSONAL = {
   name: "Manas Purohit",
   title: "Software Engineer",
-  tagline: "LLMS · Agentic-AI · Gen-AI · Full Stack",
+  tagline: "GenAI · LLMs · Agentic-AI · RAG",
   location: "Indore, MP",
-  email: "manaspurohit28@gmail.com",
-  phone: "+916232762572",
-  website: "manaspurohit28.github.io/3dportfolio",
+  email: "manaspurohit00@gmail.com",
+  phone: "+91 62327-62572",
+  website: "manaspurohit28.com",
   linkedin: "linkedin.com/in/Manaspurohit28",
   summary:
-    "A versatile Software Engineer with hands-on experience in GenAI tools, LLMs, Agentic-AI frameworks, and RAG systems. Fast vibe-coding learning style with strong problem-solving. Passionate about exploring emerging technologies and building impactful, real-world solutions.",
+    "A versatile Software Engineer with hands-on experience in GenAI tools, LLMs, Agentic-AI frameworks, and RAG systems. Fast vibe-coding learning style with strong problem-solving and communication skills. Passionate about exploring emerging technologies and building impactful, real-world solutions.",
 };
 
 export const SKILLS = {
   technical: [
-    { name: "Python", level: 90 },
-    { name: "JavaScript", level: 82 },
-    { name: "C / C++", level: 75 },
-    { name: "HTML / CSS", level: 85 },
-    { name: "LangChain", level: 80 },
-    { name: "Ollama", level: 75 },
-    { name: "Flask", level: 70 },
-    { name: "MySQL", level: 72 },
+    { name: "Python",       level: 90 },
+    { name: "JavaScript",   level: 82 },
+    { name: "C / C++",      level: 75 },
+    { name: "HTML / CSS",   level: 80 },
+    { name: "LangChain",    level: 80 },
+    { name: "Ollama",       level: 75 },
+    { name: "Flask",        level: 70 },
+    { name: "MySQL",        level: 72 },
   ],
   domains: [
     "Generative AI",
@@ -79,7 +79,6 @@ export const PROJECTS = [
     description:
       "An AI-powered RAG and LLM testing tool to ensure robust and reliable generative AI systems.",
     tags: ["Python", "LangChain", "LLMs", "RAG", "GenAI"],
-    accent: "#ffffff",
   },
   {
     id: "bloomnet",
@@ -88,8 +87,7 @@ export const PROJECTS = [
     period: "Oct 2024 – Nov 2024",
     description:
       "A CNN-based flower image classifier using MobileNet, achieving an accuracy of 89.9%.",
-    tags: ["Python", "TensorFlow", "MobileNet", "CNN", "CV"],
-    accent: "#cccccc",
+    tags: ["Python", "TensorFlow", "MobileNet", "CNN"],
   },
   {
     id: "libratrack",
@@ -99,7 +97,6 @@ export const PROJECTS = [
     description:
       "A web-based e-library platform for efficient multi-user resource management.",
     tags: ["JavaScript", "HTML/CSS", "MySQL", "Flask"],
-    accent: "#aaaaaa",
   },
 ];
 
@@ -132,23 +129,21 @@ export const EDUCATION = [
 
 export const CERTIFICATIONS = [
   { name: "The Joy of Computing using Python", issuer: "NPTEL" },
-  { name: "Cloud Application Developer", issuer: "IBM" },
-  { name: "The Ultimate MySQL Crash Course", issuer: "Udemy" },
+  { name: "Cloud Application Developer",       issuer: "IBM" },
+  { name: "The Ultimate MySQL Crash Course",   issuer: "Udemy" },
   { name: "Enhancing Soft Skills and Personality", issuer: "NPTEL" },
 ];
 
 export const HOBBIES = ["Photography", "Videography", "Traveling", "Gaming"];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// ANNOTATION CONFIG — maps body regions to portfolio sections
-// Each entry defines: which section to open, camera target, label position
+// ANNOTATION CONFIG
 // ─────────────────────────────────────────────────────────────────────────────
 export const ANNOTATIONS = [
   {
     id: "about",
     label: "ABOUT",
     description: "Identity & Summary",
-    // Face / goggle region — model center, head height
     position: [0.12, 1.70, 0.22],
     cameraTarget: [0, 1.62, 0],
     cameraPosition: [1.6, 1.75, 1.6],
@@ -158,7 +153,6 @@ export const ANNOTATIONS = [
     id: "skills",
     label: "SKILLS",
     description: "Python · AI · Web",
-    // Right shoulder — A-pose arm raises to ~1.48 height
     position: [0.44, 1.48, 0.12],
     cameraTarget: [0.2, 1.45, 0],
     cameraPosition: [2.0, 1.55, 1.5],
@@ -168,7 +162,6 @@ export const ANNOTATIONS = [
     id: "projects",
     label: "PROJECTS",
     description: "DeepRAG · BloomNet · LibraTrack",
-    // Left shoulder
     position: [-0.44, 1.48, 0.12],
     cameraTarget: [-0.2, 1.45, 0],
     cameraPosition: [-2.0, 1.55, 1.5],
@@ -178,7 +171,6 @@ export const ANNOTATIONS = [
     id: "education",
     label: "EDUCATION",
     description: "SVVV — CSE · CGPA 7.71",
-    // Right wrist — A-pose arm extends to ~0.95 height at x~0.75
     position: [0.78, 0.92, 0.08],
     cameraTarget: [0.4, 0.95, 0],
     cameraPosition: [2.2, 1.0, 1.6],
@@ -188,10 +180,18 @@ export const ANNOTATIONS = [
     id: "experience",
     label: "EXPERIENCE",
     description: "TCS · AllSoft",
-    // Left wrist
     position: [-0.78, 0.92, 0.08],
     cameraTarget: [-0.4, 0.95, 0],
     cameraPosition: [-2.2, 1.0, 1.6],
+    side: "left",
+  },
+  {
+    id: "talk",
+    label: "TALK",
+    description: "Send a message",
+    position: [-0.45, 0.38, 0.12],
+    cameraTarget: [0, 0.4, 0],
+    cameraPosition: [-2.0, 0.6, 1.8],
     side: "left",
   },
 ];
