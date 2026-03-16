@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { MainScene } from '@/components/3d/MainScene'
 import { SectionPanel } from '@/components/SectionPanel'
 import { HUDOverlay } from '@/components/HUDOverlay'
@@ -8,28 +9,60 @@ import { SwipeHint } from '@/components/SwipeHint'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useAmbientMusic } from '@/hooks/useAmbientMusic'
 
+// Detect mobile
+function isMobileDevice() {
+  return window.innerWidth < 768 ||
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+}
+
 export default function App() {
   const [loading,    setLoading]    = useState(true)
   const [showHint,   setShowHint]   = useState(false)
+
+  const navigate  = useNavigate()
+  const location  = useLocation()
 
   const activeSection    = useSceneStore((s) => s.activeSection)
   const setActiveSection = useSceneStore((s) => s.setActiveSection)
   const closeSection     = useSceneStore((s) => s.closeSection)
   const { playing, start, toggle } = useAmbientMusic()
 
+  const mobile = isMobileDevice()
+
+  // ── Sync URL → store (mobile only) ───────────────────────────────────────
+  // When user hits browser back, location changes → close section
+  useEffect(() => {
+    if (!mobile) return
+    const path = location.pathname.replace('/', '').replace(/\/$/, '')
+    if (path && path !== '') {
+      // A section route is active
+      if (activeSection !== path) setActiveSection(path)
+    } else {
+      // Root — close any open section
+      if (activeSection) closeSection()
+    }
+  }, [location.pathname]) // eslint-disable-line
+
+  // ── Sync store → URL (mobile only) ───────────────────────────────────────
   const handleAnnotationClick = (annotation) => {
-    if (activeSection === annotation.id) closeSection()
-    else setActiveSection(annotation.id)
+    if (activeSection === annotation.id) {
+      handleClose()
+    } else {
+      setActiveSection(annotation.id)
+      if (mobile) navigate(`/${annotation.id}`)
+    }
   }
 
-  // Called when user clicks ENTER
+  const handleClose = () => {
+    closeSection()
+    if (mobile) navigate('/')
+  }
+
   const handleEnter = () => {
     start()
     setLoading(false)
-    // Brief delay then trigger sweep + hint together
     setTimeout(() => {
-setShowHint(true)
-      // Hide hint after sweep completes (~5s total)
+      setShowHint(true)
       setTimeout(() => setShowHint(false), 5200)
     }, 400)
   }
@@ -43,11 +76,7 @@ setShowHint(true)
 
       {loading && <LoadingScreen onComplete={handleEnter} />}
 
-      {/* Canvas — always mounted so model loads during boot */}
-      <div
-        className="absolute inset-0"
-        style={{ touchAction: 'none' }}
-      >
+      <div className="absolute inset-0" style={{ touchAction: 'none' }}>
         <MainScene
           onAnnotationClick={handleAnnotationClick}
           onModelLoaded={() => {}}
@@ -60,10 +89,10 @@ setShowHint(true)
         onMusicToggle={toggle}
       />
 
-      {/* Swipe hint appears after entering, disappears after ~5s */}
       <SwipeHint visible={showHint} />
 
-      <SectionPanel />
+      {/* Pass handleClose so both X button and back button work */}
+      <SectionPanel onClose={handleClose} />
     </div>
   )
 }

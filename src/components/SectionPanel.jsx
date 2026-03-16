@@ -22,7 +22,7 @@ const SECTION_MAP = {
   blog:       BlogSection,
 }
 
-export function SectionPanel() {
+export function SectionPanel({ onClose }) {
   const panelOpen     = useSceneStore((s) => s.panelOpen)
   const activeSection = useSceneStore((s) => s.activeSection)
   const closeSection  = useSceneStore((s) => s.closeSection)
@@ -67,7 +67,7 @@ export function SectionPanel() {
       </div>
 
       <button
-        onClick={() => { playClick(); closeSection() }}
+        onClick={() => { playClick(); onClose ? onClose() : closeSection() }}
         className="absolute top-6 right-6 z-10 w-8 h-8 flex items-center justify-center border border-white/15 text-white/40 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-base"
         aria-label="Close"
       >
