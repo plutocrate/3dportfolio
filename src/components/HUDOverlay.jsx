@@ -96,7 +96,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
           {/* Left: name + tagline */}
           <div className="flex flex-col gap-0.5">
             <div className="font-display text-[20px] sm:text-[28px] md:text-[34px] text-white leading-none tracking-widest">
-              {PERSONAL.name.toUpperCase().replace(' ', '_')}
+              {PERSONAL.name.toUpperCase()}
             </div>
             <div className="font-mono text-[7px] sm:text-[9px] text-white/30 uppercase tracking-[0.22em]">
               {PERSONAL.tagline}
