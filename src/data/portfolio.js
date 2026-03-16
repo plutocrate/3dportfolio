@@ -4,8 +4,8 @@
 
 export const PERSONAL = {
   name: "Pratham Purohit",
-  title: "Frontend / Full-Stack Developer",
-  tagline: "Data analyst by day, full-stack developer by night",
+  title: "Full-Stack Developer",
+  tagline: "FSDev by day, Philosopher by night.",
   location: "Solan, HP, India",
   email: "prathampurohitonline@outlook.com",
   phone: "+91 93172-77524",
