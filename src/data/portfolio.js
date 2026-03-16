@@ -202,4 +202,13 @@ export const ANNOTATIONS = [
     cameraPosition: [-2.2, 1.0, 1.6],
     side: "left",
   },
+  {
+    id: "talk",
+    label: "TALK",
+    description: "Send a message",
+    position: [-0.45, 0.62, 0.12],
+    cameraTarget: [0, 0.65, 0],
+    cameraPosition: [-2.0, 0.75, 1.8],
+    side: "left",
+  },
 ];

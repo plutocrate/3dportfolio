@@ -8,6 +8,7 @@ import {
   ProjectsSection,
   SkillsSection,
   EducationSection,
+  TalkSection,
 } from '@/components/sections'
 
 const SECTION_MAP = {
@@ -16,6 +17,7 @@ const SECTION_MAP = {
   projects:   ProjectsSection,
   skills:     SkillsSection,
   education:  EducationSection,
+  talk:       TalkSection,
 }
 
 export function SectionPanel() {
@@ -28,7 +30,6 @@ export function SectionPanel() {
 
   useEffect(() => {
     if (!panelRef.current) return
-
     if (panelOpen) {
       gsap.fromTo(panelRef.current,
         { x: '100%', opacity: 0 },
@@ -54,10 +55,8 @@ export function SectionPanel() {
       className="fixed top-0 right-0 h-full w-full sm:w-[360px] md:w-[380px] z-50 pointer-events-auto"
       style={{ transform: 'translateX(100%)', opacity: 0 }}
     >
-      {/* Background */}
       <div className="absolute inset-0 bg-[#070707]/97 backdrop-blur-2xl border-l border-white/8" />
 
-      {/* Left edge label */}
       <div className="absolute left-0 top-0 bottom-0 w-px bg-white/8 flex items-center justify-center pointer-events-none">
         <div
           className="font-mono text-[9px] text-white/15 uppercase tracking-[0.4em] select-none"
@@ -67,7 +66,6 @@ export function SectionPanel() {
         </div>
       </div>
 
-      {/* Close button */}
       <button
         onClick={() => { playClick(); closeSection() }}
         className="absolute top-6 right-6 z-10 w-8 h-8 flex items-center justify-center border border-white/15 text-white/40 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-base"
@@ -76,17 +74,15 @@ export function SectionPanel() {
         ×
       </button>
 
-      {/* Scrollable content */}
       <div className="relative h-full overflow-y-auto pt-16 pb-12 px-8 pl-10">
         <div ref={contentRef}>
           {SectionContent && <SectionContent />}
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div className="absolute bottom-0 left-px right-0 border-t border-white/8 px-8 pl-10 py-3 flex items-center justify-between">
         <span className="font-mono text-[9px] text-white/18 uppercase tracking-widest">
-          plutocrate.github.io/3dportfolio
+          plutocrate.github.io/portfolio
         </span>
         <span className="font-mono text-[9px] text-white/18 tabular-nums">
           {new Date().getFullYear()}
