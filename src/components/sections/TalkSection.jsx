@@ -3,9 +3,9 @@ import emailjs from '@emailjs/browser'
 import { Separator } from '@/components/ui/separator'
 
 // Credentials loaded from .env — never exposed in git
-const EJ_SERVICE_ID  = import.meta.env.VITE_EJ_SERVICE_ID
-const EJ_TEMPLATE_ID = import.meta.env.VITE_EJ_TEMPLATE_ID
-const EJ_PUBLIC_KEY  = import.meta.env.VITE_EJ_PUBLIC_KEY
+const EJ_SERVICE_ID  = 'service_06d6y58'
+const EJ_TEMPLATE_ID = 'template_kfcibfh'
+const EJ_PUBLIC_KEY  = 'HgsszHkvHyhtMtI--'
 
 export function TalkSection() {
   const formRef = useRef()
