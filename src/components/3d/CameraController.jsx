@@ -68,7 +68,7 @@ export function CameraController() {
     tl.current = gsap.timeline({ onComplete: () => setAnimating(false) })
     tl.current.to(fromPos, {
       x: targetPos[0], y: targetPos[1], z: targetPos[2],
-      duration: 1.4, ease: 'power3.inOut',
+      duration: 1.1, ease: 'expo.out',
       onUpdate: () => {
         camera.position.set(fromPos.x, fromPos.y, fromPos.z)
         controlsRef.current?.update()
@@ -76,7 +76,7 @@ export function CameraController() {
     }, 0)
     tl.current.to(fromTarget, {
       x: targetLookAt[0], y: targetLookAt[1], z: targetLookAt[2],
-      duration: 1.4, ease: 'power3.inOut',
+      duration: 1.1, ease: 'expo.out',
       onUpdate: () => {
         controlsRef.current?.target.set(fromTarget.x, fromTarget.y, fromTarget.z)
         controlsRef.current?.update()

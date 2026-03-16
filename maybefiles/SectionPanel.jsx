@@ -35,15 +35,17 @@ export function SectionPanel() {
     if (panelOpen) {
       // CSS transition — GPU composited, smooth on mobile
       panelRef.current.style.transform = 'translateX(0%)'
+      panelRef.current.style.opacity = '1'
       if (contentRef.current?.children?.length) {
         gsap.fromTo(
           Array.from(contentRef.current.children),
           { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power2.out', delay: 0.1 }
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.06, ease: 'power2.out', delay: 0.65 }
         )
       }
     } else {
       panelRef.current.style.transform = 'translateX(100%)'
+      panelRef.current.style.opacity = '0'
     }
   }, [panelOpen, activeSection])
 
@@ -53,9 +55,9 @@ export function SectionPanel() {
     <div
       ref={panelRef}
       className="fixed top-0 right-0 h-full w-full sm:w-[360px] md:w-[380px] z-50 pointer-events-auto"
-      style={{ transform: 'translateX(100%)', transition: 'transform 0.38s cubic-bezier(0.22,1,0.36,1)', willChange: 'transform' }}
+      style={{ transform: 'translateX(100%)', opacity: 0, transition: 'transform 0.38s cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease 0.3s' }}
     >
-      <div className="absolute inset-0 border-l border-white/8" style={{ background: "rgba(7,7,7,0.96)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", willChange: "transform" }} />
+      <div className="absolute inset-0 bg-[#070707]/97 backdrop-blur-2xl border-l border-white/8" />
 
       <div className="absolute left-0 top-0 bottom-0 w-px bg-white/8 flex items-center justify-center pointer-events-none">
         <div
