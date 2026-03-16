@@ -3,138 +3,130 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const PERSONAL = {
-  name: "Manas Purohit",
-  title: "Software Engineer",
-  tagline: "GenAI · LLMs · Agentic-AI · RAG",
-  location: "Indore, MP",
-  email: "manaspurohit00@gmail.com",
-  phone: "+91 62327-62572",
-  website: "manaspurohit28.com",
-  linkedin: "linkedin.com/in/Manaspurohit28",
+  name: "Arshad Jamal",
+  title: "AI/ML Engineer & Backend Developer",
+  tagline: "Python · GenAI · Multi-Agent · FastAPI",
+  location: "Hyderabad, Telangana",
+  email: "arshad.jamal.co@gmail.com",
+  phone: "+91 95341-61220",
+  website: "github.com/arshadjamal",
+  linkedin: "linkedin.com/in/arshadjamal",
   summary:
-    "A versatile Software Engineer with hands-on experience in GenAI tools, LLMs, Agentic-AI frameworks, and RAG systems. Fast vibe-coding learning style with strong problem-solving and communication skills. Passionate about exploring emerging technologies and building impactful, real-world solutions.",
+    "Python-focused AI/ML practitioner with 2 International Exchange experiences, strong expertise in Backend Development and Generative AI. Proven experience building scalable AI applications using Python, FastAPI, and SQL. Expert in orchestrating multi-agent workflows and deploying real-world solutions.",
 };
 
 export const SKILLS = {
   technical: [
-    { name: "Python",       level: 90 },
-    { name: "JavaScript",   level: 82 },
-    { name: "C / C++",      level: 75 },
-    { name: "HTML / CSS",   level: 80 },
-    { name: "LangChain",    level: 80 },
-    { name: "Ollama",       level: 75 },
-    { name: "Flask",        level: 70 },
-    { name: "MySQL",        level: 72 },
+    { name: "Python",              level: 95 },
+    { name: "FastAPI / Flask",     level: 88 },
+    { name: "PyTorch / TensorFlow",level: 84 },
+    { name: "LangChain / LangGraph",level: 88 },
+    { name: "SQL / PostgreSQL",    level: 80 },
+    { name: "Docker / MLOps",      level: 78 },
+    { name: "CrewAI / Autogen",    level: 82 },
+    { name: "C++ / R",             level: 60 },
   ],
   domains: [
     "Generative AI",
-    "LLMs",
-    "Agentic AI",
-    "RAG Systems",
-    "Machine Learning",
-    "Web Development",
+    "Multi-Agent Systems",
+    "RAG Pipelines",
+    "MLOps",
+    "Backend Development",
+    "Deep Learning",
     "Data Science",
-    "Computer Vision",
+    "LLM Orchestration",
   ],
   soft: [
+    "Problem Solving",
+    "System Design",
+    "Research",
+    "Cross-Cultural Collaboration",
     "Communication",
-    "Teamwork",
-    "Public Relations",
-    "Time Management",
-    "Strategy Building",
   ],
 };
 
 export const EXPERIENCE = [
   {
-    id: "tcs",
-    role: "Software Intern",
-    company: "Tata Consultancy Services (TCS)",
-    location: "Indore, MP",
-    period: "Mar 2025 – Jul 2025",
+    id: "zsapiens",
+    role: "Data Science Intern",
+    company: "Z Sapiens",
+    location: "Remote",
+    period: "Feb 2025 – Aug 2025",
     highlights: [
-      "Developed a GenAI RAG evaluator and resume ranking tool using LLMs and embeddings.",
-      "Researched GenAI tools, frameworks, and advanced evaluation techniques.",
-    ],
-  },
-  {
-    id: "allsoft",
-    role: "Software Engineer Intern",
-    company: "AllSoft Solutions",
-    location: "Ajitgarh, Punjab",
-    period: "Jan 2025 – May 2025",
-    highlights: [
-      "Built XGBoost model to accurately forecast retail sales.",
-      "Improved retail planning through data-driven forecasting insights.",
+      "Developed Sutradhar, a GenAI-powered orchestration platform automating academic resource curation from faculty-defined natural language prompts.",
+      "Engineered a multi-agent system in Python and LangChain with specialized tool-equipped agents orchestrated by a central planner.",
+      "Implemented an end-to-end RAG pipeline integrating Astra DB for heterogeneous content with high-relevance, low-latency semantic retrieval.",
+      "Contributed to backend integration using Python and FastAPI ensuring seamless communication between AI agents and the user interface.",
     ],
   },
 ];
 
 export const PROJECTS = [
   {
-    id: "deeprag",
-    name: "DeepRAG",
-    subtitle: "RAG Testing Application",
-    period: "Apr 2025 – Jul 2025",
+    id: "a2a",
+    name: "A2A-ADK-MCP",
+    subtitle: "Multi-Agent Protocol System",
+    period: "Sep 2025",
     description:
-      "An AI-powered RAG and LLM testing tool to ensure robust and reliable generative AI systems.",
-    tags: ["Python", "LangChain", "LLMs", "RAG", "GenAI"],
+      "Engineered a multi-agent system implementing core A2A and MCP standards. Architected a host_agent for task orchestration, dynamically discovering and delegating to specialized A2A-compatible agents built using Google's ADK.",
+    tags: ["Python", "A2A", "MCP", "Google ADK", "Multi-Agent"],
   },
   {
-    id: "bloomnet",
-    name: "BloomNet",
-    subtitle: "Flower Classification System",
-    period: "Oct 2024 – Nov 2024",
+    id: "genai-orchestration",
+    name: "GenAI Orchestrator",
+    subtitle: "Multi-Agent AI Orchestration Framework",
+    period: "Jul 2025",
     description:
-      "A CNN-based flower image classifier using MobileNet, achieving an accuracy of 89.9%.",
-    tags: ["Python", "TensorFlow", "MobileNet", "CNN"],
+      "Designed and deployed a multi-agent AI orchestration system using Python, FastAPI, and LangChain. Delivered multi-interface accessibility — web dashboard, Typer-based CLI, and YAML-driven evaluation suite, improving developer efficiency by 35%.",
+    tags: ["Python", "FastAPI", "LangChain", "REST API", "CLI"],
   },
   {
-    id: "libratrack",
-    name: "LibraTrack",
-    subtitle: "E-Book Tracking System",
-    period: "Jul 2024 – Sep 2024",
+    id: "nyc-cab",
+    name: "NYC Cab MLOps",
+    subtitle: "Real-Time Demand Prediction Pipeline",
+    period: "Apr 2025",
     description:
-      "A web-based e-library platform for efficient multi-user resource management.",
-    tags: ["JavaScript", "HTML/CSS", "MySQL", "Flask"],
+      "Built an end-to-end MLOps pipeline using MLflow, AWS EC2, and Docker to forecast taxi demand. Improved forecast model MAPE by 18% and deployment speed by 40%. Implemented automated model drift detection reducing performance degradation by 30%.",
+    tags: ["Python", "MLflow", "Docker", "AWS EC2", "MLOps"],
   },
 ];
 
 export const EDUCATION = [
   {
-    id: "svvv",
-    degree: "BTech — Computer Science Engineering",
-    institution: "Shri Vaishnav Vidyapeeth Vishwavidyalaya",
-    location: "Indore",
-    period: "Jul 2021 – Jun 2025",
-    score: "CGPA: 7.71 / 10",
+    id: "shoolini",
+    degree: "BTech — Computer Science (AI & ML)",
+    institution: "Shoolini University",
+    location: "Solan, India",
+    period: "Aug 2021 – Jun 2025",
+    score: "GPA: 8.5 / 10",
   },
   {
-    id: "sps12",
-    degree: "Higher School Certificate (CBSE 12)",
-    institution: "Standard Public School",
-    location: "Indore",
-    period: "Apr 2020 – May 2021",
-    score: "80.0%",
+    id: "ankara",
+    degree: "International Exchange Program",
+    institution: "Ankara University",
+    location: "Turkey",
+    period: "Feb 2023 – Jul 2023",
+    score: "GPA: 6.9",
   },
   {
-    id: "sps10",
-    degree: "Senior School Certificate (CBSE 10)",
-    institution: "Standard Public School",
-    location: "Indore",
-    period: "Apr 2018 – May 2019",
-    score: "81.4%",
+    id: "asia",
+    degree: "International Exchange Program",
+    institution: "Asia University",
+    location: "Taiwan",
+    period: "Aug 2023 – Jul 2024",
+    score: "GPA: 8.5",
   },
 ];
 
 export const CERTIFICATIONS = [
-  { name: "The Joy of Computing using Python", issuer: "NPTEL" },
-  { name: "Cloud Application Developer",       issuer: "IBM" },
-  { name: "The Ultimate MySQL Crash Course",   issuer: "Udemy" },
-  { name: "Enhancing Soft Skills and Personality", issuer: "NPTEL" },
+  { name: "Honours Award from Director General EME",         issuer: "2019" },
+  { name: "Meta's XR Startup Program — FITT IIT Delhi",     issuer: "IIT Delhi" },
+  { name: "HTML, CSS, JavaScript for Web Dev",               issuer: "Coursera" },
+  { name: "Advanced Algorithms and Complexity",              issuer: "Coursera" },
+  { name: "Model United Nations — Consolation Prize",        issuer: "Hyderabad" },
 ];
 
-export const HOBBIES = ["Photography", "Videography", "Traveling", "Gaming"];
+export const HOBBIES = ["AI Research", "Open Source", "Travel", "MUN"];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ANNOTATION CONFIG
@@ -152,7 +144,7 @@ export const ANNOTATIONS = [
   {
     id: "skills",
     label: "SKILLS",
-    description: "Python · AI · Web",
+    description: "Python · GenAI · MLOps",
     position: [0.44, 1.48, 0.12],
     cameraTarget: [0.2, 1.45, 0],
     cameraPosition: [2.0, 1.55, 1.5],
@@ -161,7 +153,7 @@ export const ANNOTATIONS = [
   {
     id: "projects",
     label: "PROJECTS",
-    description: "DeepRAG · BloomNet · LibraTrack",
+    description: "A2A · GenAI · NYC Cab",
     position: [-0.44, 1.48, 0.12],
     cameraTarget: [-0.2, 1.45, 0],
     cameraPosition: [-2.0, 1.55, 1.5],
@@ -170,7 +162,7 @@ export const ANNOTATIONS = [
   {
     id: "education",
     label: "EDUCATION",
-    description: "SVVV — CSE · CGPA 7.71",
+    description: "Shoolini · Ankara · Asia Univ",
     position: [0.78, 0.92, 0.08],
     cameraTarget: [0.4, 0.95, 0],
     cameraPosition: [2.2, 1.0, 1.6],
@@ -179,7 +171,7 @@ export const ANNOTATIONS = [
   {
     id: "experience",
     label: "EXPERIENCE",
-    description: "TCS · AllSoft",
+    description: "Z Sapiens · Sutradhar",
     position: [-0.78, 0.92, 0.08],
     cameraTarget: [-0.4, 0.95, 0],
     cameraPosition: [-2.2, 1.0, 1.6],
