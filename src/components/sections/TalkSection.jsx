@@ -3,9 +3,9 @@ import emailjs from '@emailjs/browser'
 import { Separator } from '@/components/ui/separator'
 
 // Credentials loaded from .env — never exposed in git
-const EJ_SERVICE_ID  = import.meta.env.VITE_EJ_SERVICE_ID
-const EJ_TEMPLATE_ID = import.meta.env.VITE_EJ_TEMPLATE_ID
-const EJ_PUBLIC_KEY  = import.meta.env.VITE_EJ_PUBLIC_KEY
+const EJ_SERVICE_ID  = 'service_06d6y58'
+const EJ_TEMPLATE_ID = 'template_kfcibfh'
+const EJ_PUBLIC_KEY  = 'HgsszHkvHyhtMtI--'
 
 export function TalkSection() {
   const formRef = useRef()
@@ -105,9 +105,9 @@ export function TalkSection() {
       <div className="space-y-2">
         <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/25 mb-2">Or reach directly</div>
         {[
-          { label: 'Email',    value: 'manaspurohit28@gmail.com' },
-          { label: 'GitHub',   value: 'github.com/manaspurohit28' },
-          { label: 'LinkedIn', value: 'linkedin.com/in/manaspurohit28' },
+          { label: 'Email',    value: 'prathampurohitonline@outlook.com' },
+          { label: 'GitHub',   value: 'github.com/plutocrate' },
+          { label: 'LinkedIn', value: 'linkedin.com/in/prathammpurohit' },
         ].map(({ label, value }) => (
           <div key={label} className="flex items-baseline gap-3">
             <span className="font-mono text-[8px] text-white/20 w-14 uppercase tracking-wider">{label}</span>
