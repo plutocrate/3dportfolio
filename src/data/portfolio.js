@@ -153,6 +153,24 @@ export const CERTIFICATIONS = [
 
 export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 
+// -------------------------------------
+// BLOG
+export const BLOG_POSTS = [
+  {
+    id: "first-post",
+    title: "Why I Build Things That Break",
+    subtitle: "On learning by shipping, not studying.",
+    date: "Mar 2026",
+    categories: ["Reflection", "Engineering"],
+    body: [
+      "Every project I've shipped has had at least one catastrophic failure before it worked. That's not a bug in my process — it's the whole point.",
+      "The fastest way I've found to understand a system is to break it intentionally, then fix it. You learn more from a failed deployment at 2am than from any tutorial.",
+    ],
+    link: "",
+  },
+];
+// ---------------------------------------------
+
 // ─────────────────────────────────────────────────────────────────────────────
 // ANNOTATION CONFIG
 // ─────────────────────────────────────────────────────────────────────────────
@@ -210,5 +228,14 @@ export const ANNOTATIONS = [
     cameraTarget: [0, 0.65, 0],
     cameraPosition: [-2.0, 0.75, 1.8],
     side: "left",
+  },
+	  {
+    id: "blog",
+    label: "BLOG",
+    description: "Thoughts & Writes",
+    position: [0.38, 0.22, 0.12],
+    cameraTarget: [0, 0.25, 0],
+    cameraPosition: [2.0, 0.45, 1.8],
+    side: "right",
   },
 ];

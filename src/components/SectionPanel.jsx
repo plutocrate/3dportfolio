@@ -9,6 +9,7 @@ import {
   SkillsSection,
   EducationSection,
   TalkSection,
+  BlogSection,
 } from '@/components/sections'
 
 const SECTION_MAP = {
@@ -18,6 +19,7 @@ const SECTION_MAP = {
   skills:     SkillsSection,
   education:  EducationSection,
   talk:       TalkSection,
+  blog:       BlogSection,
 }
 
 export function SectionPanel() {
