@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useSceneStore } from '@/hooks/useSceneStore'
+import { resumeMusicAfterVideo } from '@/hooks/useMusicBridge'
 import { useClickSound } from '@/hooks/useClickSound'
 import {
   AboutSection,
@@ -44,6 +45,7 @@ export function SectionPanel({ onClose }) {
       }
     } else {
       panelRef.current.style.transform = 'translateX(100%)'
+      resumeMusicAfterVideo() // resume bgm if a video was playing
     }
   }, [panelOpen, activeSection])
 

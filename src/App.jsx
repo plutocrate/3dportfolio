@@ -8,6 +8,7 @@ import { SunCorner } from '@/components/SunCorner'
 import { SwipeHint } from '@/components/SwipeHint'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useAmbientMusic } from '@/hooks/useAmbientMusic'
+import { setMusicBridge } from '@/hooks/useMusicBridge'
 
 // Detect mobile
 function isMobileDevice() {
@@ -25,7 +26,8 @@ export default function App() {
   const activeSection    = useSceneStore((s) => s.activeSection)
   const setActiveSection = useSceneStore((s) => s.setActiveSection)
   const closeSection     = useSceneStore((s) => s.closeSection)
-  const { playing, start, toggle } = useAmbientMusic()
+  const { playing, start, toggle, pauseForVideo, resumeAfterVideo } = useAmbientMusic()
+  setMusicBridge(pauseForVideo, resumeAfterVideo)
 
   const mobile = isMobileDevice()
 

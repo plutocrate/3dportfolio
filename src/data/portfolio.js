@@ -162,6 +162,19 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "fourth-post",
+    title: "Late night jam.",
+    subtitle: "",
+    date: "16 Mar 2026",
+    categories: ["Guitar","Music"],
+    body: [
+      "In future I'll be giving more time to my music/guitar sessions",
+      "For, now I share with you what I practised last night at 4.",
+    ],
+		media: ["/media/terebinag.mp4","/media/was.gif"],
+    link: "",
+  },
+  {
     id: "third-post",
     title: "I have my IBM assesment test morrow",
     subtitle: "",
@@ -171,6 +184,7 @@ export const BLOG_POSTS = [
       "I must be preparing for the coding round, and I will use Javascript as my language.",
       "Time to get my arse back to DSA now.",
     ],
+		media: ["/media/gorilla.jpg"],
     link: "",
   },
   {
