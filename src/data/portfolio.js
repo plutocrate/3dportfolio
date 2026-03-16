@@ -162,6 +162,18 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "third-post",
+    title: "I have my IBM assesment test morrow",
+    subtitle: "",
+    date: "16 Mar 2026",
+    categories: ["Reflection"],
+    body: [
+      "I must be preparing for the coding round, and I will use Javascript as my language.",
+      "Time to get my arse back to DSA now.",
+    ],
+    link: "",
+  },
+  {
     id: "second-post",
     title: "It's a good day, today.",
     subtitle: "Just a basic life blog.",
