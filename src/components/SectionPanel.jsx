@@ -82,7 +82,7 @@ export function SectionPanel() {
 
       <div className="absolute bottom-0 left-px right-0 border-t border-white/8 px-8 pl-10 py-3 flex items-center justify-between">
         <span className="font-mono text-[9px] text-white/18 uppercase tracking-widest">
-          plutocrate.github.io/portfolio
+          prathamis.cool
         </span>
         <span className="font-mono text-[9px] text-white/18 tabular-nums">
           {new Date().getFullYear()}

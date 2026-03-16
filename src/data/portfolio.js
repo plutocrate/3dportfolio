@@ -9,7 +9,7 @@ export const PERSONAL = {
   location: "Solan, HP, India",
   email: "prathampurohitonline@outlook.com",
   phone: "+91 93172-77524",
-  website: "plutocrate.github.io/portfolio",
+  website: "prathamis.cool",
   linkedin: "linkedin.com/in/prathammpurohit",
   github: "github.com/plutocrate",
   summary:
