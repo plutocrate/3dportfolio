@@ -1,5 +1,17 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { pauseMusicForVideo, resumeMusicAfterVideo } from '@/hooks/useMusicBridge'
+
+// Global registry of all video elements currently mounted in the blog
+const videoRegistry = new Set()
+
+function pauseAllExcept(activeRef) {
+  videoRegistry.forEach((ref) => {
+    if (ref !== activeRef && ref.current && !ref.current.paused) {
+      ref.current.pause()
+      ref.current.currentTime = 0
+    }
+  })
+}
 import { BLOG_POSTS } from '@/data/portfolio'
 import { Separator } from '@/components/ui/separator'
 
@@ -18,12 +30,20 @@ function MediaItem({ src }) {
   const videoRef = useRef()
   const type = getMediaType(src)
 
+  // Register this video in the global registry on mount, unregister on unmount
+  useEffect(() => {
+    if (type !== 'video') return
+    videoRegistry.add(videoRef)
+    return () => videoRegistry.delete(videoRef)
+  }, [type])
+
   const handlePlayInline = useCallback(() => {
     if (!videoRef.current) return
     if (playing) {
       videoRef.current.pause()
       setPlaying(false)
     } else {
+      pauseAllExcept(videoRef)   // stop & reset all other videos
       videoRef.current.play()
       setPlaying(true)
     }
