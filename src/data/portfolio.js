@@ -95,6 +95,7 @@ export const PROJECTS = [
     description:
       "Engineered a Canvas-based puzzle simulation engine in JavaScript with a Node.js/Express + PostgreSQL backend, deployed on Neon and Railway, serving 200 daily user requests.",
     tags: ["JavaScript", "Canvas API", "Node.js", "Express", "PostgreSQL", "Railway"],
+		link:"https://github.com/plutocrate/iluvbaba",
   },
   {
     id: "gtutor",
@@ -104,6 +105,7 @@ export const PROJECTS = [
     description:
       "Built a real-time browser guitar tutor using React and TypeScript, integrating MediaPipe gesture recognition and Web Audio API signal analysis.",
     tags: ["React", "TypeScript", "MediaPipe", "Web Audio API"],
+		link: "https://www.linkedin.com/posts/activity-7437057168048091137-l_Ey?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADauVx0BsN5m4HZ_vmMezRkN9FZRXltun7w",
   },
   {
     id: "mrphony",
@@ -113,6 +115,7 @@ export const PROJECTS = [
     description:
       "React + TypeScript strategy game converting real-world Uttarakhand topography into ASCII game maps using Claude AI, with automated deployment via GitHub Actions.",
     tags: ["React", "TypeScript", "Claude AI", "GitHub Actions"],
+		link: "https://github.com/plutocrate/mrphony",
   },
   {
     id: "beatdancer",
@@ -122,6 +125,7 @@ export const PROJECTS = [
     description:
       "Browser-based rhythm game using Three.js and WebGL, integrating Mixamo 3D character animations synchronized with music beats in real time.",
     tags: ["Three.js", "WebGL", "Mixamo", "Web Audio API"],
+		link: "https://beatonline-production.up.railway.app/",
   },
   {
     id: "gwent",
@@ -131,6 +135,7 @@ export const PROJECTS = [
     description:
       "Real-time multiplayer browser card game using Node.js, Express, and Socket.IO with room-based 1v1 matches and synchronized game state between players.",
     tags: ["Node.js", "Express", "Socket.IO", "Multiplayer"],
+		link: "https://gwent-mult-production.up.railway.app/",
   },
 ];
 
@@ -157,10 +162,22 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "second-post",
+    title: "It's a good day, today.",
+    subtitle: "Just a basic life blog.",
+    date: "16 Mar 2026",
+    categories: ["Reflection"],
+    body: [
+      "I'm getting stronger with life, playing guitar, coding everday, learning music... beautiful life it is.",
+      "Anways, thanks for your visit here",
+    ],
+    link: "",
+  },
+  {
     id: "first-post",
     title: "Why I Build Things That Break",
     subtitle: "On learning by shipping, not studying.",
-    date: "Mar 2026",
+    date: "16 Mar 2026",
     categories: ["Reflection"],
     body: [
       "Every project I've shipped has had at least one catastrophic failure before it worked. That's not a bug in my process — it's the whole point.",

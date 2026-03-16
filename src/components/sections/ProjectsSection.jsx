@@ -14,7 +14,14 @@ export function ProjectsSection() {
           <div key={proj.id} className="group">
             <div className="flex items-baseline gap-3 mb-1">
               <span className="font-mono text-[9px] text-white/20 tabular-nums">{String(idx+1).padStart(2,'0')}</span>
-              <h3 className="font-display text-[28px] text-white tracking-wider leading-none">{proj.name.toUpperCase()}</h3>
+							{proj.link ? (
+  <a href={proj.link} target="_blank" rel="noopener noreferrer"
+    className="font-display text-[28px] text-white tracking-wider leading-none hover:text-white/60 transition-colors border-b border-white/20 hover:border-white/50 pb-0.5">
+    {proj.name.toUpperCase()}
+  </a>
+) : (
+  <h3 className="font-display text-[28px] text-white tracking-wider leading-none">{proj.name.toUpperCase()}</h3>
+)}
               <span className="font-mono text-[9px] text-white/28 ml-auto shrink-0">{proj.period}</span>
             </div>
             <div className="font-mono text-[10px] text-white/32 uppercase tracking-widest mb-2 pl-8">{proj.subtitle}</div>
