@@ -71,10 +71,10 @@ export function LoadingScreen({ onComplete }) {
       {/* Name */}
       <div className="mb-8 text-center">
         <div className="font-display text-[36px] sm:text-[52px] md:text-[64px] text-white tracking-widest leading-none mb-2">
-          {PERSONAL.name.toUpperCase().replace(' ', '_')}
+          {PERSONAL.name.toUpperCase()}
         </div>
         <div className="font-mono text-[9px] sm:text-[11px] text-white/30 uppercase tracking-[0.35em]">
-          {PERSONAL.title} · Portfolio
+          {PERSONAL.title}
         </div>
       </div>
 
@@ -120,7 +120,7 @@ export function LoadingScreen({ onComplete }) {
           style={{ opacity: 0 }}
           className="font-mono text-[7px] sm:text-[8px] text-white/20 uppercase tracking-[0.25em]"
         >
-          Sound recommended
+          🎧Headphones recommended
         </div>
       </div>
     </div>
