@@ -162,6 +162,19 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "seventh-post",
+    title: "RABID, my spilt keyboard side hustle.",
+    subtitle: "Thank you claude.",
+    date: "0211, 18 Mar 2026",
+    categories: ["sidehustle"],
+    body: [
+      "I'm working on RABID's website, which is side hustle, where I sell split keyboards, and provide Web Development services.",
+      "Anyways, priority at this moment is Python, PowerBI, and SQL. That's gonna land me a job.",
+    ],
+		media: ["/media/patrick.jpg"],
+    link: "rabid.co.in",
+  },
+  {
     id: "sixth-post",
     title: "No Good Night",
     subtitle: "Sighs, I must build a project first.",
