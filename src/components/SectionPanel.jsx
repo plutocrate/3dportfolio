@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { resumeMusicAfterVideo } from '@/hooks/useMusicBridge'
 import { useClickSound } from '@/hooks/useClickSound'
+import { pauseAllVideos } from '@/hooks/useMusicBridge'
 import {
   AboutSection,
   ExperienceSection,
@@ -34,6 +35,7 @@ export function SectionPanel({ onClose }) {
   useEffect(() => {
     if (!panelRef.current) return
     if (panelOpen) {
+			pauseAllVideos()
       // CSS transition — GPU composited, smooth on mobile
       panelRef.current.style.transform = 'translateX(0%)'
       if (contentRef.current?.children?.length) {
