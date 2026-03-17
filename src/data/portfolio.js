@@ -172,7 +172,7 @@ export const BLOG_POSTS = [
       "Anyways, priority at this moment is Python, PowerBI, and SQL. That's gonna land me a job.",
     ],
 		media: ["/media/patrick.jpg"],
-    link: "rabid.co.in",
+    link: "https://rabid.co.in",
   },
   {
     id: "sixth-post",
