@@ -3,14 +3,14 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const PERSONAL = {
-  name: "Pratham Purohit",
-  title: "Full-Stack Developer",
-  tagline: "FSDev by day, Philosopher by night.",
-  location: "Solan, HP, India",
-  email: "prathampurohitonline@outlook.com",
-  phone: "+91 93172-77524",
-  website: "prathamis.cool",
-  linkedin: "linkedin.com/in/prathammpurohit",
+  name: "Parag Purohit",
+  title: "Software Engineer",
+  tagline: "Python | Web",
+  location: "Indore, MP, India",
+  email: "paragpurohit.2828@gmail.com",
+  phone: "+91 6261213949",
+  website: "paragpurohit.dev",
+  linkedin: "linkedin.com/in/contact-parag",
   github: "github.com/plutocrate",
   summary:
     "Frontend / Full-Stack Developer with hands-on experience building responsive web interfaces, real-time systems, and browser-based simulations. Skilled in React, TypeScript, Three.js, and Node.js with a passion for creative engineering, graphics programming, and real-world deployment.",
