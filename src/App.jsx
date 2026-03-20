@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { MainScene } from '@/components/3d/MainScene'
 import { MobileAnnotationOverlay } from '@/components/MobileAnnotationOverlay'
+import { NewsBanner } from '@/components/NewsBanner'
 import { SectionPanel } from '@/components/SectionPanel'
 import { HUDOverlay } from '@/components/HUDOverlay'
 import { LoadingScreen } from '@/components/LoadingScreen'
@@ -92,6 +93,8 @@ export default function App() {
       <div className="scan-overlay" />
 
       <SunCorner visible={!loading} />
+
+      <NewsBanner visible={!loading} />
 
       {loading && <LoadingScreen onComplete={handleEnter} />}
 

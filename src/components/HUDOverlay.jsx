@@ -92,7 +92,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
         style={{ opacity: 0 }}
       >
         {/* ── TOP BAR ── compact on mobile */}
-        <div className="absolute top-0 inset-x-0 flex items-start justify-between px-4 sm:px-8 pt-4 sm:pt-6">
+        <div className="absolute inset-x-0 flex items-start justify-between px-4 sm:px-8 pt-4 sm:pt-6" style={{ top: 28 }}>
           {/* Left: name + tagline */}
           <div className="flex flex-col gap-0.5">
             <div className="font-display text-[20px] sm:text-[28px] md:text-[34px] text-white leading-none tracking-widest">
