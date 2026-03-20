@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { MainScene } from '@/components/3d/MainScene'
+import { MobileAnnotationOverlay } from '@/components/MobileAnnotationOverlay'
 import { SectionPanel } from '@/components/SectionPanel'
 import { HUDOverlay } from '@/components/HUDOverlay'
 import { LoadingScreen } from '@/components/LoadingScreen'
@@ -30,6 +31,17 @@ export default function App() {
   setMusicBridge(pauseForVideo, resumeAfterVideo)
 
   const mobile = isMobileDevice()
+
+  // ── Escape key → close section ───────────────────────────────────────────
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && activeSection) {
+        handleClose()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [activeSection]) // eslint-disable-line
 
   // ── Sync URL → store (mobile only) ───────────────────────────────────────
   // When user hits browser back, location changes → close section
@@ -78,12 +90,17 @@ export default function App() {
 
       {loading && <LoadingScreen onComplete={handleEnter} />}
 
-      <div className="absolute inset-0" style={{ touchAction: 'none' }}>
+      <div className="absolute inset-0">
         <MainScene
           onAnnotationClick={handleAnnotationClick}
           onModelLoaded={() => {}}
+          isMobile={mobile}
         />
       </div>
+
+      {mobile && !loading && (
+        <MobileAnnotationOverlay onAnnotationClick={handleAnnotationClick} />
+      )}
 
       <HUDOverlay
         visible={!loading}
