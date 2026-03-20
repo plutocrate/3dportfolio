@@ -7,8 +7,8 @@ export function AboutSection() {
       <div>
         <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30 mb-2">Identity</div>
         <h2 className="font-display text-5xl text-white leading-none tracking-wide mb-1">
-          {PERSONAL.name.toUpperCase()}
-        </h2>
+            {PERSONAL.name.toUpperCase()}
+          </h2>
         <p className="font-mono text-[11px] text-white/45 tracking-widest uppercase">{PERSONAL.title}</p>
       </div>
 

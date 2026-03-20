@@ -7,7 +7,9 @@ export const useSceneStore = create((set, get) => ({
   hoveredAnnotation: null,
   introPlayed: false,
 
-  // Shared camera state written from inside Canvas, read outside
+  // Font size scale for section panels (1 = default, range 0.75–1.5)
+  fontSize: 1,
+  setFontSize: (v) => set({ fontSize: Math.max(0.75, Math.min(1.5, v)) }),
   cameraState: null,  // { camera, size } updated each frame
 
   setActiveSection: (id) => {

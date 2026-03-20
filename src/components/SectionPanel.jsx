@@ -32,6 +32,8 @@ export function SectionPanel({ onClose }) {
   const panelOpen     = useSceneStore((s) => s.panelOpen)
   const activeSection = useSceneStore((s) => s.activeSection)
   const closeSection  = useSceneStore((s) => s.closeSection)
+  const fontSize      = useSceneStore((s) => s.fontSize)
+  const setFontSize   = useSceneStore((s) => s.setFontSize)
   const panelRef      = useRef()
   const contentRef    = useRef()
   const playClick     = useClickSound()
@@ -174,9 +176,30 @@ export function SectionPanel({ onClose }) {
         ×
       </button>
 
+      {/* Font size controls — fixed in header, never affected by zoom */}
+      <div className="absolute top-6 z-10 flex items-center gap-1" style={{ right: 56 }}>
+        <button
+          onClick={() => setFontSize(fontSize - 0.2)}
+          disabled={fontSize <= 0.6}
+          className="w-7 h-7 flex items-center justify-center border border-white/15 font-mono text-[12px] text-white/35 hover:text-white hover:border-white/45 disabled:opacity-20 disabled:cursor-not-allowed transition-all leading-none"
+        >−</button>
+        <button
+          onClick={() => setFontSize(fontSize + 0.2)}
+          disabled={fontSize >= 2.0}
+          className="w-7 h-7 flex items-center justify-center border border-white/15 font-mono text-[12px] text-white/35 hover:text-white hover:border-white/45 disabled:opacity-20 disabled:cursor-not-allowed transition-all leading-none"
+        >+</button>
+        {fontSize !== 1 && (
+          <button
+            onClick={() => setFontSize(1)}
+            className="w-7 h-7 flex items-center justify-center font-mono text-[11px] text-white/20 hover:text-white/55 transition-colors"
+            title="Reset"
+          >↺</button>
+        )}
+      </div>
+
       {/* Scrollable content */}
-      <div className="relative h-full overflow-y-auto pt-16 pb-12 px-8 pl-10">
-        <div ref={contentRef}>
+      <div className="relative h-full overflow-y-auto pb-12 pl-10" style={{ paddingTop: 52 }}>
+        <div ref={contentRef} style={{ zoom: fontSize }}>
           {SectionContent && <SectionContent />}
         </div>
       </div>
