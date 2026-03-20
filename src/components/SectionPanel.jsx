@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import gsap from 'gsap'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { resumeMusicAfterVideo } from '@/hooks/useMusicBridge'
@@ -24,6 +24,10 @@ const SECTION_MAP = {
   blog:       BlogSection,
 }
 
+const DEFAULT_WIDTH = 560   // 1.5× original ~380
+const MIN_WIDTH     = 320
+const MAX_WIDTH     = Math.min(900, typeof window !== 'undefined' ? window.innerWidth - 80 : 900)
+
 export function SectionPanel({ onClose }) {
   const panelOpen     = useSceneStore((s) => s.panelOpen)
   const activeSection = useSceneStore((s) => s.activeSection)
@@ -32,11 +36,23 @@ export function SectionPanel({ onClose }) {
   const contentRef    = useRef()
   const playClick     = useClickSound()
 
+  const [width, setWidth]       = useState(DEFAULT_WIDTH)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
+  const dragging  = useRef(false)
+  const startX    = useRef(0)
+  const startW    = useRef(0)
+
+  // Track mobile breakpoint
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
+  }, [])
+
   useEffect(() => {
     if (!panelRef.current) return
     if (panelOpen) {
-			pauseAllVideos()
-      // CSS transition — GPU composited, smooth on mobile
+      pauseAllVideos()
       panelRef.current.style.transform = 'translateX(0%)'
       if (contentRef.current?.children?.length) {
         gsap.fromTo(
@@ -47,29 +63,109 @@ export function SectionPanel({ onClose }) {
       }
     } else {
       panelRef.current.style.transform = 'translateX(100%)'
-      resumeMusicAfterVideo() // resume bgm if a video was playing
+      resumeMusicAfterVideo()
     }
   }, [panelOpen, activeSection])
 
+  // ── Drag resize handlers ──────────────────────────────────────────────────
+  const onMouseDown = useCallback((e) => {
+    dragging.current = true
+    startX.current   = e.clientX
+    startW.current   = width
+    document.body.style.cursor    = 'ew-resize'
+    document.body.style.userSelect = 'none'
+  }, [width])
+
+  useEffect(() => {
+    const onMouseMove = (e) => {
+      if (!dragging.current) return
+      const delta = startX.current - e.clientX   // dragging left = wider
+      const next  = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startW.current + delta))
+      setWidth(next)
+    }
+    const onMouseUp = () => {
+      if (!dragging.current) return
+      dragging.current = false
+      document.body.style.cursor    = ''
+      document.body.style.userSelect = ''
+    }
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup',   onMouseUp)
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseup',   onMouseUp)
+    }
+  }, [])
+
+  // Touch drag
+  const onTouchStart = useCallback((e) => {
+    dragging.current = true
+    startX.current   = e.touches[0].clientX
+    startW.current   = width
+  }, [width])
+
+  useEffect(() => {
+    const onTouchMove = (e) => {
+      if (!dragging.current) return
+      const delta = startX.current - e.touches[0].clientX
+      const next  = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startW.current + delta))
+      setWidth(next)
+    }
+    const onTouchEnd = () => { dragging.current = false }
+    window.addEventListener('touchmove', onTouchMove)
+    window.addEventListener('touchend',  onTouchEnd)
+    return () => {
+      window.removeEventListener('touchmove', onTouchMove)
+      window.removeEventListener('touchend',  onTouchEnd)
+    }
+  }, [])
+
   const SectionContent = activeSection ? SECTION_MAP[activeSection] : null
+  const panelWidth     = isMobile ? '100%' : width
 
   return (
     <div
       ref={panelRef}
-      className="fixed top-0 right-0 h-full w-full sm:w-[360px] md:w-[380px] z-50 pointer-events-auto"
-      style={{ transform: 'translateX(100%)', transition: 'transform 0.38s cubic-bezier(0.22,1,0.36,1)', willChange: 'transform' }}
+      className="fixed top-0 right-0 h-full z-50 pointer-events-auto"
+      style={{
+        width: panelWidth,
+        transform: 'translateX(100%)',
+        transition: 'transform 0.38s cubic-bezier(0.22,1,0.36,1)',
+        willChange: 'transform',
+      }}
     >
-      <div className="absolute inset-0 border-l border-white/8" style={{ background: "rgba(7,7,7,0.96)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", willChange: "transform" }} />
+      {/* Background */}
+      <div
+        className="absolute inset-0 border-l border-white/8"
+        style={{ background: 'rgba(7,7,7,0.96)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)' }}
+      />
 
-      <div className="absolute left-0 top-0 bottom-0 w-px bg-white/8 flex items-center justify-center pointer-events-none">
+      {/* ── Drag handle (desktop only) ── */}
+      {!isMobile && (
         <div
-          className="font-mono text-[9px] text-white/15 uppercase tracking-[0.4em] select-none"
-          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+          onMouseDown={onMouseDown}
+          onTouchStart={onTouchStart}
+          className="absolute left-0 top-0 bottom-0 w-4 z-20 flex items-center justify-center group"
+          style={{ cursor: 'ew-resize', touchAction: 'none' }}
         >
-          {activeSection}
+          {/* Thin visible grip line */}
+          <div
+            className="w-px h-16 rounded-full transition-all duration-150 group-hover:h-24 group-active:bg-white/50"
+            style={{ background: 'rgba(255,255,255,0.12)', transition: 'background 0.15s, height 0.15s' }}
+            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.35)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.12)'}
+          />
+          {/* Section label */}
+          <div
+            className="absolute font-mono text-[9px] text-white/15 uppercase tracking-[0.4em] select-none pointer-events-none"
+            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+          >
+            {activeSection}
+          </div>
         </div>
-      </div>
+      )}
 
+      {/* Close button */}
       <button
         onClick={() => { playClick(); onClose ? onClose() : closeSection() }}
         className="absolute top-6 right-6 z-10 w-8 h-8 flex items-center justify-center border border-white/15 text-white/40 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-base"
@@ -78,12 +174,14 @@ export function SectionPanel({ onClose }) {
         ×
       </button>
 
+      {/* Scrollable content */}
       <div className="relative h-full overflow-y-auto pt-16 pb-12 px-8 pl-10">
         <div ref={contentRef}>
           {SectionContent && <SectionContent />}
         </div>
       </div>
 
+      {/* Footer */}
       <div className="absolute bottom-0 left-px right-0 border-t border-white/8 px-8 pl-10 py-3 flex items-center justify-between">
         <span className="font-mono text-[9px] text-white/18 uppercase tracking-widest">
           prathamis.cool
