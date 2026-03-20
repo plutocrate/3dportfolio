@@ -11,10 +11,15 @@ import { useSceneStore } from '@/hooks/useSceneStore'
 import { useAmbientMusic } from '@/hooks/useAmbientMusic'
 import { setMusicBridge } from '@/hooks/useMusicBridge'
 
-// Detect mobile
-function isMobileDevice() {
-  return window.innerWidth < 768 ||
-    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+// Reactive mobile detection — updates on resize, matches 3D side threshold
+function useIsMobile() {
+  const [mobile, setMobile] = useState(() => window.innerWidth < 1024)
+  useEffect(() => {
+    const handler = () => setMobile(window.innerWidth < 1024)
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
+  }, [])
+  return mobile
 }
 
 export default function App() {
@@ -30,7 +35,7 @@ export default function App() {
   const { playing, start, toggle, pauseForVideo, resumeAfterVideo } = useAmbientMusic()
   setMusicBridge(pauseForVideo, resumeAfterVideo)
 
-  const mobile = isMobileDevice()
+  const mobile = useIsMobile()
 
   // ── Escape key → close section ───────────────────────────────────────────
   useEffect(() => {
@@ -98,7 +103,7 @@ export default function App() {
         />
       </div>
 
-      {mobile && !loading && (
+      {mobile && (
         <MobileAnnotationOverlay onAnnotationClick={handleAnnotationClick} />
       )}
 

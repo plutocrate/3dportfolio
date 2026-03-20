@@ -7,12 +7,13 @@ import { cn } from '@/lib/utils'
 
 const _v = new THREE.Vector3()
 
-function computePositions(camera, size) {
-  const BTN_H       = 22
-  const PAD         = 8
-  const TOP_SAFE    = 60
-  const BOTTOM_SAFE = size.height - 80
+const BTN_W      = 80   // fixed width px — big enough to tap
+const BTN_H      = 32   // fixed height px
+const PAD_X      = 12   // min distance from left/right edge
+const PAD_TOP    = 64   // below name bar
+const PAD_BOTTOM = 90   // above uptime bar
 
+function computePositions(camera, size) {
   return ANNOTATIONS.map((ann) => {
     _v.set(...ann.position).project(camera)
 
@@ -21,24 +22,25 @@ function computePositions(camera, size) {
     const sx = ( _v.x *  0.5 + 0.5) * size.width
     const sy = (-_v.y *  0.5 + 0.5) * size.height
 
-    const BTN_W = ann.label.length * 6.5 + 18
-    let bx = ann.side === 'right' ? sx + 6 : sx - BTN_W - 6
-    bx = Math.max(PAD, Math.min(size.width - BTN_W - PAD, bx))
-    const by = Math.max(TOP_SAFE, Math.min(BOTTOM_SAFE - BTN_H, sy - BTN_H / 2))
+    // Place button to the side of the projected point, then clamp inward
+    let bx = ann.side === 'right'
+      ? sx + 4
+      : sx - BTN_W - 4
+
+    bx = Math.max(PAD_X, Math.min(size.width - BTN_W - PAD_X, bx))
+
+    const by = Math.max(PAD_TOP, Math.min(size.height - PAD_BOTTOM - BTN_H, sy - BTN_H / 2))
 
     return { id: ann.id, label: ann.label, annotation: ann, bx, by, visible: true }
   })
 }
 
 export function MobileAnnotationOverlay({ onAnnotationClick }) {
-  const cameraState   = useSceneStore((s) => s.cameraState)
   const activeSection = useSceneStore((s) => s.activeSection)
   const playClick     = useClickSound()
-
-  // Use a ref for positions and force re-render via counter
-  const posRef   = useRef([])
-  const rafRef   = useRef(null)
-  const [, tick] = useState(0)
+  const posRef        = useRef([])
+  const rafRef        = useRef(null)
+  const [, tick]      = useState(0)
 
   useEffect(() => {
     function loop() {
@@ -65,20 +67,41 @@ export function MobileAnnotationOverlay({ onAnnotationClick }) {
               position: 'absolute',
               left: p.bx,
               top: p.by,
+              width: BTN_W,
+              height: BTN_H,
               pointerEvents: 'auto',
-              whiteSpace: 'nowrap',
               willChange: 'left, top',
+              // Glassmorphism
+              background: isActive
+                ? 'rgba(255,255,255,0.92)'
+                : 'rgba(10,10,10,0.55)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: isActive
+                ? '1px solid rgba(255,255,255,1)'
+                : '1px solid rgba(255,255,255,0.18)',
+              boxShadow: isActive
+                ? '0 0 12px rgba(255,255,255,0.25)'
+                : '0 2px 12px rgba(0,0,0,0.45)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              userSelect: 'none',
+              borderRadius: 2,
             }}
-            className={cn(
-              'font-mono uppercase border cursor-pointer transition-colors duration-150',
-              'px-1.5 py-0.5 text-[8px] tracking-[0.10em]',
-              isActive
-                ? 'bg-white text-black border-white'
-                : 'bg-black/85 text-white/55 border-white/25'
-            )}
             onClick={() => { playClick(); onAnnotationClick(p.annotation) }}
           >
-            {p.label}
+            <span style={{
+              fontFamily: 'monospace',
+              fontSize: 9,
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              color: isActive ? '#000' : 'rgba(255,255,255,0.75)',
+              fontWeight: isActive ? 700 : 400,
+            }}>
+              {p.label}
+            </span>
           </div>
         )
       })}
