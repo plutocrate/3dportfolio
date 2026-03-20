@@ -169,10 +169,10 @@ export const BLOG_POSTS = [
     categories: ["reflection"],
     body: [
       "Suffering makes you stronger, too much suffering makes you humble, way too much suffering makes you hubristic.",
-			"If you're in an aware loop of 'way too much suffering',you constantly discover deeper dimensions of perception, and weirder sense of life.",
+			"If you're in an aware loop of 'way too much suffering', you constantly discover deeper dimensions of perception, and weirder sense of life.",
       "That constant discovery of yourself makes you lonelier, and difficult to adapt the innocence around you.",
 			"People are naive, they are pre-made, but you're not, that's where your ego kicks in, the worst form of ego; arrogance of justifying your sick life as discovery.",
-			"Life is meant to be understood slowly, that's where the fun lies in. Big brain too early... What will you do now? How will you adjust within yourself, when you've known there's no God, or if there is, you do not care.",
+			"Life is meant to be understood slowly, that's where the fun lies in. Big brain too early... What will you do now? How will you adjust within yourself, when you've known there's no God, or if there is, you do not care?",
 			"What will you do now? If you take my advise, live with the rules of society, and nature. You'll be okay again, and trust me you will not loose your 'years of deep research'."
     ],
 		media: ["/media/buddhamonkey.jpg"],
