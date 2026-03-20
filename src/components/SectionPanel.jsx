@@ -167,33 +167,53 @@ export function SectionPanel({ onClose }) {
         </div>
       )}
 
-      {/* Close button */}
-      <button
-        onClick={() => { playClick(); onClose ? onClose() : closeSection() }}
-        className="absolute top-6 right-6 z-10 w-8 h-8 flex items-center justify-center border border-white/15 text-white/40 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-base"
-        aria-label="Close"
-      >
-        ×
-      </button>
-
       {/* Font size controls — fixed in header, never affected by zoom */}
-      <div className="absolute top-6 z-10 flex items-center gap-1" style={{ right: 56 }}>
-        <button
-          onClick={() => setFontSize(fontSize - 0.2)}
-          disabled={fontSize <= 0.6}
-          className="w-7 h-7 flex items-center justify-center border border-white/15 font-mono text-[12px] text-white/35 hover:text-white hover:border-white/45 disabled:opacity-20 disabled:cursor-not-allowed transition-all leading-none"
-        >−</button>
-        <button
-          onClick={() => setFontSize(fontSize + 0.2)}
-          disabled={fontSize >= 2.0}
-          className="w-7 h-7 flex items-center justify-center border border-white/15 font-mono text-[12px] text-white/35 hover:text-white hover:border-white/45 disabled:opacity-20 disabled:cursor-not-allowed transition-all leading-none"
-        >+</button>
+      <div
+        className="absolute top-6 z-10 flex items-center"
+        style={{ right: isMobile ? 16 : 16, gap: 8 }}
+      >
+        {/* − + as one grouped unit */}
+        <div className="flex items-center gap-0.5">
+          <button
+            onClick={() => setFontSize(fontSize - 0.2)}
+            disabled={fontSize <= 0.6}
+            className="w-7 h-7 flex items-center justify-center border border-white/15 font-mono text-[12px] text-white/35 hover:text-white hover:border-white/45 disabled:opacity-20 disabled:cursor-not-allowed transition-all leading-none"
+          >−</button>
+          <button
+            onClick={() => setFontSize(fontSize + 0.2)}
+            disabled={fontSize >= 2.0}
+            className="w-7 h-7 flex items-center justify-center border border-white/15 font-mono text-[12px] text-white/35 hover:text-white hover:border-white/45 disabled:opacity-20 disabled:cursor-not-allowed transition-all leading-none"
+          >+</button>
+        </div>
+
+        {/* Reset */}
         {fontSize !== 1 && (
           <button
             onClick={() => setFontSize(1)}
-            className="w-7 h-7 flex items-center justify-center font-mono text-[11px] text-white/20 hover:text-white/55 transition-colors"
+            className="w-7 h-7 flex items-center justify-center font-mono text-[11px] text-white/20 hover:text-white/55 transition-colors border border-white/10 hover:border-white/30"
             title="Reset"
           >↺</button>
+        )}
+
+        {/* Close — desktop only, separated by a clear gap from font controls */}
+        {!isMobile && (
+          <div style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.1)', margin: '0 4px' }} />
+        )}
+        {!isMobile && (
+          <button
+            onClick={() => { playClick(); onClose ? onClose() : closeSection() }}
+            className="w-8 h-8 flex items-center justify-center border border-white/15 text-white/40 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-base"
+            aria-label="Close"
+          >×</button>
+        )}
+
+        {/* Close — mobile only */}
+        {isMobile && (
+          <button
+            onClick={() => { playClick(); onClose ? onClose() : closeSection() }}
+            className="w-7 h-7 flex items-center justify-center border border-white/15 text-white/40 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-base"
+            aria-label="Close"
+          >×</button>
         )}
       </div>
 
