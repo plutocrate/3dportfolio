@@ -6,16 +6,18 @@ import { useClickSound } from '@/hooks/useClickSound'
 // Parse loose date strings like "17 Mar 2026" or "0211, 18 Mar 2026"
 function parseDate(str) {
   if (!str) return new Date(0)
-  // Strip leading codes like "0211, "
-  const clean = str.replace(/^[\w]+,\s*/, '')
+  const clean = str.replace(/^[\w]+,\s*/, '').trim()
   const d = new Date(clean)
   return isNaN(d) ? new Date(0) : d
 }
+
+const NOW = new Date()
 
 // Build a flat list of all "items" with type, label, date, sectionId
 function buildFeed() {
   const items = []
 
+  // Blog posts — use their publish date directly
   BLOG_POSTS.forEach((p) => items.push({
     type: 'BLOG',
     label: p.title,
@@ -24,6 +26,7 @@ function buildFeed() {
     prefix: '✦ NEW BLOG',
   }))
 
+  // Projects — use their period (month/year of completion)
   PROJECTS.forEach((p) => items.push({
     type: 'PROJECT',
     label: p.name,
@@ -32,30 +35,40 @@ function buildFeed() {
     prefix: '✦ NEW PROJECT',
   }))
 
+  // Experience — only include if the START of the role is recent (within 12 months)
+  // and never use future/ongoing end dates
   EXPERIENCE.forEach((e) => {
-    // Use end date of period eg "Mar 2025 – Nov 2025"
-    const end = e.period?.split('–').pop()?.trim() || ''
-    items.push({
-      type: 'EXPERIENCE',
-      label: `${e.role} @ ${e.company}`,
-      date: parseDate(end),
-      sectionId: 'experience',
-      prefix: '✦ NEW EXPERIENCE',
-    })
+    const start = e.period?.split('–')[0]?.trim() || ''
+    const startDate = parseDate(start)
+    const monthsAgo = (NOW - startDate) / (1000 * 60 * 60 * 24 * 30)
+    if (startDate > new Date(0) && monthsAgo <= 12) {
+      items.push({
+        type: 'EXPERIENCE',
+        label: `${e.role} @ ${e.company}`,
+        date: startDate,
+        sectionId: 'experience',
+        prefix: '✦ NEW EXPERIENCE',
+      })
+    }
   })
 
+  // Education — only include if started within last 4 years (actively studying)
   EDUCATION.forEach((e) => {
-    const end = e.period?.split('–').pop()?.trim() || ''
-    items.push({
-      type: 'EDUCATION',
-      label: e.degree,
-      date: parseDate(end),
-      sectionId: 'education',
-      prefix: '✦ NEW EDUCATION',
-    })
+    const start = e.period?.split('–')[0]?.trim() || ''
+    const startDate = parseDate(start)
+    const yearsAgo = (NOW - startDate) / (1000 * 60 * 60 * 24 * 365)
+    if (startDate > new Date(0) && yearsAgo <= 4) {
+      items.push({
+        type: 'EDUCATION',
+        label: e.degree,
+        date: startDate,
+        sectionId: 'education',
+        prefix: '✦ NEW EDUCATION',
+      })
+    }
   })
 
-  // Sort newest first
+  // Sort newest first, dedupe by label
   items.sort((a, b) => b.date - a.date)
   return items
 }
