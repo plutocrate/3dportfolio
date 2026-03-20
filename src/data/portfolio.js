@@ -162,6 +162,19 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "eigth-post",
+    title: "Rejected in like 8 companies yet.",
+    subtitle: "Problem is me.",
+    date: "2244, 20 Mar 2026",
+    categories: ["reflection"],
+    body: [
+      "I missed the TCS NQT today, I mean I didn't go, never prepared for it, ran away(maybe, or, maybe not, I'm just being like everyone). Life has more to offer, who knows, let's see.",
+      "I had my first interview of my life recently at American Chase, instanstly I knew, I fucked up, and yeah I got the rejection. Next time, I'll be well prepared before I open my mouth.",
+    ],
+		media: ["/media/buddha.jpg"],
+    link: "",
+  },
+  {
     id: "seventh-post",
     title: "RABID, my spilt keyboard side hustle.",
     subtitle: "Thank you claude.",
