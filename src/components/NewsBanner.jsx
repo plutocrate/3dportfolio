@@ -71,6 +71,8 @@ export function NewsBanner({ visible }) {
   const trackRef         = useRef()
   const [current, setCurrent] = useState(0)
   const [dismissed, setDismissed] = useState(false)
+  const touchStartX = useRef(null)
+  const touchDx     = useRef(0)
 
   // Auto-advance every 4s
   useEffect(() => {
@@ -80,6 +82,30 @@ export function NewsBanner({ visible }) {
     }, 4000)
     return () => clearInterval(id)
   }, [visible, dismissed])
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX
+    touchDx.current = 0
+  }
+
+  const handleTouchMove = (e) => {
+    if (touchStartX.current === null) return
+    touchDx.current = e.touches[0].clientX - touchStartX.current
+  }
+
+  const handleTouchEnd = () => {
+    if (Math.abs(touchDx.current) > 30) {
+      if (touchDx.current < 0) {
+        // swipe left → next
+        setCurrent((c) => (c + 1) % TICKER_ITEMS.length)
+      } else {
+        // swipe right → prev
+        setCurrent((c) => (c - 1 + TICKER_ITEMS.length) % TICKER_ITEMS.length)
+      }
+    }
+    touchStartX.current = null
+    touchDx.current = 0
+  }
 
   if (!visible || dismissed || TICKER_ITEMS.length === 0) return null
 
@@ -95,6 +121,9 @@ export function NewsBanner({ visible }) {
         WebkitBackdropFilter: 'blur(16px)',
         borderBottom: '1px solid rgba(255,255,255,0.08)',
       }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Left tag */}
       <div
