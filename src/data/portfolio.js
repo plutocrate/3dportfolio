@@ -162,6 +162,19 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "tenth-post",
+    title: "This job search is making me screen addict",
+    subtitle: "I must really learn to make use of my time.",
+    date: "1441, 21 Mar 2026",
+    categories: ["reflection"],
+    body: [
+			"At a moment in life, I was so fed up of the technologies that I might have become the next, Ted kaczynski (><).",
+      "But this job search thing, I gotta connect with people, stay online always, too much of a brain drainage, but good atleast I've started realizing it, and I will fix my schedule brick by brick now.",
+    ],
+		media: ["/media/tedkphone.jpg"],
+    link: "",
+  },
+  {
     id: "ninth-post",
     title: "Misunderstanding Buddhism",
     subtitle: "And life overall",
