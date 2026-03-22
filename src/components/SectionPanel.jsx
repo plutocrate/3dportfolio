@@ -207,14 +207,6 @@ export function SectionPanel({ onClose }) {
           >×</button>
         )}
 
-        {/* Close — mobile only */}
-        {isMobile && (
-          <button
-            onClick={() => { playClick(); onClose ? onClose() : closeSection() }}
-            className="w-7 h-7 flex items-center justify-center border border-white/15 text-white/40 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-base"
-            aria-label="Close"
-          >×</button>
-        )}
       </div>
 
       {/* Scrollable content */}
