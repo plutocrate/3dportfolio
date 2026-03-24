@@ -162,6 +162,19 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "11th-post",
+    title: "Success makes a person believer.",
+    subtitle: "really?",
+    date: "2141, 24 Mar 2026",
+    categories: ["reflection"],
+    body: [
+			"I have seen high grade success makes a preson believer, idk what they believe in, but they start believing.",
+      "Philisophy is a liesure of poor and free, like me.",
+    ],
+		media: ["/media/walt.gif"],
+    link: "",
+  },
+  {
     id: "tenth-post",
     title: "This job search is making me a screen addict",
     subtitle: "I must really learn to make use of my time.",
