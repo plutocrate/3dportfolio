@@ -162,6 +162,20 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "12th-post",
+    title: "How to fix life?",
+    subtitle: "idk",
+    date: "0535, 25 Mar 2026",
+    categories: ["reflection"],
+    body: [
+			"Fixing life is easy.",
+      "Just wake up early in the morning, and start respecting the clock.",
+      "Simple enough, right? I'll apply it to myself now, will share the results later.",
+    ],
+		media: ["/media/stoned.jpg"],
+    link: "",
+  },
+  {
     id: "11th-post",
     title: "Success makes a person believer.",
     subtitle: "really?",
