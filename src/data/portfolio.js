@@ -162,6 +162,20 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "13th-post",
+    title: "Last dance?",
+    subtitle: "",
+    date: "1137, 26 Mar 2026",
+    categories: ["reflection"],
+    body: [
+			"Constant hurdles are important, you can overcome them anyways, just by overpowering yourself. ",
+      "I think I must start posting a little 'coding' related blogs now, too much talking.",
+      "I will implement a journal section too, where I note my daily-log, I have gained 27kgs in past 4 years, gotta be fit again, will start sleeping on time, workout, eat healthy and study everyday. No more running away from the problems, time to face them.",
+    ],
+		media: ["/media/lastdance.jpeg"],
+    link: "",
+  },
+  {
     id: "12th-post",
     title: "How to fix life?",
     subtitle: "idk",
