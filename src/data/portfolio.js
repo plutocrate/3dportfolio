@@ -162,57 +162,20 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
-    id: "13th-post",
-    title: "Last dance?",
-    subtitle: "",
-    date: "1137, 26 Mar 2026",
+    id: "10-post",
+    title: "Creativity is a painful suffering.",
+    subtitle: "I got a fix to btw.",
+    date: "0104, 30 Mar 2026",
     categories: ["reflection"],
     body: [
-			"Constant hurdles are important, you can overcome them anyways, just by overpowering yourself. ",
-      "I think I must start posting a little 'coding' related blogs now, too much talking.",
-      "I will implement a journal section too, where I note my daily-log, I have gained 27kgs in past 4 years, gotta be fit again, will start sleeping on time, workout, eat healthy and study everyday. No more running away from the problems, time to face them.",
+      "Creativity is a constant slavery your mind imposes on you.",
+			"Slavey will never bring you joy, and that's the reason you can't find bliss.",
+      "Eastern philosphies had a different way of dealing with it, 'mysticism'.",
+			"Buddha left with blissfullness.",
+			"But, you're not him, your creative suffering will never end, never, unless you start meditating the right way.",
+			"Know yourself, meditate, touch grass, you don't need to be Buddha to end this loop, just a little will to adapt and change."
     ],
-		media: ["/media/lastdance.jpeg"],
-    link: "",
-  },
-  {
-    id: "12th-post",
-    title: "How to fix life?",
-    subtitle: "idk",
-    date: "0535, 25 Mar 2026",
-    categories: ["reflection"],
-    body: [
-			"Fixing life is easy.",
-      "Just wake up early in the morning, and start respecting the clock.",
-      "Simple enough, right? I'll apply it to myself now, will share the results later.",
-    ],
-		media: ["/media/stoned.jpg"],
-    link: "",
-  },
-  {
-    id: "11th-post",
-    title: "Success makes a person believer.",
-    subtitle: "really?",
-    date: "2141, 24 Mar 2026",
-    categories: ["reflection"],
-    body: [
-			"I have seen high grade success makes a preson believer, idk what they believe in, but they start believing.",
-      "Philisophy is a liesure of poor and free, like me.",
-    ],
-		media: ["/media/walt.gif"],
-    link: "",
-  },
-  {
-    id: "tenth-post",
-    title: "This job search is making me a screen addict",
-    subtitle: "I must really learn to make use of my time.",
-    date: "1441, 21 Mar 2026",
-    categories: ["reflection"],
-    body: [
-			"At a moment in life, I was so fed up of the technologies that I might have become the next Ted kaczynski (><).",
-      "But this job search thing, I gotta connect with people, stay online always, too much of a brain drainage, but good atleast I've started realizing it, and I will fix my schedule brick by brick now.",
-    ],
-		media: ["/media/tedkphone.jpg"],
+		media: ["/media/buddhamonkey.jpg"],
     link: "",
   },
   {
