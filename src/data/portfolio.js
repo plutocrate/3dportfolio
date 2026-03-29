@@ -163,7 +163,7 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 export const BLOG_POSTS = [
   {
     id: "10-post",
-    title: "Creativity is a painful suffering.",
+    title: "Creativity is a constant suffering.",
     subtitle: "I got a fix to btw.",
     date: "0104, 30 Mar 2026",
     categories: ["reflection"],
