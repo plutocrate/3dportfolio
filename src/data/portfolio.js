@@ -175,7 +175,7 @@ export const BLOG_POSTS = [
 			"But, you're not him, your creative suffering will never end, never, unless you start meditating the right way.",
 			"Know yourself, meditate, touch grass, you don't need to be Buddha to end this loop, just a little will to adapt and change."
     ],
-		media: ["/media/buddhamonkey.jpg"],
+		media: ["/media/buddha.jpg"],
     link: "",
   },
   {
@@ -193,45 +193,6 @@ export const BLOG_POSTS = [
 			"What will you do now? If you take my advise, live with the rules of society, and nature. You'll be okay again, and trust me you will not loose your 'years of deep research'."
     ],
 		media: ["/media/buddhamonkey.jpg"],
-    link: "",
-  },
-  {
-    id: "eigth-post",
-    title: "Rejected in like 8 companies yet.",
-    subtitle: "Problem is me.",
-    date: "2244, 20 Mar 2026",
-    categories: ["reflection"],
-    body: [
-      "I missed the TCS NQT today, I mean I didn't go, never prepared for it, ran away(maybe, or, maybe not, I'm just being like everyone). Life has more to offer, who knows, let's see.",
-      "I had my first interview of my life recently at American Chase, instanstly I knew, I fucked up, and yeah I got the rejection. Next time, I'll be well prepared before I open my mouth.",
-    ],
-		media: ["/media/buddha.jpg"],
-    link: "",
-  },
-  {
-    id: "seventh-post",
-    title: "RABID, my spilt keyboard side hustle.",
-    subtitle: "Thank you claude.",
-    date: "0211, 18 Mar 2026",
-    categories: ["sidehustle"],
-    body: [
-      "I'm working on RABID's website, which is side hustle, where I sell split keyboards, and provide Web Development services.",
-      "Anyways, priority at this moment is Python, PowerBI, and SQL. That's gonna land me a job.",
-    ],
-		media: ["/media/patrick.jpg"],
-    link: "https://rabid.co.in",
-  },
-  {
-    id: "sixth-post",
-    title: "No Good Night",
-    subtitle: "Sighs, I must build a project first.",
-    date: "17 Mar 2026",
-    categories: ["reflection"],
-    body: [
-      "I have high chances of landing a job at Adani, I must make every minute count.",
-      "I'm making a data analytics project right now, it's a new domain to me, but I'm doing good, I think I'll make it through.",
-    ],
-		media: ["/media/shinnerd.jpg"],
     link: "",
   },
   {
@@ -258,45 +219,6 @@ export const BLOG_POSTS = [
       "For, now I share with you what I practised last night at 4.",
     ],
 		media: ["/media/terebinag.mp4","/media/was.gif"],
-    link: "",
-  },
-  {
-    id: "third-post",
-    title: "I have my IBM assesment test morrow",
-    subtitle: "",
-    date: "16 Mar 2026",
-    categories: ["Reflection"],
-    body: [
-      "I must be preparing for the coding round, and I will use Javascript as my language.",
-      "Time to get my arse back to DSA now.",
-    ],
-		media: ["/media/gorilla.jpg"],
-    link: "",
-  },
-  {
-    id: "second-post",
-    title: "It's a good day, today.",
-    subtitle: "Just a basic life blog.",
-    date: "16 Mar 2026",
-    categories: ["Reflection"],
-    body: [
-      "I'm getting stronger with life, playing guitar, coding everday, learning music... beautiful life it is.",
-      "Anways, thanks for your visit here",
-    ],
-		media: ["/media/basicthru.mp4","/media/peterche.jpg"],
-    link: "",
-  },
-  {
-    id: "first-post",
-    title: "Why I Build Things That Break",
-    subtitle: "On learning by shipping, not studying.",
-    date: "16 Mar 2026",
-    categories: ["Reflection"],
-    body: [
-      "Every project I've shipped has had at least one catastrophic failure before it worked. That's not a bug in my process — it's the whole point.",
-      "The fastest way I've found to understand a system is to break it intentionally, then fix it. You learn more from a failed deployment at 2am than from any tutorial.",
-    ],
-		media: ["/media/burn.jpg"],
     link: "",
   },
 ];
