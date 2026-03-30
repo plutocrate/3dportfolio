@@ -164,16 +164,17 @@ export const BLOG_POSTS = [
   {
     id: "10-post",
     title: "Creativity is a constant suffering.",
-    subtitle: "I got a fix to btw.",
+    subtitle: "I got a fix to it btw.",
     date: "0104, 30 Mar 2026",
     categories: ["reflection"],
     body: [
       "Creativity is a constant slavery your mind imposes on you.",
-			"Slavey will never bring you joy, and that's the reason you can't find bliss.",
+			"Slavery will never bring you joy, and that's the reason you can't find bliss.",
       "Eastern philosphies had a different way of dealing with it, 'mysticism'.",
 			"Buddha left with blissfullness.",
 			"But, you're not him, your creative suffering will never end, never, unless you start meditating the right way.",
-			"Know yourself, meditate, touch grass, you don't need to be Buddha to end this loop, just a little will to adapt and change."
+			"Know yourself, meditate, touch grass, you don't need to be Buddha to end this loop, just a little will to adapt and change.",
+			"Mysticism keeps you in a sweet dilemma, remember when you were a kid giving yourself imaginary tasks, if I run 30 secs more, I will be gifted with good omen, shit like that. That sweet dilemma, but now we do it with meditation, so that we know a little more about consciouness too rather than just only the curosity. Really, it helps.",
     ],
 		media: ["/media/buddha.jpg"],
     link: "",
