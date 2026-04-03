@@ -162,6 +162,23 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "11th-blog",
+    title: "How to meditate",
+    subtitle: "My previous blogs were uncooked",
+    date: "0121, 03 April 2026",
+    categories: ["reflection"],
+    body: [
+      "My previous blogs were not correct, I will contradict myself here.",
+			"I said meditation is letting go of thougts, I was wrong. Meditation is noticing your thoughts.",
+      "I used to think, we are our thoughts, our wiring of thoughts makes us different, which is correct in most cases, but, thoughts are temporary, really, everything is temporary, real battlefield is inside the head.",
+			"Meditation is about looking at your thoughts coming and going. That's it, you can't control your thoughts, they will come, always.",
+			"This is more about awareness, and attention. If you realise even your own wiring of system is just a side effect of being a human, you can bend your own reality.",
+			"Bending reality? No, not in the way you're thinking, it's not magic, it's just making your life more peaceful by just observing, no magic here, sorry.",
+    ],
+		media: ["/media/whatis.jpg"],
+    link: "",
+  },
+  {
     id: "10-post",
     title: "Creativity is a constant suffering.",
     subtitle: "I got a fix to it btw.",
