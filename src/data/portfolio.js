@@ -165,7 +165,7 @@ export const BLOG_POSTS = [
     id: "11th-blog",
     title: "How to meditate",
     subtitle: "My previous blogs were uncooked",
-    date: "0121, 03 April 2026",
+    date: "1321, 03 April 2026",
     categories: ["reflection"],
     body: [
       "My previous blogs were not correct, I will contradict myself here.",
