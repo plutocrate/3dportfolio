@@ -168,24 +168,49 @@ export const BLOG_POSTS = [
     date: "1328, 26 April 2026",
     categories: ["reflection"],
     body: [
-      "Liberation is letting go. Not just of things, but of the idea that anything is yours.",
-			"Because the truth is, the things you own… they start owning you. Not just money, rooms, status, and your thoughts too. You cling to them, shape your identity around them, and suddenly you’re trapped inside your own head.",
-      "If you’re okay with that, fine. Stay there.",
-			"But if you’re not, then drop it. All of it.",
-			"Materialism, sure. But also the invisible shit, the need to define yourself, to control every thought, to “be someone” in a way that makes sense to others.",
-			"I look at my room and feel nothing but disgust. Not because it’s bad, but because it’s mine. Another box. Another label. Another thing tying me down.",
-			"Why do we keep trying to complete life by collecting more? More things, more validation, more identity?",
-			"Fuck that.",
-			"Liberate.",
-			"LET THE FUCK GO.",
-			"Live.",
-			"Sleep on the streets if you have to. Sit in silence. Stop trying to build a version of yourself that fits into something that was never meant for you.",
-			"I’m not privileged. I can’t buy peace. I tried playing along, adjusting, becoming what I’m 'supposed' to be, but it doesn’t work. It never really did.",
-			"I feel like I’m wearing a costume all the time. And I’m tired of it.",
-			"Because underneath all this… there’s something real.",
-			"There are stories running in my head. Worlds. Dreams. Things that actually feel alive.",
-			"But they’re suffocating in here.",
-			" And maybe the only way they come out… is if I finally stop pretending… and just become whatever the hell I am without all this weight.",
+		"Liberation is not peace. It’s rejection. I was sitting in my room when it hit me.",
+
+"It’s a terrible room—old, suffocating, lifeless. I hate it. And the strange part is… it gives me everything I need. A bed, a roof, a place to stay. So why does it still feel wrong?",
+
+"Because logically, there’s no problem. It works. But something in me just refuses it. And that feeling… felt more honest than logic.",
+
+"That’s when it started to shift. Maybe it’s not about fixing anything. Maybe it’s about seeing what’s actually happening.",
+
+"The room isn’t the problem. Need isn’t the problem. It’s this idea of ‘mine’. The moment I call it my room… I start adjusting to it. I shrink a little. I settle. I become someone who fits inside it.",
+
+"And it’s subtle. You don’t notice it happening. You just slowly become… appropriate. Acceptable. Aligned.",
+
+"And that’s the trap. Not the room—but the agreement. You think you’re just living somewhere, but you’re also becoming someone who belongs there.",
+
+"And it’s not just rooms. It’s everything. Thoughts, identity, beliefs. You hold them, then you start living according to them, and after a point… you don’t even question them.",
+
+"That’s not living. That’s maintenance.",
+
+"And I think liberation starts there. Not with some big idea. Just a quiet disgust. Not anger, not sadness. Just… this isn’t it.",
+
+"And if you stay with that feeling, something changes. You stop trying to fix things. You stop decorating it. You stop trying to make it work.",
+
+"You just… step back from it. Not physically. But internally. You stop belonging to it.",
+
+"And when that happens, things loosen. The room is just a room. Thoughts are just thoughts. Identity stops feeling permanent.",
+
+"And you don’t have to become anything else. You just stop forcing yourself to fit.",
+
+"It feels strange at first. Almost wrong. Because we’re used to holding on, used to shaping ourselves into something stable.",
+
+"But once you see it… even a little… you can’t fully go back.",
+
+"And under all that noise—something else is there. It’s always been there.",
+
+"These fragments, these stories, these things that keep running in my head… they don’t come from that maintained version of me.",
+
+"They show up when I’m not trying so hard to be someone. When I’m not holding everything together.",
+
+"And maybe that’s the point.",
+
+"Not to become something new… but to stop holding so much…",
+
+"So whatever is already there… can finally move."
     ],
 		media: ["/media/letgo.jpg"],
     link: "",
