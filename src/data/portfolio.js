@@ -200,17 +200,45 @@ export const BLOG_POSTS = [
 
 "But once you see it… even a little… you can’t fully go back.",
 
-"And under all that noise—something else is there. It’s always been there.",
+"And for me… it goes deeper than just a room.",
 
-"These fragments, these stories, these things that keep running in my head… they don’t come from that maintained version of me.",
+"I’ve lived in lack. Real lack. The kind where you start believing peace is something you have to earn… or buy.",
 
-"They show up when I’m not trying so hard to be someone. When I’m not holding everything together.",
+"So I tried. I tried to fit in, to adjust, to build something that looks like stability… something that feels like I’ve finally made it out.",
 
-"And maybe that’s the point.",
+"But even there… it doesn’t sit right.",
 
-"Not to become something new… but to stop holding so much…",
+"Because it feels like I’m just trading one cage for another.",
 
-"So whatever is already there… can finally move."
+"A better one, maybe. Cleaner. Safer.",
+
+"But still something I have to fit into.",
+
+"And I don’t want that anymore.",
+
+"I don’t want to buy peace. I don’t want to shape myself into something acceptable just to feel okay.",
+
+"I’d rather let it all go wrong than feel that quiet suffocation again.",
+
+"Because underneath all of this… there’s something else in me.",
+
+"These stories. These worlds. Things that keep running in my head whether I want them to or not.",
+
+"They don’t come from that version of me that’s trying to survive or fit in.",
+
+"They show up when I stop holding everything together.",
+
+"And I think I’ve been burying them… just to keep this structure intact.",
+
+"So maybe liberation, for me, is this—",
+
+"Getting out of this costume. Dropping all of it. Even if it looks unstable. Even if it makes no sense to anyone else.",
+
+"And letting whatever is inside… come out the way it wants.",
+
+"Not controlled. Not shaped to fit.",
+
+"Just… real."
     ],
 		media: ["/media/letgo.jpg"],
     link: "",
