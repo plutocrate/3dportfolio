@@ -162,6 +162,23 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "12th-blog",
+    title: "Liberation.",
+    subtitle: "What is liberation?",
+    date: "1328, 26 April 2026",
+    categories: ["reflection"],
+    body: [
+      "Liberation is letting go of ownership.",
+			"Things we own, they end up owning us.",
+      "Things? Materal, yes. But, even your thoughts, you own your thoughts, they end up owning you.",
+			"You okay with them? I don't have any problem. If you're not, liberate, let go of materialism, and meta-materialism. I hate my room, fuck it, don't own your thoughts too much, fucking let go, and live, stop completing your life by owning more, fucking liberate, live in a cave, sleep on streets.",
+			"Look, I'm a poor guy, I don't have privilage to buy peace, I tried so hard to adjust in the society, but, it's just not going that way.",
+			"I want to get out of this costume, and be me, what I want to be. I daydream, I lucid dream, stories are running in my head, I want to share it with the world. But, that will only happen when I get out of this costume.",
+    ],
+		media: ["/media/letgo.jpg"],
+    link: "",
+  },
+  {
     id: "11th-blog",
     title: "How to meditate",
     subtitle: "My previous blogs were uncooked",
