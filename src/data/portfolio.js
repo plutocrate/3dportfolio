@@ -168,77 +168,15 @@ export const BLOG_POSTS = [
     date: "1328, 26 April 2026",
     categories: ["reflection"],
     body: [
-		"Liberation is not peace. It’s rejection. I was sitting in my room when it hit me.",
-
-"It’s a terrible room—old, suffocating, lifeless. I hate it. And the strange part is… it gives me everything I need. A bed, a roof, a place to stay. So why does it still feel wrong?",
-
-"Because logically, there’s no problem. It works. But something in me just refuses it. And that feeling… felt more honest than logic.",
-
-"That’s when it started to shift. Maybe it’s not about fixing anything. Maybe it’s about seeing what’s actually happening.",
-
-"The room isn’t the problem. Need isn’t the problem. It’s this idea of ‘mine’. The moment I call it my room… I start adjusting to it. I shrink a little. I settle. I become someone who fits inside it.",
-
-"And it’s subtle. You don’t notice it happening. You just slowly become… appropriate. Acceptable. Aligned.",
-
-"And that’s the trap. Not the room—but the agreement. You think you’re just living somewhere, but you’re also becoming someone who belongs there.",
-
-"And it’s not just rooms. It’s everything. Thoughts, identity, beliefs. You hold them, then you start living according to them, and after a point… you don’t even question them.",
-
-"That’s not living. That’s maintenance.",
-
-"And I think liberation starts there. Not with some big idea. Just a quiet disgust. Not anger, not sadness. Just… this isn’t it.",
-
-"And if you stay with that feeling, something changes. You stop trying to fix things. You stop decorating it. You stop trying to make it work.",
-
-"You just… step back from it. Not physically. But internally. You stop belonging to it.",
-
-"And when that happens, things loosen. The room is just a room. Thoughts are just thoughts. Identity stops feeling permanent.",
-
-"And you don’t have to become anything else. You just stop forcing yourself to fit.",
-
-"It feels strange at first. Almost wrong. Because we’re used to holding on, used to shaping ourselves into something stable.",
-
-"But once you see it… even a little… you can’t fully go back.",
-
-"And for me… it goes deeper than just a room.",
-
-"I’ve lived in lack. Real lack. The kind where you start believing peace is something you have to earn… or buy.",
-
-"So I tried. I tried to fit in, to adjust, to build something that looks like stability… something that feels like I’ve finally made it out.",
-
-"But even there… it doesn’t sit right.",
-
-"Because it feels like I’m just trading one cage for another.",
-
-"A better one, maybe. Cleaner. Safer.",
-
-"But still something I have to fit into.",
-
-"And I don’t want that anymore.",
-
-"I don’t want to buy peace. I don’t want to shape myself into something acceptable just to feel okay.",
-
-"I’d rather let it all go wrong than feel that quiet suffocation again.",
-
-"Because underneath all of this… there’s something else in me.",
-
-"These stories. These worlds. Things that keep running in my head whether I want them to or not.",
-
-"They don’t come from that version of me that’s trying to survive or fit in.",
-
-"They show up when I stop holding everything together.",
-
-"And I think I’ve been burying them… just to keep this structure intact.",
-
-"So maybe liberation, for me, is this—",
-
-"Getting out of this costume. Dropping all of it. Even if it looks unstable. Even if it makes no sense to anyone else.",
-
-"And letting whatever is inside… come out the way it wants.",
-
-"Not controlled. Not shaped to fit.",
-
-"Just… real."
+		"Is liberation rejection or acceptance?",
+		"Liberation starts with disgust. I look around, my messed up room, suffocating, lifeless, everything shattered and scattered, but this room gives me everything, a bed to sleep, a roof, washroom to shit in private.",
+		"We are all living in a costume, some folks like it, some don't, I'm in the second group, because I lived in lack, real lack of resources, affection, and worldy freedom. Only cool thing I posses at the moment is my head.",
+		"I tried to make my life better, make it stable, but the more I own, it ended up owning me and complicating my life.",
+		"I owned a job(owning a job, really?). I worked hard to find a job, but that job owned my life, all the things I've ever owned ended up owning me, my emotions they own me, my affection for her is now owning me, my mental illness is owning me.",
+		"What do humans like me do? Death is not a cool option imo, I have stories going in my head, I daydream, I luciddream about them.",
+		"I want to tell these stories to the world in my own way, but the question is when? Either make your life stable, play safe, take your time, or, do whatever the fuck you want to do, use the resources you already got, really use them, and create.",
+		"What if my creativity is not accepted by the world? Ask yourself did you do all these for validation?",
+		"Play safe then. Idk man, I don't have answers to all these questions at the moments",
     ],
 		media: ["/media/letgo.jpg"],
     link: "",
