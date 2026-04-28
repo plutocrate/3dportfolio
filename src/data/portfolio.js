@@ -176,7 +176,7 @@ export const BLOG_POSTS = [
 		"What do humans like me do? Death is not a cool option imo, I have stories going in my head, I daydream, I luciddream about them.",
 		"I want to tell these stories to the world in my own way, but the question is when? Either make your life stable, play safe, take your time, or, do whatever the fuck you want to do, use the resources you already got, really use them, and create.",
 		"What if my creativity is not accepted by the world? Ask yourself did you do all these for validation?",
-		"Play safe then. Idk man, I don't have answers to all these questions at the moments",
+		"Play safe then. Idk man, I don't have answers to all these questions at the moment.",
     ],
 		media: ["/media/letgo.jpg"],
     link: "",
