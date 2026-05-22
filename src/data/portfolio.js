@@ -162,28 +162,6 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
-    id: "13th-blog",
-    title: "What is intelligence?",
-    subtitle: "IQ is not real(some parts)",
-    date: "1047, 17 May 2026",
-    categories: ["reflection"],
-    body: [
-			"the intelligent person is spontaneous , and the intellectual is never spontaneous.",
-		"but our school colleges and universities are not places were intelligence is helped.",
-	"it is hindered.",
-	"our whole educational system is a part of the establishment.",
-	"it does not work for the well-being of the taught, it works for the vested interests of the politicans, of the priests, of the churches, of the state, of all kinds of the other things.",
-	"it has nothing to do with the taught himself.",
-	"it's whole work is to create efficient slaves, and whatsoever you call IQ, intelligence quotient has nothing to do with the intelligence.",
-	"it is memory quotient, it is MQ.",
-	"One who can memorize things well and can reproduce them exactly as he has been taught is thought to be intelligent .",
-	"but he is not intelligent, he's just having a good memory, and memory is nothing much to brag about, a computer can have memory, and has better memory.",
-	"rings a bell, who said it?",
-    ],
-		media: ["/media/needs.jpg"],
-    link: "",
-  },
-  {
     id: "12th-blog",
     title: "Liberation.",
     subtitle: "What is liberation?",
