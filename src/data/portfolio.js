@@ -48,6 +48,16 @@ export const SKILLS = {
 
 export const EXPERIENCE = [
   {
+    id: "genesis",
+    role: "UIUX Developer",
+    company: "Genesis Technologies",
+    location: "Indore, MP, India",
+    period: "June 2026 - present",
+    highlights: [
+      "Currently on traninig period",
+    ],
+  },
+  {
     id: "inviolate",
     role: "Junior Web Developer",
     company: "Inviolate Technologies LLP",
