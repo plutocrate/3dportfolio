@@ -186,7 +186,7 @@ export const BLOG_POSTS = [
 		"I liked a girl after 2 years, but, I think I'm fucking up. I think it's my new irritating personality.",
 		"Ik I might be overstating a lot at the moment, but fuck it man, it's not a philosophy blog, I'm just, I'm just, idk. Good night"
     ],
-		media: ["/media/letgo.jpg"],
+		media: ["/media/ill.jpg"],
     link: "",
   },
   {
