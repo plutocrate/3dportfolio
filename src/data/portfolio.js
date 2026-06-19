@@ -172,24 +172,6 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
-    id: "13th-blog",
-    title: "Long time no see.",
-    subtitle: "Life is shit",
-    date: "0028, 19 June 2026",
-    categories: ["reflection"],
-    body: [
-		"I am tierd today, I can't talk heavy, I don't care about the worldly wisdom today.",
-		"I want to talk about myself, my lonliness is following me everywhere, and it's been so long. Honestly, now I want people to listen to me, I've remained unsaid for a long time now. I have lost my charm, I can't socialize, I can't pull girls, I can't be normal anymore.",
-		"I really want to feel affection, being loved, noticed.",
-		"I am too lonely, fuck it, saying this makes me a bitch?",
-		"I've too many problems going on in my life man, too many, if I don't man the up now, my family would suffer, I really want to vent it out now, but not here, internet's not a cool place for this.",
-		"I liked a girl after 2 years, but, I think I'm fucking up. I think it's my new irritating personality.",
-		"Ik I might be overstating a lot at the moment, but fuck it man, it's not a philosophy blog, I'm just, I'm just, idk. Good night"
-    ],
-		media: ["/media/ill.jpg"],
-    link: "",
-  },
-  {
     id: "12th-blog",
     title: "Liberation.",
     subtitle: "What is liberation?",
