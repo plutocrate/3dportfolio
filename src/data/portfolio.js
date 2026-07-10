@@ -172,6 +172,25 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "13th-blog",
+    title: "I'll deliberately go insane.",
+    subtitle: "I accept my defeat and let's actually start working.",
+    date: "0319, 11 July 2026",
+    categories: ["reflection"],
+    body: [
+			"I choose pain.",
+			"I know it sounds insane right? Just one sentence, 'I choose pain.', but hear me out.",
+			"Past 6 years, I have constantly degraded myself, I seeked love, pleasure, meaning, wisdom in the most esoteric form, and you know I found nothing, I don't belong to this world, this society anymore now, what you take sincerely I don't, I'll laugh my ass out at what you might consider important, I will also give you the examples in the easiest way possible, and the examples are money, image, insecurites, ownership, emotional breakdown, and I don't know, I'm not wordsmith",
+			"This blog's after quite some time, I want to self destruct myself now, because you know I get lost in the charm of healing(healing?), I don't heal, I just exist with the irritating hobbies I've developed over my years of isolation and insanity.",
+			"But, this time I'll go insane deliberately, I want to starve, I want to stay quiet, I want to get rid of my affection towards absurdism, and get rid of lust, get rid of the fucking obesity I've developed over past year, get rid of my absurd and careless behaviour, get rid of the distractions I bring into my life in the form of 'exploration and living the life'.",
+			"I know I still live without all this shit, after all we all die right?, Fuck your 'after all we all die', I don't want any debate, argument, or conversation with mankind for sometime, my only touch with humanity will be my job. Besides that, I'm disappearing from my world(even though it doesn't care about me), and spend time actually working on myself.",
+			"let's end this pain of mental agony, and start the pain of growth.",
+			"Sounds very 'fake motivation guru' like right? I know it's the most cringest blog of mine, but you know man, I'm done self introspecting myself, because I do nothing there's nothing much left to introspect now, let me introduce more factors while being attentive and aware, so I increase my fucking wisdom and build fucking something."
+    ],
+		media: ["/media/stoned.jpg"],
+    link: "",
+  },
+  {
     id: "12th-blog",
     title: "Liberation.",
     subtitle: "What is liberation?",
