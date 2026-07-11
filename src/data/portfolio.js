@@ -172,6 +172,22 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "14th-blog",
+    title: "I was a fool.",
+    subtitle: "What do I really need?",
+    date: "1630, 11 July 2026",
+    categories: ["reflection"],
+    body: [
+			"What do I do man, shit, I'm a fucking fool",
+			"Today, my 2 years old niece came to visit us with my uncle, and I realised how insane I have gone, sometimes a touch of pure love melts people's big brains and deprogram them to live.",
+			"I don't want to go insane, I just want to be happy and build what I want to build, that's it. I've realised a pattern as well, I talk about buliding, but I never build it, it must change too.",
+			"That was it, no more blabbering about the world and my self introspection.",
+			"Whatever shit's done, done, let's not revisit it, and move on.",
+    ],
+		media: ["/media/ill.jpg"],
+    link: "",
+  },
+  {
     id: "13th-blog",
     title: "I'll deliberately go insane.",
     subtitle: "I accept my defeat and let's actually start working.",
