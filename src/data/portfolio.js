@@ -174,7 +174,7 @@ export const BLOG_POSTS = [
 {
   id: "14th-blog",
   title: "No place for non believers",
-  subtitle: "tbd",
+  subtitle: "people need to share a certian common belief to coexist.",
   date: "1220, 14 July 2026",
   categories: ["reflection"],
   body: [
