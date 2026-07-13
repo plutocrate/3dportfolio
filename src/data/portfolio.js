@@ -194,8 +194,6 @@ export const BLOG_POSTS = [
     date: "0319, 11 July 2026",
     categories: ["reflection"],
 		body: [
-    "I accept my defeat.",
-    "Let's actually start working.",
     "I choose pain.",
     "Past 6 years, I searched for love, pleasure, meaning and wisdom.",
     "I found nothing.",
