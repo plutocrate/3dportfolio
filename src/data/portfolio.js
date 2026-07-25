@@ -182,11 +182,11 @@ export const BLOG_POSTS = [
 	"Anyways, you know when I'm lost, or when I was lost, lost in myself or lost in the charm or chaos of life, I don't look up, I look at my head level, I look down my phone's screen, or straight to laptop's screen, or just down, very closed range, very.",
 	"When I listen to music at nights, I either close my eyes, or use my phone.",
 	"But, there was a time, last night I was thinking about it, when I wanted to change, and when I was changing(real change). I used to look far, not metaphorically, but actually used to look far.",
-	"I'll look at the distant trees, distant car running on mountains, distant people, distant bulidings, building tops, and even the sky!",
+	"I'll look at the distant trees, distant car running on mountains, distant people, distant buildings, building tops, and even the sky!",
 	"And yes, when listening to music, looking at the ceiling.",
 	"There was even time, I was so alone, I used to talk with the moon, obviously mouth closed, just looking at that amazing celestial body in freezing Himalyan nights(btw my college was in Himachal Pradesh).",
 	"This thing hit me last night, and I again started looking far, not in metaphorical sense, but actually(again I'm bringing this up).",
-	"Meaning of this journal log/blog -> no meaning. It just maybe made sense to me. Ok untill next time, I want to talk about the women in my life, in past and present, and what I learned from them, the seperation, and how I should treat the new woman coming in my life."
+	"Meaning of this journal log/blog -> no meaning. It just maybe made sense to me. Ok untill next time, I want to talk about the women in my life, in past and present, and what I learned from them, the separation, and how I should treat the new woman coming in my life."
   ],
   media: ["/media/greatgit.mp4"],
   link: "",
@@ -198,7 +198,7 @@ export const BLOG_POSTS = [
   date: "1245, 19 July 2026",
   categories: ["reflection"],
   body: [
-	"I dreamt of my past life, and realised how badly I disconnected from everything, in school I was the happiest(this is what I dream of btw), then how I disconnected from it. That seperation was painful, oh god. Next, during COVID, if I observe closely, I was living my happiest time, but I couldn't realise it in the moment, I spent that time in my ex's home, no evil love, no lust, just pure fucking fun. Her family, me and my sister, it was fun. I disconnected from that too, and again god, that seperation was painful, really painful that it opened my doorway to esoteric life.",
+	"I dreamt of my past life, and realised how badly I disconnected from everything, in school I was the happiest(this is what I dream of btw), then how I disconnected from it. That separation was painful, oh god. Next, during COVID, if I observe closely, I was living my happiest time, but I couldn't realise it in the moment, I spent that time in my ex's home, no evil love, no lust, just pure fucking fun. Her family, me and my sister, it was fun. I disconnected from that too, and again god, that separation was painful, really painful that it opened my doorway to esoteric life.",
 	"And you know, there's a lot more after that. I think it is human to attach, right? Attach to people, surrounding, place, and a lifestlye?",
 	"Now, if you talk about my now, I am really detached from everything, I didn't care, I don't care if someone leaves, or I leave, or something changes, it's just my default to not care.",
 	"Even if I dream of that ex, and the moments I was enjoying being a human, those emotions. I wake up, and I analyse my dream instead, rather than trying to contact the people I dreamt of, or the visit the place I dreamt of.",
