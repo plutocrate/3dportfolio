@@ -65,13 +65,25 @@ export function ChronicleOverlay() {
   const overlayRef = useRef()
   const cardRef     = useRef()
   const musicRef    = useRef(null)
+  // Set right before we programmatically call history.back() (i.e. when the
+  // reader is closed via the X/Escape/backdrop, not the phone back button)
+  // so the popstate handler below doesn't double-close it.
+  const ignorePopRef = useRef(false)
 
   const handleClose = useCallback(() => {
     playClick()
     if (!overlayRef.current) { closeChronicle(); return }
     gsap.to(overlayRef.current, {
       opacity: 0, duration: 0.3, ease: 'power2.in',
-      onComplete: () => closeChronicle(),
+      onComplete: () => {
+        closeChronicle()
+        // Consume the history entry pushed on open, so it doesn't sit
+        // there as a dead entry that requires an extra back-press later.
+        if (window.history.state?.chronicleOverlay) {
+          ignorePopRef.current = true
+          window.history.back()
+        }
+      },
     })
   }, [playClick, closeChronicle])
 
@@ -107,6 +119,23 @@ export function ChronicleOverlay() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openChronicleId])
+
+  // Push a history entry the moment a chronicle opens, so the reader behaves
+  // like its own "page". A phone back-press then just pops this entry and
+  // closes the reader — landing back on the Chronicles list — instead of
+  // navigating away from whatever section/page was open underneath it.
+  useEffect(() => {
+    if (!openChronicleId) return
+
+    window.history.pushState({ chronicleOverlay: true }, '')
+
+    const onPopState = () => {
+      if (ignorePopRef.current) { ignorePopRef.current = false; return }
+      closeChronicle()
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [openChronicleId, closeChronicle])
 
   // Escape key closes
   useEffect(() => {

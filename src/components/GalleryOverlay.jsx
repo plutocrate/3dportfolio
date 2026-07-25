@@ -41,13 +41,25 @@ export function GalleryOverlay() {
 
   const overlayRef = useRef()
   const cardRef    = useRef()
+  // Set right before we programmatically call history.back() (i.e. when the
+  // overlay is closed via the X/Escape/backdrop, not the phone back button)
+  // so the popstate handler below doesn't double-close it.
+  const ignorePopRef = useRef(false)
 
   const handleClose = useCallback(() => {
     playClick()
     if (!overlayRef.current) { closeOverlay(); return }
     gsap.to(overlayRef.current, {
       opacity: 0, duration: 0.3, ease: 'power2.in',
-      onComplete: () => closeOverlay(),
+      onComplete: () => {
+        closeOverlay()
+        // Consume the history entry pushed on open, so it doesn't sit
+        // there as a dead entry that requires an extra back-press later.
+        if (window.history.state?.galleryOverlay) {
+          ignorePopRef.current = true
+          window.history.back()
+        }
+      },
     })
   }, [playClick, closeOverlay])
 
@@ -66,6 +78,23 @@ export function GalleryOverlay() {
       gsap.fromTo(cardRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out', delay: 0.05 })
     }
   }, [isOpen])
+
+  // Push a history entry the moment the gallery opens, so it behaves like
+  // its own "page". A phone back-press then just pops this entry and closes
+  // the overlay — landing back on About — instead of navigating away from
+  // whatever section/page was open underneath it.
+  useEffect(() => {
+    if (!isOpen) return
+
+    window.history.pushState({ galleryOverlay: true }, '')
+
+    const onPopState = () => {
+      if (ignorePopRef.current) { ignorePopRef.current = false; return }
+      closeOverlay()
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [isOpen, closeOverlay])
 
   // Escape key closes
   useEffect(() => {
