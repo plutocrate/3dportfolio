@@ -84,13 +84,13 @@ export function LoadingScreen({ onComplete }) {
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-4 items-stretch">
           {/* Keep my music — red / off */}
           <button
             onClick={() => handleChoice(false)}
-            className="group flex-1 flex flex-col items-center gap-2 px-5 py-4 border border-red-500/25 bg-red-500/[0.04] hover:bg-red-500/[0.09] hover:border-red-500/45 transition-all duration-200"
+            className="group flex-1 basis-0 min-w-0 min-h-[116px] flex flex-col items-center justify-center gap-2 px-5 py-4 text-center border border-red-500/25 bg-red-500/[0.04] hover:bg-red-500/[0.09] hover:border-red-500/45 transition-all duration-200"
           >
-            <VolumeX size={18} className="text-red-400/70 group-hover:text-red-300 transition-colors" />
+            <VolumeX size={18} className="text-red-400/70 group-hover:text-red-300 transition-colors shrink-0" />
             <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.15em] text-red-200/80 group-hover:text-red-100 transition-colors">
               Keep My Music
             </span>
@@ -102,9 +102,9 @@ export function LoadingScreen({ onComplete }) {
           {/* Play site music — green / on */}
           <button
             onClick={() => handleChoice(true)}
-            className="group flex-1 flex flex-col items-center gap-2 px-5 py-4 border border-emerald-500/25 bg-emerald-500/[0.04] hover:bg-emerald-500/[0.09] hover:border-emerald-500/45 transition-all duration-200"
+            className="group flex-1 basis-0 min-w-0 min-h-[116px] flex flex-col items-center justify-center gap-2 px-5 py-4 text-center border border-emerald-500/25 bg-emerald-500/[0.04] hover:bg-emerald-500/[0.09] hover:border-emerald-500/45 transition-all duration-200"
           >
-            <Volume2 size={18} className="text-emerald-400/70 group-hover:text-emerald-300 transition-colors" />
+            <Volume2 size={18} className="text-emerald-400/70 group-hover:text-emerald-300 transition-colors shrink-0" />
             <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.15em] text-emerald-200/80 group-hover:text-emerald-100 transition-colors">
               Play Site Music
             </span>

@@ -12,7 +12,7 @@ export const PERSONAL = {
   linkedin: "linkedin.com/in/prathammpurohit",
   github: "github.com/plutocrate",
   summary:
-    "I spend a lot of time trying to understand things.\n\nPeople. Games. Software. Stories. Why some ideas stay with us and others disappear.\n\nI build software because it's the easiest way I know to turn those questions into something tangible. Right now that mostly means design and web development, but I'm slowly drifting toward graphics programming and game development.\n\nEverything else goes here. I hope you enjoy your time here.",
+    "I spend a lot of time trying to understand things.\nPeople. Games. Software. Stories. Why some ideas stay with us and others disappear.\nI build software because it's the easiest way I know to turn those questions into something tangible. Right now that mostly means design and web development, but I'm slowly drifting toward graphics programming and game development.\nEverything else goes here. I hope you enjoy your time here.",
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -26,6 +26,7 @@ export const PERSONAL = {
 // ─────────────────────────────────────────────────────────────────────────────
 export const AVAILABILITY = {
   status: "open",
+  chipLabel: "Open to Work",
   label: "Open to full-time roles & freelance work",
   note: "Based in India — open to remote or relocation.",
 };

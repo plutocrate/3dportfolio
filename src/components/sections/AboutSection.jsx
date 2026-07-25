@@ -6,15 +6,16 @@ import { LinksSection } from './LinksSection'
 
 export function AboutSection() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
         <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/30 mb-2">Identity</div>
-        <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide mb-1">
+        <div className="flex items-center flex-wrap gap-x-2.5 gap-y-1 mb-1">
+          <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">
             {PERSONAL.name.toUpperCase()}
           </h2>
-        <p className="font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/45 tracking-widest uppercase mb-3">{PERSONAL.title}</p>
-
-        <AvailabilitySection />
+          <AvailabilitySection variant="chip" />
+        </div>
+        <p className="font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/45 tracking-widest uppercase">{PERSONAL.title}</p>
       </div>
 
       <Separator />
