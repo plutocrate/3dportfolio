@@ -185,7 +185,7 @@ export const BLOG_POSTS = [
 	"I'll look at the distant trees, distant car running on mountains, distant people, distant bulidings, building tops, and even the sky!",
 	"And yes, when listening to music, looking at the ceiling.",
 	"There was even time, I was so alone, I used to talk with the moon, obviously mouth closed, just looking at that amazing celestial body in freezing Himalyan nights(btw my college was in Himachal Pradesh).",
-	"This thing hit it last night, and I again started look far, not in metaphorical sense, but actually(again I'm bringing this up).",
+	"This thing hit me last night, and I again started looking far, not in metaphorical sense, but actually(again I'm bringing this up).",
 	"Meaning of this journal log/blog -> no meaning. It just maybe made sense to me. Ok untill next time, I want to talk about the women in my life, in past and present, and what I learned from them, the seperation, and how I should treat the new woman coming in my life."
   ],
   media: ["/media/greatgit.mp4"],
