@@ -55,10 +55,11 @@ function MobileButton({ annotation, onClick }) {
         }}
         className={cn(
           'font-mono uppercase border cursor-pointer transition-all duration-200',
-          'px-1.5 py-0.5 text-[8px] tracking-[0.10em]',
+          'px-1.5 py-0.5 text-[clamp(9px,calc(8.6px+0.13vw),11px)] tracking-[0.10em]',
           isActive
             ? 'bg-white text-black border-white'
-            : 'bg-black/85 text-white/60 border-white/20'
+            : 'bg-black/85 text-white/60 border-white/20',
+          !isActive && (id === 'blog' || id === 'chronicles') && 'flow-glow'
         )}
         onClick={() => { playClick(); onClick(annotation) }}
       >
@@ -86,7 +87,8 @@ export function AnnotationMarker({ annotation, onClick }) {
     if (!pulseRef.current) return
     const t = clock.getElapsedTime()
     const base = isActive ? 1.4 : isHovered ? 1.2 : 1.0
-    pulseRef.current.scale.setScalar(base + Math.sin(t * 2.8) * 0.08)
+    // Slow, calm flowing breathe instead of a fast pulse
+    pulseRef.current.scale.setScalar(base + Math.sin(t * 0.7) * 0.05)
   })
 
   // Mobile: use screen-projected button component
@@ -150,15 +152,16 @@ export function AnnotationMarker({ annotation, onClick }) {
         >
           <div className={cn(
             'font-mono uppercase border whitespace-nowrap transition-all duration-200',
-            'px-2.5 py-1 text-[9px] tracking-[0.18em]',
+            'px-2.5 py-1 text-[clamp(10px,calc(9.6px+0.16vw),12px)] tracking-[0.18em]',
             isActive
               ? 'bg-white text-black border-white'
-              : 'bg-black/85 text-white/60 border-white/20'
+              : 'bg-black/85 text-white/60 border-white/20',
+            !isActive && (id === 'blog' || id === 'chronicles') && 'flow-glow'
           )}>
             {label}
           </div>
           <div className={cn(
-            'font-mono text-[8px] mt-0.5 transition-colors duration-200 whitespace-nowrap',
+            'font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] mt-0.5 transition-colors duration-200 whitespace-nowrap',
             isActive ? 'text-white/55' : 'text-white/22',
             side === 'right' ? 'pl-0.5' : 'pr-0.5'
           )}>

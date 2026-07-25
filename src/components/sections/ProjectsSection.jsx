@@ -5,30 +5,30 @@ export function ProjectsSection() {
   return (
     <div className="space-y-6">
       <div>
-        <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30 mb-1">Deployments</div>
-        <h2 className="font-display text-5xl text-white leading-none tracking-wide">PROJECTS</h2>
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/30 mb-1">Deployments</div>
+        <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">PROJECTS</h2>
       </div>
       <Separator />
       <div className="space-y-6">
         {PROJECTS.map((proj, idx) => (
           <div key={proj.id} className="group">
             <div className="flex items-baseline gap-3 mb-1">
-              <span className="font-mono text-[9px] text-white/20 tabular-nums">{String(idx+1).padStart(2,'0')}</span>
+              <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/20 tabular-nums">{String(idx+1).padStart(2,'0')}</span>
 							{proj.link ? (
   <a href={proj.link} target="_blank" rel="noopener noreferrer"
-    className="font-display text-[28px] text-white tracking-wider leading-none hover:text-white/60 transition-colors border-b border-white/20 hover:border-white/50 pb-0.5">
+    className="font-display text-[clamp(16px,calc(14.6px+0.6vw),19px)] text-white tracking-wider leading-none hover:text-white/60 transition-colors border-b border-white/20 hover:border-white/50 pb-0.5">
     {proj.name.toUpperCase()}
   </a>
 ) : (
-  <h3 className="font-display text-[28px] text-white tracking-wider leading-none">{proj.name.toUpperCase()}</h3>
+  <h3 className="font-display text-[clamp(16px,calc(14.6px+0.6vw),19px)] text-white tracking-wider leading-none">{proj.name.toUpperCase()}</h3>
 )}
-              <span className="font-mono text-[9px] text-white/28 ml-auto shrink-0">{proj.period}</span>
+              <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/28 ml-auto shrink-0">{proj.period}</span>
             </div>
-            <div className="font-mono text-[10px] text-white/32 uppercase tracking-widest mb-2 pl-8">{proj.subtitle}</div>
-            <p className="font-body text-[13px] text-white/55 leading-relaxed pl-8 mb-3">{proj.description}</p>
+            <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/32 uppercase tracking-widest mb-2 pl-8">{proj.subtitle}</div>
+            <p className="font-body text-[clamp(14px,calc(13.3px+0.28vw),16px)] text-white/55 leading-relaxed pl-8 mb-3">{proj.description}</p>
             <div className="flex flex-wrap gap-2 pl-8">
               {proj.tags.map((tag) => (
-                <span key={tag} className="font-mono text-[9px] uppercase tracking-wider px-2.5 py-0.5 border border-white/12 text-white/35 group-hover:border-white/22 transition-colors">
+                <span key={tag} className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-wider px-2.5 py-0.5 border border-white/12 text-white/35 group-hover:border-white/22 transition-colors">
                   {tag}
                 </span>
               ))}

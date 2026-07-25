@@ -6,47 +6,50 @@ import { useClickSound } from '@/hooks/useClickSound'
 import { pauseAllVideos } from '@/hooks/useMusicBridge'
 import {
   AboutSection,
-  ExperienceSection,
-  ProjectsSection,
-  SkillsSection,
-  EducationSection,
   TalkSection,
   BlogSection,
+  AcademiaSection,
+  ChroniclesSection,
 } from '@/components/sections'
 
 const SECTION_MAP = {
   about:      AboutSection,
-  experience: ExperienceSection,
-  projects:   ProjectsSection,
-  skills:     SkillsSection,
-  education:  EducationSection,
+  academia:   AcademiaSection,
   talk:       TalkSection,
+  chronicles: ChroniclesSection,
   blog:       BlogSection,
 }
 
-const DEFAULT_WIDTH = 560   // 1.5× original ~380
-const MIN_WIDTH     = 320
-const MAX_WIDTH     = Math.min(900, typeof window !== 'undefined' ? window.innerWidth - 80 : 900)
+// Default panel width — roughly half the viewport on desktop, capped so it
+// never feels excessive on ultra-wide monitors. Mobile always uses 100%.
+const getDefaultWidth = () => {
+  if (typeof window === 'undefined') return 560
+  return Math.round(Math.min(Math.max(window.innerWidth * 0.5, 480), 1000))
+}
+const MIN_WIDTH = 320
+const getMaxWidth = () => (typeof window !== 'undefined' ? Math.min(1200, window.innerWidth - 80) : 1200)
 
 export function SectionPanel({ onClose }) {
   const panelOpen     = useSceneStore((s) => s.panelOpen)
   const activeSection = useSceneStore((s) => s.activeSection)
   const closeSection  = useSceneStore((s) => s.closeSection)
-  const fontSize      = useSceneStore((s) => s.fontSize)
-  const setFontSize   = useSceneStore((s) => s.setFontSize)
   const panelRef      = useRef()
   const contentRef    = useRef()
   const playClick     = useClickSound()
 
-  const [width, setWidth]       = useState(DEFAULT_WIDTH)
+  const [width, setWidth]       = useState(getDefaultWidth)
+  const [maxWidth, setMaxWidth] = useState(getMaxWidth)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
   const dragging  = useRef(false)
   const startX    = useRef(0)
   const startW    = useRef(0)
 
-  // Track mobile breakpoint
+  // Track mobile breakpoint (and keep width sane on resize)
   useEffect(() => {
-    const handler = () => setIsMobile(window.innerWidth < 768)
+    const handler = () => {
+      setIsMobile(window.innerWidth < 768)
+      setMaxWidth(getMaxWidth())
+    }
     window.addEventListener('resize', handler)
     return () => window.removeEventListener('resize', handler)
   }, [])
@@ -82,7 +85,7 @@ export function SectionPanel({ onClose }) {
     const onMouseMove = (e) => {
       if (!dragging.current) return
       const delta = startX.current - e.clientX   // dragging left = wider
-      const next  = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startW.current + delta))
+      const next  = Math.max(MIN_WIDTH, Math.min(maxWidth, startW.current + delta))
       setWidth(next)
     }
     const onMouseUp = () => {
@@ -97,7 +100,7 @@ export function SectionPanel({ onClose }) {
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('mouseup',   onMouseUp)
     }
-  }, [])
+  }, [maxWidth])
 
   // Touch drag
   const onTouchStart = useCallback((e) => {
@@ -110,7 +113,7 @@ export function SectionPanel({ onClose }) {
     const onTouchMove = (e) => {
       if (!dragging.current) return
       const delta = startX.current - e.touches[0].clientX
-      const next  = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startW.current + delta))
+      const next  = Math.max(MIN_WIDTH, Math.min(maxWidth, startW.current + delta))
       setWidth(next)
     }
     const onTouchEnd = () => { dragging.current = false }
@@ -120,13 +123,28 @@ export function SectionPanel({ onClose }) {
       window.removeEventListener('touchmove', onTouchMove)
       window.removeEventListener('touchend',  onTouchEnd)
     }
-  }, [])
+  }, [maxWidth])
 
   const SectionContent = activeSection ? SECTION_MAP[activeSection] : null
   const panelWidth     = isMobile ? '100%' : width
 
+  const handleCloseClick = () => { playClick(); onClose ? onClose() : closeSection() }
+
   return (
-    <div
+    <>
+      {/* Click-anywhere-outside backdrop — closes the sidebar. Sits below the
+          panel (z-45 < z-50) and is only interactive while the panel is open. */}
+      <div
+        onClick={handleCloseClick}
+        className="fixed inset-0 z-[45]"
+        style={{
+          pointerEvents: panelOpen ? 'auto' : 'none',
+          background: 'transparent',
+        }}
+        aria-hidden={!panelOpen}
+      />
+
+      <div
       ref={panelRef}
       className="fixed top-0 right-0 h-full z-50 pointer-events-auto"
       style={{
@@ -159,7 +177,7 @@ export function SectionPanel({ onClose }) {
           />
           {/* Section label */}
           <div
-            className="absolute font-mono text-[9px] text-white/15 uppercase tracking-[0.4em] select-none pointer-events-none"
+            className="absolute font-mono text-[clamp(11px,calc(10.08px+0.24vw),14px)] text-white/15 uppercase tracking-[0.4em] select-none pointer-events-none"
             style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
           >
             {activeSection}
@@ -167,64 +185,35 @@ export function SectionPanel({ onClose }) {
         </div>
       )}
 
-      {/* Font size controls — fixed in header, never affected by zoom */}
+      {/* Close button — always visible, top-right */}
       <div
         className="absolute top-6 z-10 flex items-center"
-        style={{ right: isMobile ? 16 : 16, gap: 8 }}
+        style={{ right: 16 }}
       >
-        {/* − + as one grouped unit */}
-        <div className="flex items-center gap-0.5">
-          <button
-            onClick={() => setFontSize(fontSize - 0.2)}
-            disabled={fontSize <= 0.6}
-            className="w-7 h-7 flex items-center justify-center border border-white/15 font-mono text-[12px] text-white/35 hover:text-white hover:border-white/45 disabled:opacity-20 disabled:cursor-not-allowed transition-all leading-none"
-          >−</button>
-          <button
-            onClick={() => setFontSize(fontSize + 0.2)}
-            disabled={fontSize >= 2.0}
-            className="w-7 h-7 flex items-center justify-center border border-white/15 font-mono text-[12px] text-white/35 hover:text-white hover:border-white/45 disabled:opacity-20 disabled:cursor-not-allowed transition-all leading-none"
-          >+</button>
-        </div>
-
-        {/* Reset */}
-        {fontSize !== 1 && (
-          <button
-            onClick={() => setFontSize(1)}
-            className="w-7 h-7 flex items-center justify-center font-mono text-[11px] text-white/20 hover:text-white/55 transition-colors border border-white/10 hover:border-white/30"
-            title="Reset"
-          >↺</button>
-        )}
-
-        {/* Close — desktop only, separated by a clear gap from font controls */}
-        {!isMobile && (
-          <div style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.1)', margin: '0 4px' }} />
-        )}
-        {!isMobile && (
-          <button
-            onClick={() => { playClick(); onClose ? onClose() : closeSection() }}
-            className="w-8 h-8 flex items-center justify-center border border-white/15 text-white/40 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-base"
-            aria-label="Close"
-          >×</button>
-        )}
-
+        <button
+          onClick={handleCloseClick}
+          className="w-9 h-9 flex items-center justify-center border border-white/15 text-white/40 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-lg"
+          aria-label="Close"
+        >×</button>
       </div>
 
       {/* Scrollable content */}
-      <div className="relative h-full overflow-y-auto pb-12 pl-10" style={{ paddingTop: 52 }}>
-        <div ref={contentRef} style={{ zoom: fontSize }}>
+      <div className="relative h-full overflow-y-auto pb-12 pl-6 pr-6 sm:pl-10 sm:pr-10" style={{ paddingTop: 52 }}>
+        <div ref={contentRef}>
           {SectionContent && <SectionContent />}
         </div>
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-0 left-px right-0 border-t border-white/8 px-8 pl-10 py-3 flex items-center justify-between">
-        <span className="font-mono text-[9px] text-white/18 uppercase tracking-widest">
+      <div className="absolute bottom-0 left-px right-0 border-t border-white/8 px-6 sm:px-8 py-3 flex items-center justify-between">
+        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/18 uppercase tracking-widest">
           prathamis.cool
         </span>
-        <span className="font-mono text-[9px] text-white/18 tabular-nums">
+        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/18 tabular-nums">
           {new Date().getFullYear()}
         </span>
       </div>
     </div>
+    </>
   )
 }

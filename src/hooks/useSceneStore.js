@@ -12,6 +12,11 @@ export const useSceneStore = create((set, get) => ({
   setFontSize: (v) => set({ fontSize: Math.max(0.75, Math.min(1.5, v)) }),
   cameraState: null,  // { camera, size } updated each frame
 
+  // Currently open Chronicle (full-screen glass overlay), null = closed
+  openChronicleId: null,
+  openChronicle: (id) => set({ openChronicleId: id }),
+  closeChronicle: () => set({ openChronicleId: null }),
+
   setActiveSection: (id) => {
     set({ activeSection: id, panelOpen: id !== null, isAnimating: true })
   },

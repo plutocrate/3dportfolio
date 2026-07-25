@@ -130,7 +130,7 @@ function MediaGrid({ media }) {
 // ─── Category chip ───────────────────────────────────────────────────────────
 function CategoryTag({ label }) {
   return (
-    <span className="font-mono text-[7px] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/35">
+    <span className="font-mono text-[clamp(8px,calc(7.08px+0.24vw),11px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/35">
       {label}
     </span>
   )
@@ -155,25 +155,25 @@ function BlogEntry({ post, isLast }) {
               <CategoryTag key={cat} label={cat} />
             ))}
           </div>
-          <span className="font-mono text-[9px] text-white/28 shrink-0 tabular-nums">
+          <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/28 shrink-0 tabular-nums">
             {post.date}
           </span>
         </div>
 
         {/* Title */}
-        <h3 className="font-mono text-[12px] text-white uppercase tracking-wider mb-1 leading-snug">
+        <h3 className="font-mono text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white uppercase tracking-wider mb-1 leading-snug">
           {post.title}
         </h3>
 
         {/* Subtitle */}
         {post.subtitle && (
-          <p className="font-body text-[11px] text-white/40 mb-2 italic">{post.subtitle}</p>
+          <p className="font-body text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/40 mb-2 italic">{post.subtitle}</p>
         )}
 
         {/* Body */}
         <div className="space-y-2">
           {(Array.isArray(post.body) ? post.body : [post.body]).map((para, i) => (
-            <p key={i} className="font-body text-[12px] text-white/55 leading-relaxed">{para}</p>
+            <p key={i} className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/55 leading-relaxed">{para}</p>
           ))}
         </div>
 
@@ -186,7 +186,7 @@ function BlogEntry({ post, isLast }) {
             href={post.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-3 font-mono text-[9px] uppercase tracking-[0.18em] text-white/30 hover:text-white/70 transition-colors border-b border-white/15 hover:border-white/40 pb-px"
+            className="inline-block mt-3 font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.18em] text-white/30 hover:text-white/70 transition-colors border-b border-white/15 hover:border-white/40 pb-px"
           >
             Read more →
           </a>
@@ -201,18 +201,18 @@ export function BlogSection() {
   return (
     <div className="space-y-6">
       <div>
-        <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30 mb-1">
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/30 mb-1">
           Thoughts & Writes
         </div>
-        <h2 className="font-display text-5xl text-white leading-none tracking-wide">BLOG</h2>
+        <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">BLOG</h2>
       </div>
 
       <Separator />
 
       {BLOG_POSTS.length === 0 ? (
         <div className="flex flex-col gap-2 py-4">
-          <div className="font-mono text-[10px] text-white/25 uppercase tracking-widest">No posts yet.</div>
-          <p className="font-body text-[12px] text-white/30">
+          <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/25 uppercase tracking-widest">No posts yet.</div>
+          <p className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/30">
             Add entries to <span className="font-mono text-white/40">BLOG_POSTS</span> in{' '}
             <span className="font-mono text-white/40">src/data/portfolio.js</span>
           </p>

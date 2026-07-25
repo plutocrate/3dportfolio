@@ -48,10 +48,10 @@ export function LoadingScreen({ onComplete }) {
 
       {/* Name + title */}
       <div ref={nameRef} className="mb-10 text-center" style={{ opacity: 0 }}>
-        <div className="font-display text-[36px] sm:text-[52px] md:text-[64px] text-white tracking-widest leading-none mb-2">
+        <div className="font-display text-[clamp(28px,calc(25.6px+0.85vw),35px)] sm:text-[clamp(34px,calc(31.2px+0.9vw),42px)] md:text-[clamp(38px,calc(35px+1vw),48px)] text-white tracking-widest leading-none mb-2">
           {PERSONAL.name.toUpperCase()}
         </div>
-        <div className="font-mono text-[9px] sm:text-[11px] text-white/30 uppercase tracking-[0.35em]">
+        <div className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] sm:text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/30 uppercase tracking-[0.35em]">
           {PERSONAL.tagline}
         </div>
       </div>
@@ -68,7 +68,7 @@ export function LoadingScreen({ onComplete }) {
           ref={btnRef}
           onClick={handleEnter}
           style={{ opacity: 0 }}
-          className="group relative font-mono text-[11px] sm:text-[13px] uppercase tracking-[0.3em] text-white/60 hover:text-white transition-colors duration-300 px-7 sm:px-9 py-3 border border-white/18 hover:border-white/50"
+          className="flow-glow group relative font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] sm:text-[clamp(12px,calc(11.4px+0.2vw),14px)] uppercase tracking-[0.3em] text-white/60 hover:text-white transition-colors duration-300 px-7 sm:px-9 py-3 border border-white/18 hover:border-white/50"
         >
           <span className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors duration-300" />
           <span className="relative">[ ENTER ]</span>
@@ -77,7 +77,7 @@ export function LoadingScreen({ onComplete }) {
         <div
           ref={hintRef}
           style={{ opacity: 0 }}
-          className="font-mono text-[7px] sm:text-[8px] text-white/20 uppercase tracking-[0.25em]"
+          className="font-mono text-[clamp(7px,calc(6.8px+0.1vw),8px)] sm:text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/20 uppercase tracking-[0.25em]"
         >
           🎧 Headphones recommended
         </div>

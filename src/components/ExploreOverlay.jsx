@@ -33,13 +33,13 @@ export function ExploreOverlay({ onEnter }) {
       <div className="flex flex-col items-center gap-8 px-6 text-center">
         {/* Name */}
         <div className="flex flex-col items-center gap-2">
-          <div className="font-mono text-[10px] sm:text-[11px] text-white/25 uppercase tracking-[0.4em]">
+          <div className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] sm:text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/25 uppercase tracking-[0.4em]">
             Portfolio
           </div>
-          <div className="font-display text-[40px] sm:text-[64px] text-white leading-none tracking-widest">
+          <div className="font-display text-[clamp(28px,calc(25.6px+0.85vw),35px)] sm:text-[clamp(34px,calc(31.2px+0.9vw),42px)] text-white leading-none tracking-widest">
             MANAS_PUROHIT
           </div>
-          <div className="font-mono text-[10px] sm:text-[12px] text-white/35 uppercase tracking-[0.28em]">
+          <div className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] sm:text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/35 uppercase tracking-[0.28em]">
             Software Engineer · GenAI · LLMs
           </div>
         </div>
@@ -55,7 +55,7 @@ export function ExploreOverlay({ onEnter }) {
         <button
           ref={btnRef}
           onClick={handleEnter}
-          className="group relative font-mono text-[11px] sm:text-[13px] uppercase tracking-[0.35em] text-white/60 hover:text-white transition-colors duration-300 px-8 py-3 border border-white/15 hover:border-white/50"
+          className="flow-glow group relative font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] sm:text-[clamp(12px,calc(11.4px+0.2vw),14px)] uppercase tracking-[0.35em] text-white/60 hover:text-white transition-colors duration-300 px-8 py-3 border border-white/15 hover:border-white/50"
           style={{ opacity: 0 }}
         >
           {/* Hover fill */}
@@ -63,7 +63,7 @@ export function ExploreOverlay({ onEnter }) {
           <span className="relative">[ EXPLORE ]</span>
         </button>
 
-        <div className="font-mono text-[8px] sm:text-[9px] text-white/18 uppercase tracking-[0.25em]">
+        <div className="font-mono text-[clamp(8px,calc(7.7px+0.1vw),9px)] sm:text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/18 uppercase tracking-[0.25em]">
           Click to enter · Sound recommended
         </div>
       </div>

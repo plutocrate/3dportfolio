@@ -27,6 +27,11 @@
     overflow: hidden;
   }
 
+  /* Slightly bigger, fluid baseline text size across the whole site */
+  html {
+    font-size: clamp(15px, 12px + 0.6vw, 18px);
+  }
+
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
@@ -151,5 +156,63 @@
   @keyframes glitch-2 {
     0%, 85%, 100% { transform: translate(0); }
     90% { transform: translate(2px, -1px); }
+  }
+
+  /* ── Awwwards-level idle state ───────────────────────────────────────────
+     The primary CTA (ENTER) now shares the exact same calm right→left
+     shine as the Blog / Chronicles buttons — see .flow-glow below. */
+
+
+  /* ── Subtle flowing glow ──────────────────────────────────────────────────
+     A calm, continuous shine that drifts right → left across the button.
+     Only `background-position` is animated (no box-shadow/transform
+     keyframes), which is what was causing the earlier flicker — this is
+     smooth and GPU-friendly with a steady, static base glow underneath. */
+  @keyframes shine-sweep {
+    0%   { background-position: 160% 0; }
+    100% { background-position: -60% 0; }
+  }
+
+  .awwwards-nav-highlight .nav-dot {
+    background: rgba(255,255,255,0.55) !important;
+    box-shadow: 0 0 5px rgba(255,255,255,0.45), 0 0 10px rgba(255,255,255,0.18);
+  }
+
+  .awwwards-nav-highlight .nav-label {
+    position: relative;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.42) 0%,
+      rgba(255,255,255,0.42) 42%,
+      rgba(255,255,255,0.95) 50%,
+      rgba(255,255,255,0.42) 58%,
+      rgba(255,255,255,0.42) 100%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shine-sweep 6.5s linear infinite;
+  }
+
+  /* Same flowing shine, adapted for the bordered annotation buttons that sit
+     directly on the 3D character (blog / chronicles). A steady soft glow
+     sits underneath, with the moving highlight layered on top via ::after. */
+  .flow-glow {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 6px rgba(255,255,255,0.14), 0 0 14px rgba(255,255,255,0.06);
+  }
+
+  .flow-glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(100deg, transparent 42%, rgba(255,255,255,0.38) 50%, transparent 58%);
+    background-size: 250% 100%;
+    background-position: 160% 0;
+    animation: shine-sweep 6.5s linear infinite;
+    pointer-events: none;
   }
 }

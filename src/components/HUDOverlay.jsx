@@ -13,7 +13,7 @@ function LiveClock() {
   }, [])
   const p = (n) => String(n).padStart(2, '0')
   return (
-    <span className="font-mono text-[10px] text-white/50 tabular-nums tracking-widest">
+    <span className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/50 tabular-nums tracking-widest">
       {p(t.getHours())}:{p(t.getMinutes())}:{p(t.getSeconds())}
     </span>
   )
@@ -27,39 +27,67 @@ function Uptime() {
   }, [])
   const p = (n) => String(n).padStart(2, '0')
   return (
-    <span className="font-mono text-[10px] text-white/50 tabular-nums tracking-widest">
+    <span className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/50 tabular-nums tracking-widest">
       {p(Math.floor(s / 3600))}:{p(Math.floor((s % 3600) / 60))}:{p(s % 60)}
     </span>
   )
 }
 
-function MusicButton({ playing, onToggle }) {
+function MusicBars({ playing }) {
   return (
-    <button
-      onClick={onToggle}
-      className="flex items-center gap-1.5 group transition-all duration-200"
-      aria-label={playing ? 'Mute' : 'Unmute'}
-    >
-      <div className="flex items-end gap-[2px] h-3">
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
-            className="w-[2px] rounded-sm bg-white/35 group-hover:bg-white/65 transition-all duration-200"
-            style={playing ? {
-              height: '10px',
-              animation: `music-bar ${0.55 + i * 0.1}s ease-in-out ${i * 0.15}s infinite alternate`,
-            } : { height: '3px' }}
-          />
-        ))}
-      </div>
-      <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/30 group-hover:text-white/60 transition-colors">
-        {playing ? 'AMB' : 'OFF'}
-      </span>
-    </button>
+    <div className="flex items-end gap-[2px] h-3 shrink-0">
+      {[0, 1, 2].map((i) => (
+        <div
+          key={i}
+          className="w-[2px] rounded-sm bg-white/35 group-hover:bg-white/65 transition-all duration-200"
+          style={playing ? {
+            height: '10px',
+            animation: `music-bar ${0.55 + i * 0.1}s ease-in-out ${i * 0.15}s infinite alternate`,
+          } : { height: '3px' }}
+        />
+      ))}
+    </div>
   )
 }
 
-export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
+// ── Compact "now playing" music player — sits where the old AMB button was ──
+function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks }) {
+  return (
+    <div className="flex items-center gap-2 group">
+      <button
+        onClick={onToggle}
+        className="flex items-center gap-1.5 transition-all duration-200"
+        aria-label={playing ? 'Mute' : 'Unmute'}
+      >
+        <MusicBars playing={playing} />
+        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.18em] text-white/30 group-hover:text-white/60 transition-colors">
+          {playing ? 'AMB' : 'OFF'}
+        </span>
+      </button>
+
+      {/* Now-playing track name */}
+      <span
+        className="font-mono text-[clamp(8px,calc(7.7px+0.1vw),9px)] text-white/22 group-hover:text-white/45 uppercase tracking-[0.12em] max-w-[110px] truncate transition-colors"
+        title={trackName}
+      >
+        {trackName}
+      </span>
+
+      {/* Skip to another random track */}
+      {hasMultipleTracks && (
+        <button
+          onClick={onNext}
+          aria-label="Next track"
+          className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/25 hover:text-white/70 transition-colors leading-none"
+        >
+          »
+        </button>
+      )}
+    </div>
+  )
+}
+
+export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, trackName, hasMultipleTracks }) {
   const hudRef           = useRef()
   const activeSection    = useSceneStore((s) => s.activeSection)
   const setActiveSection = useSceneStore((s) => s.setActiveSection)
@@ -95,10 +123,10 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
         <div className="absolute inset-x-0 flex items-start justify-between px-4 sm:px-8 pt-4 sm:pt-6" style={{ top: 28 }}>
           {/* Left: name + tagline */}
           <div className="flex flex-col gap-0.5">
-            <div className="font-display text-[20px] sm:text-[28px] md:text-[34px] text-white leading-none tracking-widest">
+            <div className="font-display text-[clamp(18px,calc(16.6px+0.5vw),22px)] sm:text-[clamp(22px,calc(20.2px+0.6vw),27px)] md:text-[clamp(25px,calc(23px+0.7vw),31px)] text-white leading-none tracking-widest">
               {PERSONAL.name.toUpperCase()}
             </div>
-            <div className="font-mono text-[7px] sm:text-[9px] text-white/30 uppercase tracking-[0.22em]">
+            <div className="font-mono text-[clamp(8px,calc(7.5px+0.16vw),10px)] sm:text-[clamp(9px,calc(8.6px+0.16vw),11px)] text-white/30 uppercase tracking-[0.22em]">
               {PERSONAL.tagline}
             </div>
           </div>
@@ -106,7 +134,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
           {/* Right: status dot */}
           <div className="flex items-center gap-1.5 mt-1">
             <div className="w-1.5 h-1.5 rounded-full bg-white/35 animate-pulse" />
-            <span className="font-mono text-[8px] text-white/22 uppercase tracking-wider hidden sm:block">
+            <span className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/22 uppercase tracking-wider hidden sm:block">
               {activeSection ? `— ${activeSection}` : 'Interactive'}
             </span>
           </div>
@@ -119,27 +147,34 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
           <div className="flex flex-col pointer-events-auto">
             {/* Desktop text nav */}
             <div className="hidden sm:flex flex-col gap-1.5">
-              {ANNOTATIONS.map((ann) => (
-                <button
-                  key={ann.id}
-                  onClick={() => {
-                    playClick()
-                    activeSection === ann.id ? closeSection() : setActiveSection(ann.id)
-                  }}
-                  className="flex items-center gap-2 group text-left"
-                >
-                  <div className={cn(
-                    'w-1.5 h-1.5 rounded-full transition-all duration-200 shrink-0',
-                    activeSection === ann.id ? 'bg-white' : 'bg-white/18 group-hover:bg-white/55'
-                  )} />
-                  <span className={cn(
-                    'font-mono text-[9px] uppercase tracking-[0.16em] transition-colors',
-                    activeSection === ann.id ? 'text-white' : 'text-white/30 group-hover:text-white/65'
-                  )}>
-                    {ann.label}
-                  </span>
-                </button>
-              ))}
+              {ANNOTATIONS.map((ann) => {
+                const isGlowing = ann.id === 'blog' || ann.id === 'chronicles'
+                const isActive = activeSection === ann.id
+                return (
+                  <button
+                    key={ann.id}
+                    onClick={() => {
+                      playClick()
+                      activeSection === ann.id ? closeSection() : setActiveSection(ann.id)
+                    }}
+                    className={cn(
+                      'flex items-center gap-2 group text-left',
+                      isGlowing && !isActive && 'awwwards-nav-highlight'
+                    )}
+                  >
+                    <div className={cn(
+                      'nav-dot w-1.5 h-1.5 rounded-full transition-all duration-200 shrink-0',
+                      isActive ? 'bg-white' : 'bg-white/18 group-hover:bg-white/55'
+                    )} />
+                    <span className={cn(
+                      'nav-label font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.16em] transition-colors',
+                      isActive ? 'text-white' : 'text-white/30 group-hover:text-white/65'
+                    )}>
+                      {ann.label}
+                    </span>
+                  </button>
+                )
+              })}
             </div>
 
             {/* Mobile dot nav */}
@@ -165,14 +200,14 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
 
             {/* Uptime — same left edge as nav items */}
             <div className="flex flex-col gap-0.5">
-              <span className="font-mono text-[7px] sm:text-[8px] text-white/18 uppercase tracking-[0.2em]">Uptime</span>
+              <span className="font-mono text-[clamp(7px,calc(6.8px+0.1vw),8px)] sm:text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/18 uppercase tracking-[0.2em]">Uptime</span>
               <Uptime />
             </div>
           </div>
 
           {/* Center hint — desktop only */}
           <div className="hidden md:block absolute left-1/2 bottom-4 sm:bottom-6 -translate-x-1/2">
-            <span className="font-mono text-[8px] text-white/13 uppercase tracking-[0.2em]">
+            <span className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/13 uppercase tracking-[0.2em]">
               Drag · Pinch · Click
             </span>
           </div>
@@ -180,11 +215,17 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle }) {
           {/* Right: local time + music */}
           <div className="flex flex-col items-end gap-2 pointer-events-auto">
             <div className="flex flex-col items-end gap-0.5">
-              <span className="font-mono text-[7px] sm:text-[8px] text-white/18 uppercase tracking-[0.2em]">Local Time</span>
+              <span className="font-mono text-[clamp(7px,calc(6.8px+0.1vw),8px)] sm:text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/18 uppercase tracking-[0.2em]">Local Time</span>
               <LiveClock />
             </div>
             <div className="w-14 sm:w-20 h-px bg-white/8" />
-            <MusicButton playing={musicPlaying} onToggle={onMusicToggle} />
+            <MusicPlayer
+              playing={musicPlaying}
+              onToggle={onMusicToggle}
+              onNext={onMusicNext}
+              trackName={trackName}
+              hasMultipleTracks={hasMultipleTracks}
+            />
           </div>
         </div>
 

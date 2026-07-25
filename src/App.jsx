@@ -4,6 +4,7 @@ import { MainScene } from '@/components/3d/MainScene'
 import { MobileAnnotationOverlay } from '@/components/MobileAnnotationOverlay'
 import { NewsBanner } from '@/components/NewsBanner'
 import { SectionPanel } from '@/components/SectionPanel'
+import { ChronicleOverlay } from '@/components/ChronicleOverlay'
 import { HUDOverlay } from '@/components/HUDOverlay'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { SunCorner } from '@/components/SunCorner'
@@ -33,7 +34,7 @@ export default function App() {
   const activeSection    = useSceneStore((s) => s.activeSection)
   const setActiveSection = useSceneStore((s) => s.setActiveSection)
   const closeSection     = useSceneStore((s) => s.closeSection)
-  const { playing, start, toggle, pauseForVideo, resumeAfterVideo } = useAmbientMusic()
+  const { playing, start, toggle, next, trackName, hasMultipleTracks, pauseForVideo, resumeAfterVideo } = useAmbientMusic()
   setMusicBridge(pauseForVideo, resumeAfterVideo)
 
   const mobile = useIsMobile()
@@ -114,12 +115,17 @@ export default function App() {
         visible={!loading}
         musicPlaying={playing}
         onMusicToggle={toggle}
+        onMusicNext={next}
+        trackName={trackName}
+        hasMultipleTracks={hasMultipleTracks}
       />
 
       <SwipeHint visible={showHint} />
 
       {/* Pass handleClose so both X button and back button work */}
       <SectionPanel onClose={handleClose} />
+
+      <ChronicleOverlay />
     </div>
   )
 }

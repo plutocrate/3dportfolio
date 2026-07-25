@@ -188,7 +188,7 @@ export const BLOG_POSTS = [
 	"This thing hit me last night, and I again started looking far, not in metaphorical sense, but actually(again I'm bringing this up).",
 	"Meaning of this journal log/blog -> no meaning. It just maybe made sense to me. Ok untill next time, I want to talk about the women in my life, in past and present, and what I learned from them, the separation, and how I should treat the new woman coming in my life."
   ],
-  media: ["/media/greatgig.mp4"],
+  media: ["/media/far.jpg"],
   link: "",
 },
 {
@@ -331,66 +331,56 @@ export const BLOG_POSTS = [
 // ─────────────────────────────────────────────────────────────────────────────
 export const ANNOTATIONS = [
   {
+    // Specs / head level — left side
     id: "about",
     label: "ABOUT",
     description: "Identity & Summary",
+    position: [-0.12, 1.70, 0.22],
+    cameraTarget: [0, 1.62, 0],
+    cameraPosition: [-1.6, 1.75, 1.6],
+    side: "left",
+  },
+  {
+    // Consolidates the old Projects / Experience / Skills / Education buttons
+    // into one tabbed section — see AcademiaSection.jsx
+    // Elbow level — left side
+    id: "academia",
+    label: "ACADEMIA",
+    description: "Projects · Experience · Skills · Education",
+    position: [-0.38, 1.16, 0.15],
+    cameraTarget: [-0.2, 1.16, 0],
+    cameraPosition: [-2.0, 1.26, 1.5],
+    side: "left",
+  },
+  {
+    // Knee level — left side
+    id: "talk",
+    label: "TALK",
+    description: "Send a message",
+    position: [-0.18, 0.48, 0.15],
+    cameraTarget: [0, 0.48, 0],
+    cameraPosition: [-2.0, 0.58, 1.8],
+    side: "left",
+  },
+  {
+    // New long-form essay page — see ChroniclesSection.jsx / ChronicleOverlay.jsx
+    // Specs / head level — right side (mirrors "about")
+    id: "chronicles",
+    label: "CHRONICLES",
+    description: "Long-form essays",
     position: [0.12, 1.70, 0.22],
     cameraTarget: [0, 1.62, 0],
     cameraPosition: [1.6, 1.75, 1.6],
     side: "right",
   },
   {
-    id: "skills",
-    label: "SKILLS",
-    description: "React · Three.js · Node",
-    position: [0.44, 1.48, 0.12],
-    cameraTarget: [0.2, 1.45, 0],
-    cameraPosition: [2.0, 1.55, 1.5],
-    side: "right",
-  },
-  {
-    id: "projects",
-    label: "PROJECTS",
-    description: "Baba Is You · GTutor · MrPhony",
-    position: [-0.44, 1.48, 0.12],
-    cameraTarget: [-0.2, 1.45, 0],
-    cameraPosition: [-2.0, 1.55, 1.5],
-    side: "left",
-  },
-  {
-    id: "education",
-    label: "EDUCATION",
-    description: "Shoolini Univ — CSE",
-    position: [0.78, 0.92, 0.08],
-    cameraTarget: [0.4, 0.95, 0],
-    cameraPosition: [2.2, 1.0, 1.6],
-    side: "right",
-  },
-  {
-    id: "experience",
-    label: "EXPERIENCE",
-    description: "Inviolate · FirstUniv",
-    position: [-0.78, 0.92, 0.08],
-    cameraTarget: [-0.4, 0.95, 0],
-    cameraPosition: [-2.2, 1.0, 1.6],
-    side: "left",
-  },
-  {
-    id: "talk",
-    label: "TALK",
-    description: "Send a message",
-    position: [-0.45, 0.62, 0.12],
-    cameraTarget: [0, 0.65, 0],
-    cameraPosition: [-2.0, 0.75, 1.8],
-    side: "left",
-  },
-	  {
+    // Fist / hand level — right side (arm hangs down)
     id: "blog",
     label: "BLOG",
     description: "Thoughts & Writes",
-    position: [0.38, 0.22, 0.12],
-    cameraTarget: [0, 0.25, 0],
-    cameraPosition: [2.0, 0.45, 1.8],
+    position: [0.42, 0.85, 0.12],
+    cameraTarget: [0.2, 0.85, 0],
+    cameraPosition: [2.0, 0.95, 1.5],
     side: "right",
   },
 ];

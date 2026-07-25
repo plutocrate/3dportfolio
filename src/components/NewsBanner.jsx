@@ -31,7 +31,7 @@ function buildFeed() {
     type: 'PROJECT',
     label: p.name,
     date: parseDate(p.period),
-    sectionId: 'projects',
+    sectionId: 'academia',
     prefix: '✦ NEW PROJECT',
   }))
 
@@ -46,7 +46,7 @@ function buildFeed() {
         type: 'EXPERIENCE',
         label: `${e.role} @ ${e.company}`,
         date: startDate,
-        sectionId: 'experience',
+        sectionId: 'academia',
         prefix: '✦ NEW EXPERIENCE',
       })
     }
@@ -62,7 +62,7 @@ function buildFeed() {
         type: 'EDUCATION',
         label: e.degree,
         date: startDate,
-        sectionId: 'education',
+        sectionId: 'academia',
         prefix: '✦ NEW EDUCATION',
       })
     }
@@ -143,7 +143,7 @@ export function NewsBanner({ visible }) {
         className="shrink-0 flex items-center px-2 h-full border-r"
         style={{ borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.04)' }}
       >
-        <span className="font-mono text-[7px] uppercase tracking-[0.22em] text-white/30">
+        <span className="font-mono text-[clamp(8px,calc(7.08px+0.24vw),11px)] uppercase tracking-[0.22em] text-white/30">
           LATEST
         </span>
       </div>
@@ -153,11 +153,11 @@ export function NewsBanner({ visible }) {
         className="flex-1 overflow-hidden flex items-center px-3 cursor-pointer group"
         onClick={() => { playClick(); setActiveSection(item.sectionId) }}
       >
-        <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-white/35 mr-2 shrink-0">
+        <span className="font-mono text-[clamp(10px,calc(9.39px+0.16vw),12px)] uppercase tracking-[0.16em] text-white/35 mr-2 shrink-0">
           {item.prefix}
         </span>
         <span
-          className="font-mono text-[8px] uppercase tracking-[0.12em] text-white/70 group-hover:text-white transition-colors truncate"
+          className="font-mono text-[clamp(10px,calc(9.39px+0.16vw),12px)] uppercase tracking-[0.12em] text-white/70 group-hover:text-white transition-colors truncate"
         >
           — {item.label}
         </span>
@@ -186,7 +186,7 @@ export function NewsBanner({ visible }) {
       {/* Dismiss */}
       <button
         onClick={() => setDismissed(true)}
-        className="shrink-0 flex items-center justify-center w-7 h-full border-l text-white/25 hover:text-white/60 transition-colors font-mono text-[10px]"
+        className="shrink-0 flex items-center justify-center w-7 h-full border-l text-white/25 hover:text-white/60 transition-colors font-mono text-[clamp(12px,calc(10.78px+0.33vw),16px)]"
         style={{ borderColor: 'rgba(255,255,255,0.08)' }}
       >
         ×
