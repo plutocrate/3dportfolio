@@ -188,7 +188,7 @@ export const BLOG_POSTS = [
 	"This thing hit me last night, and I again started looking far, not in metaphorical sense, but actually(again I'm bringing this up).",
 	"Meaning of this journal log/blog -> no meaning. It just maybe made sense to me. Ok untill next time, I want to talk about the women in my life, in past and present, and what I learned from them, the separation, and how I should treat the new woman coming in my life."
   ],
-  media: ["/media/greatgit.mp4"],
+  media: ["/media/greatgig.mp4"],
   link: "",
 },
 {
