@@ -5,6 +5,7 @@ import { MobileAnnotationOverlay } from '@/components/MobileAnnotationOverlay'
 import { NewsBanner } from '@/components/NewsBanner'
 import { SectionPanel } from '@/components/SectionPanel'
 import { ChronicleOverlay } from '@/components/ChronicleOverlay'
+import { GalleryOverlay } from '@/components/GalleryOverlay'
 import { Lightbox } from '@/components/Lightbox'
 import { HUDOverlay } from '@/components/HUDOverlay'
 import { LoadingScreen } from '@/components/LoadingScreen'
@@ -36,7 +37,7 @@ export default function App() {
   const activeSection    = useSceneStore((s) => s.activeSection)
   const setActiveSection = useSceneStore((s) => s.setActiveSection)
   const closeSection     = useSceneStore((s) => s.closeSection)
-  const { playing, start, toggle, next, trackName, hasMultipleTracks, pauseForVideo, resumeAfterVideo } = useAmbientMusic()
+  const { playing, start, prepare, toggle, next, trackName, hasMultipleTracks, pauseForVideo, resumeAfterVideo } = useAmbientMusic()
   setMusicBridge(pauseForVideo, resumeAfterVideo)
   const playClick = useClickSound()
 
@@ -83,8 +84,12 @@ export default function App() {
     if (mobile) navigate('/')
   }
 
-  const handleEnter = () => {
-    start()
+  const handleEnter = (withMusic) => {
+    if (withMusic) {
+      start()
+    } else {
+      prepare() // sets up the <audio> element silently so the HUD toggle still works later
+    }
     setLoading(false)
     setTimeout(() => {
       setShowHint(true)
@@ -130,6 +135,8 @@ export default function App() {
       <SectionPanel onClose={handleClose} />
 
       <ChronicleOverlay />
+
+      <GalleryOverlay />
 
       <Lightbox />
     </div>

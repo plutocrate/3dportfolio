@@ -26,6 +26,13 @@ export const useSceneStore = create((set, get) => ({
   openLightbox: (src, caption = '') => set({ lightboxSrc: src, lightboxCaption: caption }),
   closeLightbox: () => set({ lightboxSrc: null, lightboxCaption: '' }),
 
+  // Full-gallery glass overlay (About → Gallery → "View full gallery").
+  // Same visual language as the Chronicle reader, but a static grid of every
+  // gallery image — no marquee, no infinite loop.
+  galleryOverlayOpen: false,
+  openGalleryOverlay: () => set({ galleryOverlayOpen: true }),
+  closeGalleryOverlay: () => set({ galleryOverlayOpen: false }),
+
   setActiveSection: (id) => {
     set({ activeSection: id, panelOpen: id !== null, isAnimating: true })
   },

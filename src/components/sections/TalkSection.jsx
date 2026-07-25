@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import { Separator } from '@/components/ui/separator'
 import { useClickSound } from '@/hooks/useClickSound'
+import { AvailabilitySection } from './AvailabilitySection'
 
 // Credentials loaded from .env — never exposed in git
 const EJ_SERVICE_ID  = 'service_06d6y58'
@@ -38,7 +39,9 @@ export function TalkSection() {
         <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/30 mb-1">
           Get In Touch
         </div>
-        <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">TALK</h2>
+        <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide mb-3">TALK</h2>
+
+        <AvailabilitySection />
       </div>
 
       <Separator />

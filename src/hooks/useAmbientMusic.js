@@ -91,6 +91,13 @@ export function useAmbientMusic() {
     }
   }, [init])
 
+  // Set up the <audio> element without playing it. Used when the visitor
+  // chooses "Enter without music" so the HUD's manual music toggle still
+  // works later if they change their mind — without ever autoplaying.
+  const prepare = useCallback(() => {
+    init()
+  }, [init])
+
   const toggle = useCallback(() => {
     if (!audioRef.current) return
     if (playing) {
@@ -134,6 +141,7 @@ export function useAmbientMusic() {
   return {
     playing,
     start,
+    prepare,
     toggle,
     next,
     pauseForVideo,

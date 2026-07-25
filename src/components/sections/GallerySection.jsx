@@ -1,3 +1,4 @@
+import { Expand } from 'lucide-react'
 import { GALLERY_IMAGES } from '@/data/gallery'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
@@ -71,18 +72,37 @@ function MarqueeColumn({ items, duration, paused, onOpen }) {
 }
 
 export function GallerySection() {
-  const lightboxOpen  = useSceneStore((s) => s.lightboxSrc !== null)
-  const openLightbox  = useSceneStore((s) => s.openLightbox)
-  const playClick     = useClickSound()
+  const lightboxOpen     = useSceneStore((s) => s.lightboxSrc !== null)
+  const galleryOverlayOpen = useSceneStore((s) => s.galleryOverlayOpen)
+  const openLightbox     = useSceneStore((s) => s.openLightbox)
+  const openGalleryOverlay = useSceneStore((s) => s.openGalleryOverlay)
+  const playClick         = useClickSound()
 
   const handleOpen = (item) => {
     playClick()
     openLightbox(item.src, item.caption)
   }
 
+  const handleViewAll = () => {
+    playClick()
+    openGalleryOverlay()
+  }
+
   return (
     <div>
-      <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/30 mb-3">Gallery</div>
+      <div className="flex items-center justify-between mb-3">
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/30">Gallery</div>
+
+        {GALLERY_IMAGES.length > 0 && (
+          <button
+            onClick={handleViewAll}
+            className="group flex items-center gap-1.5 font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.16em] px-2.5 py-1 border border-white/15 text-white/40 hover:text-white hover:border-white/40 transition-all duration-200"
+          >
+            <Expand size={12} className="text-white/40 group-hover:text-white transition-colors" />
+            View All
+          </button>
+        )}
+      </div>
 
       {GALLERY_IMAGES.length === 0 ? (
         <div className="flex flex-col gap-2 py-4">
@@ -100,7 +120,7 @@ export function GallerySection() {
                 key={i}
                 items={col}
                 duration={58 + i * 14}
-                paused={lightboxOpen}
+                paused={lightboxOpen || galleryOverlayOpen}
                 onOpen={handleOpen}
               />
             ))}

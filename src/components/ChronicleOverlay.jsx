@@ -28,7 +28,8 @@ function MediaBlock({ item }) {
             controls
             playsInline
             loop
-            className="w-full h-auto block"
+            className="w-full block object-cover"
+            style={{ height: 'clamp(280px, 52vh, 560px)' }}
             onPlay={() => pauseMusicForVideo()}
             onPause={() => resumeMusicAfterVideo()}
             onEnded={() => resumeMusicAfterVideo()}
@@ -39,7 +40,8 @@ function MediaBlock({ item }) {
             alt={item.caption || ''}
             loading="lazy"
             onClick={handleOpen}
-            className="w-full h-auto block cursor-pointer hover:opacity-90 transition-opacity duration-200"
+            className="w-full block object-cover cursor-pointer hover:opacity-90 transition-opacity duration-200"
+            style={{ height: 'clamp(280px, 52vh, 560px)' }}
           />
         )}
       </div>
@@ -179,7 +181,8 @@ export function ChronicleOverlay() {
                 src={chronicle.coverImage}
                 alt=""
                 onClick={() => { playClick(); openLightbox(chronicle.coverImage, chronicle.title || '') }}
-                className="w-full h-auto block cursor-pointer hover:opacity-90 transition-opacity duration-200"
+                className="w-full block object-cover cursor-pointer hover:opacity-90 transition-opacity duration-200"
+                style={{ height: 'clamp(300px, 56vh, 600px)' }}
               />
             </div>
           )}

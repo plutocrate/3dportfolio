@@ -1,5 +1,6 @@
 import { PERSONAL } from '@/data/portfolio'
 import { Separator } from '@/components/ui/separator'
+import { AvailabilitySection } from './AvailabilitySection'
 import { GallerySection } from './GallerySection'
 import { LinksSection } from './LinksSection'
 
@@ -11,7 +12,9 @@ export function AboutSection() {
         <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide mb-1">
             {PERSONAL.name.toUpperCase()}
           </h2>
-        <p className="font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/45 tracking-widest uppercase">{PERSONAL.title}</p>
+        <p className="font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/45 tracking-widest uppercase mb-3">{PERSONAL.title}</p>
+
+        <AvailabilitySection />
       </div>
 
       <Separator />

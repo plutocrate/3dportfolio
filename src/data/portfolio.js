@@ -6,13 +6,28 @@ export const PERSONAL = {
   name: "Pratham Purohit",
   title: "Full-Stack Developer",
   tagline: "Dev by day, Philosopher by night.",
-  location: "Solan, HP, India",
+  location: "India",
   email: "prathampurohitonline@outlook.com",
   website: "prathamis.cool",
   linkedin: "linkedin.com/in/prathammpurohit",
   github: "github.com/plutocrate",
   summary:
     "I spend a lot of time trying to understand things.\n\nPeople. Games. Software. Stories. Why some ideas stay with us and others disappear.\n\nI build software because it's the easiest way I know to turn those questions into something tangible. Right now that mostly means design and web development, but I'm slowly drifting toward graphics programming and game development.\n\nEverything else goes here. I hope you enjoy your time here.",
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AVAILABILITY — small status badge shown under Identity in the About section.
+// Update `status` any time your situation changes:
+//   "open"    → green dot, e.g. actively looking for roles/freelance
+//   "limited" → amber dot, e.g. open but selective / limited bandwidth
+//   "closed"  → grey dot,  e.g. not currently looking
+// `label` is the short badge text. `note` is optional smaller print under it —
+// leave it as "" to hide.
+// ─────────────────────────────────────────────────────────────────────────────
+export const AVAILABILITY = {
+  status: "open",
+  label: "Open to full-time roles & freelance work",
+  note: "Based in India — open to remote or relocation.",
 };
 
 // Add an optional `dateAdded: "26 Jul 2026"` field to any technical skill
