@@ -172,6 +172,26 @@ export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
 // BLOG
 export const BLOG_POSTS = [
 {
+  id: "15th-blog",
+  title: "Look up if you want change.",
+  subtitle: "Not metaphorically, I mean actually!",
+  date: "1418, 25 July 2026",
+  categories: ["reflection"],
+  body: [
+	"I'm attaching pink floyd's ambience guitar below, listen to it.",
+	"Anyways, you know when I'm lost, or when I was lost, lost in myself or lost in the charm or chaos of life, I don't look up, I look at my head level, I look down my phone's screen, or straight to laptop's screen, or just down, very closed range, very.",
+	"When I listen to music at nights, I either close my eyes, or use my phone.",
+	"But, there was a time, last night I was thinking about it, when I wanted to change, and when I was changing(real change). I used to look far, not metaphorically, but actually used to look far.",
+	"I'll look at the distant trees, distant car running on mountains, distant people, distant bulidings, building tops, and even the sky!",
+	"And yes, when listening to music, looking at the ceiling.",
+	"There was even time, I was so alone, I used to talk with the moon, obviously mouth closed, just looking at that amazing celestial body in freezing Himalyan nights(btw my college was in Himachal Pradesh).",
+	"This thing hit it last night, and I again started look far, not in metaphorical sense, but actually(again I'm bringing this up).",
+	"Meaning of this journal log/blog -> no meaning. It just maybe made sense to me. Ok untill next time, I want to talk about the women in my life, in past and present, and what I learned from them, the seperation, and how I should treat the new woman coming in my life."
+  ],
+  media: ["/media/greatgit.mp4"],
+  link: "",
+},
+{
   id: "14th-blog",
   title: "My REM talks to me, and it provides me wisdom.",
   subtitle: "This is the first time, I'm documenting it.",
