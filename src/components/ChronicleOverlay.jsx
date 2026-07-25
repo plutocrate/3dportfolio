@@ -7,7 +7,15 @@ import { getChronicleById, getReadingTime } from '@/data/chronicles'
 import { pauseMusicForVideo, resumeMusicAfterVideo, pauseAllVideos } from '@/hooks/useMusicBridge'
 
 function MediaBlock({ item }) {
+  const openLightbox = useSceneStore((s) => s.openLightbox)
+  const playClick    = useClickSound()
   if (!item) return null
+
+  const handleOpen = () => {
+    playClick()
+    openLightbox(item.src, item.caption || '')
+  }
+
   return (
     <figure className="my-6">
       <div
@@ -26,7 +34,13 @@ function MediaBlock({ item }) {
             onEnded={() => resumeMusicAfterVideo()}
           />
         ) : (
-          <img src={item.src} alt={item.caption || ''} loading="lazy" className="w-full h-auto block" />
+          <img
+            src={item.src}
+            alt={item.caption || ''}
+            loading="lazy"
+            onClick={handleOpen}
+            className="w-full h-auto block cursor-pointer hover:opacity-90 transition-opacity duration-200"
+          />
         )}
       </div>
       {item.caption && (
@@ -43,7 +57,8 @@ export function ChronicleOverlay() {
   const closeChronicle  = useSceneStore((s) => s.closeChronicle)
   const playClick       = useClickSound()
 
-  const chronicle = openChronicleId ? getChronicleById(openChronicleId) : null
+  const chronicle     = openChronicleId ? getChronicleById(openChronicleId) : null
+  const openLightbox  = useSceneStore((s) => s.openLightbox)
 
   const overlayRef = useRef()
   const cardRef     = useRef()
@@ -116,11 +131,11 @@ export function ChronicleOverlay() {
         style={{ background: 'rgba(4,4,4,0.55)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' }}
       />
 
-      {/* Reader card — full screen on mobile, 80vw on desktop */}
+      {/* Reader card — full screen on mobile, 90vw on desktop */}
       <div
         ref={cardRef}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full h-full sm:h-auto sm:w-[80vw] max-w-[1200px] max-h-full sm:max-h-[90vh] overflow-y-auto border-0 sm:border border-white/12"
+        className="relative w-full h-full sm:h-auto sm:w-[90vw] max-w-[1400px] max-h-full sm:max-h-[90vh] overflow-y-auto border-0 sm:border border-white/12"
         style={{
           background: 'rgba(9,9,9,0.82)',
           backdropFilter: 'blur(28px)',
@@ -160,7 +175,12 @@ export function ChronicleOverlay() {
 
           {chronicle.coverImage && (
             <div className="w-full border border-white/10 overflow-hidden mb-8" style={{ background: '#0a0a0a' }}>
-              <img src={chronicle.coverImage} alt="" className="w-full h-auto block" />
+              <img
+                src={chronicle.coverImage}
+                alt=""
+                onClick={() => { playClick(); openLightbox(chronicle.coverImage, chronicle.title || '') }}
+                className="w-full h-auto block cursor-pointer hover:opacity-90 transition-opacity duration-200"
+              />
             </div>
           )}
 

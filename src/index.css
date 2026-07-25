@@ -165,12 +165,19 @@
 
   /* ── Subtle flowing glow ──────────────────────────────────────────────────
      A calm, continuous shine that drifts right → left across the button.
-     Only `background-position` is animated (no box-shadow/transform
-     keyframes), which is what was causing the earlier flicker — this is
-     smooth and GPU-friendly with a steady, static base glow underneath. */
-  @keyframes shine-sweep {
-    0%   { background-position: 160% 0; }
-    100% { background-position: -60% 0; }
+     NOTE: this used to animate `background-position`, which mobile browsers
+     (Safari iOS / Chrome Android) frequently fail to composite/animate when
+     the element sits inside a 3D-transformed ancestor — e.g. the drei
+     <Html> portals used for the on-character BLOG/CHRONICLES pins, or any
+     element under a `transform`-animated parent. That's why the glow never
+     showed up on phones. Swapping to a `transform: translateX()` sweep on a
+     dedicated absolutely-positioned bar fixes this since transform
+     animations are reliably GPU-composited everywhere, and we also force
+     each glow element onto its own compositor layer with `translateZ(0)` /
+     `will-change` so mobile browsers don't skip the animation. */
+  @keyframes shine-sweep-x {
+    0%   { transform: translateX(-120%); }
+    100% { transform: translateX(220%); }
   }
 
   .awwwards-nav-highlight .nav-dot {
@@ -193,26 +200,95 @@
     background-size: 250% 100%;
     -webkit-background-clip: text;
     background-clip: text;
+    -webkit-animation: shine-sweep 6.5s linear infinite;
     animation: shine-sweep 6.5s linear infinite;
   }
 
+  @keyframes shine-sweep {
+    0%   { background-position: 160% 0; }
+    100% { background-position: -60% 0; }
+  }
+
+  /* Mobile bottom dot-nav has no text to run a text-gradient shine across,
+     so BLOG/CHRONICLES get a pulsing glow ring on the dot itself instead —
+     this is the mobile-only counterpart to `.awwwards-nav-highlight`. */
+  @keyframes dot-glow-pulse {
+    0%, 100% { box-shadow: 0 0 4px rgba(255,255,255,0.35), 0 0 9px rgba(255,255,255,0.16); }
+    50%      { box-shadow: 0 0 8px rgba(255,255,255,0.75), 0 0 18px rgba(255,255,255,0.35); }
+  }
+
+  .mobile-nav-glow {
+    -webkit-animation: dot-glow-pulse 2.4s ease-in-out infinite;
+    animation: dot-glow-pulse 2.4s ease-in-out infinite;
+  }
+
   /* Same flowing shine, adapted for the bordered annotation buttons that sit
-     directly on the 3D character (blog / chronicles). A steady soft glow
-     sits underneath, with the moving highlight layered on top via ::after. */
+     directly on the 3D character (blog / chronicles), the ENTER/EXPLORE
+     buttons, etc. A steady soft glow sits underneath, with the moving
+     highlight bar layered on top via ::after. */
   .flow-glow {
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 6px rgba(255,255,255,0.14), 0 0 14px rgba(255,255,255,0.06);
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  /* Steady soft glow only — no ::after sweep. Used by the mobile annotation
+     buttons (see AnnotationMarker.jsx MobileButton), whose moving highlight
+     bar is a real DOM node driven imperatively via useFrame instead of a CSS
+     @keyframes animation, since keyframe animations reliably fail to run on
+     phones when nested inside drei's continuously-transformed <Html> portal. */
+  .glow-static {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 6px rgba(255,255,255,0.14), 0 0 14px rgba(255,255,255,0.06);
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
 
   .flow-glow::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background-image: linear-gradient(100deg, transparent 42%, rgba(255,255,255,0.38) 50%, transparent 58%);
-    background-size: 250% 100%;
-    background-position: 160% 0;
-    animation: shine-sweep 6.5s linear infinite;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background-image: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%);
+    -webkit-animation: shine-sweep-x 6.5s linear infinite;
+    animation: shine-sweep-x 6.5s linear infinite;
+    will-change: transform;
+    -webkit-will-change: transform;
     pointer-events: none;
+  }
+
+  /* ── Minute floating motion for HUD buttons ──────────────────────────────
+     Mirrors the character's own idle float (sin wave, ~0.06 world units,
+     ~9s period) as a tiny, calm CSS bob so the UI feels like it belongs to
+     the same floating world — small enough it never gets in the way of
+     tapping/clicking. Use the --float-delay custom property to stagger
+     multiple buttons so they don't all bob in lockstep. */
+  @keyframes hud-float {
+    0%, 100% { transform: translateY(0px); }
+    50%      { transform: translateY(-3px); }
+  }
+
+  .hud-float {
+    display: inline-flex;
+    -webkit-animation: hud-float 4.2s ease-in-out infinite;
+    animation: hud-float 4.2s ease-in-out infinite;
+    animation-delay: var(--float-delay, 0s);
+    will-change: transform;
+  }
+
+  /* ── Gallery — slow bottom→top infinite marquee columns ──────────────────
+     Each column's track renders the image list twice back to back; animating
+     translateY from 0% to -50% loops seamlessly since the second half is an
+     exact copy of the first. Speed is deliberately slow (see durations set
+     inline per-column in GallerySection.jsx) and paused via
+     animation-play-state while the lightbox is open. */
+  @keyframes gallery-marquee-up {
+    0%   { transform: translateY(0%); }
+    100% { transform: translateY(-50%); }
   }
 }

@@ -8,6 +8,10 @@ import { cn } from '@/lib/utils'
 
 // ── Mobile button: projects 3D world pos → screen px each frame,
 // renders as a fixed-size DOM button clamped inside safe screen bounds.
+// Shine sweep period, in seconds — kept in sync with the desktop CSS version
+// (see shine-sweep-x in index.css) so both feel like the same calm animation.
+const GLOW_SWEEP_PERIOD = 6.5
+
 function MobileButton({ annotation, onClick }) {
   const { id, label, position, side } = annotation
   const activeSection = useSceneStore((s) => s.activeSection)
@@ -17,14 +21,33 @@ function MobileButton({ annotation, onClick }) {
   const [pos, setPos] = useState({ x: -999, y: -999, visible: false })
 
   const worldPos = useRef(new THREE.Vector3(...position))
+  const glowBarRef = useRef(null)
 
-  useFrame(() => {
+  const showGlow = !isActive && (id === 'blog' || id === 'chronicles')
+
+  useFrame(({ clock }) => {
     const v = worldPos.current.clone().project(camera)
     // NDC → pixels
     const x = (v.x  *  0.5 + 0.5) * size.width
     const y = (-v.y *  0.5 + 0.5) * size.height
     // Only show if in front of camera
     setPos({ x, y, visible: v.z < 1 })
+
+    // ── Glow sweep, driven imperatively (not CSS @keyframes) ────────────────
+    // This button lives inside a drei <Html> portal whose wrapper div gets a
+    // `transform` mutated every frame outside React. Mobile Safari/Chrome
+    // reliably fail to run CSS keyframe animations on descendants of such a
+    // continuously-transformed ancestor, which is why the glow never showed
+    // up on phones even though the button's own position (also driven by
+    // this same useFrame loop) always tracked correctly. Fix: update the
+    // sweep bar's inline transform directly here, in lockstep with the
+    // position updates we already know render fine on mobile.
+    if (glowBarRef.current) {
+      const t = clock.getElapsedTime()
+      const progress = (t % GLOW_SWEEP_PERIOD) / GLOW_SWEEP_PERIOD // 0 → 1
+      const xPercent = -120 + progress * 340 // -120% → 220%, matches shine-sweep-x
+      glowBarRef.current.style.transform = `translateX(${xPercent}%)`
+    }
   })
 
   if (!pos.visible) return null
@@ -54,16 +77,32 @@ function MobileButton({ annotation, onClick }) {
           whiteSpace: 'nowrap',
         }}
         className={cn(
-          'font-mono uppercase border cursor-pointer transition-all duration-200',
+          'relative overflow-hidden font-mono uppercase border cursor-pointer transition-all duration-200',
           'px-1.5 py-0.5 text-[clamp(9px,calc(8.6px+0.13vw),11px)] tracking-[0.10em]',
           isActive
             ? 'bg-white text-black border-white'
             : 'bg-black/85 text-white/60 border-white/20',
-          !isActive && (id === 'blog' || id === 'chronicles') && 'flow-glow'
+          showGlow && 'glow-static'
         )}
         onClick={() => { playClick(); onClick(annotation) }}
       >
         {label}
+        {showGlow && (
+          <span
+            ref={glowBarRef}
+            aria-hidden="true"
+            style={{
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '40%',
+              height: '100%',
+              backgroundImage: 'linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%)',
+              pointerEvents: 'none',
+            }}
+          />
+        )}
       </div>
     </Html>
   )

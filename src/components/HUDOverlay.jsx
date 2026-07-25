@@ -51,36 +51,45 @@ function MusicBars({ playing }) {
 }
 
 // ── Compact "now playing" music player — sits where the old AMB button was ──
+// Order: AMB toggle → track name → change-track button. The AMB pill and the
+// change-track pill are the same height/padding so both are equally easy to
+// tap on phone (the old "»" text link was a tiny, hard-to-hit target).
 function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks }) {
   return (
-    <div className="flex items-center gap-2 group">
+    <div className="flex items-center gap-2">
       <button
         onClick={onToggle}
-        className="flex items-center gap-1.5 transition-all duration-200"
+        className="flex items-center gap-1.5 px-2.5 py-1.5 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
         aria-label={playing ? 'Mute' : 'Unmute'}
       >
         <MusicBars playing={playing} />
-        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.18em] text-white/30 group-hover:text-white/60 transition-colors">
+        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.18em] text-white/40 group-hover:text-white/70 transition-colors">
           {playing ? 'AMB' : 'OFF'}
         </span>
       </button>
 
       {/* Now-playing track name */}
       <span
-        className="font-mono text-[clamp(8px,calc(7.7px+0.1vw),9px)] text-white/22 group-hover:text-white/45 uppercase tracking-[0.12em] max-w-[110px] truncate transition-colors"
+        className="font-mono text-[clamp(8px,calc(7.7px+0.1vw),9px)] text-white/22 uppercase tracking-[0.12em] max-w-[90px] sm:max-w-[110px] truncate transition-colors"
         title={trackName}
       >
         {trackName}
       </span>
 
-      {/* Skip to another random track */}
+      {/* Skip to another random track — same size/touch-target as the AMB pill */}
       {hasMultipleTracks && (
         <button
           onClick={onNext}
           aria-label="Next track"
-          className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/25 hover:text-white/70 transition-colors leading-none"
+          title="Next track"
+          className="flex items-center gap-1 px-2.5 py-1.5 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
         >
-          »
+          <span className="font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/40 group-hover:text-white/80 transition-colors leading-none">
+            ⏭
+          </span>
+          <span className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] uppercase tracking-[0.14em] text-white/40 group-hover:text-white/80 transition-colors hidden sm:inline">
+            Next
+          </span>
         </button>
       )}
     </div>
@@ -147,7 +156,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
           <div className="flex flex-col pointer-events-auto">
             {/* Desktop text nav */}
             <div className="hidden sm:flex flex-col gap-1.5">
-              {ANNOTATIONS.map((ann) => {
+              {ANNOTATIONS.map((ann, i) => {
                 const isGlowing = ann.id === 'blog' || ann.id === 'chronicles'
                 const isActive = activeSection === ann.id
                 return (
@@ -158,9 +167,10 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
                       activeSection === ann.id ? closeSection() : setActiveSection(ann.id)
                     }}
                     className={cn(
-                      'flex items-center gap-2 group text-left',
+                      'hud-float flex items-center gap-2 group text-left',
                       isGlowing && !isActive && 'awwwards-nav-highlight'
                     )}
+                    style={{ '--float-delay': `${i * 0.35}s` }}
                   >
                     <div className={cn(
                       'nav-dot w-1.5 h-1.5 rounded-full transition-all duration-200 shrink-0',
@@ -179,20 +189,26 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
 
             {/* Mobile dot nav */}
             <div className="flex sm:hidden items-center gap-2 pointer-events-auto">
-              {ANNOTATIONS.map((ann) => (
-                <button
-                  key={ann.id}
-                  onClick={() => {
-                    playClick()
-                    activeSection === ann.id ? closeSection() : setActiveSection(ann.id)
-                  }}
-                  className={cn(
-                    'w-2 h-2 rounded-full transition-all duration-200',
-                    activeSection === ann.id ? 'bg-white scale-125' : 'bg-white/22'
-                  )}
-                  title={ann.label}
-                />
-              ))}
+              {ANNOTATIONS.map((ann, i) => {
+                const isGlowing = ann.id === 'blog' || ann.id === 'chronicles'
+                const isActive = activeSection === ann.id
+                return (
+                  <button
+                    key={ann.id}
+                    onClick={() => {
+                      playClick()
+                      isActive ? closeSection() : setActiveSection(ann.id)
+                    }}
+                    className={cn(
+                      'hud-float w-2 h-2 rounded-full transition-all duration-200',
+                      isActive ? 'bg-white scale-125' : 'bg-white/22',
+                      isGlowing && !isActive && 'mobile-nav-glow'
+                    )}
+                    style={{ '--float-delay': `${i * 0.35}s` }}
+                    title={ann.label}
+                  />
+                )
+              })}
             </div>
 
             {/* Divider */}
@@ -219,13 +235,15 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
               <LiveClock />
             </div>
             <div className="w-14 sm:w-20 h-px bg-white/8" />
-            <MusicPlayer
-              playing={musicPlaying}
-              onToggle={onMusicToggle}
-              onNext={onMusicNext}
-              trackName={trackName}
-              hasMultipleTracks={hasMultipleTracks}
-            />
+            <div className="hud-float" style={{ '--float-delay': '0.7s' }}>
+              <MusicPlayer
+                playing={musicPlaying}
+                onToggle={onMusicToggle}
+                onNext={onMusicNext}
+                trackName={trackName}
+                hasMultipleTracks={hasMultipleTracks}
+              />
+            </div>
           </div>
         </div>
 

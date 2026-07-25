@@ -5,12 +5,14 @@ import { MobileAnnotationOverlay } from '@/components/MobileAnnotationOverlay'
 import { NewsBanner } from '@/components/NewsBanner'
 import { SectionPanel } from '@/components/SectionPanel'
 import { ChronicleOverlay } from '@/components/ChronicleOverlay'
+import { Lightbox } from '@/components/Lightbox'
 import { HUDOverlay } from '@/components/HUDOverlay'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { SunCorner } from '@/components/SunCorner'
 import { SwipeHint } from '@/components/SwipeHint'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useAmbientMusic } from '@/hooks/useAmbientMusic'
+import { useClickSound } from '@/hooks/useClickSound'
 import { setMusicBridge } from '@/hooks/useMusicBridge'
 
 // Reactive mobile detection — updates on resize, matches 3D side threshold
@@ -36,6 +38,7 @@ export default function App() {
   const closeSection     = useSceneStore((s) => s.closeSection)
   const { playing, start, toggle, next, trackName, hasMultipleTracks, pauseForVideo, resumeAfterVideo } = useAmbientMusic()
   setMusicBridge(pauseForVideo, resumeAfterVideo)
+  const playClick = useClickSound()
 
   const mobile = useIsMobile()
 
@@ -43,6 +46,7 @@ export default function App() {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && activeSection) {
+        playClick()
         handleClose()
       }
     }
@@ -126,6 +130,8 @@ export default function App() {
       <SectionPanel onClose={handleClose} />
 
       <ChronicleOverlay />
+
+      <Lightbox />
     </div>
   )
 }

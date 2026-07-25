@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { BLOG_POSTS, PROJECTS, EXPERIENCE, EDUCATION } from '@/data/portfolio'
+import { BLOG_POSTS, PROJECTS, EXPERIENCE, EDUCATION, SKILLS } from '@/data/portfolio'
+import { CHRONICLES } from '@/data/chronicles'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
 
@@ -17,14 +18,36 @@ const NOW = new Date()
 function buildFeed() {
   const items = []
 
-  // Blog posts — use their publish date directly
+  // Blog / journal posts — use their publish date directly
   BLOG_POSTS.forEach((p) => items.push({
-    type: 'BLOG',
+    type: 'JOURNAL',
     label: p.title,
     date: parseDate(p.date),
     sectionId: 'blog',
-    prefix: '✦ NEW BLOG',
+    prefix: '✦ NEW JOURNAL',
   }))
+
+  // Chronicles — long-form essays, use their publish date directly
+  CHRONICLES.forEach((c) => items.push({
+    type: 'CHRONICLE',
+    label: c.title,
+    date: parseDate(c.date),
+    sectionId: 'chronicles',
+    prefix: '✦ NEW CHRONICLE',
+  }))
+
+  // Skills — only surfaces skills that have been tagged with a dateAdded
+  // (see the comment above SKILLS in data/portfolio.js)
+  SKILLS.technical.forEach((s) => {
+    if (!s.dateAdded) return
+    items.push({
+      type: 'SKILL',
+      label: s.name,
+      date: parseDate(s.dateAdded),
+      sectionId: 'academia',
+      prefix: '✦ NEW SKILL',
+    })
+  })
 
   // Projects — use their period (month/year of completion)
   PROJECTS.forEach((p) => items.push({

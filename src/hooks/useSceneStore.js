@@ -17,6 +17,15 @@ export const useSceneStore = create((set, get) => ({
   openChronicle: (id) => set({ openChronicleId: id }),
   closeChronicle: () => set({ openChronicleId: null }),
 
+  // Global image lightbox — any <img> across the site (Gallery grid,
+  // Chronicle body images, Journal media, etc.) can open this. null src
+  // means closed. Components that auto-scroll (e.g. the Gallery marquee)
+  // read `lightboxSrc` to know when to pause.
+  lightboxSrc: null,
+  lightboxCaption: '',
+  openLightbox: (src, caption = '') => set({ lightboxSrc: src, lightboxCaption: caption }),
+  closeLightbox: () => set({ lightboxSrc: null, lightboxCaption: '' }),
+
   setActiveSection: (id) => {
     set({ activeSection: id, panelOpen: id !== null, isAnimating: true })
   },

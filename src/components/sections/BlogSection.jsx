@@ -14,6 +14,8 @@ function pauseAllExcept(activeRef) {
 }
 import { BLOG_POSTS } from '@/data/portfolio'
 import { Separator } from '@/components/ui/separator'
+import { useSceneStore } from '@/hooks/useSceneStore'
+import { useClickSound } from '@/hooks/useClickSound'
 
 // ─── Detect media type from path ─────────────────────────────────────────────
 function getMediaType(src) {
@@ -29,6 +31,8 @@ function MediaItem({ src }) {
   const [playing,   setPlaying]   = useState(false)
   const videoRef = useRef()
   const type = getMediaType(src)
+  const openLightbox = useSceneStore((s) => s.openLightbox)
+  const playClick     = useClickSound()
 
   // Register this video in the global registry on mount, unregister on unmount
   useEffect(() => {
@@ -66,7 +70,8 @@ function MediaItem({ src }) {
                 alt=""
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover"
+                onClick={() => { playClick(); openLightbox(src, '') }}
+                className="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity duration-200"
                 style={{ display: 'block' }}
               />
             </>
@@ -204,7 +209,7 @@ export function BlogSection() {
         <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/30 mb-1">
           Thoughts & Writes
         </div>
-        <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">BLOG</h2>
+        <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">JOURNAL</h2>
       </div>
 
       <Separator />

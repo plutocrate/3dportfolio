@@ -36,7 +36,7 @@ export function useClickSound() {
       src.buffer = buf
       // Slight gain control
       const gain = ctx.createGain()
-      gain.gain.value = 0.7
+      gain.gain.value = 0.22 // quieter still — down from 0.385
       src.connect(gain)
       gain.connect(ctx.destination)
       src.start(0)

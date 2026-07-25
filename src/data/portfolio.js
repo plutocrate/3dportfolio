@@ -5,17 +5,19 @@
 export const PERSONAL = {
   name: "Pratham Purohit",
   title: "Full-Stack Developer",
-  tagline: "FSDev by day, Philosopher by night.",
+  tagline: "Dev by day, Philosopher by night.",
   location: "Solan, HP, India",
   email: "prathampurohitonline@outlook.com",
-  phone: "+91 93172-77524",
   website: "prathamis.cool",
   linkedin: "linkedin.com/in/prathammpurohit",
   github: "github.com/plutocrate",
   summary:
-    "Frontend / Full-Stack Developer with hands-on experience building responsive web interfaces, real-time systems, and browser-based simulations. Skilled in React, TypeScript, Three.js, and Node.js with a passion for creative engineering, graphics programming, and real-world deployment.",
+    "I spend a lot of time trying to understand things.\n\nPeople. Games. Software. Stories. Why some ideas stay with us and others disappear.\n\nI build software because it's the easiest way I know to turn those questions into something tangible. Right now that mostly means design and web development, but I'm slowly drifting toward graphics programming and game development.\n\nEverything else goes here. I hope you enjoy your time here.",
 };
 
+// Add an optional `dateAdded: "26 Jul 2026"` field to any technical skill
+// below to make it show up as "✦ NEW SKILL" in the top LATEST ticker
+// (see NewsBanner.jsx). Skills without a dateAdded are left out of the feed.
 export const SKILLS = {
   technical: [
     { name: "JavaScript / TypeScript", level: 92 },
@@ -167,6 +169,61 @@ export const CERTIFICATIONS = [
 ];
 
 export const HOBBIES = ["3D Graphics", "Game Dev", "Open Source", "Linux"];
+// NOTE: HOBBIES is no longer rendered in the About section (Interests was
+// removed) but is left here in case it's wired up elsewhere later.
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LINK COLLECTIONS — powers the About → Links section (replaces Contact).
+// Same tabbed layout as Academia: each entry below becomes one tab, `heading`
+// is the sub-heading shown above its list, and `links` is rendered in the
+// same underline + arrow format used by Chronicles' "Further Reading".
+// Add/remove collections or links freely — everything here is data-driven.
+// ─────────────────────────────────────────────────────────────────────────────
+export const LINK_COLLECTIONS = [
+  {
+    id: "wikipedia",
+    label: "Wiki Trails",
+    heading: "Favorite Wikipedia Links",
+    links: [
+      { label: "Simulation Hypothesis", href: "https://en.wikipedia.org/wiki/Simulation_hypothesis" },
+      { label: "Ship of Theseus", href: "https://en.wikipedia.org/wiki/Ship_of_Theseus" },
+      { label: "Dunning–Kruger Effect", href: "https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect" },
+      { label: "Occam's Razor", href: "https://en.wikipedia.org/wiki/Occam%27s_razor" },
+      { label: "The Trolley Problem", href: "https://en.wikipedia.org/wiki/Trolley_problem" },
+      { label: "Conway's Game of Life", href: "https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" },
+      { label: "The Absurd (Camus)", href: "https://en.wikipedia.org/wiki/Absurdism" },
+      { label: "Fermi Paradox", href: "https://en.wikipedia.org/wiki/Fermi_paradox" },
+    ],
+  },
+  {
+    id: "cs-articles",
+    label: "CS Reads",
+    heading: "Favorite Computer Science Articles",
+    links: [
+      { label: "Turing Completeness", href: "https://en.wikipedia.org/wiki/Turing_completeness" },
+      { label: "P versus NP Problem", href: "https://en.wikipedia.org/wiki/P_versus_NP_problem" },
+      { label: "CAP Theorem", href: "https://en.wikipedia.org/wiki/CAP_theorem" },
+      { label: "Byzantine Fault Tolerance", href: "https://en.wikipedia.org/wiki/Byzantine_fault" },
+      { label: "Big O Notation", href: "https://en.wikipedia.org/wiki/Big_O_notation" },
+      { label: "The Halting Problem", href: "https://en.wikipedia.org/wiki/Halting_problem" },
+      { label: "Two Generals' Problem", href: "https://en.wikipedia.org/wiki/Two_Generals%27_Problem" },
+      { label: "Rice's Theorem", href: "https://en.wikipedia.org/wiki/Rice%27s_theorem" },
+    ],
+  },
+  {
+    id: "favorite-places",
+    label: "Web Haunts",
+    heading: "Favorite Places on the Internet",
+    links: [
+      { label: "Hacker News", href: "https://news.ycombinator.com" },
+      { label: "Are.na", href: "https://www.are.na" },
+      { label: "GitHub", href: "https://github.com" },
+      { label: "Wikipedia", href: "https://www.wikipedia.org" },
+      { label: "Lobsters", href: "https://lobste.rs" },
+      { label: "Reddit", href: "https://www.reddit.com" },
+    ],
+  },
+];
 
 // -------------------------------------
 // BLOG
@@ -376,7 +433,7 @@ export const ANNOTATIONS = [
   {
     // Fist / hand level — right side (arm hangs down)
     id: "blog",
-    label: "BLOG",
+    label: "JOURNAL",
     description: "Thoughts & Writes",
     position: [0.42, 0.85, 0.12],
     cameraTarget: [0.2, 0.85, 0],
