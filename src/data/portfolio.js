@@ -39,6 +39,10 @@ export const SECTION_META = {
     title: `${PERSONAL.name} — Chronicles`,
     description: `Long-form essays by ${PERSONAL.name} on software, games, and the ideas behind them.`,
   },
+  constellation: {
+    title: `${PERSONAL.name} — Constellation`,
+    description: `A mind map of the thinkers, projects, and ideas connected across ${PERSONAL.name}'s work.`,
+  },
   blog: {
     title: `${PERSONAL.name} — Journal`,
     description: `Shorter thoughts and write-ups from ${PERSONAL.name}.`,
@@ -476,6 +480,16 @@ export const ANNOTATIONS = [
     position: [0.42, 0.85, 0.12],
     cameraTarget: [0.2, 0.85, 0],
     cameraPosition: [2.0, 0.95, 1.5],
+    side: "right",
+  },
+  {
+    // Foot level — right side (mirrors "talk" at the left knee, one level down)
+    id: "constellation",
+    label: "CONSTELLATION",
+    description: "A mind map of ideas",
+    position: [0.22, 0.06, 0.12],
+    cameraTarget: [0.1, 0.1, 0],
+    cameraPosition: [1.8, 0.22, 1.7],
     side: "right",
   },
 ];

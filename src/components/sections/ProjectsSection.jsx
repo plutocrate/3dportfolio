@@ -11,7 +11,7 @@ export function ProjectsSection() {
       <Separator />
       <div className="space-y-6">
         {PROJECTS.map((proj, idx) => (
-          <div key={proj.id} className="group">
+          <div key={proj.id} id={`project-${proj.id}`} className="group">
             <div className="flex items-baseline gap-3 mb-1">
               <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/20 tabular-nums">{String(idx+1).padStart(2,'0')}</span>
 							{proj.link ? (

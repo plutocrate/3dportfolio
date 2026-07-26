@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import { useClickSound } from '@/hooks/useClickSound'
+import { useSceneStore } from '@/hooks/useSceneStore'
 import { ProjectsSection } from './ProjectsSection'
 import { ExperienceSection } from './ExperienceSection'
 import { SkillsSection } from './SkillsSection'
@@ -19,7 +20,12 @@ const TABS = [
 // the original, untouched section component so nothing about their layout
 // or styling changes.
 export function AcademiaSection() {
-  const [tab, setTab] = useState('projects')
+  // Read once on mount — lets a Constellation node (or anything else) send
+  // the user straight to e.g. "Skills" via setAcademiaInitialTab() before
+  // opening this section, instead of always landing on Projects. Once
+  // mounted, switching tabs is purely local state so it doesn't fight you.
+  const initialTab = useSceneStore((s) => s.academiaInitialTab)
+  const [tab, setTab] = useState(initialTab || 'projects')
   const Active = TABS.find((t) => t.id === tab)?.Component
   const playClick = useClickSound()
 

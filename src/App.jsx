@@ -6,6 +6,7 @@ import { NewsBanner } from '@/components/NewsBanner'
 import { SectionPanel } from '@/components/SectionPanel'
 import { ChronicleOverlay } from '@/components/ChronicleOverlay'
 import { ChronicleCategoryOverlay } from '@/components/ChronicleCategoryOverlay'
+import { ConstellationOverlay } from '@/components/ConstellationOverlay'
 import { GalleryOverlay } from '@/components/GalleryOverlay'
 import { Lightbox } from '@/components/Lightbox'
 import { HUDOverlay } from '@/components/HUDOverlay'
@@ -145,6 +146,8 @@ export default function App() {
       <SectionPanel onClose={handleClose} />
 
       <ChronicleCategoryOverlay />
+
+      <ConstellationOverlay />
 
       <ChronicleOverlay />
 

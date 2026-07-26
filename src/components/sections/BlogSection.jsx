@@ -144,7 +144,7 @@ function CategoryTag({ label }) {
 // ─── Single blog entry ───────────────────────────────────────────────────────
 function BlogEntry({ post, isLast }) {
   return (
-    <div className="flex gap-4">
+    <div id={`blogpost-${post.id}`} className="flex gap-4">
       {/* Timeline spine */}
       <div className="flex flex-col items-center shrink-0 mt-1">
         <div className="w-2 h-2 rounded-full bg-white shrink-0" />

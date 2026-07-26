@@ -42,6 +42,28 @@ export const useSceneStore = create((set, get) => ({
   openGalleryOverlay: () => set({ galleryOverlayOpen: true }),
   closeGalleryOverlay: () => set({ galleryOverlayOpen: false }),
 
+  // Currently open Constellation mind-map (full-screen glass overlay with an
+  // SVG graph), null = closed. Same "list → overlay" shape as Chronicles.
+  openConstellationId: null,
+  openConstellation: (id) => set({ openConstellationId: id }),
+  closeConstellation: () => set({ openConstellationId: null }),
+
+  // Which Academia tab to land on next time it opens — lets a Constellation
+  // node (or anything else) deep-link straight to e.g. "Projects" instead of
+  // always landing on the default first tab. Read once on mount by
+  // AcademiaSection; changing it doesn't fight the user once they're in there
+  // switching tabs themselves.
+  academiaInitialTab: 'projects',
+  setAcademiaInitialTab: (tab) => set({ academiaInitialTab: tab }),
+
+  // A DOM element id to scroll into view the next time the section panel's
+  // content finishes rendering (e.g. a specific blog post or project card).
+  // Set alongside setActiveSection() by anything that wants to deep-link
+  // into a section instead of just opening it at the top.
+  pendingScrollId: null,
+  setPendingScroll: (id) => set({ pendingScrollId: id }),
+  clearPendingScroll: () => set({ pendingScrollId: null }),
+
   setActiveSection: (id) => {
     set({ activeSection: id, panelOpen: id !== null, isAnimating: true })
   },

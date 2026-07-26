@@ -11,7 +11,7 @@ export function ExperienceSection() {
       <Separator />
       <div className="space-y-7">
         {EXPERIENCE.map((exp, idx) => (
-          <div key={exp.id} className="flex gap-4">
+          <div key={exp.id} id={`experience-${exp.id}`} className="flex gap-4">
             <div className="flex flex-col items-center shrink-0 mt-1">
               <div className="w-2 h-2 rounded-full bg-white shrink-0" />
               {idx < EXPERIENCE.length - 1 && <div className="w-px flex-1 bg-white/10 mt-2 min-h-[50px]" />}

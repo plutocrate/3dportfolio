@@ -10,14 +10,16 @@ import {
   BlogSection,
   AcademiaSection,
   ChroniclesSection,
+  ConstellationSection,
 } from '@/components/sections'
 
 const SECTION_MAP = {
-  about:      AboutSection,
-  academia:   AcademiaSection,
-  talk:       TalkSection,
-  chronicles: ChroniclesSection,
-  blog:       BlogSection,
+  about:         AboutSection,
+  academia:      AcademiaSection,
+  talk:          TalkSection,
+  chronicles:    ChroniclesSection,
+  constellation: ConstellationSection,
+  blog:          BlogSection,
 }
 
 // Default panel width — roughly half the viewport on desktop, capped so it
@@ -30,9 +32,11 @@ const MIN_WIDTH = 320
 const getMaxWidth = () => (typeof window !== 'undefined' ? Math.min(1200, window.innerWidth - 80) : 1200)
 
 export function SectionPanel({ onClose }) {
-  const panelOpen     = useSceneStore((s) => s.panelOpen)
-  const activeSection = useSceneStore((s) => s.activeSection)
-  const closeSection  = useSceneStore((s) => s.closeSection)
+  const panelOpen        = useSceneStore((s) => s.panelOpen)
+  const activeSection    = useSceneStore((s) => s.activeSection)
+  const closeSection     = useSceneStore((s) => s.closeSection)
+  const pendingScrollId  = useSceneStore((s) => s.pendingScrollId)
+  const clearPendingScroll = useSceneStore((s) => s.clearPendingScroll)
   const panelRef      = useRef()
   const contentRef    = useRef()
   const playClick     = useClickSound()
@@ -84,6 +88,22 @@ export function SectionPanel({ onClose }) {
       resumeMusicAfterVideo()
     }
   }, [panelOpen, activeSection])
+
+  // Deep-link scroll — if something (e.g. a Constellation node) requested a
+  // specific element be scrolled into view, do it once the section's
+  // content has actually rendered, then clear the request.
+  useEffect(() => {
+    if (!panelOpen || !pendingScrollId) return
+    const raf1 = requestAnimationFrame(() => {
+      const raf2 = requestAnimationFrame(() => {
+        const el = document.getElementById(pendingScrollId)
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        clearPendingScroll()
+      })
+      return () => cancelAnimationFrame(raf2)
+    })
+    return () => cancelAnimationFrame(raf1)
+  }, [panelOpen, activeSection, pendingScrollId, clearPendingScroll])
 
   // ── Drag resize handlers ──────────────────────────────────────────────────
   const onMouseDown = useCallback((e) => {
