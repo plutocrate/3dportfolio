@@ -116,14 +116,6 @@ export function ChronicleOverlay() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openChronicleId])
 
-  // Escape key closes
-  useEffect(() => {
-    if (!chronicle) return
-    const onKey = (e) => { if (e.key === 'Escape') handleClose() }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [chronicle, handleClose])
-
   if (!chronicle) return null
 
   const readingTime = getReadingTime(chronicle)

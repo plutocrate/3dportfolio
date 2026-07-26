@@ -48,9 +48,15 @@ export default function App() {
   useDocumentMeta(activeSection)
 
   // ── Escape key → close section ───────────────────────────────────────────
+  // Guarded so this only fires when no overlay (Chronicle, Chronicle
+  // category, Gallery, Lightbox…) is currently stacked on top of the
+  // section panel — each of those owns its own Escape handling via
+  // useHistoryOverlay and pushes a history entry while open. If one is
+  // open, `history.state.overlay` will be set and we defer to it instead
+  // of also closing the whole panel underneath.
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && activeSection) {
+      if (e.key === 'Escape' && activeSection && !window.history.state?.overlay) {
         playClick()
         handleClose()
       }

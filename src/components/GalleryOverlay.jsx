@@ -73,14 +73,6 @@ export function GalleryOverlay() {
     }
   }, [isOpen])
 
-  // Escape key closes
-  useEffect(() => {
-    if (!isOpen) return
-    const onKey = (e) => { if (e.key === 'Escape') handleClose() }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [isOpen, handleClose])
-
   if (!isOpen) return null
 
   return (

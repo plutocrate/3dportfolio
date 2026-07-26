@@ -40,15 +40,28 @@ export function SectionPanel({ onClose }) {
   const [width, setWidth]       = useState(getDefaultWidth)
   const [maxWidth, setMaxWidth] = useState(getMaxWidth)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
-  const dragging  = useRef(false)
-  const startX    = useRef(0)
-  const startW    = useRef(0)
+  const dragging       = useRef(false)
+  const startX         = useRef(0)
+  const startW         = useRef(0)
+  const hasCustomWidth = useRef(false) // true once the user manually drag-resizes
 
-  // Track mobile breakpoint (and keep width sane on resize)
+  // Track mobile breakpoint + keep width tied to the CURRENT viewport size.
+  // Until the user manually drags the resize handle, the panel always
+  // tracks ~50% of whatever the viewport is right now (so shrinking/growing
+  // the window, e.g. via devtools, re-flows it live instead of freezing at
+  // whatever size it happened to be on mount). Once the user does drag it,
+  // we respect their choice but still clamp it so it can never overflow a
+  // viewport that's since gotten smaller.
   useEffect(() => {
     const handler = () => {
       setIsMobile(window.innerWidth < 768)
-      setMaxWidth(getMaxWidth())
+      const nextMax = getMaxWidth()
+      setMaxWidth(nextMax)
+      if (!hasCustomWidth.current) {
+        setWidth(getDefaultWidth())
+      } else {
+        setWidth((w) => Math.min(w, nextMax))
+      }
     }
     window.addEventListener('resize', handler)
     return () => window.removeEventListener('resize', handler)
@@ -75,6 +88,7 @@ export function SectionPanel({ onClose }) {
   // ── Drag resize handlers ──────────────────────────────────────────────────
   const onMouseDown = useCallback((e) => {
     dragging.current = true
+    hasCustomWidth.current = true
     startX.current   = e.clientX
     startW.current   = width
     document.body.style.cursor    = 'ew-resize'
@@ -105,6 +119,7 @@ export function SectionPanel({ onClose }) {
   // Touch drag
   const onTouchStart = useCallback((e) => {
     dragging.current = true
+    hasCustomWidth.current = true
     startX.current   = e.touches[0].clientX
     startW.current   = width
   }, [width])

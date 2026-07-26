@@ -105,33 +105,53 @@ function ChronicleHeading({ category, items }) {
   return (
     <button
       onClick={() => { playClick(); openCategory(category) }}
-      className="group w-full text-left flex items-start justify-between gap-4"
+      className="group w-full text-left"
     >
-      <div className="min-w-0">
-        <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-          <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.18em] text-white/28 tabular-nums">
-            {count} {count === 1 ? 'Chronicle' : 'Chronicles'}
-          </span>
-          {/* Reflects the most recent chronicle filed under this heading —
-              open it to see every entry's own status. */}
-          {preview && <StatusChip status={preview.status} />}
+      {preview?.coverImage && (
+        <div
+          className="w-full border border-white/8 overflow-hidden mb-3"
+          style={{ paddingTop: '42%', position: 'relative', background: '#0a0a0a' }}
+        >
+          {/* object-cover always fills this banner fully (no gaps) — if a
+              crop looks off for a particular image, set `coverPosition` on
+              that chronicle in chronicles.js to shift the focal point. */}
+          <img
+            src={preview.coverImage}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-95 group-hover:scale-[1.02] transition-all duration-500"
+            style={{ objectPosition: preview.coverPosition || 'center' }}
+          />
+        </div>
+      )}
+
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+            <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.18em] text-white/28 tabular-nums">
+              {count} {count === 1 ? 'Chronicle' : 'Chronicles'}
+            </span>
+            {/* Reflects the most recent chronicle filed under this heading —
+                open it to see every entry's own status. */}
+            {preview && <StatusChip status={preview.status} />}
+          </div>
+
+          <h3 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-tight tracking-wide mb-1.5 group-hover:text-white/75 transition-colors">
+            {category}
+          </h3>
+
+          {preview?.dek && (
+            <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/40 leading-relaxed">
+              {preview.dek}
+            </p>
+          )}
         </div>
 
-        <h3 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-tight tracking-wide mb-1.5 group-hover:text-white/75 transition-colors">
-          {category}
-        </h3>
-
-        {preview?.dek && (
-          <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/40 leading-relaxed">
-            {preview.dek}
-          </p>
-        )}
+        <ChevronRight
+          size={18}
+          className="mt-1 shrink-0 text-white/25 group-hover:text-white/70 group-hover:translate-x-1 transition-all duration-300"
+        />
       </div>
-
-      <ChevronRight
-        size={18}
-        className="mt-1 shrink-0 text-white/25 group-hover:text-white/70 group-hover:translate-x-1 transition-all duration-300"
-      />
     </button>
   )
 }
