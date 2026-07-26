@@ -42,14 +42,36 @@ export const useSceneStore = create((set, get) => ({
   openGalleryOverlay: () => set({ galleryOverlayOpen: true }),
   closeGalleryOverlay: () => set({ galleryOverlayOpen: false }),
 
-  // Currently open Constellation mind-map (full-screen glass overlay with an
-  // SVG graph), null = closed. Same "list → overlay" shape as Chronicles.
-  openConstellationId: null,
-  openConstellation: (id) => set({ openConstellationId: id }),
-  closeConstellation: () => set({ openConstellationId: null }),
+  // ── Cabinet ──────────────────────────────────────────────────────────────
+  // The Cabinet section is a "list of lists" — Evidence Locker and Motif each
+  // open in their own full-screen glass overlay (same shape as Chronicles /
+  // Gallery, nesting-safe via useHistoryOverlay). Gift Shop is deliberately
+  // NOT one of these — it's a small centered popup, not a history-tracked
+  // overlay, so it gets its own plain boolean + no history wiring.
+  evidenceOverlayOpen: false,
+  openEvidenceOverlay: () => set({ evidenceOverlayOpen: true }),
+  closeEvidenceOverlay: () => set({ evidenceOverlayOpen: false }),
 
-  // Which Academia tab to land on next time it opens — lets a Constellation
-  // node (or anything else) deep-link straight to e.g. "Projects" instead of
+  motifOverlayOpen: false,
+  openMotifOverlay: () => set({ motifOverlayOpen: true }),
+  closeMotifOverlay: () => set({ motifOverlayOpen: false }),
+
+  failureOverlayOpen: false,
+  openFailureOverlay: () => set({ failureOverlayOpen: true }),
+  closeFailureOverlay: () => set({ failureOverlayOpen: false }),
+
+  // Gift Shop — a curated question "gifted" to the visitor. Not an overlay:
+  // just a center-screen popup toggled by this flag. `giftQuestionIndex`
+  // tracks which question from GIFT_QUESTIONS is currently showing so a
+  // "reroll" can grab a different random one without repeating itself.
+  giftPopupOpen: false,
+  giftQuestionIndex: null,
+  openGiftPopup: (index) => set({ giftPopupOpen: true, giftQuestionIndex: index }),
+  closeGiftPopup: () => set({ giftPopupOpen: false }),
+  rerollGift: (index) => set({ giftQuestionIndex: index }),
+
+  // Which Academia tab to land on next time it opens — lets a deep link
+  // (or anything else) send the user straight to e.g. "Projects" instead of
   // always landing on the default first tab. Read once on mount by
   // AcademiaSection; changing it doesn't fight the user once they're in there
   // switching tabs themselves.

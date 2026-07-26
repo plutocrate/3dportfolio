@@ -287,13 +287,12 @@
      exact copy of the first. Speed is deliberately slow (see durations set
      inline per-column in GallerySection.jsx) and paused via
      animation-play-state while the lightbox is open. */
-  /* Very calm, slow idle twinkle for Constellation stars — each star gets a
-     slightly different duration/delay (computed inline) so the whole web
-     breathes rather than blinking in unison. Only runs while nothing is
-     hovered — see ConstellationOverlay. */
-  @keyframes star-twinkle {
-    0%, 100% { box-shadow: 0 0 4px rgba(255,255,255,0.5), 0 0 9px rgba(255,255,255,0.18); opacity: 0.85; }
-    50%      { box-shadow: 0 0 7px rgba(255,255,255,0.75), 0 0 14px rgba(255,255,255,0.3); opacity: 1; }
+  /* Slow, constant spin for the Motif discs — paused via
+     animation-play-state while that disc isn't the one playing. See
+     MotifOverlay. */
+  @keyframes disc-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
   }
 
   @keyframes gallery-marquee-up {

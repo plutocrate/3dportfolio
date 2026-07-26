@@ -1,0 +1,122 @@
+import { Archive, Gift, Disc, Frown, ChevronRight } from 'lucide-react'
+import { Separator } from '@/components/ui/separator'
+import { useSceneStore } from '@/hooks/useSceneStore'
+import { useClickSound } from '@/hooks/useClickSound'
+import { EVIDENCE_ITEMS } from '@/data/evidence'
+import { MOTIFS } from '@/data/motifs'
+import { FAILURE_CONFESSIONS } from '@/data/failureConfessions'
+import { randomGiftIndex } from '@/data/giftQuestions'
+
+// A single drawer row — same title/description rhythm as the Chronicles
+// heading cards, just with a small icon instead of a cover-image preview
+// (these three drawers aren't visual enough to warrant one).
+function DrawerCard({ icon: Icon, label, description, count, countLabel, onOpen }) {
+  const playClick = useClickSound()
+
+  return (
+    <button
+      onClick={() => { playClick(); onOpen() }}
+      className="group w-full text-left flex items-start gap-4"
+    >
+      <div className="shrink-0 w-11 h-11 mt-0.5 border border-white/12 flex items-center justify-center text-white/40 group-hover:text-white/85 group-hover:border-white/40 transition-all duration-300">
+        <Icon size={18} strokeWidth={1.5} />
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <div className="flex items-start justify-between gap-3 mb-1.5">
+          <h3 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-tight tracking-wide group-hover:text-white/75 transition-colors">
+            {label}
+          </h3>
+          <ChevronRight
+            size={18}
+            className="mt-1 shrink-0 text-white/25 group-hover:text-white/70 group-hover:translate-x-1 transition-all duration-300"
+          />
+        </div>
+
+        {count != null && (
+          <span className="inline-block font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.18em] text-white/28 tabular-nums mb-1.5">
+            {count} {countLabel}
+          </span>
+        )}
+
+        <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/45 leading-relaxed">
+          {description}
+        </p>
+      </div>
+    </button>
+  )
+}
+
+export function CabinetSection() {
+  const openEvidenceOverlay = useSceneStore((s) => s.openEvidenceOverlay)
+  const openMotifOverlay    = useSceneStore((s) => s.openMotifOverlay)
+  const openFailureOverlay  = useSceneStore((s) => s.openFailureOverlay)
+  const openGiftPopup       = useSceneStore((s) => s.openGiftPopup)
+
+  const drawers = [
+    {
+      key: 'evidence-locker',
+      icon: Archive,
+      label: 'EVIDENCE LOCKER',
+      description: 'Small proof of a life being lived — a screenshot, a photo, something made.',
+      count: EVIDENCE_ITEMS.length,
+      countLabel: EVIDENCE_ITEMS.length === 1 ? 'item' : 'items',
+      onOpen: openEvidenceOverlay,
+    },
+    {
+      key: 'motif',
+      icon: Disc,
+      label: 'MOTIF',
+      description: 'Music, pressed to disc. Press play, let it spin.',
+      count: MOTIFS.length,
+      countLabel: MOTIFS.length === 1 ? 'track' : 'tracks',
+      onOpen: openMotifOverlay,
+    },
+    {
+      key: 'failure-confessions',
+      icon: Frown,
+      label: 'FAILURE CONFESSIONS',
+      description: 'Things that didn\u2019t work, said plainly.',
+      count: FAILURE_CONFESSIONS.length,
+      countLabel: FAILURE_CONFESSIONS.length === 1 ? 'confession' : 'confessions',
+      onOpen: openFailureOverlay,
+    },
+    {
+      key: 'gift-shop',
+      icon: Gift,
+      label: 'GIFT SHOP',
+      description: 'A question, curated by me, gifted to you — no purchase necessary.',
+      count: null,
+      onOpen: () => openGiftPopup(randomGiftIndex()),
+    },
+  ]
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.16vw),13px)] uppercase tracking-[0.25em] text-white/30 mb-1">
+          A Drawer Of Small Things
+        </div>
+        <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">CABINET</h2>
+      </div>
+
+      <Separator />
+
+      <div className="space-y-6">
+        {drawers.map((d, idx) => (
+          <div key={d.key}>
+            <DrawerCard
+              icon={d.icon}
+              label={d.label}
+              description={d.description}
+              count={d.count}
+              countLabel={d.countLabel}
+              onOpen={d.onOpen}
+            />
+            {idx < drawers.length - 1 && <Separator className="mt-6" />}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}

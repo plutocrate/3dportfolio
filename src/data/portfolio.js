@@ -39,9 +39,9 @@ export const SECTION_META = {
     title: `${PERSONAL.name} — Chronicles`,
     description: `Long-form essays by ${PERSONAL.name} on software, games, and the ideas behind them.`,
   },
-  constellation: {
-    title: `${PERSONAL.name} — Constellation`,
-    description: `A mind map of the thinkers, projects, and ideas connected across ${PERSONAL.name}'s work.`,
+  cabinet: {
+    title: `${PERSONAL.name} — Cabinet`,
+    description: `A small cabinet of curiosities from ${PERSONAL.name} — evidence, gifts, and music.`,
   },
   blog: {
     title: `${PERSONAL.name} — Journal`,
@@ -484,9 +484,9 @@ export const ANNOTATIONS = [
   },
   {
     // Foot level — right side (mirrors "talk" at the left knee, one level down)
-    id: "constellation",
-    label: "CONSTELLATION",
-    description: "A mind map of ideas",
+    id: "cabinet",
+    label: "CABINET",
+    description: "A drawer of small things",
     position: [0.22, 0.06, 0.12],
     cameraTarget: [0.1, 0.1, 0],
     cameraPosition: [1.8, 0.22, 1.7],

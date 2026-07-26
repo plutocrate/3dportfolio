@@ -10,16 +10,16 @@ import {
   BlogSection,
   AcademiaSection,
   ChroniclesSection,
-  ConstellationSection,
+  CabinetSection,
 } from '@/components/sections'
 
 const SECTION_MAP = {
-  about:         AboutSection,
-  academia:      AcademiaSection,
-  talk:          TalkSection,
-  chronicles:    ChroniclesSection,
-  constellation: ConstellationSection,
-  blog:          BlogSection,
+  about:      AboutSection,
+  academia:   AcademiaSection,
+  talk:       TalkSection,
+  chronicles: ChroniclesSection,
+  cabinet:    CabinetSection,
+  blog:       BlogSection,
 }
 
 // Default panel width — roughly half the viewport on desktop, capped so it

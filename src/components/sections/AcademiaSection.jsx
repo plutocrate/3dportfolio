@@ -20,7 +20,7 @@ const TABS = [
 // the original, untouched section component so nothing about their layout
 // or styling changes.
 export function AcademiaSection() {
-  // Read once on mount — lets a Constellation node (or anything else) send
+  // Read once on mount — lets a deep link (or anything else) send
   // the user straight to e.g. "Skills" via setAcademiaInitialTab() before
   // opening this section, instead of always landing on Projects. Once
   // mounted, switching tabs is purely local state so it doesn't fight you.

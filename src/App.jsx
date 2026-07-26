@@ -6,7 +6,10 @@ import { NewsBanner } from '@/components/NewsBanner'
 import { SectionPanel } from '@/components/SectionPanel'
 import { ChronicleOverlay } from '@/components/ChronicleOverlay'
 import { ChronicleCategoryOverlay } from '@/components/ChronicleCategoryOverlay'
-import { ConstellationOverlay } from '@/components/ConstellationOverlay'
+import { EvidenceOverlay } from '@/components/EvidenceOverlay'
+import { MotifOverlay } from '@/components/MotifOverlay'
+import { FailureConfessionsOverlay } from '@/components/FailureConfessionsOverlay'
+import { GiftShopPopup } from '@/components/GiftShopPopup'
 import { GalleryOverlay } from '@/components/GalleryOverlay'
 import { Lightbox } from '@/components/Lightbox'
 import { HUDOverlay } from '@/components/HUDOverlay'
@@ -147,13 +150,19 @@ export default function App() {
 
       <ChronicleCategoryOverlay />
 
-      <ConstellationOverlay />
+      <EvidenceOverlay />
+
+      <MotifOverlay />
+
+      <FailureConfessionsOverlay />
 
       <ChronicleOverlay />
 
       <GalleryOverlay />
 
       <Lightbox />
+
+      <GiftShopPopup />
     </div>
   )
 }
