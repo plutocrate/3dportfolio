@@ -1,0 +1,37 @@
+# Pratham Purohit
+
+> Full-Stack Developer based in India, specializing in React, Three.js, Node.js, TypeScript, and WebGL. Builds real-time web apps, interactive 3D browser experiences, and multiplayer games. This site is an interactive 3D portfolio.
+
+Currently a UI/UX Developer (training) at Genesis Technologies, Indore. Previously a Junior Web Developer at Inviolate Technologies LLP. Holds a BTech in Computer Science & Engineering from Shoolini University of Biotechnology and Management Sciences (2021–2025). Open to full-time roles and freelance work — see the Talk section.
+
+## Sections
+
+- [About](https://prathamis.cool/about): Identity, summary, availability status, project gallery, and links.
+- [Academia](https://prathamis.cool/academia): Projects, work experience, technical skills, and education in one place.
+- [Chronicles](https://prathamis.cool/chronicles): Long-form essays on software, games, and the ideas behind them.
+- [Journal](https://prathamis.cool/blog): Shorter thoughts and write-ups.
+- [Talk](https://prathamis.cool/talk): Contact form; open to full-time roles and freelance work.
+
+## Projects
+
+- Baba Is You (Feb 2026) — Canvas-based puzzle simulation engine. JavaScript, Node.js, Express, PostgreSQL, deployed on Neon/Railway. https://github.com/plutocrate/iluvbaba
+- GTutor (Jan 2026) — Real-time gesture-based guitar tutor using MediaPipe gesture recognition and Web Audio API. React, TypeScript.
+- MrPhony (Mar 2026) — ASCII terrain strategy game converting real-world topography into game maps with Claude AI assistance. React, TypeScript, GitHub Actions. https://github.com/plutocrate/mrphony
+- Beat Dancer (Mar 2026) — Browser-based rhythm game with Three.js/WebGL and Mixamo 3D character animation synced to music. https://beatonline-production.up.railway.app/
+- Gwent Multiplayer (Feb 2026) — Real-time multiplayer card game (Witcher 3 inspired) with room-based 1v1 matches. Node.js, Express, Socket.IO. https://gwent-mult-production.up.railway.app/
+
+## Skills
+
+JavaScript/TypeScript, React, Three.js/WebGL, HTML5/CSS3/Tailwind CSS, Node.js/Express, GSAP, PostgreSQL/MySQL/MongoDB, Socket.io, Canvas API, REST APIs, Linux/Nginx, GitHub Actions.
+
+## Contact
+
+- Email: prathampurohitonline@outlook.com
+- LinkedIn: https://linkedin.com/in/prathammpurohit
+- GitHub: https://github.com/plutocrate
+- Website: https://prathamis.cool
+
+## Optional
+
+- [Full site details](https://prathamis.cool/llms-full.txt): a longer plain-text summary covering experience, education, and every project in more detail.
+- [Sitemap](https://prathamis.cool/sitemap.xml)

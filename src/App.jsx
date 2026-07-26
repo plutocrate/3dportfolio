@@ -14,6 +14,7 @@ import { SwipeHint } from '@/components/SwipeHint'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useAmbientMusic } from '@/hooks/useAmbientMusic'
 import { useClickSound } from '@/hooks/useClickSound'
+import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { setMusicBridge } from '@/hooks/useMusicBridge'
 
 // Reactive mobile detection — updates on resize, matches 3D side threshold
@@ -42,6 +43,8 @@ export default function App() {
   const playClick = useClickSound()
 
   const mobile = useIsMobile()
+
+  useDocumentMeta(activeSection)
 
   // ── Escape key → close section ───────────────────────────────────────────
   useEffect(() => {

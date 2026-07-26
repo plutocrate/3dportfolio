@@ -3,11 +3,15 @@ import gsap from 'gsap'
 import { X } from 'lucide-react'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
+import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
 
 // ── Global image lightbox ────────────────────────────────────────────────────
 // Mounted once at the App root. Any image anywhere in the site can trigger it
 // via useSceneStore().openLightbox(src, caption). Tapping/clicking the image,
-// the backdrop, the close button, or hitting Escape all close it.
+// the backdrop, the close button, Escape, or the phone back button all close
+// it. It can also open on top of the Chronicle/Gallery overlay — the shared
+// useHistoryOverlay hook keeps that nesting straight, so a single back-press
+// only closes the image, not whatever it was opened from.
 export function Lightbox() {
   const src      = useSceneStore((s) => s.lightboxSrc)
   const caption  = useSceneStore((s) => s.lightboxCaption)
@@ -15,15 +19,21 @@ export function Lightbox() {
   const playClick = useClickSound()
 
   const overlayRef = useRef()
+  const isOpen = Boolean(src)
+
+  const consumeHistoryEntry = useHistoryOverlay('lightbox', isOpen, close)
 
   const handleClose = useCallback(() => {
     playClick()
-    if (!overlayRef.current) { close(); return }
+    if (!overlayRef.current) { close(); consumeHistoryEntry(); return }
     gsap.to(overlayRef.current, {
       opacity: 0, duration: 0.25, ease: 'power2.in',
-      onComplete: () => close(),
+      onComplete: () => {
+        close()
+        consumeHistoryEntry()
+      },
     })
-  }, [playClick, close])
+  }, [playClick, close, consumeHistoryEntry])
 
   useEffect(() => {
     if (!src) return

@@ -16,6 +16,36 @@ export const PERSONAL = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// SECTION_META — SEO: per-section <title> / meta description, applied as the
+// visitor navigates between sections (see hooks/useDocumentMeta.js). Keeps
+// the browser tab, search-result snippet, and any link previews accurate to
+// whichever section is actually open, instead of one static title for the
+// whole site. Keys must match ANNOTATIONS ids below.
+// ─────────────────────────────────────────────────────────────────────────────
+export const SECTION_META = {
+  about: {
+    title: `${PERSONAL.name} — About`,
+    description: `About ${PERSONAL.name}, a ${PERSONAL.title} based in ${PERSONAL.location}. Identity, gallery, and links.`,
+  },
+  academia: {
+    title: `${PERSONAL.name} — Projects, Experience & Skills`,
+    description: `Projects, work experience, technical skills, and education for ${PERSONAL.name} — React, Three.js, Node.js and more.`,
+  },
+  talk: {
+    title: `${PERSONAL.name} — Get In Touch`,
+    description: `Contact ${PERSONAL.name} for full-time roles and freelance web & graphics development work.`,
+  },
+  chronicles: {
+    title: `${PERSONAL.name} — Chronicles`,
+    description: `Long-form essays by ${PERSONAL.name} on software, games, and the ideas behind them.`,
+  },
+  blog: {
+    title: `${PERSONAL.name} — Journal`,
+    description: `Shorter thoughts and write-ups from ${PERSONAL.name}.`,
+  },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // AVAILABILITY — small status badge shown under Identity in the About section.
 // Update `status` any time your situation changes:
 //   "open"    → green dot, e.g. actively looking for roles/freelance
@@ -251,15 +281,11 @@ export const BLOG_POSTS = [
   date: "1418, 25 July 2026",
   categories: ["reflection"],
   body: [
-	"I'm attaching pink floyd's ambience guitar below, listen to it.",
-	"Anyways, you know when I'm lost, or when I was lost, lost in myself or lost in the charm or chaos of life, I don't look up, I look at my head level, I look down my phone's screen, or straight to laptop's screen, or just down, very closed range, very.",
-	"When I listen to music at nights, I either close my eyes, or use my phone.",
-	"But, there was a time, last night I was thinking about it, when I wanted to change, and when I was changing(real change). I used to look far, not metaphorically, but actually used to look far.",
-	"I'll look at the distant trees, distant car running on mountains, distant people, distant buildings, building tops, and even the sky!",
-	"And yes, when listening to music, looking at the ceiling.",
-	"There was even time, I was so alone, I used to talk with the moon, obviously mouth closed, just looking at that amazing celestial body in freezing Himalyan nights(btw my college was in Himachal Pradesh).",
-	"This thing hit me last night, and I again started looking far, not in metaphorical sense, but actually(again I'm bringing this up).",
-	"Meaning of this journal log/blog -> no meaning. It just maybe made sense to me. Ok untill next time, I want to talk about the women in my life, in past and present, and what I learned from them, the separation, and how I should treat the new woman coming in my life."
+	"When I'm lost, I stop looking far. My eyes stay somewhere around my head level. My phone, my laptop, the road, just... close. Very fucking close.",
+"But last night I remembered something. Whenever I was actually changing, I used to look far. Trees, mountains, random cars, people, building tops, the sky. Even when listening to music, I'd just stare at the ceiling.",
+"There was even a phase where I'd just look at the moon in freezing Himachali nights. Mouth shut. Just looking.",
+"So I started doing it again.",
+"Idk, maybe it means nothing. It just made sense to me."
   ],
   media: ["/media/far.jpg"],
   link: "",
@@ -271,14 +297,12 @@ export const BLOG_POSTS = [
   date: "1245, 19 July 2026",
   categories: ["reflection"],
   body: [
-	"I dreamt of my past life, and realised how badly I disconnected from everything, in school I was the happiest(this is what I dream of btw), then how I disconnected from it. That separation was painful, oh god. Next, during COVID, if I observe closely, I was living my happiest time, but I couldn't realise it in the moment, I spent that time in my ex's home, no evil love, no lust, just pure fucking fun. Her family, me and my sister, it was fun. I disconnected from that too, and again god, that separation was painful, really painful that it opened my doorway to esoteric life.",
-	"And you know, there's a lot more after that. I think it is human to attach, right? Attach to people, surrounding, place, and a lifestlye?",
-	"Now, if you talk about my now, I am really detached from everything, I didn't care, I don't care if someone leaves, or I leave, or something changes, it's just my default to not care.",
-	"Even if I dream of that ex, and the moments I was enjoying being a human, those emotions. I wake up, and I analyse my dream instead, rather than trying to contact the people I dreamt of, or the visit the place I dreamt of.",
-	"The thing I analyzed is, I don't want absence in life, I want to be present in this world, my happiness lies in being present. I like people, I like what's around me, it's just I switch my life too fast without making myself stable.",
-	"Buddha liked absence? Idk, I heard it somewhere. But, I do not. I think my hunt for being absent and detached from the world is the cause of my lonliness, and you know what, I want to grow in life, this is not what I want to be, just a 'thinker'. Just my growth has a different route, I want to make games, I care a lot about the human psychology, collective psychology of characters, how they were, how they are now, not just what they've become, but how they eat now, how they talk with people now, how they stand, how they dress, how they make gestures, how they believe, and what not what not",
-	"The summary was my REM told me, what I estimate is a false estimation, it'll actually require a lot of my efforts and hardwork to deliver what I want to, if I keep going like what I'm going like, I'll end up being just more of a thinker not a fucking successful game developer with cult following.",
-	"The dream was not even about this thing, but this is what I analyzed lol, ok bye."
+	"I dreamt of my past, and realised my whole life has been a loop of losing what I loved. School, people, places, a way of living. Every time I got attached, life moved on, and the separation fucked me up more than I realised.",
+"I think it's human to attach. To people, places, routines. Maybe that's what makes them feel like home.",
+"Now I'm detached from almost everything. People leave, places change, life moves, and I barely react. Even when I dream of those moments, I wake up and analyse the dream instead of missing what I lost.",
+"I don't think I want that anymore. I don't want absence, I want presence. I like people. I like what's around me. I just keep switching lives before I ever become part of one.",
+"I don't want to end up as just another thinker. I want to make games. I want characters that feel painfully human.",
+"The dream wasn't even about this. This is just what I got out of it. Lol."
   ],
   media: ["/media/gorilla.jpg"],
   link: "",
@@ -290,11 +314,10 @@ export const BLOG_POSTS = [
   date: "1220, 14 July 2026",
   categories: ["reflection"],
   body: [
-	"I became a non believer around 2 years ago. Not a non believer of God, a non believer of almost everything. Before that, life was surprisingly simple. Grow, work hard, become wealthy, build something, take revenge against myself for all those years I wasted suffering and wandering. I actually worked hard, real hard. I had good friends, good girls, good sex. Life wasn't exactly unfair to me, and somehow it still kept unfolding it's secrets in front of me.",
-    "Something changed though. Now I question almost every model handed to me. Society, authority, success, even my own thoughts. Not because I want to rebel, my mind just refuses to accept things without denying them first. I don't know why, maybe it's just how it works now.",
-    "The funny part is, I still want to build. Probably more than ever. I just don't hurry anymore. I don't feel that guilt of missing out. I just like to exist. Which is also fake because I still haven't mastered myself. I still see a beautiful girl and fall for her, what is it now... around the 30th one? And I still end up confessing.",
-    "Now I'm lonely. Not because there are no people around me, there are. I just don't fit into where I want to fit anymore. I want conversations about people, art, cinema, games, stories and weird observations. Instead I mostly end up talking about things that don't move me.",
-    "And yeah... I still want good booties, good folks and good sex. I'm painfully human after all. Maybe that's the irony."
+	"I became a non believer around two years ago. Not of God, of almost everything. Before that life was simple. Grow, work hard, build something. Life wasn't unfair to me either. Somehow it just kept unfolding its weird, esoteric side in front of me, even when I wasn't looking for it.",
+"Something changed. Now I question almost every model handed to me. Society, authority, success, even my own thoughts. Not because I want to rebel, my mind just refuses to accept anything before denying it first.",
+"The funny part is, I still want to build. Probably more than ever. I just don't hurry anymore. Which is also bullshit because I still haven't mastered myself. I still see a beautiful girl and fall for her. Around the 30th one now? And I still end up confessing.",
+"I'm lonely. Not because there are no people around me. I just don't fit where I want to fit. I want conversations about people, art, cinema, games, stories and weird observations. Instead I mostly talk about things that don't move me.",
   ],
   media: ["/media/lastdance.jpeg"],
   link: "",
@@ -307,14 +330,13 @@ export const BLOG_POSTS = [
     categories: ["reflection"],
     body: [
 		"Is liberation rejection or acceptance?",
-		"Liberation starts with disgust. I look around, my messed up room, suffocating, lifeless, everything shattered and scattered, but this room gives me everything, a bed to sleep, a roof, washroom to shit in private.",
-		"We are all living in a costume, some folks like it, some don't, I'm in the second group, because I lived in lack, real lack of resources, affection, and worldy freedom. Only cool thing I posses at the moment is my head.",
-		"I tried to make my life better, make it stable, but the more I own, it ended up owning me and complicating my life.",
-		"I owned a job(owning a job, really?). I worked hard to find a job, but that job owned my life, all the things I've ever owned ended up owning me, my emotions they own me, my affection for her is now owning me, my mental illness is owning me.",
-		"What do humans like me do? Death is not a cool option imo, I have stories going in my head, I daydream, I luciddream about them.",
-		"I want to tell these stories to the world in my own way, but the question is when? Either make your life stable, play safe, take your time, or, do whatever the fuck you want to do, use the resources you already got, really use them, and create.",
-		"What if my creativity is not accepted by the world? Ask yourself did you do all these for validation?",
-		"Play safe then. Idk man, I don't have answers to all these questions at the moment.",
+"Liberation starts with disgust. I look around, my messed up room. Suffocating, lifeless, everything shattered. Yet this room gives me a bed to sleep, a roof, a washroom to shit in private.",
+"We're all living in a costume. Some folks like it, some don't. I don't. I grew up with lack. Real lack. Of resources, affection, and freedom. The only cool thing I possess right now is my head.",
+"I tried making my life stable, but the more I owned, the more it owned me. A job, my emotions, affection, even my own mind.",
+"What do humans like me do? Death isn't a cool option. I have stories in my head. I daydream them. I lucid dream them.",
+"I want to tell those stories in my own way. The question is when? Play safe, make life stable, or use what you've already got and just fucking create.",
+"What if nobody likes what I create? Then ask yourself, did you do all this for validation?",
+"Play safe then. Idk man, I don't have the answers right now."
     ],
 		media: ["/media/letgo.jpg"],
     link: "",

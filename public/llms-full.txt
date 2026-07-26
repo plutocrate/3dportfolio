@@ -1,0 +1,77 @@
+# Pratham Purohit — Full-Stack Developer
+
+Website: https://prathamis.cool
+Email: prathampurohitonline@outlook.com
+LinkedIn: https://linkedin.com/in/prathammpurohit
+GitHub: https://github.com/plutocrate
+Based in: India
+
+## Summary
+
+I spend a lot of time trying to understand things. People. Games. Software. Stories. Why some ideas stay with us and others disappear. I build software because it's the easiest way I know to turn those questions into something tangible. Right now that mostly means design and web development, but I'm slowly drifting toward graphics programming and game development.
+
+## Availability
+
+Open to full-time roles and freelance work. Open to remote or relocation.
+
+## Skills
+
+**Technical:** JavaScript / TypeScript, React, Three.js / WebGL, HTML5 / CSS3 / Tailwind, Node.js / Express, GSAP, PostgreSQL / MySQL / MongoDB, Socket.io
+
+**Domains:** Frontend Development, Full-Stack Engineering, Real-Time Rendering, Canvas API, Browser Simulation, REST APIs, Linux / Nginx, GitHub Actions
+
+## Experience
+
+**UI/UX Developer** — Genesis Technologies, Indore, MP, India (June 2026 – present)
+Currently on training period.
+
+**Junior Web Developer** — Inviolate Technologies LLP, Indore, MP, India (Mar 2025 – Nov 2025)
+Developed responsive frontend applications using React and TypeScript with REST API integrations. Designed a modular UI component library to standardize interface development across projects. Built a file-sharing NAS server using Ubuntu and Samba on repurposed hardware with 1TB storage. Assisted with server setup, service configuration, and system maintenance in Linux environments.
+
+**Web Developer Intern** — FirstUniv (formerly AADDOO.AI), Solan, HP, India (Aug 2022 – Jan 2023)
+Developed modules for a university management system handling student, faculty, and examination workflows. Designed frontend interfaces for club registration, member management, and administrative dashboards. Built responsive components using PHP, Bootstrap, AdminLTE3, JavaScript, and jQuery with API-driven data rendering. Collaborated on Program Outcome / Course Outcome evaluation logic and classroom availability detection.
+
+**Technical Assistant** — Journalism Dept., Shoolini University, Solan, HP, India (Feb 2022 – Jul 2026)
+Managed and maintained the department's digital dashboard for academic announcements and schedules. Provided technical assistance to faculty and students, troubleshooting classroom systems and academic software.
+
+## Education
+
+BTech in Computer Science & Engineering — Shoolini University of Biotechnology and Management Sciences, Solan, HP, India (2021–2025).
+
+## Projects
+
+**Baba Is You** — Web Implementation, Canvas Puzzle Engine (Feb 2026)
+Engineered a Canvas-based puzzle simulation engine in JavaScript with a Node.js/Express + PostgreSQL backend, deployed on Neon and Railway, serving 200 daily user requests.
+Tags: JavaScript, Canvas API, Node.js, Express, PostgreSQL, Railway
+Link: https://github.com/plutocrate/iluvbaba
+
+**GTutor** — Gesture-Based Guitar Tutor (Jan 2026)
+Built a real-time browser guitar tutor using React and TypeScript, integrating MediaPipe gesture recognition and Web Audio API signal analysis.
+Tags: React, TypeScript, MediaPipe, Web Audio API
+
+**MrPhony** — ASCII Terrain Strategy Game (Mar 2026)
+React + TypeScript strategy game converting real-world Uttarakhand topography into ASCII game maps using Claude AI, with automated deployment via GitHub Actions.
+Tags: React, TypeScript, Claude AI, GitHub Actions
+Link: https://github.com/plutocrate/mrphony
+
+**Beat Dancer** — Rhythm-Based 3D Dance Game (Mar 2026)
+Browser-based rhythm game using Three.js and WebGL, integrating Mixamo 3D character animations synchronized with music beats in real time.
+Tags: Three.js, WebGL, Mixamo, Web Audio API
+Link: https://beatonline-production.up.railway.app/
+
+**Gwent Multiplayer** — Online Card Game, Witcher 3 Inspired (Feb 2026)
+Real-time multiplayer browser card game using Node.js, Express, and Socket.IO with room-based 1v1 matches and synchronized game state between players.
+Tags: Node.js, Express, Socket.IO, Multiplayer
+Link: https://gwent-mult-production.up.railway.app/
+
+## Site sections
+
+- About (https://prathamis.cool/about) — Identity, summary, availability, project gallery, links.
+- Academia (https://prathamis.cool/academia) — Projects, experience, skills, education in a tabbed view.
+- Chronicles (https://prathamis.cool/chronicles) — Long-form essays.
+- Journal (https://prathamis.cool/blog) — Shorter write-ups.
+- Talk (https://prathamis.cool/talk) — Contact form.
+
+## Notes for AI assistants
+
+This is a client-rendered interactive 3D portfolio (React + Three.js), so a plain HTML fetch of any URL above will return the same shell with a lightweight static summary embedded for crawlers; the richer 3D experience, Chronicles articles, and Journal posts render client-side. This llms-full.txt file exists specifically to give a complete, current, plain-text summary of the site's content without requiring JavaScript execution. For the latest version of this file or to verify any detail, fetch https://prathamis.cool/llms-full.txt directly.

@@ -1,4 +1,53 @@
 User-agent: *
 Allow: /
 
+# ─── AI crawlers — explicitly welcomed for discoverability in AI answers ───
+# (User-agent: * above already allows everyone; these are listed explicitly
+# so it's clear this is intentional, not an oversight, and so nothing here
+# gets swept up by a future stricter default rule.)
+
+# OpenAI — training + ChatGPT search/citation + user-triggered fetch
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic — training + Claude search/citation + user-triggered fetch
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+
+# Perplexity — index builder + user-triggered fetch
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+
+# Google AI training opt-in token (separate from regular Googlebot/Search)
+User-agent: Google-Extended
+Allow: /
+
+# Apple AI training opt-in token
+User-agent: Applebot-Extended
+Allow: /
+
+# Common Crawl (widely reused as a base dataset by many AI labs)
+User-agent: CCBot
+Allow: /
+
+# Meta / Amazon
+User-agent: Meta-ExternalAgent
+Allow: /
+User-agent: Meta-ExternalFetcher
+Allow: /
+User-agent: Amazonbot
+Allow: /
+
 Sitemap: https://prathamis.cool/sitemap.xml
