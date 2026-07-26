@@ -1,9 +1,10 @@
-import { CHRONICLES, getReadingTime } from '@/data/chronicles'
+import { ChevronRight } from 'lucide-react'
+import { CHRONICLES, getReadingTime, getStatusMeta } from '@/data/chronicles'
 import { Separator } from '@/components/ui/separator'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
 
-function CategoryChip({ label }) {
+export function CategoryChip({ label }) {
   return (
     <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/35">
       {label}
@@ -11,7 +12,24 @@ function CategoryChip({ label }) {
   )
 }
 
-function ChronicleCard({ chronicle }) {
+// Status chip — "Completed" / "In Progress" / "Draft" (or any custom label a
+// chronicle sets). Color is looked up from getStatusMeta() in the CMS file
+// so the palette lives in one place. Unknown/omitted statuses fall back to
+// a neutral "Completed" styling — see getStatusMeta() in chronicles.js.
+export function StatusChip({ status }) {
+  const { label, className } = getStatusMeta(status)
+  return (
+    <span
+      className={`font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border ${className}`}
+    >
+      {label}
+    </span>
+  )
+}
+
+// A single chronicle — used both inside a heading's overlay list and
+// (previously) as a flat card. Clicking it opens the full reading area.
+export function ChronicleCard({ chronicle }) {
   const openChronicle = useSceneStore((s) => s.openChronicle)
   const playClick     = useClickSound()
   const readingTime    = getReadingTime(chronicle)
@@ -26,17 +44,24 @@ function ChronicleCard({ chronicle }) {
           className="w-full border border-white/8 overflow-hidden mb-3"
           style={{ paddingTop: '42%', position: 'relative', background: '#0a0a0a' }}
         >
+          {/* object-cover always fills this banner fully (no gaps) — if a
+              crop looks off for a particular image, set `coverPosition` on
+              that chronicle in chronicles.js to shift the focal point. */}
           <img
             src={chronicle.coverImage}
             alt=""
             loading="lazy"
             className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-95 group-hover:scale-[1.02] transition-all duration-500"
+            style={{ objectPosition: chronicle.coverPosition || 'center' }}
           />
         </div>
       )}
 
       <div className="flex items-center justify-between gap-2 mb-1.5">
-        <CategoryChip label={chronicle.category} />
+        <div className="flex items-center gap-1.5 min-w-0">
+          <CategoryChip label={chronicle.category} />
+          <StatusChip status={chronicle.status} />
+        </div>
         <span className="font-mono text-[clamp(8px,calc(7.35px+0.12vw),10px)] text-white/28 shrink-0 tabular-nums">
           {chronicle.date} · {readingTime}
         </span>
@@ -59,7 +84,61 @@ function ChronicleCard({ chronicle }) {
   )
 }
 
+// Groups the flat CHRONICLES array into headings, keyed by `category`, in
+// first-seen order — so the CMS stays a flat array in chronicles.js while
+// the section renders it as a list of headings, each holding its own essays.
+function groupByCategory(chronicles) {
+  const groups = new Map()
+  for (const c of chronicles) {
+    if (!groups.has(c.category)) groups.set(c.category, [])
+    groups.get(c.category).push(c)
+  }
+  return Array.from(groups.entries()).map(([category, items]) => ({ category, items }))
+}
+
+function ChronicleHeading({ category, items }) {
+  const openCategory = useSceneStore((s) => s.openChronicleCategoryOverlay)
+  const playClick     = useClickSound()
+  const count          = items.length
+  const preview        = items[0]
+
+  return (
+    <button
+      onClick={() => { playClick(); openCategory(category) }}
+      className="group w-full text-left flex items-start justify-between gap-4"
+    >
+      <div className="min-w-0">
+        <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+          <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.18em] text-white/28 tabular-nums">
+            {count} {count === 1 ? 'Chronicle' : 'Chronicles'}
+          </span>
+          {/* Reflects the most recent chronicle filed under this heading —
+              open it to see every entry's own status. */}
+          {preview && <StatusChip status={preview.status} />}
+        </div>
+
+        <h3 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-tight tracking-wide mb-1.5 group-hover:text-white/75 transition-colors">
+          {category}
+        </h3>
+
+        {preview?.dek && (
+          <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/40 leading-relaxed">
+            {preview.dek}
+          </p>
+        )}
+      </div>
+
+      <ChevronRight
+        size={18}
+        className="mt-1 shrink-0 text-white/25 group-hover:text-white/70 group-hover:translate-x-1 transition-all duration-300"
+      />
+    </button>
+  )
+}
+
 export function ChroniclesSection() {
+  const groups = groupByCategory(CHRONICLES)
+
   return (
     <div className="space-y-6">
       <div>
@@ -80,11 +159,11 @@ export function ChroniclesSection() {
           </p>
         </div>
       ) : (
-        <div className="space-y-8">
-          {CHRONICLES.map((c, idx) => (
-            <div key={c.id}>
-              <ChronicleCard chronicle={c} />
-              {idx < CHRONICLES.length - 1 && <Separator className="mt-8" />}
+        <div className="space-y-6">
+          {groups.map(({ category, items }, idx) => (
+            <div key={category}>
+              <ChronicleHeading category={category} items={items} />
+              {idx < groups.length - 1 && <Separator className="mt-6" />}
             </div>
           ))}
         </div>

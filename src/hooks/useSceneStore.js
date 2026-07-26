@@ -17,6 +17,15 @@ export const useSceneStore = create((set, get) => ({
   openChronicle: (id) => set({ openChronicleId: id }),
   closeChronicle: () => set({ openChronicleId: null }),
 
+  // Currently open Chronicle "heading" (category) overlay — shows every
+  // chronicle filed under that heading as a list. null = closed. Opening a
+  // chronicle from inside this list stacks the ChronicleOverlay on top of it
+  // (nesting is handled by useHistoryOverlay, so a single back-press only
+  // closes the top-most layer).
+  openChronicleCategory: null,
+  openChronicleCategoryOverlay: (category) => set({ openChronicleCategory: category }),
+  closeChronicleCategoryOverlay: () => set({ openChronicleCategory: null }),
+
   // Global image lightbox — any <img> across the site (Gallery grid,
   // Chronicle body images, Journal media, etc.) can open this. null src
   // means closed. Components that auto-scroll (e.g. the Gallery marquee)

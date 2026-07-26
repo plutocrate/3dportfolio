@@ -4,46 +4,28 @@ import { X } from 'lucide-react'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
 import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
-import { GALLERY_IMAGES } from '@/data/gallery'
+import { CHRONICLES } from '@/data/chronicles'
+import { ChronicleCard } from '@/components/sections/ChroniclesSection'
 
-// ── Full Gallery overlay ─────────────────────────────────────────────────────
-// Same glassmorphism "reader" chrome as ChronicleOverlay (backdrop blur, card,
-// sticky close button) but instead of an article it shows every image from
-// GALLERY_IMAGES as a static masonry grid. No marquee, no infinite scroll —
-// just the whole gallery, once, so it can be scanned top to bottom.
-function GalleryGridTile({ item, onOpen }) {
-  return (
-    <button
-      onClick={() => onOpen(item)}
-      className="group block w-full mb-3 break-inside-avoid text-left border border-white/8 overflow-hidden"
-      style={{ background: '#0a0a0a' }}
-    >
-      <img
-        src={item.src}
-        alt={item.caption}
-        loading="lazy"
-        draggable={false}
-        className="w-full h-auto block opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-300"
-      />
-      {item.caption && (
-        <span className="block px-2 py-1.5 font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.14em] text-white/35 group-hover:text-white/65 transition-colors">
-          {item.caption}
-        </span>
-      )}
-    </button>
-  )
-}
+// ── Chronicle heading overlay ────────────────────────────────────────────────
+// Opened by tapping a heading in ChroniclesSection. Same glassmorphism
+// "reader" chrome as ChronicleOverlay/GalleryOverlay, but instead of an
+// article or an image grid, it lists every chronicle filed under one
+// heading (category). Tapping any of those opens the actual reading area
+// (ChronicleOverlay), stacked on top — useHistoryOverlay keeps a single
+// back-press / Escape closing only the top-most layer.
+export function ChronicleCategoryOverlay() {
+  const category      = useSceneStore((s) => s.openChronicleCategory)
+  const closeOverlay  = useSceneStore((s) => s.closeChronicleCategoryOverlay)
+  const playClick     = useClickSound()
 
-export function GalleryOverlay() {
-  const isOpen        = useSceneStore((s) => s.galleryOverlayOpen)
-  const closeOverlay   = useSceneStore((s) => s.closeGalleryOverlay)
-  const openLightbox   = useSceneStore((s) => s.openLightbox)
-  const playClick      = useClickSound()
+  const isOpen = Boolean(category)
+  const items  = isOpen ? CHRONICLES.filter((c) => c.category === category) : []
 
   const overlayRef = useRef()
   const cardRef    = useRef()
 
-  const consumeHistoryEntry = useHistoryOverlay('gallery', isOpen, closeOverlay)
+  const consumeHistoryEntry = useHistoryOverlay('chronicle-category', isOpen, closeOverlay)
 
   const handleClose = useCallback(() => {
     playClick()
@@ -56,11 +38,6 @@ export function GalleryOverlay() {
       },
     })
   }, [playClick, closeOverlay, consumeHistoryEntry])
-
-  const handleOpen = (item) => {
-    playClick()
-    openLightbox(item.src, item.caption)
-  }
 
   // Mount animation
   useEffect(() => {
@@ -86,7 +63,7 @@ export function GalleryOverlay() {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[70] flex items-center justify-center p-0 sm:p-5"
+      className="fixed inset-0 z-[65] flex items-center justify-center p-0 sm:p-5"
       style={{ opacity: 0 }}
       onClick={handleClose}
     >
@@ -97,8 +74,8 @@ export function GalleryOverlay() {
       />
 
       {/* Reader-style card — full screen on mobile; on desktop it fills the
-          padded area above (fixed ~20px margin), same as the two Chronicle
-          overlays, so every glass-card overlay reads as the same size. */}
+          padded area above (fixed ~20px margin), same as ChronicleOverlay
+          and GalleryOverlay, so all three overlays read as the same size. */}
       <div
         ref={cardRef}
         onClick={(e) => e.stopPropagation()}
@@ -123,25 +100,25 @@ export function GalleryOverlay() {
           {/* Category + meta — mirrors Chronicle header format */}
           <div className="flex items-center gap-2 mb-4">
             <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/40">
-              Gallery
+              Chronicles
             </span>
             <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/28 tabular-nums">
-              {GALLERY_IMAGES.length} {GALLERY_IMAGES.length === 1 ? 'image' : 'images'}
+              {items.length} {items.length === 1 ? 'entry' : 'entries'}
             </span>
           </div>
 
           <h1 className="font-display text-[clamp(20px,calc(18.2px+1vw),25px)] text-white leading-[1.05] tracking-wide mb-8">
-            Full Gallery
+            {category}
           </h1>
 
-          {GALLERY_IMAGES.length === 0 ? (
+          {items.length === 0 ? (
             <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/30">
-              No images yet.
+              No chronicles under this heading yet.
             </p>
           ) : (
-            <div className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-3">
-              {GALLERY_IMAGES.map((item) => (
-                <GalleryGridTile key={item.filename} item={item} onOpen={handleOpen} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10">
+              {items.map((c) => (
+                <ChronicleCard key={c.id} chronicle={c} />
               ))}
             </div>
           )}

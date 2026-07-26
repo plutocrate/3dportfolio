@@ -5,6 +5,7 @@ import { MobileAnnotationOverlay } from '@/components/MobileAnnotationOverlay'
 import { NewsBanner } from '@/components/NewsBanner'
 import { SectionPanel } from '@/components/SectionPanel'
 import { ChronicleOverlay } from '@/components/ChronicleOverlay'
+import { ChronicleCategoryOverlay } from '@/components/ChronicleCategoryOverlay'
 import { GalleryOverlay } from '@/components/GalleryOverlay'
 import { Lightbox } from '@/components/Lightbox'
 import { HUDOverlay } from '@/components/HUDOverlay'
@@ -136,6 +137,8 @@ export default function App() {
 
       {/* Pass handleClose so both X button and back button work */}
       <SectionPanel onClose={handleClose} />
+
+      <ChronicleCategoryOverlay />
 
       <ChronicleOverlay />
 
