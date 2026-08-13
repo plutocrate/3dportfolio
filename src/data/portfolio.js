@@ -285,7 +285,216 @@ export const BLOG_POSTS = [
   date: "1617, 13 Aug 2026",
   categories: ["reflection"],
   body: [
-	"You're the best. I never met someone so so so so beautiful, you're as beautiful inside as outside. BTW I'm so sorry I'm not a wordsmith or poet, but this is just a try... Oh God I never met anyone like you, I probably never would. I never want to leave you, but you see again, life forced me to erase my belongings and move on. I never had the pleasure of 'good endings', I always escaped from everything, never returned, and you know what never actually felt the pain of separation. You were by my side everytime, you cared for me, you loved me even when your hands were bonded. I'll miss you a lot. I know maybe you won't ever read it, it's just you know (let me be dramatic for a while), if there's 'rebirth', I really really really really pray to god to pair me up with you.... Oh my days, I'll miss everything I had with you, I still want to be in touch with you, I still want you, but I can't, you can't(this is the most important part), but I hope, I really hope our paths cross again, and I find you. I can not stop writing about you, I can not stop thinking about you... I feel death MJ... my heart aches, it burns... I feel pain, too much of it... I cant describe... but I'll be reborn again stronger, not my first time and you know that too... but I'll miss you :(... a lot... a lot.",
+	"My girl."
+
+"O girl..."
+
+"You're the best."
+
+"I swear to God, I never met someone so, so, so, so beautiful."
+
+"And I'm not even talking about your face, your eyes, your smile, all of that..."
+
+"You're beautiful inside too."
+
+"Maybe even more there."
+
+"And God, I'm not a wordsmith, I'm not a poet, I don't know how to put these stupid, huge feelings into pretty sentences."
+
+"But let me try."
+
+"Just this once."
+
+"Oh my days..."
+
+"I never met anyone like you."
+
+"And I probably never will."
+
+"I never want to leave you."
+
+"I don't."
+
+"I really, really don't."
+
+"But you see..."
+
+"Life did that thing again."
+
+"It forced me to erase my belongings, pack whatever was left of me, and move on."
+
+"And I've always been good at leaving."
+
+"Too good, actually."
+
+"I always escaped."
+
+"From people."
+
+"From places."
+
+"From feelings."
+
+"I would leave, never look back, never return..."
+
+"And somehow I never actually felt the pain of separation."
+
+"But you..."
+
+"You were different."
+
+"You were by my side every single time."
+
+"You cared for me."
+
+"You loved me."
+
+"You stayed with me even when your own hands were bonded and you couldn't do anything about it."
+
+"You were there."
+
+"My girl, you were there."
+
+"And now I'm sitting here trying to write about you and realizing I don't even know how to say goodbye to you."
+
+"Because I don't want to."
+
+"I still want you."
+
+"I still want to talk to you."
+
+"I still want to know how your day was."
+
+"I still want to hear you."
+
+"I still want to be stupid with you."
+
+"I still want to be somewhere beside you, doing absolutely nothing, and somehow feeling like I'm exactly where I'm supposed to be."
+
+"But I can't."
+
+"And you can't."
+
+"And that's the most painful part of all."
+
+"Maybe you will never read this."
+
+"Maybe these words will just stay here, somewhere, like a little grave for everything we had."
+
+"But let me be dramatic for a while, o girl..."
+
+"If there is such a thing as rebirth, if somehow we get another life after this one, then I really, really, really, really pray to God..."
+
+"Pair me up with you again."
+
+"Please."
+
+"Let me find you again."
+
+"Let me meet you somewhere in another stupid lifetime and somehow recognize you."
+
+"Let me look at you and feel that strange little ache again and think, 'Oh... it's you.'"
+
+"Because I'll miss everything."
+
+"I'll miss you."
+
+"I'll miss the little things."
+
+"The stupid things."
+
+"The conversations."
+
+"The silence."
+
+"The comfort."
+
+"The feeling of having someone there."
+
+"The feeling that somewhere in this huge, stupid world, there was my girl."
+
+"And God..."
+
+"I cannot stop writing about you."
+
+"I cannot stop thinking about you."
+
+"I feel death, MJ."
+
+"My heart aches."
+
+"It burns."
+
+"It actually fucking burns."
+
+"And I don't know how to describe this pain because every word feels too small for it."
+
+"I thought I knew what separation felt like."
+
+"I thought I'd already seen enough endings."
+
+"But apparently I didn't."
+
+"Because this one hurts."
+
+"This one hurts like hell."
+
+"And still..."
+
+"I know I'll be reborn again."
+
+"Stronger."
+
+"I always do."
+
+"You know that too."
+
+"I'll get up."
+
+"I'll laugh again."
+
+"I'll live again."
+
+"I'll become someone else, maybe someone better, maybe someone worse, who knows."
+
+"I'll keep moving."
+
+"But somewhere inside me, there will always be this little fucking room that belongs to you."
+
+"And nobody gets the key."
+
+"Nobody."
+
+"Because you were my girl."
+
+"My o girl."
+
+"And I don't know if our paths will ever cross again."
+
+"But I hope they do."
+
+"God, I hope they fucking do."
+
+"And if one day, somewhere, somehow, I find you again..."
+
+"I swear I'll know."
+
+"I'll find you."
+
+"Or maybe you'll find me."
+
+"Until then..."
+
+"I'll miss you."
+
+"A lot."
+
+"A lot."
+
+"A lot."
+
+":("
+
   ],
   media: ["/media/hug.jpg"],
   link: "",
