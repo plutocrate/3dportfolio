@@ -329,12 +329,6 @@ export const BLOG_POSTS = [
 
 "I always escaped.",
 
-"From people.",
-
-"From places.",
-
-"From feelings.",
-
 "I would leave, never look back, never return...",
 
 "And somehow I never actually felt the pain of separation.",
@@ -451,10 +445,6 @@ export const BLOG_POSTS = [
 
 "I'll get up.",
 
-"I'll laugh again.",
-
-"I'll live again.",
-
 "I'll become someone else, maybe someone better, maybe someone worse, who knows.",
 
 "I'll keep moving.",
@@ -466,8 +456,6 @@ export const BLOG_POSTS = [
 "Nobody.",
 
 "Because you were my girl.",
-
-"My o girl.",
 
 "And I don't know if our paths will ever cross again.",
 
