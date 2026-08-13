@@ -453,7 +453,7 @@ export const BLOG_POSTS = [
 
 "Nobody.",
 
-"Because you were my girl.",
+"Because you were the best woman in my life.",
 
 "And I don't know if our paths will ever cross again.",
 
