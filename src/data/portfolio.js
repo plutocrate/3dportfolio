@@ -482,7 +482,7 @@ export const BLOG_POSTS = [
 ":(",
 
   ],
-  media: ["/media/hug.jpg"],
+  media: ["/media/mj.jpg"],
   link: "",
 },
 {
