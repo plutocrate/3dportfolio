@@ -285,215 +285,215 @@ export const BLOG_POSTS = [
   date: "1617, 13 Aug 2026",
   categories: ["reflection"],
   body: [
-	"My girl."
+	"My girl.",
 
-"O girl..."
+"O girl...",
 
-"You're the best."
+"You're the best.",
 
-"I swear to God, I never met someone so, so, so, so beautiful."
+"I swear to God, I never met someone so, so, so, so beautiful.",
 
-"And I'm not even talking about your face, your eyes, your smile, all of that..."
+"And I'm not even talking about your face, your eyes, your smile, all of that...",
 
-"You're beautiful inside too."
+"You're beautiful inside too.",
 
-"Maybe even more there."
+"Maybe even more there.",
 
-"And God, I'm not a wordsmith, I'm not a poet, I don't know how to put these stupid, huge feelings into pretty sentences."
+"And God, I'm not a wordsmith, I'm not a poet, I don't know how to put these stupid, huge feelings into pretty sentences.",
 
-"But let me try."
+"But let me try.",
 
-"Just this once."
+"Just this once.",
 
-"Oh my days..."
+"Oh my days...",
 
-"I never met anyone like you."
+"I never met anyone like you.",
 
-"And I probably never will."
+"And I probably never will.",
 
-"I never want to leave you."
+"I never want to leave you.",
 
-"I don't."
+"I don't.",
 
-"I really, really don't."
+"I really, really don't.",
 
-"But you see..."
+"But you see...",
 
-"Life did that thing again."
+"Life did that thing again.",
 
-"It forced me to erase my belongings, pack whatever was left of me, and move on."
+"It forced me to erase my belongings, pack whatever was left of me, and move on.",
 
-"And I've always been good at leaving."
+"And I've always been good at leaving.",
 
-"Too good, actually."
+"Too good, actually.",
 
-"I always escaped."
+"I always escaped.",
 
-"From people."
+"From people.",
 
-"From places."
+"From places.",
 
-"From feelings."
+"From feelings.",
 
-"I would leave, never look back, never return..."
+"I would leave, never look back, never return...",
 
-"And somehow I never actually felt the pain of separation."
+"And somehow I never actually felt the pain of separation.",
 
-"But you..."
+"But you...",
 
-"You were different."
+"You were different.",
 
-"You were by my side every single time."
+"You were by my side every single time.",
 
-"You cared for me."
+"You cared for me.",
 
-"You loved me."
+"You loved me.",
 
-"You stayed with me even when your own hands were bonded and you couldn't do anything about it."
+"You stayed with me even when your own hands were bonded and you couldn't do anything about it.",
 
-"You were there."
+"You were there.",
 
-"My girl, you were there."
+"My girl, you were there.",
 
-"And now I'm sitting here trying to write about you and realizing I don't even know how to say goodbye to you."
+"And now I'm sitting here trying to write about you and realizing I don't even know how to say goodbye to you.",
 
-"Because I don't want to."
+"Because I don't want to.",
 
-"I still want you."
+"I still want you.",
 
-"I still want to talk to you."
+"I still want to talk to you.",
 
-"I still want to know how your day was."
+"I still want to know how your day was.",
 
-"I still want to hear you."
+"I still want to hear you.",
 
-"I still want to be stupid with you."
+"I still want to be stupid with you.",
 
-"I still want to be somewhere beside you, doing absolutely nothing, and somehow feeling like I'm exactly where I'm supposed to be."
+"I still want to be somewhere beside you, doing absolutely nothing, and somehow feeling like I'm exactly where I'm supposed to be.",
 
-"But I can't."
+"But I can't.",
 
-"And you can't."
+"And you can't.",
 
-"And that's the most painful part of all."
+"And that's the most painful part of all.",
 
-"Maybe you will never read this."
+"Maybe you will never read this.",
 
-"Maybe these words will just stay here, somewhere, like a little grave for everything we had."
+"Maybe these words will just stay here, somewhere, like a little grave for everything we had.",
 
-"But let me be dramatic for a while, o girl..."
+"But let me be dramatic for a while, o girl...",
 
-"If there is such a thing as rebirth, if somehow we get another life after this one, then I really, really, really, really pray to God..."
+"If there is such a thing as rebirth, if somehow we get another life after this one, then I really, really, really, really pray to God...",
 
-"Pair me up with you again."
+"Pair me up with you again.",
 
-"Please."
+"Please.",
 
-"Let me find you again."
+"Let me find you again.",
 
-"Let me meet you somewhere in another stupid lifetime and somehow recognize you."
+"Let me meet you somewhere in another stupid lifetime and somehow recognize you.",
 
-"Let me look at you and feel that strange little ache again and think, 'Oh... it's you.'"
+"Let me look at you and feel that strange little ache again and think, 'Oh... it's you.'",
 
-"Because I'll miss everything."
+"Because I'll miss everything.",
 
-"I'll miss you."
+"I'll miss you.",
 
-"I'll miss the little things."
+"I'll miss the little things.",
 
-"The stupid things."
+"The stupid things.",
 
-"The conversations."
+"The conversations.",
 
-"The silence."
+"The silence.",
 
-"The comfort."
+"The comfort.",
 
-"The feeling of having someone there."
+"The feeling of having someone there.",
 
-"The feeling that somewhere in this huge, stupid world, there was my girl."
+"The feeling that somewhere in this huge, stupid world, there was my girl.",
 
-"And God..."
+"And God...",
 
-"I cannot stop writing about you."
+"I cannot stop writing about you.",
 
-"I cannot stop thinking about you."
+"I cannot stop thinking about you.",
 
-"I feel death, MJ."
+"I feel death, MJ.",
 
-"My heart aches."
+"My heart aches.",
 
-"It burns."
+"It burns.",
 
-"It actually fucking burns."
+"It actually fucking burns.",
 
-"And I don't know how to describe this pain because every word feels too small for it."
+"And I don't know how to describe this pain because every word feels too small for it.",
 
-"I thought I knew what separation felt like."
+"I thought I knew what separation felt like.",
 
-"I thought I'd already seen enough endings."
+"I thought I'd already seen enough endings.",
 
-"But apparently I didn't."
+"But apparently I didn't.",
 
-"Because this one hurts."
+"Because this one hurts.",
 
-"This one hurts like hell."
+"This one hurts like hell.",
 
-"And still..."
+"And still...",
 
-"I know I'll be reborn again."
+"I know I'll be reborn again.",
 
-"Stronger."
+"Stronger.",
 
-"I always do."
+"I always do.",
 
-"You know that too."
+"You know that too.",
 
-"I'll get up."
+"I'll get up.",
 
-"I'll laugh again."
+"I'll laugh again.",
 
-"I'll live again."
+"I'll live again.",
 
-"I'll become someone else, maybe someone better, maybe someone worse, who knows."
+"I'll become someone else, maybe someone better, maybe someone worse, who knows.",
 
-"I'll keep moving."
+"I'll keep moving.",
 
-"But somewhere inside me, there will always be this little fucking room that belongs to you."
+"But somewhere inside me, there will always be this little fucking room that belongs to you.",
 
-"And nobody gets the key."
+"And nobody gets the key.",
 
-"Nobody."
+"Nobody.",
 
-"Because you were my girl."
+"Because you were my girl.",
 
-"My o girl."
+"My o girl.",
 
-"And I don't know if our paths will ever cross again."
+"And I don't know if our paths will ever cross again.",
 
-"But I hope they do."
+"But I hope they do.",
 
-"God, I hope they fucking do."
+"God, I hope they fucking do.",
 
-"And if one day, somewhere, somehow, I find you again..."
+"And if one day, somewhere, somehow, I find you again...",
 
-"I swear I'll know."
+"I swear I'll know.",
 
-"I'll find you."
+"I'll find you.",
 
-"Or maybe you'll find me."
+"Or maybe you'll find me.",
 
-"Until then..."
+"Until then...",
 
-"I'll miss you."
+"I'll miss you.",
 
-"A lot."
+"A lot.",
 
-"A lot."
+"A lot.",
 
-"A lot."
+"A lot.",
 
-":("
+":(",
 
   ],
   media: ["/media/hug.jpg"],
