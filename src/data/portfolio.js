@@ -327,8 +327,6 @@ export const BLOG_POSTS = [
 
 "Too good, actually.",
 
-"I always escaped.",
-
 "I would leave, never look back, never return...",
 
 "And somehow I never actually felt the pain of separation.",
@@ -347,7 +345,7 @@ export const BLOG_POSTS = [
 
 "You were there.",
 
-"My girl, you were there.",
+"O girl, you were there.",
 
 "And now I'm sitting here trying to write about you and realizing I don't even know how to say goodbye to you.",
 
