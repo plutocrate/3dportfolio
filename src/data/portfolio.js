@@ -279,6 +279,22 @@ export const LINK_COLLECTIONS = [
 // BLOG
 export const BLOG_POSTS = [
 {
+  id: "17th-blog",
+  title: "I'm a loser.",
+  subtitle: "Weakest man on the planet at this moment",
+  date: "0518, 15 Aug 2026",
+  categories: ["reflection"],
+  body: [
+	"I haven't slept because I was debating with her. And maybe that's exactly why I'm writing this now. Not to talk about her, just to observe myself. I have this weird fucking habit of losing my track whenever something feels good. I get attached, I start imagining things, I put too much of myself into something, and slowly I forget what I was doing before it entered my life.",
+	"I've done this before. More than once. And maybe I'm God's favorite child. Not because I believe in God. I don't. But sometimes it really feels like something keeps snatching things away from me whenever I start walking in the wrong direction. People, places, jobs, things I thought I wanted to keep. It has happened enough times that I can't completely ignore the pattern.",
+	"Maybe I'm just fucking stupid and keep repeating the same mistake. Or maybe life has been reminding me, again and again, that I'm not supposed to settle too early. That I'm here for something bigger. Whatever the fuck that means. Maybe every time I start building my entire world around something, something comes along and breaks it apart. And I'm left alone again.",
+	"At first I hate it. Then I understand it. Then I forget. Then I do it again. Maybe that's the loop. And maybe this is just another reminder. Get back on track, idiot.",
+	"I've also thought about removing some of my previous entries because reading them now feels painful, creepy, sometimes even cringe. But I don't think I will. They're a track of my thoughts, even the ones I don't like anymore. I never write when I'm completely okay anyway. I write when I'm too high or too low, when something has pushed me far enough in either direction that I need to put it somewhere. So maybe these journals aren't supposed to be a good representation of me. They're just evidence of where my head was when I wrote them. And I think I want to keep that.",
+  ],
+  media: ["/media/mevsme.jpg"],
+  link: "",
+},
+{
   id: "16th-blog",
   title: "Oh MJ, I'll miss you a lot.",
   subtitle: "I never thought of mentioning someone in my blog, but here you are",
