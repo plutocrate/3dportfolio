@@ -279,6 +279,22 @@ export const LINK_COLLECTIONS = [
 // BLOG
 export const BLOG_POSTS = [
 {
+  id: "18th-blog",
+  title: "Post nut clarity.",
+  subtitle: "Things were not how my brain perceived previously.",
+  date: "1747, 16 Aug 2026",
+  categories: ["reflection"],
+  body: [
+	"Had a buzz cut today, I feel light.",
+	"Life seems to be on track again, I realised my pattern of losing, detachment and healing. I can't force healing upon me, when I wake up my brain reconstructs it's reality, reality? my reality was my lifestlye which is no more mine, and it panics, I see it now, and I understand it now.",
+	"I was re-reading my journal and I realised, I was kind of a 'nihilist', but if I consider life had no meaning, then my depression has no meaning as well, right? Am I writing it to make me feel better? Ofcousre yes, why not? Shouldn't I make me feel better and look forward.",
+	"So, this experience taught me a lot, trust me a lot, I can observe better now. I'm more committed to starting my own prenuer, and I'm starting it today only.",
+	"Maybe next journal won't be an obsevration anymore, but what I'm actually doing.",
+  ],
+  media: ["/media/life.jpg"],
+  link: "",
+},
+{
   id: "17th-blog",
   title: "I'm a loser.",
   subtitle: "Weakest man on the planet at this moment",
