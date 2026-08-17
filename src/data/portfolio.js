@@ -285,12 +285,13 @@ export const BLOG_POSTS = [
   date: "0405, 17 Aug 2026",
   categories: ["reflection"],
   body: [
-	"Peter Pan Syndrome, it's my observation about me as well. Well, if it's true or if it's not, I should not base my personality on it.",
+	"Peter Pan Syndrome, it's my observation about. Well, if it's true or if it's not, I should not base my personality on it.",
 	"Come on man, I'm just an earthling just like others.",
-	"I always failed in converting life's pressure into diamond, because I'm not coal.",
+	"I have always failed in converting pressure into diamond, because I'm not coal.",
 	"I want to write music, I'll write some lyrics now, ok bye, goodnight. Why the hell am I even thinking too much about 'outer world', I should bring back my locus 'inward'.",
+		"No, actually fuck my step things and commitments, I want to make a fucking good game, maybe short, but fucking fun, and actually make it, end to end. An idea is, maybe, a rat who's gone nuts over loss of his celebrity crush, and now plans to annihilate the rat film industry, because conspiracy says something something, and my rat comrade breaches into the esoteric secerts of plutocracy of his society in his journey of mass murder, and ends up becoming a plutocrat himself. Or, maybe I need sleep, I actually do.",
   ],
-  media: ["/media/coal.jpg"],
+  media: ["/media/coal.jpg","/media/rat.jpg"],
   link: "",
 },
 {
