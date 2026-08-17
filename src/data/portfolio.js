@@ -279,6 +279,21 @@ export const LINK_COLLECTIONS = [
 // BLOG
 export const BLOG_POSTS = [
 {
+  id: "21th-blog",
+  title: "I'm not special.",
+  subtitle: "but I'll become one.",
+  date: "0405, 17 Aug 2026",
+  categories: ["reflection"],
+  body: [
+	"Peter Pan Syndrome, it's my observation about me as well. Well, if it's true or if it's not, I should not base my personality on it.",
+	"Come on man, I'm just an earthling just like others.",
+	"I always failed in converting life's pressure into diamond, because I'm not coal.",
+	"I want to write music, I'll write some lyrics now, ok bye, goodnight. Why the hell am I even thinking too much about 'outer world', I should bring back my locus 'inward'.",
+  ],
+  media: ["/media/coal.jpg"],
+  link: "",
+},
+{
   id: "20th-blog",
   title: "Commitment to myself.",
   subtitle: "needs to be done fr.",
