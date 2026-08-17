@@ -282,7 +282,7 @@ export const BLOG_POSTS = [
   id: "20th-blog",
   title: "Commitment to myself.",
   subtitle: "needs to be done fr.",
-  date: "0320, 17 Aug 2026",
+  date: "0400, 17 Aug 2026",
   categories: ["reflection"],
   body: [
 "Step 0: Just a fucking everyday routine. Shit on time. Sleep on time. Eat on time. Gym on time. Study on time. Same time, every day.",
