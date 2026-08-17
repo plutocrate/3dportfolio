@@ -279,6 +279,60 @@ export const LINK_COLLECTIONS = [
 // BLOG
 export const BLOG_POSTS = [
 {
+  id: "19th-blog",
+  title: "What is love?",
+  subtitle: "and time to be back home my boy.",
+  date: "0320, 17 Aug 2026",
+  categories: ["reflection"],
+  body: [
+"I've fallen for a lot of people. Maybe around thirty by now. And every time, I thought I was falling in love.",
+
+"But maybe I was falling for the feeling of falling.",
+
+"I'm very good at reaching someone. I become intense very quickly. I want to know them, talk to them, make them feel special. Everything gets wrapped inside this little balloon called love.",
+
+"But I've noticed something about myself.",
+
+"I'm much better at wanting something than keeping it.",
+
+"I can chase someone with everything I have, but when something becomes mine, I somehow lose the discipline to take care of it. I've done this with people, studies, work, even my own life.",
+
+"Maybe that's why I keep falling.",
+
+"There is something about the beginning that consumes me. The uncertainty, the possibility, the feeling that maybe this person could become mine. And I mistake that intensity for love.",
+
+"Maybe sometimes it is love. I don't know.",
+
+"When I think about MJ, I know what I felt was real. I wanted her around. I wanted to know her day, talk to her, be stupid with her, do absolutely nothing with her.",
+
+"And when she left, it hurt.",
+
+"I spent years talking about attachment, suffering, impermanence and human nature. Then I became attached myself.",
+
+"Turns out understanding something doesn't make you immune to it.",
+
+"Maybe love isn't the intensity of reaching someone.",
+
+"Maybe love begins after that.",
+
+"After the excitement. After the confession. After there is nothing left to chase.",
+
+"Maybe love is consistency. Maybe it's choosing to show up when everything becomes ordinary.",
+
+"I don't know.",
+
+"I'm still figuring it out.",
+
+"But maybe I don't fall in love with people.",
+
+"Maybe I fall in love with possibility.",
+
+"And maybe real love is much quieter than that.",
+  ],
+  media: ["/media/lonely.jpg"],
+  link: "",
+},
+{
   id: "18th-blog",
   title: "Post nut clarity.",
   subtitle: "Things were not how my brain perceived previously.",
