@@ -325,7 +325,7 @@ export const BLOG_POSTS = [
   date: "0320, 17 Aug 2026",
   categories: ["reflection"],
   body: [
-"I've fallen for a lot of people. Maybe around thirty by now. And every time, I thought I was falling in love.",
+"I've fallen for a lot of people, I thought I was falling in love.",
 
 "But maybe I was falling for the feeling of falling.",
 
