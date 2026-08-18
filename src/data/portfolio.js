@@ -280,16 +280,13 @@ export const LINK_COLLECTIONS = [
 export const BLOG_POSTS = [
 {
   id: "21th-blog",
-  title: "I'm not special.",
-  subtitle: "but I'll become one.",
-  date: "0405, 17 Aug 2026",
+  title: "It's morning again.",
+  subtitle: "I know I'm late, and it starts today.",
+  date: "1204, 17 Aug 2026",
   categories: ["reflection"],
   body: [
-	"Peter Pan Syndrome, it's my observation about. Well, if it's true or if it's not, I should not base my personality on it.",
-	"Come on man, I'm just an earthling just like others.",
-	"I have always failed in converting pressure into diamond, because I'm not coal.",
-	"I want to write music, I'll write some lyrics now, ok bye, goodnight. Why the hell am I even thinking too much about 'outer world', I should bring back my locus 'inward'.",
-		"No, actually fuck my step things and commitments, I want to make a fucking good game, maybe short, but fucking fun, and actually make it, end to end. An idea is, maybe, a rat who's gone nuts over loss of his celebrity crush, and now plans to annihilate the rat film industry, because conspiracy says something something, and my rat comrade breaches into the esoteric secerts of plutocracy of his society in his journey of mass murder, and ends up becoming a plutocrat himself. Or, maybe I need sleep, I actually do.",
+	"I wrote this thing already at 5 in the morning, and I woke up at 12, very good, but instead of wasting hourse thinking how shit I'm, let me actually start the day.",
+	"Let's go.",
   ],
   media: ["/media/coal.jpg","/media/rat.jpg"],
   link: "",
