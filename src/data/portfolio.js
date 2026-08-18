@@ -279,33 +279,6 @@ export const LINK_COLLECTIONS = [
 // BLOG
 export const BLOG_POSTS = [
 {
-  id: "20th-blog",
-  title: "Commitment to myself.",
-  subtitle: "needs to be done fr.",
-  date: "0400, 17 Aug 2026",
-  categories: ["reflection"],
-  body: [
-"Step 0: Just a fucking everyday routine. Shit on time. Sleep on time. Eat on time. Gym on time. Study on time. Same time, every day.",
-
-"Step 1: Take care of myself. Sleep properly, fix my health, finish my reappears. Get my body and routine back.",
-
-"Step 2: Get a good fucking job. Make money, learn, save, become stable. TS + React + Next + Three.js + Node + databases. I already know this shit. I just need to get fucking good at it.",
-
-"Step 3: Build Rabid. Keyboard store first. Let it become whatever it becomes.",
-
-"Step 4: Game dev. Stop fucking ideating it and actually make games.",
-
-"Step 5: Music. Keep writing, keep playing, keep making weird shit.",
-
-"That's it. No grand fucking five-year plan. I don't need to know which one becomes my life. I just need to do the steps without forgetting why I started them.",
-
-"And maybe I shouldn't stop writing about all this emotional shit either. It teaches me. I'm learning that I'm not falling into my emotional river anymore, I'm riding it. Fuck it, I can't keep trying to be a character. I'm me. Day 0 starts today.",
-
-  ],
-  media: ["/media/egodeath.jpg"],
-  link: "",
-},
-{
   id: "21th-blog",
   title: "It's morning again.",
   subtitle: "I know I'm late, and it starts today.",
