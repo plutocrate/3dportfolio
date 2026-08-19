@@ -279,43 +279,21 @@ export const LINK_COLLECTIONS = [
 // BLOG
 export const BLOG_POSTS = [
 {
-  id: "21th-blog",
-  title: "It's morning again.",
-  subtitle: "I know I'm late, and it starts today.",
-  date: "1204, 17 Aug 2026",
-  categories: ["reflection"],
-  body: [
-	"I wrote this thing already at 5 in the morning, and I woke up at 12, very good, but instead of wasting hourse thinking how shit I'm, let me actually start the day.",
-	"Let's go.",
-  ],
-  media: ["/media/coal.jpg","/media/rat.jpg"],
-  link: "",
-},
-{
   id: "20th-blog",
-  title: "Commitment to myself.",
-  subtitle: "needs to be done fr.",
-  date: "0400, 17 Aug 2026",
-  categories: ["reflection"],
+  title: "Adavita Vedanta",
+  subtitle: "What I understand as of now.",
+  date: "0226, 20 Aug 2026",
+  categories: ["philosophy"],
   body: [
-"Step 0: Just a fucking everyday routine. Shit on time. Sleep on time. Eat on time. Gym on time. Study on time. Same time, every day.",
+	"What I understand so far is that it starts with a very simple question: am I these things, or am I aware of these things?",
 
-"Step 1: Take care of myself. Sleep properly, fix my health, finish my reappears. Get my body and routine back.",
+"I notice a thought. So the thought is something I experience. I notice sadness, so sadness is something I experience. I notice my body, my memories, my desires, even the feeling of 'I', and all of these are things I can observe.",
 
-"Step 2: Get a good fucking job. Make money, learn, save, become stable. TS + React + Next + Three.js + Node + databases. I already know this shit. I just need to get fucking good at it.",
+"So then the question becomes: if I can observe all these things, what exactly is the thing that is observing them? I don't know yet. That's what I want to understand.",
 
-"Step 3: Build Rabid. Keyboard store first. Let it become whatever it becomes.",
-
-"Step 4: Game dev. Stop fucking ideating it and actually make games.",
-
-"Step 5: Music. Keep writing, keep playing, keep making weird shit.",
-
-"That's it. No grand fucking five-year plan. I don't need to know which one becomes my life. I just need to do the steps without forgetting why I started them.",
-
-"And maybe I shouldn't stop writing about all this emotional shit either. It teaches me. I'm learning that I'm not falling into my emotional river anymore, I'm riding it. Fuck it, I can't keep trying to be a character. I'm me. Day 0 starts today.",
-
+"I don't want to jump straight into big words or make it spiritual for the sake of it. I want to study it properly. I'll start with the Upanishads and the Bhagavad Gita, and then read Shankara. For now, I just want to understand this one question: who is the one experiencing all of this?"
   ],
-  media: ["/media/egodeath.jpg"],
+  media: ["/media/adv.jpg"],
   link: "",
 },
 {
