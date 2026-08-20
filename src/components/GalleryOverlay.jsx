@@ -18,13 +18,25 @@ function GalleryGridTile({ item, onOpen }) {
       className="group block w-full mb-3 break-inside-avoid text-left border border-white/8 overflow-hidden"
       style={{ background: '#0a0a0a' }}
     >
-      <img
-        src={item.src}
-        alt={item.caption}
-        loading="lazy"
-        draggable={false}
-        className="w-full h-auto block opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-300"
-      />
+      {item.type === 'video' ? (
+        <video
+          src={item.src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="w-full h-auto block opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-300"
+        />
+      ) : (
+        <img
+          src={item.src}
+          alt={item.caption}
+          loading="lazy"
+          draggable={false}
+          className="w-full h-auto block opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-300"
+        />
+      )}
       {item.caption && (
         <span className="block px-2 py-1.5 font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.14em] text-white/35 group-hover:text-white/65 transition-colors">
           {item.caption}
@@ -118,7 +130,7 @@ export function GalleryOverlay() {
               Gallery
             </span>
             <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/28 tabular-nums">
-              {GALLERY_IMAGES.length} {GALLERY_IMAGES.length === 1 ? 'image' : 'images'}
+              {GALLERY_IMAGES.length} {GALLERY_IMAGES.length === 1 ? 'item' : 'items'}
             </span>
           </div>
 

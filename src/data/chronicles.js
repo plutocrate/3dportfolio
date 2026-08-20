@@ -49,25 +49,25 @@
 //     date: "26 Jul 2026",            // any human-readable date string
 //     category: "Reflection",         // chip label AND heading grouping key — see note above
 //     status: "Completed",            // OPTIONAL — "Completed" | "In Progress" | "Draft" — see note above
-//     coverImage: "/media/whatis.jpg",// OPTIONAL — shown at the top of the list card + overlay
+//     coverImage: "/gallery/whatis.jpg",// OPTIONAL — shown at the top of the list card + overlay
 //     coverAspect: "16/9",            // OPTIONAL — overlay hero aspect ratio, see note above
 //     coverPosition: "center",        // OPTIONAL — crop focal point, see note above
-//     music: "/chronicles-music/reflection-01.mp3", // OPTIONAL — this chronicle's own soundtrack
-//                                      // drop the file into /public/chronicles-music/
+//     music: "/music/reflection-01.mp3", // OPTIONAL — this chronicle's own soundtrack
+//                                      // drop the file into /public/music/
 //                                      // and reference it here. Leave blank/omit for silence.
 //     body: [                         // array of paragraphs AND inline media, in reading order.
 //       "First paragraph...",         // a plain string = a paragraph
-//       { type: "image", src: "/media/whatis.jpg", caption: "Optional caption", aspect: "3/2", position: "center" },
+//       { type: "image", src: "/gallery/whatis.jpg", caption: "Optional caption", aspect: "3/2", position: "center" },
 //                                      // an object = inline media, dropped in right here between
 //                                      // paragraphs. `aspect`/`position` are OPTIONAL and work like
 //                                      // coverAspect/coverPosition above (image items only — videos
 //                                      // always show uncropped so their full frame stays visible).
 //       "Second paragraph, appears after the image above...",
-//       { type: "video", src: "/media/terebinag.mp4" },
+//       { type: "video", src: "/gallery/terebinag.mp4" },
 //       "Third paragraph...",
 //     ],
 //     media: [                        // OPTIONAL — extra images / videos shown at the END,
-//       { type: "image", src: "/media/whatis.jpg", caption: "Optional caption" },  // after everything in `body`. Use the inline
+//       { type: "image", src: "/gallery/whatis.jpg", caption: "Optional caption" },  // after everything in `body`. Use the inline
 //     ],                              // form above if you want media mid-article instead.
 //     links: [                        // OPTIONAL — shown inline as "further reading"
 //       { label: "The paper I'm referencing", href: "https://example.com" },
@@ -83,12 +83,12 @@ export const CHRONICLES = [
     id: "on-philosophy-and-life",
     title: "Advaita Vedanta -- my understanding.",
     dek: "Who the fuck am 'I'?",
-    date: "26 Jul 2026",
+    date: "21 Aug 2026",
     category: "Understanding 'I'",
     status: "In Progress",
-    coverImage: "/media/faa.jpg",
+    coverImage: "/gallery/faa.jpg",
 		coverPosition:"top",
-    music: "/chronicles-music/inter.mp3",
+    music: "/music/inter.mp3",
     body: [
 		"I've started reading a little about Advaita Vedanta, and the more I think about it, the more I realize that the question isn't really asking for another label. It is asking me to investigate the person who is doing the labeling in the first place.",
 
@@ -98,7 +98,7 @@ export const CHRONICLES = [
 
 "So Advaita asks me to stop for a moment and actually look at my experience.",
 
-{ type: "image", src: "/media/meta.jpg", caption: "kundalini", aspect: "3/2", position: "center" },
+{ type: "image", src: "/gallery/meta.jpg", caption: "kundalini", aspect: "3/2", position: "center" },
 
 "I can see my body. I can feel sensations in it. So my body is something I experience.",
 
@@ -140,7 +140,7 @@ export const CHRONICLES = [
 
 "Then Advaita gives another idea: neti, neti — 'not this, not this.'",
 
-{ type: "image", src: "/media/godisyou.jpg", caption: "kundalini", aspect: "3/2", position: "center" },
+{ type: "image", src: "/gallery/godisyou.jpg", caption: "kundalini", aspect: "3/2", position: "center" },
 
 "I look at the body: not this.",
 
@@ -186,7 +186,7 @@ export const CHRONICLES = [
 
 "Maybe this is what I was trying to say when I wrote that I'm no longer falling into my emotional river, but riding it.",
 
-{ type: "image", src: "/media/taketime.jpg", caption: "kundalini", aspect: "3/2", position: "top" },
+{ type: "image", src: "/gallery/taketime.jpg", caption: "kundalini", aspect: "3/2", position: "top" },
 
 "But Advaita makes me ask one step further: who is aware that the river is flowing?",
 

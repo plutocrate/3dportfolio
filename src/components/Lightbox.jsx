@@ -4,6 +4,7 @@ import { X } from 'lucide-react'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
 import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
+import { pauseMusicForVideo, resumeMusicAfterVideo } from '@/hooks/useMusicBridge'
 
 // ── Global image lightbox ────────────────────────────────────────────────────
 // Mounted once at the App root. Any image anywhere in the site can trigger it
@@ -20,6 +21,7 @@ export function Lightbox() {
 
   const overlayRef = useRef()
   const isOpen = Boolean(src)
+  const isVideo = /\.(mp4|webm|mov)$/i.test(src || '')
 
   const consumeHistoryEntry = useHistoryOverlay('lightbox', isOpen, close)
 
@@ -71,12 +73,26 @@ export function Lightbox() {
         className="relative max-w-[92vw] max-h-[88vh] flex flex-col items-center"
         onClick={(e) => e.stopPropagation()}
       >
-        <img
-          src={src}
-          alt={caption || ''}
-          className="max-w-[92vw] max-h-[78vh] w-auto h-auto object-contain border border-white/10"
-          style={{ background: '#0a0a0a' }}
-        />
+        {isVideo ? (
+          <video
+            src={src}
+            controls
+            autoPlay
+            playsInline
+            onPlay={pauseMusicForVideo}
+            onPause={resumeMusicAfterVideo}
+            onEnded={resumeMusicAfterVideo}
+            className="max-w-[92vw] max-h-[78vh] w-auto h-auto object-contain border border-white/10"
+            style={{ background: '#0a0a0a' }}
+          />
+        ) : (
+          <img
+            src={src}
+            alt={caption || ''}
+            className="max-w-[92vw] max-h-[78vh] w-auto h-auto object-contain border border-white/10"
+            style={{ background: '#0a0a0a' }}
+          />
+        )}
         {caption && (
           <figcaption className="mt-3 font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.16em] text-white/45 text-center">
             {caption}

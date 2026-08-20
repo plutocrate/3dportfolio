@@ -20,13 +20,25 @@ function GalleryTile({ item, onOpen }) {
       className="group block w-full mb-3 text-left border border-white/8 overflow-hidden shrink-0"
       style={{ background: '#0a0a0a' }}
     >
-      <img
-        src={item.src}
-        alt={item.caption}
-        loading="lazy"
-        draggable={false}
-        className="w-full h-auto block opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-300"
-      />
+      {item.type === 'video' ? (
+        <video
+          src={item.src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="w-full h-auto block opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-300"
+        />
+      ) : (
+        <img
+          src={item.src}
+          alt={item.caption}
+          loading="lazy"
+          draggable={false}
+          className="w-full h-auto block opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-300"
+        />
+      )}
       {item.caption && (
         <span className="block px-2 py-1.5 font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.14em] text-white/35 group-hover:text-white/65 transition-colors">
           {item.caption}
@@ -108,7 +120,7 @@ export function GallerySection() {
         <div className="flex flex-col gap-2 py-4">
           <div className="font-mono text-[clamp(10px,calc(9.26px+0.18vw),13px)] text-white/25 uppercase tracking-widest">No images yet.</div>
           <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/30">
-            Drop images into <span className="font-mono text-white/40">src/assets/gallery/</span> — captions can
+            Drop images into <span className="font-mono text-white/40">public/gallery/</span> — captions can
             be set in <span className="font-mono text-white/40">src/data/gallery.js</span>.
           </p>
         </div>

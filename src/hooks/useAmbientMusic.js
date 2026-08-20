@@ -1,36 +1,35 @@
 import { useRef, useState, useCallback, useMemo } from 'react'
+import musicFiles from 'virtual:music-manifest'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AMBIENT MUSIC PLAYER
-// Auto-discovers every track dropped into src/assets/music/ at build time —
-// just add more .mp3/.wav/.ogg files there and they're automatically picked
-// up into the playlist, no code changes needed. One random track plays on
-// every visit, and the player auto-advances to another random track when the
-// current one ends.
+// Auto-discovers every track dropped into public/music/ at build time — just
+// add more .mp3/.wav/.ogg/.m4a files there and they're automatically picked
+// up into the playlist, no code changes needed. This is the SAME track list
+// used for the Motif discs (src/data/motifs.js) and the one you pick a
+// chronicle's own soundtrack from (src/data/chronicles.js) — one folder,
+// sourced everywhere. One random track plays on every visit, and the player
+// auto-advances to another random track when the current one ends.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const trackModules = import.meta.glob('/src/assets/music/*.{mp3,wav,ogg,m4a}', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-})
-
 // Turn "ambient-01.mp3" → "Ambient 01"
-function humanize(path) {
-  const file = path.split('/').pop().replace(/\.[^.]+$/, '')
-  return file
+function humanize(filename) {
+  return filename
+    .replace(/\.[^.]+$/, '')
     .replace(/[-_]+/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase())
     .trim()
 }
 
 function buildPlaylist() {
-  const entries = Object.entries(trackModules).sort(([a], [b]) => a.localeCompare(b))
-  if (entries.length === 0) {
+  if (musicFiles.length === 0) {
     // Fallback so the player never breaks if the folder is ever emptied
-    return [{ url: import.meta.env.BASE_URL + 'amb.mp3', name: 'Ambience' }]
+    return [{ url: import.meta.env.BASE_URL + 'music/ambient-01.mp3', name: 'Ambience' }]
   }
-  return entries.map(([path, url]) => ({ url, name: humanize(path) }))
+  return musicFiles.map((filename) => ({
+    url: `${import.meta.env.BASE_URL}music/${filename}`,
+    name: humanize(filename),
+  }))
 }
 
 function shuffledIndices(length, excludeIndex = -1) {

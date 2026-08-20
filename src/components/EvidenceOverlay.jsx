@@ -134,7 +134,7 @@ export function EvidenceOverlay() {
                 The locker is empty.
               </div>
               <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/30">
-                Drop images into <span className="font-mono text-white/40">src/assets/evidence/</span> and
+                Drop images into <span className="font-mono text-white/40">public/evidence/</span> and
                 list them in <span className="font-mono text-white/40">src/data/evidence.js</span>
               </p>
             </div>

@@ -293,7 +293,7 @@ export const BLOG_POSTS = [
 
 "I don't want to jump straight into big words or make it spiritual for the sake of it. I want to study it properly. I'll start with the Upanishads and the Bhagavad Gita, and then read Shankara. For now, I just want to understand this one question: who is the one experiencing all of this?"
   ],
-  media: ["/media/adv.jpg"],
+  media: ["/gallery/adv.jpg"],
   link: "",
 },
 {
@@ -347,7 +347,7 @@ export const BLOG_POSTS = [
 
 "And maybe real love is much quieter than that.",
   ],
-  media: ["/media/lonely.jpg"],
+  media: ["/gallery/lonely.jpg"],
   link: "",
 },
 {
@@ -363,7 +363,7 @@ export const BLOG_POSTS = [
 	"So, this experience taught me a lot, trust me a lot, I can observe better now. I'm more committed to starting my own prenuer, and I'm starting it today only.",
 	"Maybe next journal won't be an obsevration anymore, but what I'm actually doing.",
   ],
-  media: ["/media/life.jpg"],
+  media: ["/gallery/life.jpg"],
   link: "",
 },
 {
@@ -379,7 +379,7 @@ export const BLOG_POSTS = [
 	"At first I hate it. Then I understand it. Then I forget. Then I do it again. Maybe that's the loop. And maybe this is just another reminder. Get back on track, idiot.",
 	"I've also thought about removing some of my previous entries because reading them now feels painful, creepy, sometimes even cringe. But I don't think I will. They're a track of my thoughts, even the ones I don't like anymore. I never write when I'm completely okay anyway. I write when I'm too high or too low, when something has pushed me far enough in either direction that I need to put it somewhere. So maybe these journals aren't supposed to be a good representation of me. They're just evidence of where my head was when I wrote them. And I think I want to keep that.",
   ],
-  media: ["/media/mevsme.jpg"],
+  media: ["/gallery/mevsme.jpg"],
   link: "",
 },
 {
@@ -586,7 +586,7 @@ export const BLOG_POSTS = [
 ":(",
 
   ],
-  media: ["/media/mj.jpg"],
+  media: ["/gallery/mj.jpg"],
   link: "",
 },
 {
@@ -602,7 +602,7 @@ export const BLOG_POSTS = [
 "So I started doing it again.",
 "Idk, maybe it means nothing. It just made sense to me."
   ],
-  media: ["/media/far.jpg"],
+  media: ["/gallery/far.jpg"],
   link: "",
 },
 {
@@ -619,7 +619,7 @@ export const BLOG_POSTS = [
 "I don't want to end up as just another thinker. I want to make games. I want characters that feel painfully human.",
 "The dream wasn't even about this. This is just what I got out of it. Lol."
   ],
-  media: ["/media/gorilla.jpg"],
+  media: ["/gallery/gorilla.jpg"],
   link: "",
 },
 {
@@ -634,7 +634,7 @@ export const BLOG_POSTS = [
 "The funny part is, I still want to build. Probably more than ever. I just don't hurry anymore. Which is also bullshit because I still haven't mastered myself. I still see a beautiful girl and fall for her. Around the 30th one now? And I still end up confessing.",
 "I'm lonely. Not because there are no people around me. I just don't fit where I want to fit. I want conversations about people, art, cinema, games, stories and weird observations. Instead I mostly talk about things that don't move me.",
   ],
-  media: ["/media/lastdance.jpeg"],
+  media: ["/gallery/lastdance.jpeg"],
   link: "",
 },
   {
@@ -653,7 +653,7 @@ export const BLOG_POSTS = [
 "What if nobody likes what I create? Then ask yourself, did you do all this for validation?",
 "Play safe then. Idk man, I don't have the answers right now."
     ],
-		media: ["/media/letgo.jpg"],
+		media: ["/gallery/letgo.jpg"],
     link: "",
   },
   {
@@ -670,7 +670,7 @@ export const BLOG_POSTS = [
 			"This is more about awareness, and attention. If you realise even your own wiring of system is just a side effect of being a human, you can bend your own reality.",
 			"Bending reality? No, not in the way you're thinking, it's not magic, it's just making your life more peaceful by just observing, no magic here, sorry.",
     ],
-		media: ["/media/whatis.jpg"],
+		media: ["/gallery/whatis.jpg"],
     link: "",
   },
   {
@@ -687,7 +687,7 @@ export const BLOG_POSTS = [
 			"Creative head calls for creativity, no matter what life gives you, your creativity keeps you in agony, I'm not talking about so called 'creatives', my talk is a little deeper.",
 			"They say meditate, let go of thoughts, you don't need to cater every thoughts of yours, like really think about it, what did your creativity bring to 'you'? So maybe just chill out, live with peace, after death is no peace, but, your consicousness is gone, you're gone. So, you gotta create peace right now.",
     ],
-		media: ["/media/buddha.jpg"],
+		media: ["/gallery/buddha.jpg"],
     link: "",
   },
   {
@@ -704,7 +704,7 @@ export const BLOG_POSTS = [
 			"Life is meant to be understood slowly, that's where the fun lies in. Big brain too early... What will you do now? How will you adjust within yourself, when you've known there's no God, or if there is, you do not care?",
 			"What will you do now? If you take my advise, live with the rules of society, and nature. You'll be okay again, and trust me you will not loose your 'years of deep research'."
     ],
-		media: ["/media/buddhamonkey.jpg"],
+		media: ["/gallery/buddhamonkey.jpg"],
     link: "",
   },
   {
@@ -717,7 +717,7 @@ export const BLOG_POSTS = [
       "My insomnia is bad, but I will fix it sooner.",
       "It starts today, I will go to bed right now, it's around 2 AM, very good. Good night folks.",
     ],
-		media: ["/media/tedk.jpg"],
+		media: ["/gallery/tedk.jpg"],
     link: "",
   },
   {
@@ -730,7 +730,7 @@ export const BLOG_POSTS = [
       "In future I'll be giving more time to my music/guitar sessions",
       "For, now I share with you what I practised last night at 4.",
     ],
-		media: ["/media/terebinag.mp4","/media/was.gif"],
+		media: ["/gallery/terebinag.mp4","/gallery/was.gif"],
     link: "",
   },
 ];

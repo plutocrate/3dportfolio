@@ -4,17 +4,14 @@
 // one short line — nothing longer.
 //
 // HOW TO ADD AN ITEM:
-//   1. Drop the image file into  src/assets/evidence/
+//   1. Drop the image file into  public/evidence/
 //   2. Add one short line of caption text below, keyed by the EXACT filename.
 //      Skip it and a title-cased version of the filename is used instead.
-//   3. That's it — the locker picks it up automatically on next build, no
-//      other code needs to change.
-//
-// A few to start with, matching what this drawer was built for:
-//   'first-contribution.png' → screenshot of your first GitHub contribution
-//   'paris.jpg'              → a photo of you in Paris
-//   'making-something.jpg'   → a photo of you making something
+//   3. That's it — the locker picks it up automatically on the next
+//      build/dev restart, no other code needs to change.
 // ─────────────────────────────────────────────────────────────────────────────
+
+import evidenceFiles from 'virtual:evidence-manifest'
 
 export const EVIDENCE_CAPTIONS = {
   'dummy-01.jpg': 'Placeholder — swap this for a real one.',
@@ -24,13 +21,6 @@ export const EVIDENCE_CAPTIONS = {
   // 'making-something.jpg': 'Mid-build, past 2am.',
 }
 
-// Dynamically pull in every image dropped into src/assets/evidence/ — this is
-// what makes the locker update automatically without touching any component.
-const modules = import.meta.glob('/src/assets/evidence/*.{jpg,jpeg,png,gif,webp,avif}', {
-  eager: true,
-  import: 'default',
-})
-
 function prettifyFilename(filename) {
   return filename
     .replace(/\.[^.]+$/, '')
@@ -38,13 +28,10 @@ function prettifyFilename(filename) {
     .replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
-export const EVIDENCE_ITEMS = Object.entries(modules)
-  .map(([path, src]) => {
-    const filename = path.split('/').pop()
-    return {
-      filename,
-      src,
-      text: EVIDENCE_CAPTIONS[filename] || prettifyFilename(filename),
-    }
-  })
+export const EVIDENCE_ITEMS = evidenceFiles
+  .map((filename) => ({
+    filename,
+    src: `${import.meta.env.BASE_URL}evidence/${filename}`,
+    text: EVIDENCE_CAPTIONS[filename] || prettifyFilename(filename),
+  }))
   .sort((a, b) => a.filename.localeCompare(b.filename))
