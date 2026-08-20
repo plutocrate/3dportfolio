@@ -81,12 +81,12 @@
 export const CHRONICLES = [
   {
     id: "on-philosophy-and-life",
-    title: "Who Am I?",
+    title: "Advaita Vedanta -- my understanding.",
     dek: "Who the fuck am 'I'?",
     date: "26 Jul 2026",
     category: "Understanding 'I'",
     status: "In Progress",
-    coverImage: "/media/rest.jpg",
+    coverImage: "/media/buddha.jpg",
     music: "/chronicles-music/greatgig.mp3",
     body: [
 		"I've started reading a little about Advaita Vedanta, and the more I think about it, the more I realize that the question isn't really asking for another label. It is asking me to investigate the person who is doing the labeling in the first place.",
@@ -96,6 +96,8 @@ export const CHRONICLES = [
 "My body has changed. My opinions have changed. My interests have changed. My relationships have changed. My emotions change every day. Even my idea of who I am keeps changing.",
 
 "So Advaita asks me to stop for a moment and actually look at my experience.",
+
+{ type: "image", src: "/media/meta.jpg", caption: "kundalini", aspect: "3/2", position: "center" },
 
 "I can see my body. I can feel sensations in it. So my body is something I experience.",
 
@@ -136,6 +138,8 @@ export const CHRONICLES = [
 "Everything I normally experience comes and goes, but the fact that these experiences are being known is always present whenever I'm conscious.",
 
 "Then Advaita gives another idea: neti, neti — 'not this, not this.'",
+
+{ type: "image", src: "/media/godisyou.jpg", caption: "kundalini", aspect: "3/2", position: "center" },
 
 "I look at the body: not this.",
 
@@ -181,6 +185,8 @@ export const CHRONICLES = [
 
 "Maybe this is what I was trying to say when I wrote that I'm no longer falling into my emotional river, but riding it.",
 
+{ type: "image", src: "/media/taketime.jpg", caption: "kundalini", aspect: "3/2", position: "top" },
+
 "But Advaita makes me ask one step further: who is aware that the river is flowing?",
 
 "I don't think the answer is supposed to become another concept that I memorize. I think the point is to actually investigate it.",
@@ -214,97 +220,6 @@ export const CHRONICLES = [
     links: [
       { label: "advaitavedanta.in", href: "https://www.advaitavedanta.in/advaita_english" },
       { label: "Advaita Vedanta wiki", href: "https://en.wikipedia.org/wiki/Advaita_Vedanta" },
-    ],
-  },
-  {
-    id: "why-i-stopped-fearing-legacy-code",
-    title: "Why I stopped fearing legacy code.",
-    dek: "Old systems aren't broken by default — they're just honest about their history.",
-    date: "20 Aug 2026",
-    category: "Systems & Software",
-    status: "Completed",
-    coverImage: "/media/tedk.jpg",
-    body: [
-      "Every developer has a story about inheriting a codebase that made them want to quit. Mine involved a decade-old billing system, undocumented, held together by a single engineer's tribal knowledge who'd left the company two years prior. My first instinct was to rewrite it. My second, more useful instinct was to ask why it looked the way it did.",
-      "Legacy code isn't a moral failing. It's a record of every real constraint the system has survived — deadlines, outages, requirements nobody wrote down, decisions that made perfect sense at the time. Reading old code charitably means reading it as a series of answers to questions you don't yet know were asked.",
-      "Once I stopped treating the codebase as an enemy and started treating it as a witness, refactoring got easier. I wasn't erasing someone's mistakes anymore — I was having a conversation with them, one commit at a time.",
-      "The systems that scare us the most are usually the ones that have quietly worked for the longest. That's not an accident. It's evidence.",
-    ],
-    links: [
-      { label: "Working Effectively with Legacy Code — Michael Feathers", href: "https://www.oreilly.com/library/view/working-effectively-with/0131177052/" },
-    ],
-  },
-  {
-    id: "the-invisible-cost-of-abstraction",
-    title: "The invisible cost of abstraction.",
-    dek: "Every layer that hides complexity also hides a decision. Someone still has to know it.",
-    date: "28 Aug 2026",
-    category: "Systems & Software",
-    status: "Completed",
-    coverImage: "/media/gorilla.jpg",
-    body: [
-      "Abstraction is supposed to be a gift — hide the hard part, expose the simple part, let people build faster. Mostly, it works. But every abstraction is also a bet: a bet that the thing you're hiding will stay hidden, that nobody downstream will need to know what's underneath.",
-      "The bet usually pays off. But when it doesn't — when the abstraction leaks, when the framework's assumption breaks under your specific load, when the ORM generates a query that brings the database to its knees — someone has to go find the thing that was hidden. And if nobody on the team ever learned what was under there, that search takes days instead of minutes.",
-      { type: "image", src: "/media/ill.jpg", caption: "The layer nobody reads until it breaks." },
-      "I've started treating 'do we understand what this abstraction is hiding' as its own line item when adopting a new tool. Not because I distrust the tool — because I want the team to still have a map when the terrain doesn't match it.",
-    ],
-  },
-  {
-    id: "notes-on-debugging-as-a-way-of-thinking",
-    title: "Notes on debugging as a way of thinking.",
-    dek: "The best debugging sessions taught me more about reasoning than any course did.",
-    date: "05 Sep 2026",
-    category: "Systems & Software",
-    status: "Draft",
-    coverImage: "/media/patrick.jpg",
-    body: [
-      "Debugging gets treated like a chore — the unglamorous tax you pay for writing software. I've come to think it's closer to the opposite: it's the moment where you're forced to reason honestly, because the computer doesn't care what you meant, only what you wrote.",
-      "A good debugging session has a shape. First, you're certain you know the cause, and you're wrong. Then you're humbled into actually reading the logs instead of guessing. Then, usually, the bug turns out to live one layer below where you were looking — which is its own small lesson about where to look first next time.",
-      "This one's still a draft in my head as much as on the page — I keep wanting to add more examples. But the core of it hasn't changed in months: debugging is just thinking, with immediate consequences.",
-    ],
-  },
-
-  {
-    id: "on-becoming-who-you-already-are",
-    title: "On becoming who you already are.",
-    dek: "Growth isn't always addition. Sometimes it's remembering what got buried.",
-    date: "12 Sep 2026",
-    category: "Philosophy & Life",
-    status: "Completed",
-    coverImage: "/media/buddha.jpg",
-    music: "/media/secunda.mp3",
-    body: [
-      "There's a version of self-improvement that treats you as a project to optimize — more habits, more discipline, a better version assembled from parts you didn't have before. I don't think that's wrong, exactly, but I think it's incomplete.",
-      "The changes that have actually stuck for me weren't additions. They were closer to excavations — clearing away the noise, the borrowed opinions, the habits I picked up to fit in rather than to be well, until something that was already there could actually be seen.",
-      "Nietzsche's line about 'becoming who you are' used to sound like a riddle to me. Now it reads more like an instruction: the work isn't building a new self from scratch, it's stopping the interference long enough to hear the one you've got.",
-    ],
-  },
-  {
-    id: "the-paradox-of-choice-revisited",
-    title: "The paradox of choice, revisited.",
-    dek: "More options didn't make me freer. It made deciding feel like a small grief every time.",
-    date: "19 Sep 2026",
-    category: "Philosophy & Life",
-    status: "Completed",
-    coverImage: "/media/peterche.jpg",
-    body: [
-      "Barry Schwartz's argument is old news by now — more choices, past a certain point, make people less happy, not more. I'd read it, nodded along, and kept living exactly the same, browsing twenty tabs before buying a pair of headphones.",
-      "What changed it for me wasn't the theory, it was noticing the specific feeling that comes right after almost every decision: a small, quiet grief for the option I didn't pick. Multiply that by every meal, every show, every purchase, and you get a life that's technically full of freedom and quietly exhausted by it.",
-      "I've started deliberately shrinking my choice set on anything that doesn't matter — same coffee order, a rotating uniform of clothes, one streaming service at a time. It's not minimalism as aesthetic. It's minimalism as a tax refund on attention.",
-    ],
-  },
-  {
-    id: "a-short-defense-of-doing-nothing",
-    title: "A short defense of doing nothing.",
-    dek: "Rest isn't the thing you earn after productivity. It's part of the work.",
-    date: "27 Sep 2026",
-    category: "Philosophy & Life",
-    status: "In Progress",
-    coverImage: "/media/lastdance.jpeg",
-    body: [
-      "I used to feel guilty sitting still. Doing nothing felt like theft — time stolen from whatever I was supposed to be building instead. It took getting genuinely burnt out to notice that the guilt itself was doing damage, independent of whatever I wasn't doing.",
-      "Rest that's earned only after enough output isn't really rest — it's just a coupon you redeem occasionally, still priced in someone else's currency. The rest that actually restores anything is the kind you take without needing to justify it first.",
-      "I'm still working out what unearned rest looks like in practice, day to day — that's why this one's staying in progress for now. But the direction feels right: doing nothing, on purpose, without an invoice attached.",
     ],
   },
 ]
