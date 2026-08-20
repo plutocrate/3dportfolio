@@ -80,60 +80,142 @@
 
 export const CHRONICLES = [
   {
-    id: "on-building-slowly",
-    title: "On building slowly.",
-    dek: "Why I stopped racing to ship and started racing to understand.",
+    id: "on-philosophy-and-life",
+    title: "Who Am I?",
+    dek: "Who the fuck am 'I'?",
     date: "26 Jul 2026",
-    category: "Reflection",
-    status: "Completed",
-    coverImage: "/media/walt.gif",
+    category: "Understanding 'I'",
+    status: "In Progress",
+    coverImage: "/media/rest.jpg",
     music: "/chronicles-music/greatgig.mp3",
     body: [
-      "There's a particular kind of anxiety that comes from watching other people ship. Every timeline is a highlight reel of launches, and it's easy to mistake velocity for progress. I fell into that trap for a long time — measuring my worth in commits, in features, in how fast I could go from idea to something clickable.",
-      "What I've slowly learned is that speed without direction is just motion. I've shipped things I don't remember building, solved problems I can't explain anymore, because I was moving too fast to actually understand what I was doing. The code worked, sure. But it wasn't mine in any meaningful sense — it was assembled, not built.",
-      // Inline media example — drop an image/video object directly into `body`
-      // at the point in the essay where you want it to appear.
-      { type: "image", src: "/media/whatis.jpg", caption: "A note to self, taped above the desk." },
-      "Building slowly doesn't mean building less. It means sitting with a problem long enough to see its shape before reaching for a solution. It means reading the error message twice before pasting it somewhere. It means asking why a thing is broken instead of just making the red text go away.",
-      "I think a lot about craftsmanship now — the old kind, the kind where someone spends a season on a single piece of furniture and the joints outlive them. That's not really achievable in software, where everything is disposable by design. But the posture is worth borrowing: care as a practice, not a deadline.",
-      "So this is me, publicly, choosing to build slowly. Not because fast is wrong, but because I've noticed that the things I'm proudest of were never the fastest things I made. They were the ones I understood completely, down to the last decision.",
+		"I've started reading a little about Advaita Vedanta, and the more I think about it, the more I realize that the question isn't really asking for another label. It is asking me to investigate the person who is doing the labeling in the first place.",
+
+"I normally say I am my name, my body, my history, my personality, my relationships, my ambitions, my failures, my memories. But all of these things are constantly changing.",
+
+"My body has changed. My opinions have changed. My interests have changed. My relationships have changed. My emotions change every day. Even my idea of who I am keeps changing.",
+
+"So Advaita asks me to stop for a moment and actually look at my experience.",
+
+"I can see my body. I can feel sensations in it. So my body is something I experience.",
+
+"I can notice a thought. For example, 'I miss her.' The thought appears in my mind, stays for a while, and disappears or gets replaced by another thought. So the thought is something I experience.",
+
+"I can notice sadness. I can notice happiness. I can notice anger. I can notice desire. They all appear and disappear. So even my emotions are things I experience.",
+
+"I can remember something from years ago. I can watch the memory come back. So even my memories are something I experience.",
+
+"Then there is this strange feeling of 'I'. I can even notice myself thinking about who I am.",
+
+"So I keep coming back to the same question: if all of these things can be experienced, then am I really any of these things?",
+
+"Maybe I have a body, but I am not ultimately the body.",
+
+"Maybe I have thoughts, but I am not ultimately my thoughts.",
+
+"Maybe I experience emotions, but I am not ultimately my emotions.",
+
+"Maybe I have memories and a personality, but neither of those seems permanent enough to be the deepest answer to who I am.",
+
+"This doesn't mean that my body, thoughts, emotions or memories are fake. They are obviously part of my life. I'm not trying to deny them. I'm trying to understand the difference between the things I experience and the one who is experiencing them.",
+
+"That is where the idea of sākṣin, the witness, starts making sense to me.",
+
+"The witness is not some tiny person sitting inside my head watching my thoughts like a movie. If I imagine it that way, I've just created another object that I can think about.",
+
+"The question is much stranger: what is it that is aware of the thought in the first place?",
+
+"I don't have to create awareness. I don't have to force myself to become aware. A thought simply appears, and I know that it appeared.",
+
+"Sadness appears, and I know that sadness is there.",
+
+"A sound appears, and I know that I heard it.",
+
+"A memory appears, and I know that I remembered something.",
+
+"Everything I normally experience comes and goes, but the fact that these experiences are being known is always present whenever I'm conscious.",
+
+"Then Advaita gives another idea: neti, neti — 'not this, not this.'",
+
+"I look at the body: not this.",
+
+"I look at thoughts: not this.",
+
+"I look at emotions: not this.",
+
+"I look at memories: not this.",
+
+"I look at my personality: not this.",
+
+"Not because these things don't exist, but because none of them seems to be the final, unchanging Self.",
+
+"And this is where I start reaching the word Ātman.",
+
+"Ātman is not simply 'my soul' or some invisible version of my personality. In Advaita, it points toward the deepest Self — the consciousness that is not merely another object appearing in experience.",
+
+"Then comes the really fucking huge claim: Ātman is Brahman.",
+
+"At first that sounds like 'I am God', but that's not what the claim means. It would be ridiculous if my ego simply declared itself the creator of the universe.",
+
+"The claim is much deeper than that.",
+
+"Brahman is the ultimate reality. Advaita says that the deepest Self, Ātman, is not ultimately separate from that reality.",
+
+"That's what Advaita, 'not two', is pointing toward.",
+
+"I normally experience myself as something separate from the world. There is 'me' here and 'everything else' out there.",
+
+"Advaita asks me to investigate whether that separation is actually fundamental.",
+
+"Maybe the deepest truth isn't that there is a small individual self trapped inside a giant universe. Maybe the consciousness I call 'myself' is not ultimately a separate thing at all.",
+
+"And this changes the way I think about my own emotions too.",
+
+"When I miss someone, I don't have to deny it.",
+
+"When I'm hurt, I don't have to pretend I'm above it.",
+
+"When I'm happy, I don't have to reject it either.",
+
+"I can experience all of it while also noticing that every emotion is something that appears and changes.",
+
+"Maybe this is what I was trying to say when I wrote that I'm no longer falling into my emotional river, but riding it.",
+
+"But Advaita makes me ask one step further: who is aware that the river is flowing?",
+
+"I don't think the answer is supposed to become another concept that I memorize. I think the point is to actually investigate it.",
+
+"So for now, I'm not going to turn Advaita into an aesthetic or pretend that I understand enlightenment. I want to read the Upanishads, the Bhagavad Gita, and eventually Śaṅkara properly. I want to understand the arguments instead of just collecting Sanskrit words.",
+
+"But the direction is becoming clearer.",
+
+"I keep looking at everything I normally call 'me' and asking: is this something I experience, or is this the deepest experiencer?",
+
+"Body — changing.",
+
+"Thoughts — changing.",
+
+"Emotions — changing.",
+
+"Memories — changing.",
+
+"Personality — changing.",
+
+"And underneath all of this is the question of the Self.",
+
+"Advaita's answer is not another identity to wear.",
+
+"It is that the deepest Self is Ātman, and that Ātman is Brahman.",
+
+"Not two realities. Not a separate little self standing apart from existence.",
+
+"Ātman is Brahman. I am not ultimately separate from the reality I have been searching for."
     ],
     links: [
-      { label: "Peter Naur — Programming as Theory Building", href: "https://pages.cs.wisc.edu/~remzi/Naur.pdf" },
+      { label: "advaitavedanta.in", href: "https://www.advaitavedanta.in/advaita_english" },
+      { label: "Advaita Vedanta wiki", href: "https://en.wikipedia.org/wiki/Advaita_Vedanta" },
     ],
   },
-  {
-    id: "the-discipline-of-unfinished-things",
-    title: "The discipline of unfinished things.",
-    dek: "Not every open loop needs closing — some are worth leaving open on purpose.",
-    date: "02 Aug 2026",
-    category: "Reflection",
-    status: "Completed",
-    coverImage: "/media/letgo.jpg",
-    coverPosition: "center",
-    music: "/chronicles-music/greatgig.mp3",
-    body: [
-      "I keep a folder called 'someday' — half-written essays, abandoned side projects, a sketch of an app I still think about sometimes. For years I treated it as a graveyard, proof of my own inconsistency. Lately I've started to see it differently.",
-      "Not everything that's unfinished is a failure. Some ideas are seeds you plant and walk away from, trusting that if they're any good, you'll come back to them with more to say. Forcing closure on every open thread just to feel productive is its own kind of dishonesty — you finish the thing, but not well, and you've spent the version of yourself that could have finished it right.",
-      "There's a difference between abandoning something and letting it rest. Abandonment is walking away and not looking back. Rest is walking away on purpose, with the door left unlocked.",
-      "I've started being more deliberate about which of my unfinished things are resting and which are actually done being worked on. The rested ones stay in the folder without guilt. The dead ones I archive and let go of, properly, so they stop taking up quiet space in my head.",
-    ],
-  },
-  {
-    id: "what-silence-teaches",
-    title: "What silence teaches.",
-    dek: "A week without notifications, and what came back to fill the space.",
-    date: "14 Aug 2026",
-    category: "Reflection",
-    status: "In Progress",
-    coverImage: "/media/stoned.jpg",
-    body: [
-      "I turned off every notification on my phone for a week — not the phone itself, just the constant, low hum of things asking for my attention. The first day was the hardest. I kept picking the phone up out of habit and finding nothing waiting for me, which felt strange, almost rude.",
-      "By the third day something shifted. Thoughts that usually got interrupted before they finished had room to actually finish. I noticed I'd been treating my own attention as background noise, something to be filled rather than protected.",
-      "I'm not going to pretend I've solved anything — this is still in progress, in every sense. But I've kept the notifications off past the week I promised myself, and that alone tells me something.",
-    ],
-  },
-
   {
     id: "why-i-stopped-fearing-legacy-code",
     title: "Why I stopped fearing legacy code.",
