@@ -86,7 +86,8 @@ export const CHRONICLES = [
     date: "26 Jul 2026",
     category: "Understanding 'I'",
     status: "In Progress",
-    coverImage: "/media/buddha.jpg",
+    coverImage: "/media/faa.jpg",
+		coverPosition:"top",
     music: "/chronicles-music/greatgig.mp3",
     body: [
 		"I've started reading a little about Advaita Vedanta, and the more I think about it, the more I realize that the question isn't really asking for another label. It is asking me to investigate the person who is doing the labeling in the first place.",
