@@ -10,8 +10,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const GALLERY_CAPTIONS = {
-	'mj.jpg':'Oh MJ, gonna miss you a lot',
-	'hug.jpg':'Oh MJ, gonna miss you',
+	'mj.jpg':'sheeet',
   'buddha.jpg': 'Stillness',
   'buddhamonkey.jpg': 'Buddha & the Monkey Mind',
   'burn.jpg': 'Burn',

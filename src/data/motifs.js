@@ -57,4 +57,18 @@ export const MOTIFS = [
     src: '/chronicles-music/greatgig.mp3',
     art: artFor('stoned.jpg'),
   },
+  {
+    id: 'motif-gta-5',
+    title: 'Gta 5',
+    note: 'idk why its here',
+    src: '/chronicles-music/gta.mp3',
+    art: artFor('buddha.jpg'),
+  },
+  {
+    id: 'motif-interstellar',
+    title: 'Zimmer',
+    note: 'idk why its here again',
+    src: '/chronicles-music/inter.mp3',
+    art: artFor('needs.jpg'),
+  },
 ].filter((m) => m.src)
