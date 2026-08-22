@@ -279,6 +279,33 @@ export const LINK_COLLECTIONS = [
 // BLOG
 export const BLOG_POSTS = [
 {
+  id: "21th-blog",
+  title: "Unemployement is a blessing for me.",
+  subtitle: "A little radical claim ik, but works for me.",
+  date: "0058, 23 Aug 2026",
+  categories: ["observation"],
+  body: [
+	"I think unemployment has taught me more about myself than having a fucking job ever did. I've been unemployed for a huge part of my life, even in college. I skipped a lot, stayed disconnected, and never really thought about the pattern.",
+
+"When I was unemployed before, I couldn't fucking handle myself. I'd sink into my memories, overeat, stay depressed, and do anything to escape my own head. Without structure, I just didn't know what the fuck to do with myself.",
+
+"Then I got a job for three or four months, and somehow life became better. I had somewhere to go, shit to do, people around me. I was moving. Now I'm unemployed again, but idk man, this time feels different.",
+
+"A few days ago, I was on a simple evening jog. I stopped for a moment and saw the sunset, the trees, the sky, the way nature just paints everything without giving a fuck. And I just stood there thinking, damn, life is actually happening. I miss so much of it when I'm trapped inside my own head.",
+
+"That's when I realised unemployment was never really the enemy. My inability to live with myself was. This time I have time, and instead of fucking destroying myself with it, I can actually use it. Study, build shit, read, walk, learn, make things, explore.",
+
+"Even my body feels calmer. My digestion is better, my rosacea is settling down, and that constant nervous-system shock feels less intense. Even my reactions to shit are becoming more normal.",
+
+"And yeah, I still want to make fucking money. I want to earn good, be materialistic as hell. I want a home made of marble, fucking amazing premium stuff everywhere, weird esoteric shit that I find beautiful, a fucking good bike, an expensive cruiser, a beautiful place to live. I want all of it. I'm not going to pretend I don't.",
+
+"But maybe that's the point. I don't need a job just to feel alive anymore. I want to work because I want to build a fucking life I actually like living."
+
+  ],
+  media: ["/gallery/space.jpg"],
+  link: "",
+},
+{
   id: "20th-blog",
   title: "Adavita Vedanta",
   subtitle: "What I understand as of now.",
