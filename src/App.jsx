@@ -21,6 +21,8 @@ import { useAmbientMusic } from '@/hooks/useAmbientMusic'
 import { useClickSound } from '@/hooks/useClickSound'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { setMusicBridge } from '@/hooks/useMusicBridge'
+import { getChronicleById } from '@/data/chronicles'
+import { pathForState, parseDeepLink } from '@/lib/routes'
 
 // Reactive mobile detection — updates on resize, matches 3D side threshold
 function useIsMobile() {
@@ -40,16 +42,45 @@ export default function App() {
   const navigate  = useNavigate()
   const location  = useLocation()
 
-  const activeSection    = useSceneStore((s) => s.activeSection)
-  const setActiveSection = useSceneStore((s) => s.setActiveSection)
-  const closeSection     = useSceneStore((s) => s.closeSection)
+  const activeSection     = useSceneStore((s) => s.activeSection)
+  const setActiveSection  = useSceneStore((s) => s.setActiveSection)
+  const closeSection      = useSceneStore((s) => s.closeSection)
+  const openChronicleId   = useSceneStore((s) => s.openChronicleId)
+  const openChronicle     = useSceneStore((s) => s.openChronicle)
   const { playing, start, prepare, toggle, next, trackName, hasMultipleTracks, pauseForVideo, resumeAfterVideo } = useAmbientMusic()
   setMusicBridge(pauseForVideo, resumeAfterVideo)
   const playClick = useClickSound()
 
   const mobile = useIsMobile()
 
-  useDocumentMeta(activeSection)
+  // ── Real per-route SEO ───────────────────────────────────────────────────
+  // Each Chronicle (and each section) gets its own indexable <title>,
+  // description, canonical URL and OG/Twitter tags — see useDocumentMeta.
+  const openChronicleObj = openChronicleId ? getChronicleById(openChronicleId) : null
+  useDocumentMeta(activeSection, openChronicleObj)
+
+  // Parse whatever URL the visitor actually landed on (a shared Chronicle
+  // link, a bookmarked section, a search-result click) exactly once, before
+  // anything navigates it away. Applied after the loading screen finishes
+  // in handleEnter below, so a direct link to /chronicles/some-essay opens
+  // straight to that essay instead of always landing on the home view.
+  const [deepLink] = useState(() => parseDeepLink(window.location.pathname))
+
+  // ── State -> URL sync ────────────────────────────────────────────────────
+  // The address bar always reflects whatever is actually open — a section
+  // or an individual Chronicle — on both desktop and mobile, so every piece
+  // of content has its own real, shareable, crawlable URL. Uses replaceState
+  // (not pushState) so it never disturbs the overlay-nesting back-button
+  // logic each overlay already owns via useHistoryOverlay.
+  useEffect(() => {
+    const base = import.meta.env.BASE_URL.replace(/\/+$/, '') // '' when BASE_URL is just '/'
+    const path = pathForState({ activeSection, openChronicleId })
+    const target = (path === '/' ? base : base + path).replace(/\/+$/, '') || '/'
+    const current = window.location.pathname.replace(/\/+$/, '') || '/'
+    if (current !== target) {
+      window.history.replaceState(window.history.state, '', target)
+    }
+  }, [activeSection, openChronicleId])
 
   // ── Escape key → close section ───────────────────────────────────────────
   // Guarded so this only fires when no overlay (Chronicle, Chronicle
@@ -73,7 +104,10 @@ export default function App() {
   // When user hits browser back, location changes → close section
   useEffect(() => {
     if (!mobile) return
-    const path = location.pathname.replace('/', '').replace(/\/$/, '')
+    // Only the first segment maps to a section (e.g. "chronicles" out of
+    // "/chronicles/some-essay") — a nested Chronicle id is handled by its
+    // own overlay history logic + the state->URL sync above, not here.
+    const path = location.pathname.split('/').filter(Boolean)[0] || ''
     if (path && path !== '') {
       // A section route is active
       if (activeSection !== path) setActiveSection(path)
@@ -105,10 +139,18 @@ export default function App() {
       prepare() // sets up the <audio> element silently so the HUD toggle still works later
     }
     setLoading(false)
-    setTimeout(() => {
-      setShowHint(true)
-      setTimeout(() => setShowHint(false), 5200)
-    }, 400)
+
+    // Land the visitor on whatever they actually linked to (a specific
+    // Chronicle, or a section) instead of always resetting to home.
+    if (deepLink) {
+      setActiveSection(deepLink.section)
+      if (deepLink.chronicleId) openChronicle(deepLink.chronicleId)
+    } else {
+      setTimeout(() => {
+        setShowHint(true)
+        setTimeout(() => setShowHint(false), 5200)
+      }, 400)
+    }
   }
 
   return (
