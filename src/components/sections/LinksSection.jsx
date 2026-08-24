@@ -1,11 +1,10 @@
-import { useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useClickSound } from '@/hooks/useClickSound'
+import { useSceneStore } from '@/hooks/useSceneStore'
+import { useGo } from '@/hooks/useAppNavigation'
 import { LINK_COLLECTIONS } from '@/data/portfolio'
 
-// Same underline + tilted-arrow format used by Chronicles' "Further Reading"
-// list, so links look consistent everywhere on the site.
 function LinkItem({ link }) {
   const playClick = useClickSound()
   return (
@@ -25,7 +24,8 @@ function LinkItem({ link }) {
 }
 
 export function LinksSection() {
-  const [tab, setTab] = useState(LINK_COLLECTIONS[0]?.id)
+  const tab       = useSceneStore((s) => s.linksTab) || LINK_COLLECTIONS[0]?.id
+  const { go }    = useGo()
   const playClick = useClickSound()
 
   if (!LINK_COLLECTIONS.length) return null
@@ -36,12 +36,11 @@ export function LinksSection() {
     <div>
       <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/30 mb-3">Links</div>
 
-      {/* Tab bar — mirrors AcademiaSection's tab styling exactly */}
       <div className="flex flex-wrap gap-1.5 mb-5">
         {LINK_COLLECTIONS.map((c) => (
           <button
             key={c.id}
-            onClick={() => { playClick(); setTab(c.id) }}
+            onClick={() => { playClick(); go(`/about/links/${c.id}`) }}
             className={cn(
               'font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.18em] px-3 py-1.5 border transition-all duration-200',
               tab === c.id

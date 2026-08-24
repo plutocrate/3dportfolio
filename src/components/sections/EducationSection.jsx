@@ -1,7 +1,12 @@
 import { EDUCATION, CERTIFICATIONS } from '@/data/portfolio'
 import { Separator } from '@/components/ui/separator'
+import { useClickSound } from '@/hooks/useClickSound'
+import { useGo } from '@/hooks/useAppNavigation'
 
 export function EducationSection() {
+  const { go }    = useGo()
+  const playClick = useClickSound()
+
   return (
     <div className="space-y-6">
       <div>
@@ -11,10 +16,13 @@ export function EducationSection() {
       <Separator />
       <div className="space-y-5">
         {EDUCATION.map((edu) => (
-          <div key={edu.id} className="flex gap-4">
+          <div key={edu.id} id={`education-${edu.id}`} className="flex gap-4">
             <div className="w-px bg-white/10 shrink-0 mt-1 min-h-[70px]" />
             <div className="flex-1 min-w-0 pb-1">
-              <h3 className="font-body text-[clamp(14px,calc(13.3px+0.28vw),16px)] text-white/80 font-medium leading-snug mb-1">{edu.degree}</h3>
+              <h3
+                onClick={() => { playClick(); go(`/academia/education/${edu.id}`) }}
+                className="font-body text-[clamp(14px,calc(13.3px+0.28vw),16px)] text-white/80 font-medium leading-snug mb-1 cursor-pointer hover:text-white transition-colors"
+              >{edu.degree}</h3>
               <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/35 mb-0.5">{edu.institution}</div>
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/25">{edu.location}</span>

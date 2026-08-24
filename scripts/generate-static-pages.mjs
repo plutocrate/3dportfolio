@@ -1,30 +1,17 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// STATIC CHRONICLE SNAPSHOTS — runs automatically after every `npm run build`
-// (wired up as the "postbuild" script in package.json).
-//
-// This site is a client-rendered SPA, so a bot or link-preview crawler that
-// doesn't execute JS would otherwise see the exact same generic homepage
-// markup no matter which /chronicles/<id> URL it fetched. That's fine for
-// Google (it renders JS), but bad for everything else that reads meta tags
-// literally — Slack/Discord/Twitter unfurls, and any crawler that skips JS.
-//
-// This script takes the already-built dist/index.html (with its real,
-// hashed asset paths) and, for every chronicle in the CMS, writes a copy to
-// dist/chronicles/<id>/index.html with:
-//   - a unique <title>, meta description, canonical link, OG/Twitter tags
-//     and og:image (the chronicle's own cover image)
-//   - the hidden crawler-only <main> block replaced with that chronicle's
-//     actual title, dek, and body text
-// The page still loads the exact same JS bundle, so a real visitor with JS
-// enabled gets the full interactive app, which then opens straight to that
-// chronicle (see src/lib/routes.js + App.jsx's deep-link handling).
-//
-// New chronicle in the CMS + a rebuild = a new indexable page. No manual step.
-// ─────────────────────────────────────────────────────────────────────────────
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
-import { CHRONICLES, getReadingTime } from '../src/data/chronicles.js'
+import { CHRONICLES, getChronicleById, getReadingTime } from '../src/data/chronicles.js'
+import {
+  PERSONAL,
+  SECTION_META,
+  PROJECTS,
+  EXPERIENCE,
+  EDUCATION,
+  BLOG_POSTS,
+  LINK_COLLECTIONS,
+} from '../src/data/portfolio.js'
+import { listAllPaths, parsePath } from '../src/lib/routes.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const SITE_URL = 'https://prathamis.cool'
@@ -32,7 +19,7 @@ const DIST_DIR = resolve(__dirname, '../dist')
 const INDEX_PATH = resolve(DIST_DIR, 'index.html')
 
 if (!existsSync(INDEX_PATH)) {
-  console.warn('⚠ dist/index.html not found — skipping static chronicle snapshots (did the build run?)')
+  console.warn('⚠ dist/index.html not found — skipping static snapshots (did the build run?)')
   process.exit(0)
 }
 
@@ -48,84 +35,219 @@ function escapeHtml(str) {
 
 function replaceOnce(html, search, replace) {
   const idx = html.indexOf(search)
-  if (idx === -1) {
-    console.warn(`⚠ expected string not found in dist/index.html, skipping that replacement:\n  ${search.slice(0, 80)}...`)
-    return html
-  }
+  if (idx === -1) return html
   return html.slice(0, idx) + replace + html.slice(idx + search.length)
 }
 
-let count = 0
-
-for (const chronicle of CHRONICLES) {
-  const url         = `${SITE_URL}/chronicles/${chronicle.id}`
-  const title        = `${chronicle.title} — Pratham Purohit`
-  const description  = escapeHtml(chronicle.dek || `An essay by Pratham Purohit — ${chronicle.category}.`)
-  const escTitle      = escapeHtml(title)
-  const image        = chronicle.coverImage ? `${SITE_URL}${chronicle.coverImage}` : `${SITE_URL}/og-image.png`
-  const readingTime  = getReadingTime(chronicle)
-
-  const paragraphs = (chronicle.body || [])
-    .filter((item) => typeof item === 'string')
-    .map((p) => `<p>${escapeHtml(p)}</p>`)
-    .join('\n        ')
-
-  let html = template
-
-  html = replaceOnce(html, '<title>Pratham Purohit — Full-Stack Developer & Software Engineer</title>', `<title>${escTitle}</title>`)
-  html = replaceOnce(
-    html,
+function applyMeta(html, { url, title, description, image, ogType }) {
+  const escTitle = escapeHtml(title)
+  const escDesc  = escapeHtml(description)
+  let out = html
+  out = replaceOnce(out, '<title>Pratham Purohit — Full-Stack Developer & Software Engineer</title>', `<title>${escTitle}</title>`)
+  out = replaceOnce(
+    out,
     '<meta name="description" content="Pratham Purohit — Full-Stack Developer based in India. Expert in React, Three.js, Node.js, TypeScript & WebGL. Built real-time apps, 3D browser experiences & multiplayer games. View portfolio, projects & blog at prathamis.cool." />',
-    `<meta name="description" content="${description}" />`
+    `<meta name="description" content="${escDesc}" />`
   )
-  html = replaceOnce(html, '<link rel="canonical" href="https://prathamis.cool/" />', `<link rel="canonical" href="${url}" />`)
-  html = replaceOnce(html, '<meta property="og:type" content="website" />', '<meta property="og:type" content="article" />')
-  html = replaceOnce(html, '<meta property="og:url" content="https://prathamis.cool/" />', `<meta property="og:url" content="${url}" />`)
-  html = replaceOnce(html, '<meta property="og:title" content="Pratham Purohit — Full-Stack Developer" />', `<meta property="og:title" content="${escTitle}" />`)
-  html = replaceOnce(
-    html,
+  out = replaceOnce(out, '<link rel="canonical" href="https://prathamis.cool/" />', `<link rel="canonical" href="${url}" />`)
+  if (ogType === 'article') {
+    out = replaceOnce(out, '<meta property="og:type" content="website" />', '<meta property="og:type" content="article" />')
+  }
+  out = replaceOnce(out, '<meta property="og:url" content="https://prathamis.cool/" />', `<meta property="og:url" content="${url}" />`)
+  out = replaceOnce(out, '<meta property="og:title" content="Pratham Purohit — Full-Stack Developer" />', `<meta property="og:title" content="${escTitle}" />`)
+  out = replaceOnce(
+    out,
     '<meta property="og:description" content="Pratham Purohit — Full-Stack Developer. React, Three.js, Node.js, TypeScript & WebGL specialist. Interactive 3D portfolio showcasing real-world projects and experience." />',
-    `<meta property="og:description" content="${description}" />`
+    `<meta property="og:description" content="${escDesc}" />`
   )
-  html = replaceOnce(html, '<meta property="og:image" content="https://prathamis.cool/og-image.png" />', `<meta property="og:image" content="${image}" />`)
-  html = replaceOnce(html, '<meta name="twitter:title" content="Pratham Purohit — Full-Stack Developer" />', `<meta name="twitter:title" content="${escTitle}" />`)
-  html = replaceOnce(
-    html,
+  out = replaceOnce(out, '<meta property="og:image" content="https://prathamis.cool/og-image.png" />', `<meta property="og:image" content="${image}" />`)
+  out = replaceOnce(out, '<meta name="twitter:title" content="Pratham Purohit — Full-Stack Developer" />', `<meta name="twitter:title" content="${escTitle}" />`)
+  out = replaceOnce(
+    out,
     '<meta name="twitter:description" content="Full-Stack Developer specialising in React, Three.js, and Node.js. Interactive 3D portfolio." />',
-    `<meta name="twitter:description" content="${description}" />`
+    `<meta name="twitter:description" content="${escDesc}" />`
   )
-  html = replaceOnce(html, '<meta name="twitter:image" content="https://prathamis.cool/og-image.png" />', `<meta name="twitter:image" content="${image}" />`)
+  out = replaceOnce(out, '<meta name="twitter:image" content="https://prathamis.cool/og-image.png" />', `<meta name="twitter:image" content="${image}" />`)
+  return out
+}
 
-  // BlogPosting structured data, appended right before </head> so it's easy
-  // to locate/replace and never collides with the site-wide Person/WebSite
-  // JSON-LD blocks already in the template.
-  const jsonLd = `<script type="application/ld+json">${JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: chronicle.title,
-    description: chronicle.dek || '',
-    url,
-    image,
-    datePublished: chronicle.date,
-    author: { '@type': 'Person', name: 'Pratham Purohit', url: SITE_URL },
-  })}</script>\n  </head>`
-  html = replaceOnce(html, '</head>', jsonLd)
+function crawlerMain(inner) {
+  return `<main style="font-family:sans-serif;max-width:800px;margin:0 auto;padding:2rem;color:#111;">
+        <p><a href="/">← ${escapeHtml(PERSONAL.name)}</a></p>
+        ${inner}
+      </main>`
+}
 
-  // Swap the generic hidden crawler <main> for this chronicle's own content.
-  const articleMain = `<main style="font-family:sans-serif;max-width:800px;margin:0 auto;padding:2rem;color:#111;">
-        <p><a href="/">← Pratham Purohit</a></p>
+function pageForPath(path) {
+  const route = parsePath(path)
+  const url = `${SITE_URL}${path === '/' ? '/' : path}`
+  const defaultImage = `${SITE_URL}/og-image.png`
+
+  if (route.chronicleId) {
+    const chronicle = getChronicleById(route.chronicleId)
+    if (chronicle) {
+      const paragraphs = (chronicle.body || [])
+        .filter((item) => typeof item === 'string')
+        .map((p) => `<p>${escapeHtml(p)}</p>`)
+        .join('\n        ')
+      const readingTime = getReadingTime(chronicle)
+      return {
+        url,
+        title: `${chronicle.title} — ${PERSONAL.name}`,
+        description: chronicle.dek || `An essay by ${PERSONAL.name} — ${chronicle.category}.`,
+        image: chronicle.coverImage ? `${SITE_URL}${chronicle.coverImage}` : defaultImage,
+        ogType: 'article',
+        jsonLd: {
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: chronicle.title,
+          description: chronicle.dek || '',
+          url,
+          image: chronicle.coverImage ? `${SITE_URL}${chronicle.coverImage}` : defaultImage,
+          datePublished: chronicle.date,
+          author: { '@type': 'Person', name: PERSONAL.name, url: SITE_URL },
+        },
+        main: crawlerMain(`
         <h1>${escapeHtml(chronicle.title)}</h1>
         <p><em>${escapeHtml(chronicle.dek || '')}</em></p>
         <p>${escapeHtml(chronicle.category)} · ${escapeHtml(chronicle.date)} · ${escapeHtml(readingTime)}</p>
         ${paragraphs}
-        <p><a href="/chronicles">More chronicles →</a></p>
-      </main>`
-  html = html.replace(/<main[\s\S]*?<\/main>/, articleMain)
+        <p><a href="/chronicles">More chronicles →</a></p>`),
+      }
+    }
+  }
 
-  const outDir = resolve(DIST_DIR, 'chronicles', chronicle.id)
+  if (route.category) {
+    const items = CHRONICLES.filter((c) => c.category === route.category)
+    const list = items.map((c) => `<li><a href="/chronicles/${c.id}">${escapeHtml(c.title)}</a></li>`).join('')
+    return {
+      url,
+      title: `${route.category} — Chronicles — ${PERSONAL.name}`,
+      description: `Chronicles under “${route.category}” by ${PERSONAL.name}.`,
+      image: defaultImage,
+      ogType: 'website',
+      main: crawlerMain(`<h1>${escapeHtml(route.category)}</h1><ul>${list}</ul>`),
+    }
+  }
+
+  if (route.section === 'academia' && route.academiaTab === 'projects' && route.focusId) {
+    const proj = PROJECTS.find((p) => p.id === route.focusId)
+    if (proj) {
+      return {
+        url,
+        title: `${proj.name} — ${PERSONAL.name}`,
+        description: proj.description || proj.subtitle || `A project by ${PERSONAL.name}.`,
+        image: defaultImage,
+        ogType: 'website',
+        main: crawlerMain(`<h1>${escapeHtml(proj.name)}</h1><p>${escapeHtml(proj.subtitle || '')}</p><p>${escapeHtml(proj.description || '')}</p>`),
+      }
+    }
+  }
+
+  if (route.section === 'academia' && route.academiaTab === 'experience' && route.focusId) {
+    const exp = EXPERIENCE.find((p) => p.id === route.focusId)
+    if (exp) {
+      const highlights = (exp.highlights || []).map((h) => `<li>${escapeHtml(h)}</li>`).join('')
+      return {
+        url,
+        title: `${exp.role} at ${exp.company} — ${PERSONAL.name}`,
+        description: `${exp.role} at ${exp.company}, ${exp.location}.`,
+        image: defaultImage,
+        ogType: 'website',
+        main: crawlerMain(`<h1>${escapeHtml(exp.role)}</h1><p>${escapeHtml(exp.company)} · ${escapeHtml(exp.location)} · ${escapeHtml(exp.period)}</p><ul>${highlights}</ul>`),
+      }
+    }
+  }
+
+  if (route.section === 'academia' && route.academiaTab === 'education' && route.focusId) {
+    const edu = EDUCATION.find((p) => p.id === route.focusId)
+    if (edu) {
+      return {
+        url,
+        title: `${edu.degree} — ${PERSONAL.name}`,
+        description: `${edu.degree} at ${edu.institution}.`,
+        image: defaultImage,
+        ogType: 'website',
+        main: crawlerMain(`<h1>${escapeHtml(edu.degree)}</h1><p>${escapeHtml(edu.institution)} · ${escapeHtml(edu.location)} · ${escapeHtml(edu.period)}</p>`),
+      }
+    }
+  }
+
+  if (route.section === 'blog' && route.focusId) {
+    const post = BLOG_POSTS.find((p) => p.id === route.focusId)
+    if (post) {
+      const body = (Array.isArray(post.body) ? post.body : [post.body]).map((p) => `<p>${escapeHtml(p)}</p>`).join('\n        ')
+      return {
+        url,
+        title: `${post.title} — ${PERSONAL.name}`,
+        description: post.subtitle || `A journal entry by ${PERSONAL.name}.`,
+        image: defaultImage,
+        ogType: 'article',
+        main: crawlerMain(`<h1>${escapeHtml(post.title)}</h1><p><em>${escapeHtml(post.subtitle || '')}</em></p>${body}`),
+      }
+    }
+  }
+
+  if (route.section === 'about' && route.linksTab) {
+    const col = LINK_COLLECTIONS.find((c) => c.id === route.linksTab)
+    if (col) {
+      const list = col.links.map((l) => `<li><a href="${escapeHtml(l.href)}">${escapeHtml(l.label)}</a></li>`).join('')
+      return {
+        url,
+        title: `${col.label} — ${PERSONAL.name}`,
+        description: col.heading,
+        image: defaultImage,
+        ogType: 'website',
+        main: crawlerMain(`<h1>${escapeHtml(col.heading)}</h1><ul>${list}</ul>`),
+      }
+    }
+  }
+
+  if (route.section && SECTION_META[route.section]) {
+    const meta = SECTION_META[route.section]
+    let extra = ''
+    if (route.section === 'chronicles') {
+      extra = `<ul>${CHRONICLES.map((c) => `<li><a href="/chronicles/${c.id}">${escapeHtml(c.title)}</a></li>`).join('')}</ul>`
+    }
+    if (route.section === 'academia' && route.academiaTab === 'projects') {
+      extra = `<ul>${PROJECTS.map((p) => `<li><a href="/academia/projects/${p.id}">${escapeHtml(p.name)}</a></li>`).join('')}</ul>`
+    }
+    if (route.section === 'blog') {
+      extra = `<ul>${BLOG_POSTS.map((p) => `<li><a href="/blog/${p.id}">${escapeHtml(p.title)}</a></li>`).join('')}</ul>`
+    }
+    return {
+      url,
+      title: meta.title,
+      description: meta.description,
+      image: defaultImage,
+      ogType: 'website',
+      main: crawlerMain(`<h1>${escapeHtml(meta.title)}</h1><p>${escapeHtml(meta.description)}</p>${extra}`),
+    }
+  }
+
+  return null
+}
+
+let count = 0
+const paths = listAllPaths().filter((p) => p !== '/')
+
+for (const path of paths) {
+  const page = pageForPath(path)
+  if (!page) continue
+
+  let html = applyMeta(template, page)
+
+  if (page.jsonLd) {
+    const jsonLd = `<script type="application/ld+json">${JSON.stringify(page.jsonLd)}</script>\n  </head>`
+    html = replaceOnce(html, '</head>', jsonLd)
+  }
+
+  html = html.replace(/<main[\s\S]*?<\/main>/, page.main)
+
+  const outDir = resolve(DIST_DIR, path.replace(/^\//, ''))
   mkdirSync(outDir, { recursive: true })
   writeFileSync(resolve(outDir, 'index.html'), html)
   count++
 }
 
-console.log(`✓ generated ${count} static chronicle snapshot(s) in dist/chronicles/<id>/index.html`)
+console.log(`✓ generated ${count} static route snapshot(s) in dist/<path>/index.html`)

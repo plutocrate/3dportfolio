@@ -1,7 +1,13 @@
 import { PROJECTS } from '@/data/portfolio'
 import { Separator } from '@/components/ui/separator'
+import { ArrowUpRight } from 'lucide-react'
+import { useClickSound } from '@/hooks/useClickSound'
+import { useGo } from '@/hooks/useAppNavigation'
 
 export function ProjectsSection() {
+  const { go }    = useGo()
+  const playClick = useClickSound()
+
   return (
     <div className="space-y-6">
       <div>
@@ -14,14 +20,25 @@ export function ProjectsSection() {
           <div key={proj.id} id={`project-${proj.id}`} className="group">
             <div className="flex items-baseline gap-3 mb-1">
               <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/20 tabular-nums">{String(idx+1).padStart(2,'0')}</span>
-							{proj.link ? (
-  <a href={proj.link} target="_blank" rel="noopener noreferrer"
-    className="font-display text-[clamp(16px,calc(14.6px+0.6vw),19px)] text-white tracking-wider leading-none hover:text-white/60 transition-colors border-b border-white/20 hover:border-white/50 pb-0.5">
-    {proj.name.toUpperCase()}
-  </a>
-) : (
-  <h3 className="font-display text-[clamp(16px,calc(14.6px+0.6vw),19px)] text-white tracking-wider leading-none">{proj.name.toUpperCase()}</h3>
-)}
+              <button
+                type="button"
+                onClick={() => { playClick(); go(`/academia/projects/${proj.id}`) }}
+                className="font-display text-[clamp(16px,calc(14.6px+0.6vw),19px)] text-white tracking-wider leading-none hover:text-white/60 transition-colors border-b border-transparent hover:border-white/30 pb-0.5 text-left"
+              >
+                {proj.name.toUpperCase()}
+              </button>
+              {proj.link && (
+                <a
+                  href={proj.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  aria-label={`Open ${proj.name}`}
+                  className="text-white/25 hover:text-white/70 transition-colors shrink-0"
+                >
+                  <ArrowUpRight size={14} />
+                </a>
+              )}
               <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/28 ml-auto shrink-0">{proj.period}</span>
             </div>
             <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/32 uppercase tracking-widest mb-2 pl-8">{proj.subtitle}</div>

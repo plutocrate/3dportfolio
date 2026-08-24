@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { BLOG_POSTS, PROJECTS, EXPERIENCE, EDUCATION, SKILLS } from '@/data/portfolio'
 import { CHRONICLES } from '@/data/chronicles'
-import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
+import { useGo } from '@/hooks/useAppNavigation'
 
 // Parse loose date strings like "17 Mar 2026" or "0211, 18 Mar 2026"
 function parseDate(str) {
@@ -23,16 +23,15 @@ function buildFeed() {
     type: 'JOURNAL',
     label: p.title,
     date: parseDate(p.date),
-    sectionId: 'blog',
+    href: `/blog/${p.id}`,
     prefix: '✦ NEW JOURNAL',
   }))
 
-  // Chronicles — long-form essays, use their publish date directly
   CHRONICLES.forEach((c) => items.push({
     type: 'CHRONICLE',
     label: c.title,
     date: parseDate(c.date),
-    sectionId: 'chronicles',
+    href: `/chronicles/${c.id}`,
     prefix: '✦ NEW CHRONICLE',
   }))
 
@@ -44,7 +43,7 @@ function buildFeed() {
       type: 'SKILL',
       label: s.name,
       date: parseDate(s.dateAdded),
-      sectionId: 'academia',
+      href: '/academia/skills',
       prefix: '✦ NEW SKILL',
     })
   })
@@ -54,7 +53,7 @@ function buildFeed() {
     type: 'PROJECT',
     label: p.name,
     date: parseDate(p.period),
-    sectionId: 'academia',
+    href: `/academia/projects/${p.id}`,
     prefix: '✦ NEW PROJECT',
   }))
 
@@ -69,7 +68,7 @@ function buildFeed() {
         type: 'EXPERIENCE',
         label: `${e.role} @ ${e.company}`,
         date: startDate,
-        sectionId: 'academia',
+        href: `/academia/experience/${e.id}`,
         prefix: '✦ NEW EXPERIENCE',
       })
     }
@@ -85,7 +84,7 @@ function buildFeed() {
         type: 'EDUCATION',
         label: e.degree,
         date: startDate,
-        sectionId: 'academia',
+        href: `/academia/education/${e.id}`,
         prefix: '✦ NEW EDUCATION',
       })
     }
@@ -102,8 +101,8 @@ const FEED = buildFeed()
 const TICKER_ITEMS = FEED.slice(0, 5)
 
 export function NewsBanner({ visible }) {
-  const setActiveSection = useSceneStore((s) => s.setActiveSection)
-  const playClick        = useClickSound()
+  const playClick = useClickSound()
+  const { go }    = useGo()
   const trackRef         = useRef()
   const [current, setCurrent] = useState(0)
   const [dismissed, setDismissed] = useState(false)
@@ -174,7 +173,7 @@ export function NewsBanner({ visible }) {
       {/* Scrolling content */}
       <div
         className="flex-1 overflow-hidden flex items-center px-3 cursor-pointer group"
-        onClick={() => { playClick(); setActiveSection(item.sectionId) }}
+        onClick={() => { playClick(); if (item.href) go(item.href) }}
       >
         <span className="font-mono text-[clamp(10px,calc(9.39px+0.16vw),12px)] uppercase tracking-[0.16em] text-white/35 mr-2 shrink-0">
           {item.prefix}

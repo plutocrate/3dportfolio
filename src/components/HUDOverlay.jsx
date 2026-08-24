@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { ANNOTATIONS, PERSONAL } from '@/data/portfolio'
 import { useClickSound } from '@/hooks/useClickSound'
+import { useGo } from '@/hooks/useAppNavigation'
 import { cn } from '@/lib/utils'
 
 function LiveClock() {
@@ -97,11 +98,10 @@ function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks }
 }
 
 export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, trackName, hasMultipleTracks }) {
-  const hudRef           = useRef()
-  const activeSection    = useSceneStore((s) => s.activeSection)
-  const setActiveSection = useSceneStore((s) => s.setActiveSection)
-  const closeSection     = useSceneStore((s) => s.closeSection)
-  const playClick        = useClickSound()
+  const hudRef        = useRef()
+  const activeSection = useSceneStore((s) => s.activeSection)
+  const playClick     = useClickSound()
+  const { go, goHome } = useGo()
 
   useEffect(() => {
     if (!hudRef.current || !visible) return
@@ -164,7 +164,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
                     key={ann.id}
                     onClick={() => {
                       playClick()
-                      activeSection === ann.id ? closeSection() : setActiveSection(ann.id)
+                      activeSection === ann.id ? goHome() : go(`/${ann.id}`)
                     }}
                     className={cn(
                       'hud-float flex items-center gap-2 group text-left',
@@ -197,7 +197,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
                     key={ann.id}
                     onClick={() => {
                       playClick()
-                      isActive ? closeSection() : setActiveSection(ann.id)
+                      isActive ? goHome() : go(`/${ann.id}`)
                     }}
                     className={cn(
                       'hud-float w-2 h-2 rounded-full transition-all duration-200',

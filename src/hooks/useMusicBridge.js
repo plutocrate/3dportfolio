@@ -2,16 +2,22 @@
 // without prop drilling. Set by App.jsx on mount.
 let _pauseForVideo    = () => {}
 let _resumeAfterVideo = () => {}
+let _userWantsMusic   = false
 
 export function setMusicBridge(pauseFn, resumeFn) {
   _pauseForVideo    = pauseFn
   _resumeAfterVideo = resumeFn
 }
 
+export function setUserWantsMusic(value) {
+  _userWantsMusic = Boolean(value)
+}
+
+export function getUserWantsMusic() {
+  return _userWantsMusic
+}
+
 export function pauseAllVideos() {
-  // imported lazily to avoid circular deps
-  import('@/components/sections/BlogSection.jsx')
-    // can't import directly — use the DOM instead
   document.querySelectorAll('video').forEach(v => {
     if (!v.paused) { v.pause(); v.currentTime = 0 }
   })

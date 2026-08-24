@@ -1,15 +1,11 @@
 import { Archive, Gift, Disc, Frown, ChevronRight } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
-import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
+import { useGo } from '@/hooks/useAppNavigation'
 import { EVIDENCE_ITEMS } from '@/data/evidence'
 import { MOTIFS } from '@/data/motifs'
 import { FAILURE_CONFESSIONS } from '@/data/failureConfessions'
-import { randomGiftIndex } from '@/data/giftQuestions'
 
-// A single drawer row — same title/description rhythm as the Chronicles
-// heading cards, just with a small icon instead of a cover-image preview
-// (these three drawers aren't visual enough to warrant one).
 function DrawerCard({ icon: Icon, label, description, count, countLabel, onOpen }) {
   const playClick = useClickSound()
 
@@ -48,10 +44,7 @@ function DrawerCard({ icon: Icon, label, description, count, countLabel, onOpen 
 }
 
 export function CabinetSection() {
-  const openEvidenceOverlay = useSceneStore((s) => s.openEvidenceOverlay)
-  const openMotifOverlay    = useSceneStore((s) => s.openMotifOverlay)
-  const openFailureOverlay  = useSceneStore((s) => s.openFailureOverlay)
-  const openGiftPopup       = useSceneStore((s) => s.openGiftPopup)
+  const { go } = useGo()
 
   const drawers = [
     {
@@ -61,7 +54,7 @@ export function CabinetSection() {
       description: 'Small proof of a life being lived — a screenshot, a photo, something made.',
       count: EVIDENCE_ITEMS.length,
       countLabel: EVIDENCE_ITEMS.length === 1 ? 'item' : 'items',
-      onOpen: openEvidenceOverlay,
+      onOpen: () => go('/cabinet/evidence'),
     },
     {
       key: 'motif',
@@ -70,7 +63,7 @@ export function CabinetSection() {
       description: 'Music, pressed to disc. Press play, let it spin.',
       count: MOTIFS.length,
       countLabel: MOTIFS.length === 1 ? 'track' : 'tracks',
-      onOpen: openMotifOverlay,
+      onOpen: () => go('/cabinet/motif'),
     },
     {
       key: 'failure-confessions',
@@ -79,7 +72,7 @@ export function CabinetSection() {
       description: 'Things that didn\u2019t work, said plainly.',
       count: FAILURE_CONFESSIONS.length,
       countLabel: FAILURE_CONFESSIONS.length === 1 ? 'confession' : 'confessions',
-      onOpen: openFailureOverlay,
+      onOpen: () => go('/cabinet/failure-confessions'),
     },
     {
       key: 'gift-shop',
@@ -87,7 +80,7 @@ export function CabinetSection() {
       label: 'GIFT SHOP',
       description: 'A question, curated by me, gifted to you — no purchase necessary.',
       count: null,
-      onOpen: () => openGiftPopup(randomGiftIndex()),
+      onOpen: () => go('/cabinet/gift-shop'),
     },
   ]
 

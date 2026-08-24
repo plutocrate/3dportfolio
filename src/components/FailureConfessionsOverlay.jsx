@@ -3,7 +3,7 @@ import gsap from 'gsap'
 import { X } from 'lucide-react'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
-import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
+import { useGo } from '@/hooks/useAppNavigation'
 import { FAILURE_CONFESSIONS } from '@/data/failureConfessions'
 
 // ── Failure Confessions overlay ──────────────────────────────────────────────
@@ -32,26 +32,21 @@ function ConfessionEntry({ confession, index }) {
 }
 
 export function FailureConfessionsOverlay() {
-  const isOpen        = useSceneStore((s) => s.failureOverlayOpen)
-  const closeOverlay   = useSceneStore((s) => s.closeFailureOverlay)
-  const playClick      = useClickSound()
+  const isOpen       = useSceneStore((s) => s.failureOverlayOpen)
+  const playClick    = useClickSound()
+  const { goParent } = useGo()
 
   const overlayRef = useRef()
   const cardRef    = useRef()
 
-  const consumeHistoryEntry = useHistoryOverlay('failure-confessions', isOpen, closeOverlay)
-
   const handleClose = useCallback(() => {
     playClick()
-    if (!overlayRef.current) { closeOverlay(); consumeHistoryEntry(); return }
+    if (!overlayRef.current) { goParent(); return }
     gsap.to(overlayRef.current, {
       opacity: 0, duration: 0.3, ease: 'power2.in',
-      onComplete: () => {
-        closeOverlay()
-        consumeHistoryEntry()
-      },
+      onComplete: () => goParent(),
     })
-  }, [playClick, closeOverlay, consumeHistoryEntry])
+  }, [playClick, goParent])
 
   // Mount animation
   useEffect(() => {

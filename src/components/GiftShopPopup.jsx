@@ -3,41 +3,28 @@ import gsap from 'gsap'
 import { X, RefreshCw, Gift } from 'lucide-react'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
+import { useGo } from '@/hooks/useAppNavigation'
 import { GIFT_QUESTIONS, randomGiftIndex } from '@/data/giftQuestions'
 
 // ── Gift Shop popup ──────────────────────────────────────────────────────────
-// Cabinet → Gift Shop. Deliberately NOT one of the full-screen glass overlays
-// and NOT wired into useHistoryOverlay/browser history — just a small card
-// centered on screen showing one curated question at a time. Backdrop click,
-// the X, or Escape all dismiss it; "Another one" rerolls in place.
+// Cabinet → Gift Shop. Small centered card; URL is /cabinet/gift-shop.
 export function GiftShopPopup() {
   const isOpen         = useSceneStore((s) => s.giftPopupOpen)
   const questionIndex  = useSceneStore((s) => s.giftQuestionIndex)
-  const close           = useSceneStore((s) => s.closeGiftPopup)
-  const reroll           = useSceneStore((s) => s.rerollGift)
-  const playClick        = useClickSound()
+  const reroll         = useSceneStore((s) => s.rerollGift)
+  const playClick      = useClickSound()
+  const { goParent }   = useGo()
 
   const cardRef = useRef()
   const question = questionIndex != null ? GIFT_QUESTIONS[questionIndex] : null
 
-  const handleClose = () => { playClick(); close() }
+  const handleClose = () => { playClick(); goParent() }
   const handleReroll = (e) => {
     e.stopPropagation()
     playClick()
     reroll(randomGiftIndex(questionIndex))
   }
 
-  // Escape closes it too, even though it isn't part of the history stack.
-  useEffect(() => {
-    if (!isOpen) return
-    const onKeyDown = (e) => { if (e.key === 'Escape') handleClose() }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen])
-
-  // Animate in on open, and re-pulse the card slightly on reroll so a new
-  // question landing feels like something, not just a text swap.
   useEffect(() => {
     if (!isOpen || !cardRef.current) return
     gsap.fromTo(

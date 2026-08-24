@@ -3,7 +3,7 @@ import gsap from 'gsap'
 import { X, Play, Pause } from 'lucide-react'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
-import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
+import { useGo } from '@/hooks/useAppNavigation'
 import { pauseMusicForVideo, resumeMusicAfterVideo } from '@/hooks/useMusicBridge'
 import { MOTIFS } from '@/data/motifs'
 
@@ -63,15 +63,13 @@ function MotifDisc({ motif, isPlaying, onToggle }) {
 
 export function MotifOverlay() {
   const isOpen       = useSceneStore((s) => s.motifOverlayOpen)
-  const closeOverlay  = useSceneStore((s) => s.closeMotifOverlay)
-  const playClick     = useClickSound()
+  const playClick    = useClickSound()
+  const { goParent } = useGo()
 
   const overlayRef = useRef()
   const cardRef    = useRef()
   const audioRef   = useRef(null)
   const [playingId, setPlayingId] = useState(null)
-
-  const consumeHistoryEntry = useHistoryOverlay('motif', isOpen, closeOverlay)
 
   const stopPlayback = useCallback(() => {
     if (audioRef.current) {
@@ -84,15 +82,12 @@ export function MotifOverlay() {
   const handleClose = useCallback(() => {
     playClick()
     stopPlayback()
-    if (!overlayRef.current) { closeOverlay(); consumeHistoryEntry(); return }
+    if (!overlayRef.current) { goParent(); return }
     gsap.to(overlayRef.current, {
       opacity: 0, duration: 0.3, ease: 'power2.in',
-      onComplete: () => {
-        closeOverlay()
-        consumeHistoryEntry()
-      },
+      onComplete: () => goParent(),
     })
-  }, [playClick, stopPlayback, closeOverlay, consumeHistoryEntry])
+  }, [playClick, stopPlayback, goParent])
 
   const handleToggle = (motif) => {
     playClick()

@@ -3,21 +3,14 @@ import gsap from 'gsap'
 import { X } from 'lucide-react'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
-import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
+import { useGo } from '@/hooks/useAppNavigation'
 import { CHRONICLES } from '@/data/chronicles'
 import { ChronicleCard } from '@/components/sections/ChroniclesSection'
 
-// ── Chronicle heading overlay ────────────────────────────────────────────────
-// Opened by tapping a heading in ChroniclesSection. Same glassmorphism
-// "reader" chrome as ChronicleOverlay/GalleryOverlay, but instead of an
-// article or an image grid, it lists every chronicle filed under one
-// heading (category). Tapping any of those opens the actual reading area
-// (ChronicleOverlay), stacked on top — useHistoryOverlay keeps a single
-// back-press / Escape closing only the top-most layer.
 export function ChronicleCategoryOverlay() {
-  const category      = useSceneStore((s) => s.openChronicleCategory)
-  const closeOverlay  = useSceneStore((s) => s.closeChronicleCategoryOverlay)
-  const playClick     = useClickSound()
+  const category     = useSceneStore((s) => s.openChronicleCategory)
+  const playClick    = useClickSound()
+  const { goParent } = useGo()
 
   const isOpen = Boolean(category)
   const items  = isOpen ? CHRONICLES.filter((c) => c.category === category) : []
@@ -25,21 +18,15 @@ export function ChronicleCategoryOverlay() {
   const overlayRef = useRef()
   const cardRef    = useRef()
 
-  const consumeHistoryEntry = useHistoryOverlay('chronicle-category', isOpen, closeOverlay)
-
   const handleClose = useCallback(() => {
     playClick()
-    if (!overlayRef.current) { closeOverlay(); consumeHistoryEntry(); return }
+    if (!overlayRef.current) { goParent(); return }
     gsap.to(overlayRef.current, {
       opacity: 0, duration: 0.3, ease: 'power2.in',
-      onComplete: () => {
-        closeOverlay()
-        consumeHistoryEntry()
-      },
+      onComplete: () => goParent(),
     })
-  }, [playClick, closeOverlay, consumeHistoryEntry])
+  }, [playClick, goParent])
 
-  // Mount animation
   useEffect(() => {
     if (!isOpen) return
     if (overlayRef.current) {
@@ -59,15 +46,11 @@ export function ChronicleCategoryOverlay() {
       style={{ opacity: 0 }}
       onClick={handleClose}
     >
-      {/* Glassmorphism backdrop — identical treatment to ChronicleOverlay */}
       <div
         className="absolute inset-0"
         style={{ background: 'rgba(4,4,4,0.55)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' }}
       />
 
-      {/* Reader-style card — full screen on mobile; on desktop it fills the
-          padded area above (fixed ~20px margin), same as ChronicleOverlay
-          and GalleryOverlay, so all three overlays read as the same size. */}
       <div
         ref={cardRef}
         onClick={(e) => e.stopPropagation()}
@@ -79,7 +62,6 @@ export function ChronicleCategoryOverlay() {
           boxShadow: '0 20px 80px rgba(0,0,0,0.6)',
         }}
       >
-        {/* Close button */}
         <button
           onClick={handleClose}
           aria-label="Close"
@@ -89,7 +71,6 @@ export function ChronicleCategoryOverlay() {
         </button>
 
         <div className="px-5 sm:px-12 pt-14 sm:pt-16 pb-12 sm:pb-16">
-          {/* Category + meta — mirrors Chronicle header format */}
           <div className="flex items-center gap-2 mb-4">
             <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/40">
               Chronicles

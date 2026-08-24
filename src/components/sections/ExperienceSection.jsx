@@ -1,7 +1,12 @@
 import { EXPERIENCE } from '@/data/portfolio'
 import { Separator } from '@/components/ui/separator'
+import { useClickSound } from '@/hooks/useClickSound'
+import { useGo } from '@/hooks/useAppNavigation'
 
 export function ExperienceSection() {
+  const { go }    = useGo()
+  const playClick = useClickSound()
+
   return (
     <div className="space-y-6">
       <div>
@@ -18,7 +23,13 @@ export function ExperienceSection() {
             </div>
             <div className="flex-1 min-w-0 pb-1">
               <div className="flex items-baseline justify-between gap-2 mb-0.5">
-                <h3 className="font-mono text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white uppercase tracking-wider">{exp.role}</h3>
+                <button
+                  type="button"
+                  onClick={() => { playClick(); go(`/academia/experience/${exp.id}`) }}
+                  className="font-mono text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white uppercase tracking-wider hover:text-white/70 transition-colors text-left"
+                >
+                  {exp.role}
+                </button>
                 <span className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/30 shrink-0 tabular-nums">{exp.period}</span>
               </div>
               <div className="font-body text-[clamp(14px,calc(13.3px+0.28vw),16px)] text-white/50 mb-3">

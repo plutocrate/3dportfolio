@@ -3,7 +3,7 @@ import gsap from 'gsap'
 import { X } from 'lucide-react'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
-import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
+import { useGo } from '@/hooks/useAppNavigation'
 import { GALLERY_IMAGES } from '@/data/gallery'
 
 // ── Full Gallery overlay ─────────────────────────────────────────────────────
@@ -47,27 +47,22 @@ function GalleryGridTile({ item, onOpen }) {
 }
 
 export function GalleryOverlay() {
-  const isOpen        = useSceneStore((s) => s.galleryOverlayOpen)
-  const closeOverlay   = useSceneStore((s) => s.closeGalleryOverlay)
-  const openLightbox   = useSceneStore((s) => s.openLightbox)
-  const playClick      = useClickSound()
+  const isOpen       = useSceneStore((s) => s.galleryOverlayOpen)
+  const openLightbox = useSceneStore((s) => s.openLightbox)
+  const playClick    = useClickSound()
+  const { goParent } = useGo()
 
   const overlayRef = useRef()
   const cardRef    = useRef()
 
-  const consumeHistoryEntry = useHistoryOverlay('gallery', isOpen, closeOverlay)
-
   const handleClose = useCallback(() => {
     playClick()
-    if (!overlayRef.current) { closeOverlay(); consumeHistoryEntry(); return }
+    if (!overlayRef.current) { goParent(); return }
     gsap.to(overlayRef.current, {
       opacity: 0, duration: 0.3, ease: 'power2.in',
-      onComplete: () => {
-        closeOverlay()
-        consumeHistoryEntry()
-      },
+      onComplete: () => goParent(),
     })
-  }, [playClick, closeOverlay, consumeHistoryEntry])
+  }, [playClick, goParent])
 
   const handleOpen = (item) => {
     playClick()

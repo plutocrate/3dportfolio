@@ -1,4 +1,6 @@
 import { create } from 'zustand'
+import { randomGiftIndex } from '@/data/giftQuestions'
+import { LINK_COLLECTIONS } from '@/data/portfolio'
 
 export const useSceneStore = create((set, get) => ({
   activeSection: null,
@@ -7,47 +9,27 @@ export const useSceneStore = create((set, get) => ({
   hoveredAnnotation: null,
   introPlayed: false,
 
-  // Font size scale for section panels (1 = default, range 0.75–1.5)
   fontSize: 1,
   setFontSize: (v) => set({ fontSize: Math.max(0.75, Math.min(1.5, v)) }),
-  cameraState: null,  // { camera, size } updated each frame
+  cameraState: null,
 
-  // Currently open Chronicle (full-screen glass overlay), null = closed
   openChronicleId: null,
   openChronicle: (id) => set({ openChronicleId: id }),
   closeChronicle: () => set({ openChronicleId: null }),
 
-  // Currently open Chronicle "heading" (category) overlay — shows every
-  // chronicle filed under that heading as a list. null = closed. Opening a
-  // chronicle from inside this list stacks the ChronicleOverlay on top of it
-  // (nesting is handled by useHistoryOverlay, so a single back-press only
-  // closes the top-most layer).
   openChronicleCategory: null,
   openChronicleCategoryOverlay: (category) => set({ openChronicleCategory: category }),
   closeChronicleCategoryOverlay: () => set({ openChronicleCategory: null }),
 
-  // Global image lightbox — any <img> across the site (Gallery grid,
-  // Chronicle body images, Journal media, etc.) can open this. null src
-  // means closed. Components that auto-scroll (e.g. the Gallery marquee)
-  // read `lightboxSrc` to know when to pause.
   lightboxSrc: null,
   lightboxCaption: '',
   openLightbox: (src, caption = '') => set({ lightboxSrc: src, lightboxCaption: caption }),
   closeLightbox: () => set({ lightboxSrc: null, lightboxCaption: '' }),
 
-  // Full-gallery glass overlay (About → Gallery → "View full gallery").
-  // Same visual language as the Chronicle reader, but a static grid of every
-  // gallery image — no marquee, no infinite loop.
   galleryOverlayOpen: false,
   openGalleryOverlay: () => set({ galleryOverlayOpen: true }),
   closeGalleryOverlay: () => set({ galleryOverlayOpen: false }),
 
-  // ── Cabinet ──────────────────────────────────────────────────────────────
-  // The Cabinet section is a "list of lists" — Evidence Locker and Motif each
-  // open in their own full-screen glass overlay (same shape as Chronicles /
-  // Gallery, nesting-safe via useHistoryOverlay). Gift Shop is deliberately
-  // NOT one of these — it's a small centered popup, not a history-tracked
-  // overlay, so it gets its own plain boolean + no history wiring.
   evidenceOverlayOpen: false,
   openEvidenceOverlay: () => set({ evidenceOverlayOpen: true }),
   closeEvidenceOverlay: () => set({ evidenceOverlayOpen: false }),
@@ -60,37 +42,67 @@ export const useSceneStore = create((set, get) => ({
   openFailureOverlay: () => set({ failureOverlayOpen: true }),
   closeFailureOverlay: () => set({ failureOverlayOpen: false }),
 
-  // Gift Shop — a curated question "gifted" to the visitor. Not an overlay:
-  // just a center-screen popup toggled by this flag. `giftQuestionIndex`
-  // tracks which question from GIFT_QUESTIONS is currently showing so a
-  // "reroll" can grab a different random one without repeating itself.
   giftPopupOpen: false,
   giftQuestionIndex: null,
   openGiftPopup: (index) => set({ giftPopupOpen: true, giftQuestionIndex: index }),
   closeGiftPopup: () => set({ giftPopupOpen: false }),
   rerollGift: (index) => set({ giftQuestionIndex: index }),
 
-  // Which Academia tab to land on next time it opens — lets a deep link
-  // (or anything else) send the user straight to e.g. "Projects" instead of
-  // always landing on the default first tab. Read once on mount by
-  // AcademiaSection; changing it doesn't fight the user once they're in there
-  // switching tabs themselves.
+  academiaTab: 'projects',
+  setAcademiaTab: (tab) => set({ academiaTab: tab }),
   academiaInitialTab: 'projects',
-  setAcademiaInitialTab: (tab) => set({ academiaInitialTab: tab }),
+  setAcademiaInitialTab: (tab) => set({ academiaInitialTab: tab, academiaTab: tab }),
 
-  // A DOM element id to scroll into view the next time the section panel's
-  // content finishes rendering (e.g. a specific blog post or project card).
-  // Set alongside setActiveSection() by anything that wants to deep-link
-  // into a section instead of just opening it at the top.
+  linksTab: LINK_COLLECTIONS[0]?.id || null,
+  setLinksTab: (tab) => set({ linksTab: tab }),
+
   pendingScrollId: null,
   setPendingScroll: (id) => set({ pendingScrollId: id }),
   clearPendingScroll: () => set({ pendingScrollId: null }),
+
+  // Apply a parsed route in one shot so URL → UI never leaves stale overlays
+  // open. Called from NavigationProvider whenever the location changes.
+  applyRoute: (route) => {
+    const r = route || {}
+    const overlay = r.overlay || null
+    const next = {
+      activeSection: r.section || null,
+      panelOpen: Boolean(r.section),
+      isAnimating: true,
+      openChronicleId: r.chronicleId || null,
+      openChronicleCategory: r.category || null,
+      academiaTab: r.academiaTab || 'projects',
+      academiaInitialTab: r.academiaTab || 'projects',
+      linksTab: r.linksTab || get().linksTab || LINK_COLLECTIONS[0]?.id || null,
+      pendingScrollId: r.scrollId || null,
+      galleryOverlayOpen: overlay === 'gallery',
+      evidenceOverlayOpen: overlay === 'evidence',
+      motifOverlayOpen: overlay === 'motif',
+      failureOverlayOpen: overlay === 'failure',
+      giftPopupOpen: overlay === 'gift',
+    }
+    if (overlay === 'gift' && get().giftQuestionIndex == null) {
+      next.giftQuestionIndex = randomGiftIndex()
+    }
+    set(next)
+  },
 
   setActiveSection: (id) => {
     set({ activeSection: id, panelOpen: id !== null, isAnimating: true })
   },
   closeSection: () => {
-    set({ activeSection: null, panelOpen: false, isAnimating: true })
+    set({
+      activeSection: null,
+      panelOpen: false,
+      isAnimating: true,
+      openChronicleId: null,
+      openChronicleCategory: null,
+      galleryOverlayOpen: false,
+      evidenceOverlayOpen: false,
+      motifOverlayOpen: false,
+      failureOverlayOpen: false,
+      giftPopupOpen: false,
+    })
   },
   setAnimating: (v) => set({ isAnimating: v }),
   setHovered: (id) => set({ hoveredAnnotation: id }),

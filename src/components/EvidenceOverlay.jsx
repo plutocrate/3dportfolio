@@ -3,7 +3,7 @@ import gsap from 'gsap'
 import { X } from 'lucide-react'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
-import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
+import { useGo } from '@/hooks/useAppNavigation'
 import { EVIDENCE_ITEMS } from '@/data/evidence'
 
 // ── Evidence Locker overlay ──────────────────────────────────────────────────
@@ -39,26 +39,21 @@ function EvidenceTile({ item, onOpen }) {
 
 export function EvidenceOverlay() {
   const isOpen        = useSceneStore((s) => s.evidenceOverlayOpen)
-  const closeOverlay   = useSceneStore((s) => s.closeEvidenceOverlay)
-  const openLightbox   = useSceneStore((s) => s.openLightbox)
-  const playClick      = useClickSound()
+  const openLightbox  = useSceneStore((s) => s.openLightbox)
+  const playClick     = useClickSound()
+  const { goParent }  = useGo()
 
   const overlayRef = useRef()
   const cardRef    = useRef()
 
-  const consumeHistoryEntry = useHistoryOverlay('evidence', isOpen, closeOverlay)
-
   const handleClose = useCallback(() => {
     playClick()
-    if (!overlayRef.current) { closeOverlay(); consumeHistoryEntry(); return }
+    if (!overlayRef.current) { goParent(); return }
     gsap.to(overlayRef.current, {
       opacity: 0, duration: 0.3, ease: 'power2.in',
-      onComplete: () => {
-        closeOverlay()
-        consumeHistoryEntry()
-      },
+      onComplete: () => goParent(),
     })
-  }, [playClick, closeOverlay, consumeHistoryEntry])
+  }, [playClick, goParent])
 
   const handleOpen = (item) => {
     playClick()

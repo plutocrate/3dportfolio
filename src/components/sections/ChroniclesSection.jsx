@@ -1,8 +1,9 @@
 import { ChevronRight } from 'lucide-react'
 import { CHRONICLES, getReadingTime, getStatusMeta } from '@/data/chronicles'
 import { Separator } from '@/components/ui/separator'
-import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
+import { useGo } from '@/hooks/useAppNavigation'
+import { slugify } from '@/lib/routes'
 
 export function CategoryChip({ label }) {
   return (
@@ -12,10 +13,6 @@ export function CategoryChip({ label }) {
   )
 }
 
-// Status chip — "Completed" / "In Progress" / "Draft" (or any custom label a
-// chronicle sets). Color is looked up from getStatusMeta() in the CMS file
-// so the palette lives in one place. Unknown/omitted statuses fall back to
-// a neutral "Completed" styling — see getStatusMeta() in chronicles.js.
 export function StatusChip({ status }) {
   const { label, className } = getStatusMeta(status)
   return (
@@ -27,16 +24,14 @@ export function StatusChip({ status }) {
   )
 }
 
-// A single chronicle — used both inside a heading's overlay list and
-// (previously) as a flat card. Clicking it opens the full reading area.
 export function ChronicleCard({ chronicle }) {
-  const openChronicle = useSceneStore((s) => s.openChronicle)
-  const playClick     = useClickSound()
-  const readingTime    = getReadingTime(chronicle)
+  const { go }     = useGo()
+  const playClick  = useClickSound()
+  const readingTime = getReadingTime(chronicle)
 
   return (
     <button
-      onClick={() => { playClick(); openChronicle(chronicle.id) }}
+      onClick={() => { playClick(); go(`/chronicles/${chronicle.id}`) }}
       className="group w-full text-left"
     >
       {chronicle.coverImage && (
@@ -44,9 +39,6 @@ export function ChronicleCard({ chronicle }) {
           className="w-full border border-white/8 overflow-hidden mb-3"
           style={{ paddingTop: '42%', position: 'relative', background: '#0a0a0a' }}
         >
-          {/* object-cover always fills this banner fully (no gaps) — if a
-              crop looks off for a particular image, set `coverPosition` on
-              that chronicle in chronicles.js to shift the focal point. */}
           <img
             src={chronicle.coverImage}
             alt=""
@@ -84,9 +76,6 @@ export function ChronicleCard({ chronicle }) {
   )
 }
 
-// Groups the flat CHRONICLES array into headings, keyed by `category`, in
-// first-seen order — so the CMS stays a flat array in chronicles.js while
-// the section renders it as a list of headings, each holding its own essays.
 function groupByCategory(chronicles) {
   const groups = new Map()
   for (const c of chronicles) {
@@ -97,14 +86,14 @@ function groupByCategory(chronicles) {
 }
 
 function ChronicleHeading({ category, items }) {
-  const openCategory = useSceneStore((s) => s.openChronicleCategoryOverlay)
-  const playClick     = useClickSound()
-  const count          = items.length
-  const preview        = items[0]
+  const { go }    = useGo()
+  const playClick = useClickSound()
+  const count     = items.length
+  const preview   = items[0]
 
   return (
     <button
-      onClick={() => { playClick(); openCategory(category) }}
+      onClick={() => { playClick(); go(`/chronicles/topic/${slugify(category)}`) }}
       className="group w-full text-left"
     >
       {preview?.coverImage && (
@@ -112,9 +101,6 @@ function ChronicleHeading({ category, items }) {
           className="w-full border border-white/8 overflow-hidden mb-3"
           style={{ paddingTop: '42%', position: 'relative', background: '#0a0a0a' }}
         >
-          {/* object-cover always fills this banner fully (no gaps) — if a
-              crop looks off for a particular image, set `coverPosition` on
-              that chronicle in chronicles.js to shift the focal point. */}
           <img
             src={preview.coverImage}
             alt=""
@@ -131,8 +117,6 @@ function ChronicleHeading({ category, items }) {
             <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.18em] text-white/28 tabular-nums">
               {count} {count === 1 ? 'Chronicle' : 'Chronicles'}
             </span>
-            {/* Reflects the most recent chronicle filed under this heading —
-                open it to see every entry's own status. */}
             {preview && <StatusChip status={preview.status} />}
           </div>
 

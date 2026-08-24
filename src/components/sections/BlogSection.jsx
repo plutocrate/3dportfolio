@@ -16,6 +16,7 @@ import { BLOG_POSTS } from '@/data/portfolio'
 import { Separator } from '@/components/ui/separator'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
+import { useGo } from '@/hooks/useAppNavigation'
 
 // ─── Detect media type from path ─────────────────────────────────────────────
 function getMediaType(src) {
@@ -143,6 +144,9 @@ function CategoryTag({ label }) {
 
 // ─── Single blog entry ───────────────────────────────────────────────────────
 function BlogEntry({ post, isLast }) {
+  const { go }    = useGo()
+  const playClick = useClickSound()
+
   return (
     <div id={`blogpost-${post.id}`} className="flex gap-4">
       {/* Timeline spine */}
@@ -166,7 +170,10 @@ function BlogEntry({ post, isLast }) {
         </div>
 
         {/* Title */}
-        <h3 className="font-mono text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white uppercase tracking-wider mb-1 leading-snug">
+        <h3
+          onClick={() => { playClick(); go(`/blog/${post.id}`) }}
+          className="font-mono text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white uppercase tracking-wider mb-1 leading-snug cursor-pointer hover:text-white/70 transition-colors"
+        >
           {post.title}
         </h3>
 

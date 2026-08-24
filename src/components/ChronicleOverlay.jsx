@@ -1,11 +1,16 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 import gsap from 'gsap'
-import { ArrowUpRight, X } from 'lucide-react'
+import { ArrowUpRight, X, Volume2, VolumeX } from 'lucide-react'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
-import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
+import { useGo } from '@/hooks/useAppNavigation'
 import { getChronicleById, getReadingTime, getStatusMeta } from '@/data/chronicles'
-import { pauseMusicForVideo, resumeMusicAfterVideo, pauseAllVideos } from '@/hooks/useMusicBridge'
+import {
+  pauseMusicForVideo,
+  resumeMusicAfterVideo,
+  pauseAllVideos,
+  getUserWantsMusic,
+} from '@/hooks/useMusicBridge'
 
 function MediaBlock({ item }) {
   const openLightbox = useSceneStore((s) => s.openLightbox)
@@ -59,42 +64,42 @@ function MediaBlock({ item }) {
 
 export function ChronicleOverlay() {
   const openChronicleId = useSceneStore((s) => s.openChronicleId)
-  const closeChronicle  = useSceneStore((s) => s.closeChronicle)
   const playClick       = useClickSound()
+  const { goParent }    = useGo()
 
-  const chronicle     = openChronicleId ? getChronicleById(openChronicleId) : null
-  const openLightbox  = useSceneStore((s) => s.openLightbox)
+  const chronicle    = openChronicleId ? getChronicleById(openChronicleId) : null
+  const openLightbox = useSceneStore((s) => s.openLightbox)
 
   const overlayRef = useRef()
-  const cardRef     = useRef()
-  const musicRef    = useRef(null)
-
-  const consumeHistoryEntry = useHistoryOverlay('chronicle', Boolean(openChronicleId), closeChronicle)
+  const cardRef    = useRef()
+  const musicRef   = useRef(null)
+  const [musicOn, setMusicOn] = useState(false)
 
   const handleClose = useCallback(() => {
     playClick()
-    if (!overlayRef.current) { closeChronicle(); consumeHistoryEntry(); return }
+    if (!overlayRef.current) { goParent(); return }
     gsap.to(overlayRef.current, {
       opacity: 0, duration: 0.3, ease: 'power2.in',
-      onComplete: () => {
-        closeChronicle()
-        consumeHistoryEntry()
-      },
+      onComplete: () => goParent(),
     })
-  }, [playClick, closeChronicle, consumeHistoryEntry])
+  }, [playClick, goParent])
 
-  // Mount / unmount animation + chronicle-specific music
   useEffect(() => {
     if (!chronicle) return
 
     pauseAllVideos()
     pauseMusicForVideo()
 
+    // If the visitor chose "keep my music" on enter, do not autoplay this
+    // chronicle's soundtrack — they can still turn it on via the bottom icon.
+    const autoplay = Boolean(chronicle.music) && getUserWantsMusic()
+    setMusicOn(autoplay)
+
     if (chronicle.music) {
       const a = new Audio(chronicle.music)
       a.loop = true
       a.volume = 0.4
-      a.play().catch(() => {})
+      if (autoplay) a.play().catch(() => {})
       musicRef.current = a
     }
 
@@ -111,10 +116,24 @@ export function ChronicleOverlay() {
         musicRef.current.src = ''
         musicRef.current = null
       }
+      setMusicOn(false)
       resumeMusicAfterVideo()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openChronicleId])
+
+  const toggleMusic = (e) => {
+    e.stopPropagation()
+    playClick()
+    if (!musicRef.current) return
+    if (musicOn) {
+      musicRef.current.pause()
+      setMusicOn(false)
+    } else {
+      musicRef.current.play().catch(() => {})
+      setMusicOn(true)
+    }
+  }
 
   if (!chronicle) return null
 
@@ -127,15 +146,11 @@ export function ChronicleOverlay() {
       style={{ opacity: 0 }}
       onClick={handleClose}
     >
-      {/* Glassmorphism backdrop */}
       <div
         className="absolute inset-0"
         style={{ background: 'rgba(4,4,4,0.55)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' }}
       />
 
-      {/* Reader card — full screen on mobile; on desktop it fills the padded
-          area above (fixed ~20px margin) instead of a vw%/max-w combo, so
-          there's no dead buffer space on wide monitors. */}
       <div
         ref={cardRef}
         onClick={(e) => e.stopPropagation()}
@@ -147,7 +162,6 @@ export function ChronicleOverlay() {
           boxShadow: '0 20px 80px rgba(0,0,0,0.6)',
         }}
       >
-        {/* Close button */}
         <button
           onClick={handleClose}
           aria-label="Close"
@@ -156,9 +170,7 @@ export function ChronicleOverlay() {
           <X size={16} />
         </button>
 
-        <div className="px-5 sm:px-12 pt-14 sm:pt-16 pb-12 sm:pb-16">
-          {/* Category + meta + title + dek — kept in a comfortable reading
-              column even though the card itself is now much wider. */}
+        <div className="px-5 sm:px-12 pt-14 sm:pt-16 pb-20 sm:pb-24">
           <div className="max-w-[860px] mx-auto">
             <div className="flex items-center gap-2 mb-4 flex-wrap">
               <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/40">
@@ -182,11 +194,6 @@ export function ChronicleOverlay() {
             )}
           </div>
 
-          {/* Cover image — allowed a wider column than the body text so it
-              actually takes advantage of the wider card. object-cover fills
-              the box completely (no letterboxed gaps); if a particular
-              image gets cropped awkwardly, set coverAspect/coverPosition
-              on that chronicle in chronicles.js. */}
           {chronicle.coverImage && (
             <div className="max-w-[1100px] mx-auto mb-8">
               <div
@@ -205,9 +212,6 @@ export function ChronicleOverlay() {
           )}
 
           <div className="max-w-[860px] mx-auto">
-            {/* Body — Medium-like reading typography. Each item in `body` is
-                either a paragraph (string) or inline media (object), rendered
-                in the order they're written so media can sit between paragraphs. */}
             <div className="space-y-5">
               {chronicle.body.map((item, i) =>
                 typeof item === 'string' ? (
@@ -223,8 +227,6 @@ export function ChronicleOverlay() {
               )}
             </div>
 
-            {/* Media — OPTIONAL extra images/videos shown after the body, for
-                chronicles that still use the older trailing-media format. */}
             {chronicle.media && chronicle.media.length > 0 && (
               <div className="mt-2">
                 {chronicle.media.map((item, i) => (
@@ -233,7 +235,6 @@ export function ChronicleOverlay() {
               </div>
             )}
 
-            {/* Links — underline + tilted upward arrow */}
             {chronicle.links && chronicle.links.length > 0 && (
               <div className="mt-10 pt-6 border-t border-white/10 space-y-2.5">
                 <div className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.2em] text-white/25 mb-3">
@@ -255,15 +256,24 @@ export function ChronicleOverlay() {
                 ))}
               </div>
             )}
-
-            {chronicle.music && (
-              <div className="mt-10 font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] text-white/18">
-                ♪ Playing this chronicle&apos;s soundtrack
-              </div>
-            )}
           </div>
         </div>
       </div>
+
+      {/* Fixed bottom music toggle — outside the card so position:fixed is
+          viewport-relative (GSAP transform on the card would otherwise trap it). */}
+      {chronicle.music && (
+        <button
+          type="button"
+          onClick={toggleMusic}
+          aria-label={musicOn ? 'Mute chronicle music' : 'Play chronicle music'}
+          title={musicOn ? 'Mute' : 'Play music'}
+          className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[80] w-10 h-10 flex items-center justify-center rounded-full border border-white/15 bg-black/50 text-white/40 hover:text-white/80 hover:border-white/35 transition-all duration-200"
+          style={{ backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}
+        >
+          {musicOn ? <Volume2 size={16} strokeWidth={1.5} /> : <VolumeX size={16} strokeWidth={1.5} />}
+        </button>
+      )}
     </div>
   )
 }

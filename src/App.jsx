@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
 import { MainScene } from '@/components/3d/MainScene'
 import { MobileAnnotationOverlay } from '@/components/MobileAnnotationOverlay'
 import { NewsBanner } from '@/components/NewsBanner'
@@ -20,11 +19,10 @@ import { useSceneStore } from '@/hooks/useSceneStore'
 import { useAmbientMusic } from '@/hooks/useAmbientMusic'
 import { useClickSound } from '@/hooks/useClickSound'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
-import { setMusicBridge } from '@/hooks/useMusicBridge'
+import { setMusicBridge, setUserWantsMusic } from '@/hooks/useMusicBridge'
+import { NavigationProvider, useGo } from '@/hooks/useAppNavigation'
 import { getChronicleById } from '@/data/chronicles'
-import { pathForState, parseDeepLink } from '@/lib/routes'
 
-// Reactive mobile detection — updates on resize, matches 3D side threshold
 function useIsMobile() {
   const [mobile, setMobile] = useState(() => window.innerWidth < 1024)
   useEffect(() => {
@@ -35,122 +33,77 @@ function useIsMobile() {
   return mobile
 }
 
-export default function App() {
-  const [loading,    setLoading]    = useState(true)
-  const [showHint,   setShowHint]   = useState(false)
+function AppShell({ loading, showHint, onEnter }) {
+  const { go, goHome, goParent } = useGo()
+  const activeSection         = useSceneStore((s) => s.activeSection)
+  const openChronicleId       = useSceneStore((s) => s.openChronicleId)
+  const academiaTab           = useSceneStore((s) => s.academiaTab)
+  const linksTab              = useSceneStore((s) => s.linksTab)
+  const openChronicleCategory = useSceneStore((s) => s.openChronicleCategory)
+  const galleryOverlayOpen    = useSceneStore((s) => s.galleryOverlayOpen)
+  const evidenceOverlayOpen   = useSceneStore((s) => s.evidenceOverlayOpen)
+  const motifOverlayOpen      = useSceneStore((s) => s.motifOverlayOpen)
+  const failureOverlayOpen    = useSceneStore((s) => s.failureOverlayOpen)
+  const giftPopupOpen         = useSceneStore((s) => s.giftPopupOpen)
 
-  const navigate  = useNavigate()
-  const location  = useLocation()
+  const openChronicleObj = openChronicleId ? getChronicleById(openChronicleId) : null
 
-  const activeSection     = useSceneStore((s) => s.activeSection)
-  const setActiveSection  = useSceneStore((s) => s.setActiveSection)
-  const closeSection      = useSceneStore((s) => s.closeSection)
-  const openChronicleId   = useSceneStore((s) => s.openChronicleId)
-  const openChronicle     = useSceneStore((s) => s.openChronicle)
-  const { playing, start, prepare, toggle, next, trackName, hasMultipleTracks, pauseForVideo, resumeAfterVideo } = useAmbientMusic()
+  const {
+    playing, start, prepare, toggle, next,
+    trackName, hasMultipleTracks,
+    pauseForVideo, resumeAfterVideo,
+  } = useAmbientMusic()
+
   setMusicBridge(pauseForVideo, resumeAfterVideo)
   const playClick = useClickSound()
-
   const mobile = useIsMobile()
 
-  // ── Real per-route SEO ───────────────────────────────────────────────────
-  // Each Chronicle (and each section) gets its own indexable <title>,
-  // description, canonical URL and OG/Twitter tags — see useDocumentMeta.
-  const openChronicleObj = openChronicleId ? getChronicleById(openChronicleId) : null
-  useDocumentMeta(activeSection, openChronicleObj)
+  useDocumentMeta({
+    activeSection,
+    chronicle: openChronicleObj,
+    academiaTab,
+    linksTab,
+    category: openChronicleCategory,
+    overlay: galleryOverlayOpen ? 'gallery'
+      : evidenceOverlayOpen ? 'evidence'
+      : motifOverlayOpen ? 'motif'
+      : failureOverlayOpen ? 'failure'
+      : giftPopupOpen ? 'gift'
+      : null,
+  })
 
-  // Parse whatever URL the visitor actually landed on (a shared Chronicle
-  // link, a bookmarked section, a search-result click) exactly once, before
-  // anything navigates it away. Applied after the loading screen finishes
-  // in handleEnter below, so a direct link to /chronicles/some-essay opens
-  // straight to that essay instead of always landing on the home view.
-  const [deepLink] = useState(() => parseDeepLink(window.location.pathname))
-
-  // ── State -> URL sync ────────────────────────────────────────────────────
-  // The address bar always reflects whatever is actually open — a section
-  // or an individual Chronicle — on both desktop and mobile, so every piece
-  // of content has its own real, shareable, crawlable URL. Uses replaceState
-  // (not pushState) so it never disturbs the overlay-nesting back-button
-  // logic each overlay already owns via useHistoryOverlay.
   useEffect(() => {
-    const base = import.meta.env.BASE_URL.replace(/\/+$/, '') // '' when BASE_URL is just '/'
-    const path = pathForState({ activeSection, openChronicleId })
-    const target = (path === '/' ? base : base + path).replace(/\/+$/, '') || '/'
-    const current = window.location.pathname.replace(/\/+$/, '') || '/'
-    if (current !== target) {
-      window.history.replaceState(window.history.state, '', target)
-    }
-  }, [activeSection, openChronicleId])
+    const nestedOpen = Boolean(
+      openChronicleId ||
+      openChronicleCategory ||
+      galleryOverlayOpen ||
+      evidenceOverlayOpen ||
+      motifOverlayOpen ||
+      failureOverlayOpen ||
+      giftPopupOpen
+    )
 
-  // ── Escape key → close section ───────────────────────────────────────────
-  // Guarded so this only fires when no overlay (Chronicle, Chronicle
-  // category, Gallery, Lightbox…) is currently stacked on top of the
-  // section panel — each of those owns its own Escape handling via
-  // useHistoryOverlay and pushes a history entry while open. If one is
-  // open, `history.state.overlay` will be set and we defer to it instead
-  // of also closing the whole panel underneath.
-  useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && activeSection && !window.history.state?.overlay) {
-        playClick()
-        handleClose()
-      }
+      if (e.key !== 'Escape') return
+      if (window.history.state?.overlay) return
+      playClick()
+      if (nestedOpen) goParent()
+      else if (activeSection) goHome()
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [activeSection]) // eslint-disable-line
-
-  // ── Sync URL → store (mobile only) ───────────────────────────────────────
-  // When user hits browser back, location changes → close section
-  useEffect(() => {
-    if (!mobile) return
-    // Only the first segment maps to a section (e.g. "chronicles" out of
-    // "/chronicles/some-essay") — a nested Chronicle id is handled by its
-    // own overlay history logic + the state->URL sync above, not here.
-    const path = location.pathname.split('/').filter(Boolean)[0] || ''
-    if (path && path !== '') {
-      // A section route is active
-      if (activeSection !== path) setActiveSection(path)
-    } else {
-      // Root — close any open section
-      if (activeSection) closeSection()
-    }
-  }, [location.pathname]) // eslint-disable-line
-
-  // ── Sync store → URL (mobile only) ───────────────────────────────────────
-  const handleAnnotationClick = (annotation) => {
-    if (activeSection === annotation.id) {
-      handleClose()
-    } else {
-      setActiveSection(annotation.id)
-      if (mobile) navigate(`/${annotation.id}`)
-    }
-  }
-
-  const handleClose = () => {
-    closeSection()
-    if (mobile) navigate('/')
-  }
+  }, [activeSection, goHome, goParent, playClick, openChronicleId, openChronicleCategory, galleryOverlayOpen, evidenceOverlayOpen, motifOverlayOpen, failureOverlayOpen, giftPopupOpen])
 
   const handleEnter = (withMusic) => {
-    if (withMusic) {
-      start()
-    } else {
-      prepare() // sets up the <audio> element silently so the HUD toggle still works later
-    }
-    setLoading(false)
+    setUserWantsMusic(withMusic)
+    if (withMusic) start()
+    else prepare()
+    onEnter(withMusic)
+  }
 
-    // Land the visitor on whatever they actually linked to (a specific
-    // Chronicle, or a section) instead of always resetting to home.
-    if (deepLink) {
-      setActiveSection(deepLink.section)
-      if (deepLink.chronicleId) openChronicle(deepLink.chronicleId)
-    } else {
-      setTimeout(() => {
-        setShowHint(true)
-        setTimeout(() => setShowHint(false), 5200)
-      }, 400)
-    }
+  const handleAnnotationClick = (annotation) => {
+    if (activeSection === annotation.id) goHome()
+    else go(`/${annotation.id}`)
   }
 
   return (
@@ -159,7 +112,6 @@ export default function App() {
       <div className="scan-overlay" />
 
       <SunCorner visible={!loading} />
-
       <NewsBanner visible={!loading} />
 
       {loading && <LoadingScreen onComplete={handleEnter} />}
@@ -187,24 +139,42 @@ export default function App() {
 
       <SwipeHint visible={showHint} />
 
-      {/* Pass handleClose so both X button and back button work */}
-      <SectionPanel onClose={handleClose} />
+      <SectionPanel onClose={() => { playClick(); goHome() }} />
 
       <ChronicleCategoryOverlay />
-
       <EvidenceOverlay />
-
       <MotifOverlay />
-
       <FailureConfessionsOverlay />
-
       <ChronicleOverlay />
-
       <GalleryOverlay />
-
       <Lightbox />
-
       <GiftShopPopup />
     </div>
+  )
+}
+
+export default function App() {
+  const [loading,  setLoading]  = useState(true)
+  const [showHint, setShowHint] = useState(false)
+
+  const handleEntered = () => {
+    setLoading(false)
+    const path = window.location.pathname.replace(/\/+$/, '') || '/'
+    if (path === '/') {
+      setTimeout(() => {
+        setShowHint(true)
+        setTimeout(() => setShowHint(false), 5200)
+      }, 400)
+    }
+  }
+
+  return (
+    <NavigationProvider enabled={!loading}>
+      <AppShell
+        loading={loading}
+        showHint={showHint}
+        onEnter={handleEntered}
+      />
+    </NavigationProvider>
   )
 }

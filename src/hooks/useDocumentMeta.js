@@ -1,27 +1,57 @@
 import { useEffect } from 'react'
 import { PERSONAL, SECTION_META } from '@/data/portfolio'
+import { pathForRoute } from '@/lib/routes'
 
 // ── SEO: dynamic per-route document metadata ────────────────────────────────
-// This is a single-page app, so without this the browser tab, any bookmark,
-// and any link preview would say the same generic title/description no
-// matter which section (About, Chronicles, Talk...) — or which individual
-// Chronicle article — is actually open. This hook keeps <title>, the meta
-// description, canonical link, and the Open Graph / Twitter tags in sync
-// with whichever section OR chronicle is active, falling back to the
-// site-wide defaults when nothing is open (i.e. the root page).
-//
-// Priority: chronicle > section > site default. A chronicle also gets its
-// own canonical URL (/chronicles/:id), its own cover image as og:image, and
-// a BlogPosting JSON-LD block — each article reads as a distinct, indexable
-// page to search engines and link-preview bots, not a fragment of the home
-// page.
 const SITE_URL = `https://${PERSONAL.website}`
 const DEFAULT_TITLE = `${PERSONAL.name} — ${PERSONAL.title} & Software Engineer`
 const DEFAULT_DESCRIPTION =
   `${PERSONAL.name} — Full-Stack Developer based in ${PERSONAL.location}. Expert in React, Three.js, Node.js, TypeScript & WebGL. Interactive 3D portfolio, projects & blog at ${PERSONAL.website}.`
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`
 
-const JSONLD_ID = 'chronicle-jsonld'
+const JSONLD_ID = 'route-jsonld'
+
+const OVERLAY_META = {
+  gallery: {
+    title: `${PERSONAL.name} — Gallery`,
+    description: `Photo and media gallery from ${PERSONAL.name}.`,
+  },
+  evidence: {
+    title: `${PERSONAL.name} — Evidence Locker`,
+    description: `Small proof of a life being lived — from ${PERSONAL.name}'s cabinet.`,
+  },
+  motif: {
+    title: `${PERSONAL.name} — Motif`,
+    description: `Music pressed to disc — Motif from ${PERSONAL.name}'s cabinet.`,
+  },
+  failure: {
+    title: `${PERSONAL.name} — Failure Confessions`,
+    description: `Things that didn't work, said plainly — from ${PERSONAL.name}.`,
+  },
+  gift: {
+    title: `${PERSONAL.name} — Gift Shop`,
+    description: `A question, curated and gifted — from ${PERSONAL.name}'s cabinet.`,
+  },
+}
+
+const ACADEMIA_TAB_META = {
+  projects: {
+    title: `${PERSONAL.name} — Projects`,
+    description: `Selected projects by ${PERSONAL.name} — React, Three.js, Node.js and more.`,
+  },
+  experience: {
+    title: `${PERSONAL.name} — Experience`,
+    description: `Work experience for ${PERSONAL.name}, Full-Stack Developer.`,
+  },
+  skills: {
+    title: `${PERSONAL.name} — Skills`,
+    description: `Technical skills and domains for ${PERSONAL.name}.`,
+  },
+  education: {
+    title: `${PERSONAL.name} — Education`,
+    description: `Education and certifications for ${PERSONAL.name}.`,
+  },
+}
 
 function setMeta(selector, attr, value) {
   const el = document.head.querySelector(selector)
@@ -38,9 +68,9 @@ function setOrCreateLink(rel, href) {
   el.setAttribute('href', href)
 }
 
-function upsertChronicleJsonLd(chronicle) {
+function upsertJsonLd(payload) {
   let script = document.getElementById(JSONLD_ID)
-  if (!chronicle) {
+  if (!payload) {
     if (script) script.remove()
     return
   }
@@ -50,41 +80,62 @@ function upsertChronicleJsonLd(chronicle) {
     script.id = JSONLD_ID
     document.head.appendChild(script)
   }
-  script.textContent = JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: chronicle.title,
-    description: chronicle.dek || '',
-    url: `${SITE_URL}/chronicles/${chronicle.id}`,
-    image: chronicle.coverImage ? `${SITE_URL}${chronicle.coverImage}` : DEFAULT_IMAGE,
-    datePublished: chronicle.date,
-    author: { '@type': 'Person', name: PERSONAL.name, url: SITE_URL },
-  })
+  script.textContent = JSON.stringify(payload)
 }
 
-export function useDocumentMeta(activeSection, chronicle = null) {
+export function useDocumentMeta({
+  activeSection,
+  chronicle = null,
+  academiaTab = null,
+  linksTab = null,
+  category = null,
+  overlay = null,
+} = {}) {
   useEffect(() => {
-    let title, description, canonical, image, ogType
+    let title = DEFAULT_TITLE
+    let description = DEFAULT_DESCRIPTION
+    let image = DEFAULT_IMAGE
+    let ogType = 'website'
+    let jsonLd = null
+
+    const route = {
+      section: activeSection,
+      chronicleId: chronicle?.id,
+      category,
+      academiaTab: activeSection === 'academia' ? academiaTab : null,
+      linksTab: activeSection === 'about' ? linksTab : null,
+      overlay,
+    }
+    const canonical = `${SITE_URL}${pathForRoute(route)}`
 
     if (chronicle) {
-      title       = `${chronicle.title} — ${PERSONAL.name}`
+      title = `${chronicle.title} — ${PERSONAL.name}`
       description = chronicle.dek || DEFAULT_DESCRIPTION
-      canonical   = `${SITE_URL}/chronicles/${chronicle.id}`
-      image       = chronicle.coverImage ? `${SITE_URL}${chronicle.coverImage}` : DEFAULT_IMAGE
-      ogType      = 'article'
+      image = chronicle.coverImage ? `${SITE_URL}${chronicle.coverImage}` : DEFAULT_IMAGE
+      ogType = 'article'
+      jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: chronicle.title,
+        description: chronicle.dek || '',
+        url: canonical,
+        image,
+        datePublished: chronicle.date,
+        author: { '@type': 'Person', name: PERSONAL.name, url: SITE_URL },
+      }
+    } else if (category) {
+      title = `${category} — Chronicles — ${PERSONAL.name}`
+      description = `Chronicles under “${category}” by ${PERSONAL.name}.`
+    } else if (overlay && OVERLAY_META[overlay]) {
+      title = OVERLAY_META[overlay].title
+      description = OVERLAY_META[overlay].description
+    } else if (activeSection === 'academia' && academiaTab && ACADEMIA_TAB_META[academiaTab]) {
+      title = ACADEMIA_TAB_META[academiaTab].title
+      description = ACADEMIA_TAB_META[academiaTab].description
     } else if (activeSection && SECTION_META[activeSection]) {
       const meta = SECTION_META[activeSection]
-      title       = meta.title
+      title = meta.title
       description = meta.description
-      canonical   = `${SITE_URL}/${activeSection}`
-      image       = DEFAULT_IMAGE
-      ogType      = 'website'
-    } else {
-      title       = DEFAULT_TITLE
-      description = DEFAULT_DESCRIPTION
-      canonical   = `${SITE_URL}/`
-      image       = DEFAULT_IMAGE
-      ogType      = 'website'
     }
 
     document.title = title
@@ -98,8 +149,7 @@ export function useDocumentMeta(activeSection, chronicle = null) {
     setMeta('meta[name="twitter:description"]', 'content', description)
     setMeta('meta[name="twitter:image"]', 'content', image)
     setOrCreateLink('canonical', canonical)
-    upsertChronicleJsonLd(chronicle)
-
+    upsertJsonLd(jsonLd)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeSection, chronicle])
+  }, [activeSection, chronicle, academiaTab, linksTab, category, overlay])
 }

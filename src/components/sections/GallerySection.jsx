@@ -2,6 +2,7 @@ import { Expand } from 'lucide-react'
 import { GALLERY_IMAGES } from '@/data/gallery'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
+import { useGo } from '@/hooks/useAppNavigation'
 
 const COLUMN_COUNT = 2
 
@@ -84,11 +85,11 @@ function MarqueeColumn({ items, duration, paused, onOpen }) {
 }
 
 export function GallerySection() {
-  const lightboxOpen     = useSceneStore((s) => s.lightboxSrc !== null)
+  const lightboxOpen       = useSceneStore((s) => s.lightboxSrc !== null)
   const galleryOverlayOpen = useSceneStore((s) => s.galleryOverlayOpen)
-  const openLightbox     = useSceneStore((s) => s.openLightbox)
-  const openGalleryOverlay = useSceneStore((s) => s.openGalleryOverlay)
-  const playClick         = useClickSound()
+  const openLightbox       = useSceneStore((s) => s.openLightbox)
+  const playClick          = useClickSound()
+  const { go }             = useGo()
 
   const handleOpen = (item) => {
     playClick()
@@ -97,7 +98,7 @@ export function GallerySection() {
 
   const handleViewAll = () => {
     playClick()
-    openGalleryOverlay()
+    go('/about/gallery')
   }
 
   return (
