@@ -240,6 +240,8 @@ export const CHRONICLES = [
 
       "Something happens, my mind reacts, then I react to that reaction. I build a story, start believing the story, and suddenly a tiny event becomes a conclusion about my entire life. Someone doesn't reply and I think they don't respect me. I waste three hours and think I'm useless. I become interested in something new and immediately think I've found my real direction. The actual event is usually tiny. The mental chain afterwards is fucking enormous.",
 
+      { type: "image", src: "/gallery/age_pro.jpg", caption: "Age Progression", aspect: "3/2", position: "center" },
+
       "I think Epictetus is trying to put a gap in that chain. What actually happened? What did my mind add to it? What part is actually mine? What can I do now?",
 
       "I used to think control meant controlling outcomes. If I work hard, I should succeed. If I prepare properly, I should get the job. If I care about someone, they should care about me. But reality doesn't work like that. I can prepare for the interview, practice guitar, make the project, treat someone well, and still not control what happens afterwards.",
@@ -252,11 +254,15 @@ export const CHRONICLES = [
 
       "That's the difference between exploration and reflexive movement. Exploration can be deliberate. Escapism is often just movement away from discomfort. It feels like progress because I'm moving, but movement isn't necessarily direction. That's probably one of the most uncomfortable things I've realized.",
 
+      { type: "image", src: "/gallery/boomer.jpg", caption: "Age Progression", aspect: "3/2", position: "center" },
+
       "So now when a new impulse appears, I don't have to kill it. 'I want to learn Rust.' Fine. 'I want to make a guitar tool.' Fine. 'I want to build a game.' Fine. But then I ask: 'Is this an actual decision, or is this just an impression?' If it's worth pursuing, I can choose it deliberately. If it's just my brain looking for an escape, I can let the thought exist without obeying it. I don't need to make my mind silent. I need to stop treating every thought as an instruction.",
 
       "This is where the terminology finally becomes useful. Epictetus calls the initial appearance of something in the mind a PHANTASIA, an impression. The thought appears, but I don't necessarily have to give it ASSENT, or SYNKATATHESIS. I can stop and say, 'Wait. They haven't replied. That's the fact. The rest is my interpretation.' The thought can appear without becoming a belief. The impulse can appear without becoming an action.",
 
       "And then there is PROHAIRESIS, roughly my capacity for deliberate choice and judgment. I can't control every impression that enters my mind, but I can work on what I do with it. So the structure becomes: event → impression → examination → assent or rejection → choice → action.",
+
+      { type: "image", src: "/gallery/resume_gap.jpg", caption: "Age Progression", aspect: "3/2", position: "top" },
 
       "This is where I see the connection with Advaita Vedanta. Advaita asks me: WHO AM I? It makes me look at thoughts, emotions and experiences that constantly change and question whether the changing thing can really be the deepest meaning of 'I'. Stoicism asks something different: WHAT IS MINE TO CHOOSE?",
 
@@ -277,6 +283,8 @@ export const CHRONICLES = [
       "I don't want to kill my curiosity. I don't want to become indifferent. I still want to explore guitar, programming, philosophy, games, mathematics, physics, and whatever genuinely catches me. What I want to change is the relationship. I want to be able to say, 'I'm interested in this,' without immediately saying, 'Therefore I must abandon everything and become this.' I want to be able to say, 'I'm afraid,' without immediately saying, 'Therefore I need to escape.'",
 
       "Maybe that's how these philosophies are making me more me. Not by giving me a new personality or a perfect answer, but by removing some of the automatic bullshit between what I experience and what I choose.",
+
+      { type: "image", src: "/gallery/kafka.jpg", caption: "Age Progression", aspect: "3/2", position: "bottom" },
 
       "Advaita is teaching me to question the thing I call 'I.' Epictetus is teaching me to question the thing I call 'my reaction.' And together they're forcing me to see something I had been avoiding: I DON'T HAVE TO OBEY EVERYTHING THAT HAPPENS INSIDE ME.",
 
