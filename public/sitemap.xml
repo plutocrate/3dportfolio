@@ -193,6 +193,12 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://prathamis.cool/blog/22th-blog</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://prathamis.cool/blog/21th-blog</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>

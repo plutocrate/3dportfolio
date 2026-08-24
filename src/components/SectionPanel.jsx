@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback, lazy, Suspense } from 'react'
 import gsap from 'gsap'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { resumeMusicAfterVideo } from '@/hooks/useMusicBridge'
 import { useClickSound } from '@/hooks/useClickSound'
 import { pauseAllVideos } from '@/hooks/useMusicBridge'
-import {
-  AboutSection,
-  TalkSection,
-  BlogSection,
-  AcademiaSection,
-  ChroniclesSection,
-  CabinetSection,
-} from '@/components/sections'
+
+// Lazy-load each section — only downloaded when the user opens that panel
+const AboutSection      = lazy(() => import('@/components/sections/AboutSection').then(m => ({ default: m.AboutSection })))
+const AcademiaSection   = lazy(() => import('@/components/sections/AcademiaSection').then(m => ({ default: m.AcademiaSection })))
+const TalkSection       = lazy(() => import('@/components/sections/TalkSection').then(m => ({ default: m.TalkSection })))
+const ChroniclesSection = lazy(() => import('@/components/sections/ChroniclesSection').then(m => ({ default: m.ChroniclesSection })))
+const CabinetSection    = lazy(() => import('@/components/sections/CabinetSection').then(m => ({ default: m.CabinetSection })))
+const BlogSection       = lazy(() => import('@/components/sections/BlogSection').then(m => ({ default: m.BlogSection })))
 
 const SECTION_MAP = {
   about:      AboutSection,
@@ -235,7 +235,9 @@ export function SectionPanel({ onClose }) {
       {/* Scrollable content */}
       <div className="relative h-full overflow-y-auto pb-12 pl-6 pr-6 sm:pl-10 sm:pr-10" style={{ paddingTop: 52 }}>
         <div ref={contentRef}>
-          {SectionContent && <SectionContent />}
+          <Suspense fallback={null}>
+            {SectionContent && <SectionContent />}
+          </Suspense>
         </div>
       </div>
 

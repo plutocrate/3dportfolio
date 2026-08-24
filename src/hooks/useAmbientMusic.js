@@ -1,5 +1,6 @@
 import { useRef, useState, useCallback, useMemo } from 'react'
 import musicFiles from 'virtual:music-manifest'
+import { setUserWantsMusic, getUserWantsMusic } from '@/hooks/useMusicBridge'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AMBIENT MUSIC PLAYER
@@ -85,6 +86,7 @@ export function useAmbientMusic() {
     try {
       await audioRef.current.play()
       setPlaying(true)
+      setUserWantsMusic(true)
     } catch (e) {
       // Autoplay may be blocked until the user interacts — safe to ignore
     }
@@ -102,10 +104,12 @@ export function useAmbientMusic() {
     if (playing) {
       audioRef.current.pause()
       setPlaying(false)
+      setUserWantsMusic(false)
       pausedByVideo.current = false // user manually turned off
     } else {
       audioRef.current.play().catch(() => {})
       setPlaying(true)
+      setUserWantsMusic(true)
     }
   }, [playing])
 
@@ -130,6 +134,7 @@ export function useAmbientMusic() {
 
   // Video stops — resume only if it was playing before video started
   const resumeAfterVideo = useCallback(() => {
+    if (!getUserWantsMusic()) return
     if (!audioRef.current || !pausedByVideo.current) return
     pausedByVideo.current = false
     audioRef.current.play().catch(() => {})

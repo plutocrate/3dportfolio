@@ -1,20 +1,23 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { MainScene } from '@/components/3d/MainScene'
-import { MobileAnnotationOverlay } from '@/components/MobileAnnotationOverlay'
-import { NewsBanner } from '@/components/NewsBanner'
-import { SectionPanel } from '@/components/SectionPanel'
-import { ChronicleOverlay } from '@/components/ChronicleOverlay'
-import { ChronicleCategoryOverlay } from '@/components/ChronicleCategoryOverlay'
-import { EvidenceOverlay } from '@/components/EvidenceOverlay'
-import { MotifOverlay } from '@/components/MotifOverlay'
-import { FailureConfessionsOverlay } from '@/components/FailureConfessionsOverlay'
-import { GiftShopPopup } from '@/components/GiftShopPopup'
-import { GalleryOverlay } from '@/components/GalleryOverlay'
-import { Lightbox } from '@/components/Lightbox'
 import { HUDOverlay } from '@/components/HUDOverlay'
 import { LoadingScreen } from '@/components/LoadingScreen'
+import { SectionPanel } from '@/components/SectionPanel'
 import { SunCorner } from '@/components/SunCorner'
 import { SwipeHint } from '@/components/SwipeHint'
+import { NewsBanner } from '@/components/NewsBanner'
+
+// Heavy overlays — lazy-loaded only when first opened
+const MobileAnnotationOverlay  = lazy(() => import('@/components/MobileAnnotationOverlay').then(m => ({ default: m.MobileAnnotationOverlay })))
+const ChronicleOverlay          = lazy(() => import('@/components/ChronicleOverlay').then(m => ({ default: m.ChronicleOverlay })))
+const ChronicleCategoryOverlay  = lazy(() => import('@/components/ChronicleCategoryOverlay').then(m => ({ default: m.ChronicleCategoryOverlay })))
+const EvidenceOverlay           = lazy(() => import('@/components/EvidenceOverlay').then(m => ({ default: m.EvidenceOverlay })))
+const MotifOverlay              = lazy(() => import('@/components/MotifOverlay').then(m => ({ default: m.MotifOverlay })))
+const FailureConfessionsOverlay = lazy(() => import('@/components/FailureConfessionsOverlay').then(m => ({ default: m.FailureConfessionsOverlay })))
+const GiftShopPopup             = lazy(() => import('@/components/GiftShopPopup').then(m => ({ default: m.GiftShopPopup })))
+const GalleryOverlay            = lazy(() => import('@/components/GalleryOverlay').then(m => ({ default: m.GalleryOverlay })))
+const Lightbox                  = lazy(() => import('@/components/Lightbox').then(m => ({ default: m.Lightbox })))
+
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useAmbientMusic } from '@/hooks/useAmbientMusic'
 import { useClickSound } from '@/hooks/useClickSound'
@@ -125,7 +128,9 @@ function AppShell({ loading, showHint, onEnter }) {
       </div>
 
       {mobile && (
-        <MobileAnnotationOverlay onAnnotationClick={handleAnnotationClick} />
+        <Suspense fallback={null}>
+          <MobileAnnotationOverlay onAnnotationClick={handleAnnotationClick} />
+        </Suspense>
       )}
 
       <HUDOverlay
@@ -141,14 +146,16 @@ function AppShell({ loading, showHint, onEnter }) {
 
       <SectionPanel onClose={() => { playClick(); goHome() }} />
 
-      <ChronicleCategoryOverlay />
-      <EvidenceOverlay />
-      <MotifOverlay />
-      <FailureConfessionsOverlay />
-      <ChronicleOverlay />
-      <GalleryOverlay />
-      <Lightbox />
-      <GiftShopPopup />
+      <Suspense fallback={null}>
+        <ChronicleCategoryOverlay />
+        <EvidenceOverlay />
+        <MotifOverlay />
+        <FailureConfessionsOverlay />
+        <ChronicleOverlay />
+        <GalleryOverlay />
+        <Lightbox />
+        <GiftShopPopup />
+      </Suspense>
     </div>
   )
 }

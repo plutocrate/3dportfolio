@@ -59,4 +59,40 @@ export default defineConfig({
   // GitHub Pages serves from https://<username>.github.io/<repo-name>/
   // IMPORTANT: change 'portfolio' below to match your actual GitHub repo name
   base: '/',
+  build: {
+    // Split the huge vendor libs into separate cacheable chunks so the
+    // browser can download them in parallel and cache them independently.
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Three.js + React Three Fiber ecosystem — biggest chunk
+          if (id.includes('three') || id.includes('@react-three')) {
+            return 'vendor-three'
+          }
+          // GSAP animation library
+          if (id.includes('gsap')) {
+            return 'vendor-gsap'
+          }
+          // Lucide icons (large icon set)
+          if (id.includes('lucide-react')) {
+            return 'vendor-icons'
+          }
+          // Radix UI primitives
+          if (id.includes('@radix-ui')) {
+            return 'vendor-radix'
+          }
+          // React core
+          if (id.includes('react-dom') || id.includes('react-router')) {
+            return 'vendor-react'
+          }
+          // Zustand state
+          if (id.includes('zustand')) {
+            return 'vendor-state'
+          }
+        },
+      },
+    },
+    // Raise the warning threshold — three.js chunks are legitimately large
+    chunkSizeWarningLimit: 1500,
+  },
 })

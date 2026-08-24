@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { normalizePath, parsePath, getAncestors } from '@/lib/routes'
+import { normalizePath, parsePath, getAncestors, listAllPaths } from '@/lib/routes'
 import { useSceneStore } from '@/hooks/useSceneStore'
 
 let seededThisLoad = false
@@ -25,6 +25,17 @@ export function NavigationProvider({ enabled, children }) {
     if (!enabled) return
 
     const path = normalizePath(location.pathname)
+
+    // Check if the path is valid. If not, redirect.
+    const validPaths = listAllPaths()
+    if (!validPaths.includes(path)) {
+      if (path.startsWith('/chronicles/topic')) {
+        navigate('/chronicles', { replace: true })
+      } else {
+        navigate('/', { replace: true })
+      }
+      return
+    }
 
     // While inserting `/` under a deep link, ignore the intermediate home
     // location so the overlay doesn't flash closed then open again.

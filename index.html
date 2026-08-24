@@ -19,7 +19,7 @@
     <meta property="og:site_name" content="Pratham Purohit" />
     <meta property="og:title" content="Pratham Purohit — Full-Stack Developer" />
     <meta property="og:description" content="Pratham Purohit — Full-Stack Developer. React, Three.js, Node.js, TypeScript & WebGL specialist. Interactive 3D portfolio showcasing real-world projects and experience." />
-    <meta property="og:image" content="https://prathamis.cool/og-image.png" />
+    <meta property="og:image" content="https://prathamis.cool/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Pratham Purohit — Full-Stack Developer Portfolio" />
@@ -31,7 +31,7 @@
     <meta name="twitter:creator" content="@prathammpurohit" />
     <meta name="twitter:title" content="Pratham Purohit — Full-Stack Developer" />
     <meta name="twitter:description" content="Full-Stack Developer specialising in React, Three.js, and Node.js. Interactive 3D portfolio." />
-    <meta name="twitter:image" content="https://prathamis.cool/og-image.png" />
+    <meta name="twitter:image" content="https://prathamis.cool/og-image.jpg" />
 
     <!-- ── JSON-LD Structured Data ── -->
     <script type="application/ld+json">
@@ -40,7 +40,7 @@
       "@type": "Person",
       "name": "Pratham Purohit",
       "url": "https://prathamis.cool",
-      "image": "https://prathamis.cool/og-image.png",
+      "image": "https://prathamis.cool/og-image.jpg",
       "jobTitle": "Full-Stack Developer",
       "description": "Full-Stack Developer specialising in React, Three.js, Node.js and WebGL. Based in India.",
       "email": "prathampurohitonline@outlook.com",
@@ -85,6 +85,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+    <!-- Preload the 3D model + texture — biggest assets, start fetching immediately -->
+    <link rel="preload" href="/models/NikitaMesh_A_Pose.gltf" as="fetch" crossorigin />
+    <link rel="preload" href="/models/Nikita1024_UV_Template.png" as="image" />
+
     <style>
       #root > main { display: none !important; }
       #root { background: #050505; }
