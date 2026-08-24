@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { normalizePath, parsePath, parentPath } from '@/lib/routes'
+import { normalizePath, parsePath, getAncestors } from '@/lib/routes'
 import { useSceneStore } from '@/hooks/useSceneStore'
 
 let seededThisLoad = false
@@ -35,15 +35,20 @@ export function NavigationProvider({ enabled, children }) {
 
     applyRoute(parsePath(path))
 
-    // Deep links start with only that URL on the stack. Seed `/` underneath
-    // once so Back from any content URL returns to the 3D home — not the
-    // parent section, and not the previous website.
+    // Deep links start with only that URL on the stack. Seed ancestors underneath
+    // once so Back from any content URL returns through the correct parent steps
+    // back to the 3D home.
     if (!seededThisLoad && path !== '/') {
       seededThisLoad = true
       seeding.current = true
-      const dest = path + (location.search || '')
-      navigate('/', { replace: true })
-      requestAnimationFrame(() => navigate(dest))
+      const ancestors = getAncestors(path)
+      if (ancestors.length > 0) {
+        window.history.replaceState(null, '', ancestors[0])
+        for (let i = 1; i < ancestors.length; i++) {
+          window.history.pushState(null, '', ancestors[i])
+        }
+        navigate(path + (location.search || ''), { replace: false })
+      }
       return
     }
     seededThisLoad = true
@@ -53,26 +58,25 @@ export function NavigationProvider({ enabled, children }) {
     const target = normalizePath(path)
     const current = normalizePath(location.pathname)
     if (target === current) return
-    // From home, push so Back returns home. From any other content URL,
-    // replace so Back still returns home instead of stacking overlays.
-    if (current === '/') navigate(target)
-    else navigate(target, { replace: true })
-  }, [location.pathname, navigate])
+
+    const ancestors = getAncestors(target)
+    if (ancestors.length > 0) {
+      window.history.replaceState(null, '', ancestors[0])
+      for (let i = 1; i < ancestors.length; i++) {
+        window.history.pushState(null, '', ancestors[i])
+      }
+    }
+    navigate(target + (location.search || ''), { replace: false })
+  }, [location.pathname, location.search, navigate])
 
   const goHome = useCallback(() => {
     if (normalizePath(location.pathname) === '/') return
-    navigate('/')
+    navigate(-1)
   }, [location.pathname, navigate])
 
   const goParent = useCallback(() => {
-    const parent = parentPath(location.pathname)
-    const current = normalizePath(location.pathname)
-    if (parent === current) {
-      goHome()
-      return
-    }
-    navigate(parent, { replace: current !== '/' })
-  }, [location.pathname, navigate, goHome])
+    navigate(-1)
+  }, [navigate])
 
   return (
     <NavContext.Provider value={{ go, goHome, goParent }}>
@@ -80,3 +84,4 @@ export function NavigationProvider({ enabled, children }) {
     </NavContext.Provider>
   )
 }
+

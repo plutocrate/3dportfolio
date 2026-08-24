@@ -171,7 +171,14 @@ export function pathForRoute(route) {
 export function parentPath(pathname) {
   const route = parsePath(pathname)
   if (!route.section) return '/'
-  if (route.chronicleId || route.category) return '/chronicles'
+  if (route.chronicleId) {
+    const chronicle = getChronicleById(route.chronicleId)
+    if (chronicle && chronicle.category) {
+      return `/chronicles/topic/${slugify(chronicle.category)}`
+    }
+    return '/chronicles'
+  }
+  if (route.category) return '/chronicles'
   if (route.overlay === 'gallery' || route.linksTab) return '/about'
   if (route.overlay) return '/cabinet'
   if (route.section === 'academia' && route.focusId) {
@@ -180,6 +187,19 @@ export function parentPath(pathname) {
   if (route.section === 'blog' && route.focusId) return '/blog'
   return '/'
 }
+
+export function getAncestors(pathname) {
+  const list = []
+  let curr = normalizePath(pathname)
+  while (curr !== '/') {
+    const parent = normalizePath(parentPath(curr))
+    if (parent === curr) break
+    list.unshift(parent)
+    curr = parent
+  }
+  return list
+}
+
 
 export function listAllPaths() {
   const paths = [
