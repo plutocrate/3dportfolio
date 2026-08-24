@@ -80,11 +80,11 @@
 
 export const CHRONICLES = [
   {
-    id: "on-philosophy-and-life",
+    id: "understanding-advaita",
     title: "Advaita Vedanta -- my understanding.",
     dek: "Who the fuck am 'I'?",
     date: "21 Aug 2026",
-    category: "Understanding 'I'",
+    category: "Understanding Life",
     status: "In Progress",
     coverImage: "/gallery/faa.jpg",
     coverPosition: "top",
@@ -226,9 +226,9 @@ export const CHRONICLES = [
   {
     id: "understanding-stoicism",
     title: "Stoicism -- my understanding",
-    dek: "The space between what happens and what I do.",
+    dek: "What the fuck is in my control?",
     date: "24 Aug 2026",
-    category: "Understanding 'I'",
+    category: "Understanding Life",
     status: "In Progress",
     coverImage: "/gallery/stoic_banner.jpg",
     coverPosition: "center",
