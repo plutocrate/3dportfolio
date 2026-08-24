@@ -157,7 +157,7 @@ export const PROJECTS = [
     description:
       "Engineered a Canvas-based puzzle simulation engine in JavaScript with a Node.js/Express + PostgreSQL backend, deployed on Neon and Railway, serving 200 daily user requests.",
     tags: ["JavaScript", "Canvas API", "Node.js", "Express", "PostgreSQL", "Railway"],
-		link:"https://github.com/plutocrate/iluvbaba",
+    link: "https://github.com/plutocrate/iluvbaba",
   },
   {
     id: "gtutor",
@@ -167,7 +167,7 @@ export const PROJECTS = [
     description:
       "Built a real-time browser guitar tutor using React and TypeScript, integrating MediaPipe gesture recognition and Web Audio API signal analysis.",
     tags: ["React", "TypeScript", "MediaPipe", "Web Audio API"],
-		link: "https://www.linkedin.com/posts/activity-7437057168048091137-l_Ey?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADauVx0BsN5m4HZ_vmMezRkN9FZRXltun7w",
+    link: "https://www.linkedin.com/posts/activity-7437057168048091137-l_Ey?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADauVx0BsN5m4HZ_vmMezRkN9FZRXltun7w",
   },
   {
     id: "mrphony",
@@ -177,7 +177,7 @@ export const PROJECTS = [
     description:
       "React + TypeScript strategy game converting real-world Uttarakhand topography into ASCII game maps using Claude AI, with automated deployment via GitHub Actions.",
     tags: ["React", "TypeScript", "Claude AI", "GitHub Actions"],
-		link: "https://github.com/plutocrate/mrphony",
+    link: "https://github.com/plutocrate/mrphony",
   },
   {
     id: "beatdancer",
@@ -187,7 +187,7 @@ export const PROJECTS = [
     description:
       "Browser-based rhythm game using Three.js and WebGL, integrating Mixamo 3D character animations synchronized with music beats in real time.",
     tags: ["Three.js", "WebGL", "Mixamo", "Web Audio API"],
-		link: "https://beatonline-production.up.railway.app/",
+    link: "https://beatonline-production.up.railway.app/",
   },
   {
     id: "gwent",
@@ -197,7 +197,7 @@ export const PROJECTS = [
     description:
       "Real-time multiplayer browser card game using Node.js, Express, and Socket.IO with room-based 1v1 matches and synchronized game state between players.",
     tags: ["Node.js", "Express", "Socket.IO", "Multiplayer"],
-		link: "https://gwent-mult-production.up.railway.app/",
+    link: "https://gwent-mult-production.up.railway.app/",
   },
 ];
 
@@ -278,392 +278,407 @@ export const LINK_COLLECTIONS = [
 // -------------------------------------
 // BLOG
 export const BLOG_POSTS = [
-{
-  id: "21th-blog",
-  title: "Unemployement is a blessing for me.",
-  subtitle: "A little radical claim ik, but works for me.",
-  date: "0058, 23 Aug 2026",
-  categories: ["observation"],
-  body: [
-	"I think unemployment has taught me more about myself than having a fucking job ever did. I've been unemployed for a huge part of my life, even in college. I skipped a lot, stayed disconnected, and never really thought about the pattern.",
+  {
+    id: "22th-blog",
+    title: "These Motherfuckers at Github suck.",
+    subtitle: "I will fucking lose my account?",
+    date: "1752, 24 Aug 2026",
+    categories: ["observation"],
+    body: [
+      "Shit I might loose access to my website for a while, because this motherfucker github hosts it, and my token is expiring tonight!",
+      "I lost my phone, which had Github 2FA, Microsoft Authenticator app, but fuck it I can't login into my github, because they fucking need 2FA.",
+      "I have fucking mailed these motherfuckers, but my token is expiring tonight, shit, I can't post anymore.",
+      "I fucking love steam support. Fuck. I want my fucking account back!",
+    ],
+    media: ["/gallery/hl.jpg"],
+    link: "",
+  },
+  {
+    id: "21th-blog",
+    title: "Unemployement is a blessing for me.",
+    subtitle: "A little radical claim ik, but works for me.",
+    date: "0058, 23 Aug 2026",
+    categories: ["observation"],
+    body: [
+      "I think unemployment has taught me more about myself than having a fucking job ever did. I've been unemployed for a huge part of my life, even in college. I skipped a lot, stayed disconnected, and never really thought about the pattern.",
 
-"When I was unemployed before, I couldn't fucking handle myself. I'd sink into my memories, overeat, stay depressed, and do anything to escape my own head. Without structure, I just didn't know what the fuck to do with myself.",
+      "When I was unemployed before, I couldn't fucking handle myself. I'd sink into my memories, overeat, stay depressed, and do anything to escape my own head. Without structure, I just didn't know what the fuck to do with myself.",
 
-"Then I got a job for three or four months, and somehow life became better. I had somewhere to go, shit to do, people around me. I was moving. Now I'm unemployed again, but idk man, this time feels different.",
+      "Then I got a job for three or four months, and somehow life became better. I had somewhere to go, shit to do, people around me. I was moving. Now I'm unemployed again, but idk man, this time feels different.",
 
-"A few days ago, I was on a simple evening jog. I stopped for a moment and saw the sunset, the trees, the sky, the way nature just paints everything without giving a fuck. And I just stood there thinking, damn, life is actually happening. I miss so much of it when I'm trapped inside my own head.",
+      "A few days ago, I was on a simple evening jog. I stopped for a moment and saw the sunset, the trees, the sky, the way nature just paints everything without giving a fuck. And I just stood there thinking, damn, life is actually happening. I miss so much of it when I'm trapped inside my own head.",
+
+      "That's when I realised unemployment was never really the enemy. My inability to live with myself was. This time I have time, and instead of fucking destroying myself with it, I can actually use it. Study, build shit, read, walk, learn, make things, explore.",
+
+      "Even my body feels calmer. My digestion is better, my rosacea is settling down, and that constant nervous-system shock feels less intense. Even my reactions to shit are becoming more normal.",
+
+      "And yeah, I still want to make fucking money. I want to earn good, be materialistic as hell. I want a home made of marble, fucking amazing premium stuff everywhere, weird esoteric shit that I find beautiful, a fucking good bike, an expensive cruiser, a beautiful place to live. I want all of it. I'm not going to pretend I don't.",
+
+      "But maybe that's the point. I don't need a job just to feel alive anymore. I want to work because I want to build a fucking life I actually like living."
+
+    ],
+    media: ["/gallery/space.jpg"],
+    link: "",
+  },
+  {
+    id: "20th-blog",
+    title: "Adavita Vedanta",
+    subtitle: "What I understand as of now.",
+    date: "0226, 20 Aug 2026",
+    categories: ["philosophy"],
+    body: [
+      "What I understand so far is that it starts with a very simple question: am I these things, or am I aware of these things?",
+
+      "I notice a thought. So the thought is something I experience. I notice sadness, so sadness is something I experience. I notice my body, my memories, my desires, even the feeling of 'I', and all of these are things I can observe.",
+
+      "So then the question becomes: if I can observe all these things, what exactly is the thing that is observing them? I don't know yet. That's what I want to understand.",
+
+      "I don't want to jump straight into big words or make it spiritual for the sake of it. I want to study it properly. I'll start with the Upanishads and the Bhagavad Gita, and then read Shankara. For now, I just want to understand this one question: who is the one experiencing all of this?"
+    ],
+    media: ["/gallery/adv.jpg"],
+    link: "",
+  },
+  {
+    id: "19th-blog",
+    title: "What is love?",
+    subtitle: "and time to be back home my boy.",
+    date: "0320, 17 Aug 2026",
+    categories: ["reflection"],
+    body: [
+      "I've fallen for a lot of people, I thought I was falling in love.",
+
+      "But maybe I was falling for the feeling of falling.",
+
+      "I'm very good at reaching someone. I become intense very quickly. I want to know them, talk to them, make them feel special. Everything gets wrapped inside this little balloon called love.",
+
+      "But I've noticed something about myself.",
+
+      "I'm much better at wanting something than keeping it.",
+
+      "I can chase someone with everything I have, but when something becomes mine, I somehow lose the discipline to take care of it. I've done this with people, studies, work, even my own life.",
+
+      "Maybe that's why I keep falling.",
 
-"That's when I realised unemployment was never really the enemy. My inability to live with myself was. This time I have time, and instead of fucking destroying myself with it, I can actually use it. Study, build shit, read, walk, learn, make things, explore.",
+      "There is something about the beginning that consumes me. The uncertainty, the possibility, the feeling that maybe this person could become mine. And I mistake that intensity for love.",
 
-"Even my body feels calmer. My digestion is better, my rosacea is settling down, and that constant nervous-system shock feels less intense. Even my reactions to shit are becoming more normal.",
+      "Maybe sometimes it is love. I don't know.",
 
-"And yeah, I still want to make fucking money. I want to earn good, be materialistic as hell. I want a home made of marble, fucking amazing premium stuff everywhere, weird esoteric shit that I find beautiful, a fucking good bike, an expensive cruiser, a beautiful place to live. I want all of it. I'm not going to pretend I don't.",
+      "When I think about MJ, I know what I felt was real. I wanted her around. I wanted to know her day, talk to her, be stupid with her, do absolutely nothing with her.",
 
-"But maybe that's the point. I don't need a job just to feel alive anymore. I want to work because I want to build a fucking life I actually like living."
+      "And when she left, it hurt.",
 
-  ],
-  media: ["/gallery/space.jpg"],
-  link: "",
-},
-{
-  id: "20th-blog",
-  title: "Adavita Vedanta",
-  subtitle: "What I understand as of now.",
-  date: "0226, 20 Aug 2026",
-  categories: ["philosophy"],
-  body: [
-	"What I understand so far is that it starts with a very simple question: am I these things, or am I aware of these things?",
-
-"I notice a thought. So the thought is something I experience. I notice sadness, so sadness is something I experience. I notice my body, my memories, my desires, even the feeling of 'I', and all of these are things I can observe.",
-
-"So then the question becomes: if I can observe all these things, what exactly is the thing that is observing them? I don't know yet. That's what I want to understand.",
-
-"I don't want to jump straight into big words or make it spiritual for the sake of it. I want to study it properly. I'll start with the Upanishads and the Bhagavad Gita, and then read Shankara. For now, I just want to understand this one question: who is the one experiencing all of this?"
-  ],
-  media: ["/gallery/adv.jpg"],
-  link: "",
-},
-{
-  id: "19th-blog",
-  title: "What is love?",
-  subtitle: "and time to be back home my boy.",
-  date: "0320, 17 Aug 2026",
-  categories: ["reflection"],
-  body: [
-"I've fallen for a lot of people, I thought I was falling in love.",
+      "I spent years talking about attachment, suffering, impermanence and human nature. Then I became attached myself.",
 
-"But maybe I was falling for the feeling of falling.",
+      "Turns out understanding something doesn't make you immune to it.",
 
-"I'm very good at reaching someone. I become intense very quickly. I want to know them, talk to them, make them feel special. Everything gets wrapped inside this little balloon called love.",
+      "Maybe love isn't the intensity of reaching someone.",
 
-"But I've noticed something about myself.",
+      "Maybe love begins after that.",
 
-"I'm much better at wanting something than keeping it.",
+      "After the excitement. After the confession. After there is nothing left to chase.",
 
-"I can chase someone with everything I have, but when something becomes mine, I somehow lose the discipline to take care of it. I've done this with people, studies, work, even my own life.",
+      "Maybe love is consistency. Maybe it's choosing to show up when everything becomes ordinary.",
 
-"Maybe that's why I keep falling.",
+      "I don't know.",
 
-"There is something about the beginning that consumes me. The uncertainty, the possibility, the feeling that maybe this person could become mine. And I mistake that intensity for love.",
+      "I'm still figuring it out.",
 
-"Maybe sometimes it is love. I don't know.",
+      "But maybe I don't fall in love with people.",
 
-"When I think about MJ, I know what I felt was real. I wanted her around. I wanted to know her day, talk to her, be stupid with her, do absolutely nothing with her.",
+      "Maybe I fall in love with possibility.",
 
-"And when she left, it hurt.",
+      "And maybe real love is much quieter than that.",
+    ],
+    media: ["/gallery/lonely.jpg"],
+    link: "",
+  },
+  {
+    id: "18th-blog",
+    title: "Post nut clarity.",
+    subtitle: "Things were not how my brain perceived previously.",
+    date: "1747, 16 Aug 2026",
+    categories: ["reflection"],
+    body: [
+      "Had a buzz cut today, I feel light.",
+      "Life seems to be on track again, I realised my pattern of losing, detachment and healing. I can't force healing upon me, when I wake up my brain reconstructs it's reality, reality? my reality was my lifestlye which is no more mine, and it panics, I see it now, and I understand it now.",
+      "I was re-reading my journal and I realised, I was kind of a 'nihilist', but if I consider life had no meaning, then my depression has no meaning as well, right? Am I writing it to make me feel better? Ofcousre yes, why not? Shouldn't I make me feel better and look forward.",
+      "So, this experience taught me a lot, trust me a lot, I can observe better now. I'm more committed to starting my own prenuer, and I'm starting it today only.",
+      "Maybe next journal won't be an obsevration anymore, but what I'm actually doing.",
+    ],
+    media: ["/gallery/life.jpg"],
+    link: "",
+  },
+  {
+    id: "17th-blog",
+    title: "I'm a loser.",
+    subtitle: "Weakest man on the planet at this moment",
+    date: "0518, 15 Aug 2026",
+    categories: ["reflection"],
+    body: [
+      "I haven't slept because I was debating with her. And maybe that's exactly why I'm writing this now. Not to talk about her, just to observe myself. I have this weird fucking habit of losing my track whenever something feels good. I get attached, I start imagining things, I put too much of myself into something, and slowly I forget what I was doing before it entered my life.",
+      "I've done this before. More than once. And maybe I'm God's favorite child. Not because I believe in God. I don't. But sometimes it really feels like something keeps snatching things away from me whenever I start walking in the wrong direction. People, places, jobs, things I thought I wanted to keep. It has happened enough times that I can't completely ignore the pattern.",
+      "Maybe I'm just fucking stupid and keep repeating the same mistake. Or maybe life has been reminding me, again and again, that I'm not supposed to settle too early. That I'm here for something bigger. Whatever the fuck that means. Maybe every time I start building my entire world around something, something comes along and breaks it apart. And I'm left alone again.",
+      "At first I hate it. Then I understand it. Then I forget. Then I do it again. Maybe that's the loop. And maybe this is just another reminder. Get back on track, idiot.",
+      "I've also thought about removing some of my previous entries because reading them now feels painful, creepy, sometimes even cringe. But I don't think I will. They're a track of my thoughts, even the ones I don't like anymore. I never write when I'm completely okay anyway. I write when I'm too high or too low, when something has pushed me far enough in either direction that I need to put it somewhere. So maybe these journals aren't supposed to be a good representation of me. They're just evidence of where my head was when I wrote them. And I think I want to keep that.",
+    ],
+    media: ["/gallery/mevsme.jpg"],
+    link: "",
+  },
+  {
+    id: "16th-blog",
+    title: "Oh MJ, I'll miss you a lot.",
+    subtitle: "I never thought of mentioning someone in my blog, but here you are",
+    date: "1617, 13 Aug 2026",
+    categories: ["reflection"],
+    body: [
+      "My girl.",
 
-"I spent years talking about attachment, suffering, impermanence and human nature. Then I became attached myself.",
+      "O girl...",
 
-"Turns out understanding something doesn't make you immune to it.",
+      "You're the best.",
 
-"Maybe love isn't the intensity of reaching someone.",
+      "I swear to God, I never met someone so, so, so, so beautiful.",
 
-"Maybe love begins after that.",
+      "And I'm not even talking about your face, your eyes, your smile, all of that...",
 
-"After the excitement. After the confession. After there is nothing left to chase.",
+      "You're beautiful inside too.",
 
-"Maybe love is consistency. Maybe it's choosing to show up when everything becomes ordinary.",
+      "Maybe even more there.",
 
-"I don't know.",
+      "And God, I'm not a wordsmith, I'm not a poet, I don't know how to put these stupid, huge feelings into pretty sentences.",
 
-"I'm still figuring it out.",
+      "But let me try.",
 
-"But maybe I don't fall in love with people.",
+      "Just this once.",
 
-"Maybe I fall in love with possibility.",
+      "Oh my days...",
 
-"And maybe real love is much quieter than that.",
-  ],
-  media: ["/gallery/lonely.jpg"],
-  link: "",
-},
-{
-  id: "18th-blog",
-  title: "Post nut clarity.",
-  subtitle: "Things were not how my brain perceived previously.",
-  date: "1747, 16 Aug 2026",
-  categories: ["reflection"],
-  body: [
-	"Had a buzz cut today, I feel light.",
-	"Life seems to be on track again, I realised my pattern of losing, detachment and healing. I can't force healing upon me, when I wake up my brain reconstructs it's reality, reality? my reality was my lifestlye which is no more mine, and it panics, I see it now, and I understand it now.",
-	"I was re-reading my journal and I realised, I was kind of a 'nihilist', but if I consider life had no meaning, then my depression has no meaning as well, right? Am I writing it to make me feel better? Ofcousre yes, why not? Shouldn't I make me feel better and look forward.",
-	"So, this experience taught me a lot, trust me a lot, I can observe better now. I'm more committed to starting my own prenuer, and I'm starting it today only.",
-	"Maybe next journal won't be an obsevration anymore, but what I'm actually doing.",
-  ],
-  media: ["/gallery/life.jpg"],
-  link: "",
-},
-{
-  id: "17th-blog",
-  title: "I'm a loser.",
-  subtitle: "Weakest man on the planet at this moment",
-  date: "0518, 15 Aug 2026",
-  categories: ["reflection"],
-  body: [
-	"I haven't slept because I was debating with her. And maybe that's exactly why I'm writing this now. Not to talk about her, just to observe myself. I have this weird fucking habit of losing my track whenever something feels good. I get attached, I start imagining things, I put too much of myself into something, and slowly I forget what I was doing before it entered my life.",
-	"I've done this before. More than once. And maybe I'm God's favorite child. Not because I believe in God. I don't. But sometimes it really feels like something keeps snatching things away from me whenever I start walking in the wrong direction. People, places, jobs, things I thought I wanted to keep. It has happened enough times that I can't completely ignore the pattern.",
-	"Maybe I'm just fucking stupid and keep repeating the same mistake. Or maybe life has been reminding me, again and again, that I'm not supposed to settle too early. That I'm here for something bigger. Whatever the fuck that means. Maybe every time I start building my entire world around something, something comes along and breaks it apart. And I'm left alone again.",
-	"At first I hate it. Then I understand it. Then I forget. Then I do it again. Maybe that's the loop. And maybe this is just another reminder. Get back on track, idiot.",
-	"I've also thought about removing some of my previous entries because reading them now feels painful, creepy, sometimes even cringe. But I don't think I will. They're a track of my thoughts, even the ones I don't like anymore. I never write when I'm completely okay anyway. I write when I'm too high or too low, when something has pushed me far enough in either direction that I need to put it somewhere. So maybe these journals aren't supposed to be a good representation of me. They're just evidence of where my head was when I wrote them. And I think I want to keep that.",
-  ],
-  media: ["/gallery/mevsme.jpg"],
-  link: "",
-},
-{
-  id: "16th-blog",
-  title: "Oh MJ, I'll miss you a lot.",
-  subtitle: "I never thought of mentioning someone in my blog, but here you are",
-  date: "1617, 13 Aug 2026",
-  categories: ["reflection"],
-  body: [
-	"My girl.",
+      "I never met anyone like you.",
 
-"O girl...",
+      "And I probably never will.",
 
-"You're the best.",
+      "I never want to leave you.",
 
-"I swear to God, I never met someone so, so, so, so beautiful.",
+      "I don't.",
 
-"And I'm not even talking about your face, your eyes, your smile, all of that...",
+      "I really, really don't.",
 
-"You're beautiful inside too.",
+      "But you see...",
 
-"Maybe even more there.",
+      "Life did that thing again.",
 
-"And God, I'm not a wordsmith, I'm not a poet, I don't know how to put these stupid, huge feelings into pretty sentences.",
+      "It forced me to erase my belongings, pack whatever was left of me, and move on.",
 
-"But let me try.",
+      "And I've always been good at leaving.",
 
-"Just this once.",
+      "Too good, actually.",
 
-"Oh my days...",
+      "I would leave, never look back, never return...",
 
-"I never met anyone like you.",
+      "And somehow I never actually felt the pain of separation.",
 
-"And I probably never will.",
+      "But you...",
 
-"I never want to leave you.",
+      "You were different.",
 
-"I don't.",
+      "You were by my side every single time.",
 
-"I really, really don't.",
+      "You cared for me.",
 
-"But you see...",
+      "You loved me.",
 
-"Life did that thing again.",
+      "You stayed with me even when your own hands were bonded and you couldn't do anything about it.",
 
-"It forced me to erase my belongings, pack whatever was left of me, and move on.",
+      "You were there.",
 
-"And I've always been good at leaving.",
+      "O girl, you were there.",
 
-"Too good, actually.",
+      "And now I'm sitting here trying to write about you and realizing I don't even know how to say goodbye to you.",
 
-"I would leave, never look back, never return...",
+      "Because I don't want to.",
 
-"And somehow I never actually felt the pain of separation.",
+      "I still want you.",
 
-"But you...",
+      "I still want to talk to you.",
 
-"You were different.",
+      "I still want to know how your day was.",
 
-"You were by my side every single time.",
+      "I still want to hear you.",
 
-"You cared for me.",
+      "I still want to be stupid with you.",
 
-"You loved me.",
+      "I still want to be somewhere beside you, doing absolutely nothing, and somehow feeling like I'm exactly where I'm supposed to be.",
 
-"You stayed with me even when your own hands were bonded and you couldn't do anything about it.",
+      "But I can't.",
 
-"You were there.",
+      "And you can't.",
 
-"O girl, you were there.",
+      "And that's the most painful part of all.",
 
-"And now I'm sitting here trying to write about you and realizing I don't even know how to say goodbye to you.",
+      "Maybe you will never read this.",
 
-"Because I don't want to.",
+      "Maybe these words will just stay here, somewhere, like a little grave for everything we had.",
 
-"I still want you.",
+      "But let me be dramatic for a while, o girl...",
 
-"I still want to talk to you.",
+      "If there is such a thing as rebirth, if somehow we get another life after this one, then I really, really, really, really pray to God...",
 
-"I still want to know how your day was.",
+      "Pair me up with you again.",
 
-"I still want to hear you.",
+      "Please.",
 
-"I still want to be stupid with you.",
+      "Let me find you again.",
 
-"I still want to be somewhere beside you, doing absolutely nothing, and somehow feeling like I'm exactly where I'm supposed to be.",
+      "Let me meet you somewhere in another stupid lifetime and somehow recognize you.",
 
-"But I can't.",
+      "Let me look at you and feel that strange little ache again and think, 'Oh... it's you.'",
 
-"And you can't.",
+      "Because I'll miss everything.",
 
-"And that's the most painful part of all.",
+      "I'll miss you.",
 
-"Maybe you will never read this.",
+      "I'll miss the little things.",
 
-"Maybe these words will just stay here, somewhere, like a little grave for everything we had.",
+      "The stupid things.",
 
-"But let me be dramatic for a while, o girl...",
+      "The conversations.",
 
-"If there is such a thing as rebirth, if somehow we get another life after this one, then I really, really, really, really pray to God...",
+      "The silence.",
 
-"Pair me up with you again.",
+      "The comfort.",
 
-"Please.",
+      "The feeling of having someone there.",
 
-"Let me find you again.",
+      "The feeling that somewhere in this huge, stupid world, there was my girl.",
 
-"Let me meet you somewhere in another stupid lifetime and somehow recognize you.",
+      "And God...",
 
-"Let me look at you and feel that strange little ache again and think, 'Oh... it's you.'",
+      "I cannot stop writing about you.",
 
-"Because I'll miss everything.",
+      "I cannot stop thinking about you.",
 
-"I'll miss you.",
+      "I feel death, MJ.",
 
-"I'll miss the little things.",
+      "My heart aches.",
 
-"The stupid things.",
+      "It burns.",
 
-"The conversations.",
+      "It actually fucking burns.",
 
-"The silence.",
+      "And I don't know how to describe this pain because every word feels too small for it.",
 
-"The comfort.",
+      "I thought I knew what separation felt like.",
 
-"The feeling of having someone there.",
+      "I thought I'd already seen enough endings.",
 
-"The feeling that somewhere in this huge, stupid world, there was my girl.",
+      "But apparently I didn't.",
 
-"And God...",
+      "Because this one hurts.",
 
-"I cannot stop writing about you.",
+      "This one hurts like hell.",
 
-"I cannot stop thinking about you.",
+      "And still...",
 
-"I feel death, MJ.",
+      "I know I'll be reborn again.",
 
-"My heart aches.",
+      "Stronger.",
 
-"It burns.",
+      "I always do.",
 
-"It actually fucking burns.",
+      "You know that too.",
 
-"And I don't know how to describe this pain because every word feels too small for it.",
+      "I'll get up.",
 
-"I thought I knew what separation felt like.",
+      "I'll become someone else, maybe someone better, maybe someone worse, who knows.",
 
-"I thought I'd already seen enough endings.",
+      "I'll keep moving.",
 
-"But apparently I didn't.",
+      "But somewhere inside me, there will always be this little fucking room that belongs to you.",
 
-"Because this one hurts.",
+      "And nobody gets the key.",
 
-"This one hurts like hell.",
+      "Nobody.",
 
-"And still...",
+      "Because you were the best woman in my life.",
 
-"I know I'll be reborn again.",
+      "And I don't know if our paths will ever cross again.",
 
-"Stronger.",
+      "But I hope they do.",
 
-"I always do.",
+      "God, I hope they fucking do.",
 
-"You know that too.",
+      "And if one day, somewhere, somehow, I find you again...",
 
-"I'll get up.",
+      "I swear I'll know.",
 
-"I'll become someone else, maybe someone better, maybe someone worse, who knows.",
+      "I'll find you.",
 
-"I'll keep moving.",
+      "Or maybe you'll find me.",
 
-"But somewhere inside me, there will always be this little fucking room that belongs to you.",
+      "Until then...",
 
-"And nobody gets the key.",
+      "I'll miss you.",
 
-"Nobody.",
+      "A lot.",
 
-"Because you were the best woman in my life.",
+      "A lot.",
 
-"And I don't know if our paths will ever cross again.",
+      "A lot.",
 
-"But I hope they do.",
+      ":(",
 
-"God, I hope they fucking do.",
-
-"And if one day, somewhere, somehow, I find you again...",
-
-"I swear I'll know.",
-
-"I'll find you.",
-
-"Or maybe you'll find me.",
-
-"Until then...",
-
-"I'll miss you.",
-
-"A lot.",
-
-"A lot.",
-
-"A lot.",
-
-":(",
-
-  ],
-  media: ["/gallery/mj.jpg"],
-  link: "",
-},
-{
-  id: "15th-blog",
-  title: "Look up if you want change.",
-  subtitle: "Not metaphorically, I mean actually!",
-  date: "1418, 25 July 2026",
-  categories: ["reflection"],
-  body: [
-	"When I'm lost, I stop looking far. My eyes stay somewhere around my head level. My phone, my laptop, the road, just... close. Very fucking close.",
-"But last night I remembered something. Whenever I was actually changing, I used to look far. Trees, mountains, random cars, people, building tops, the sky. Even when listening to music, I'd just stare at the ceiling.",
-"There was even a phase where I'd just look at the moon in freezing Himachali nights. Mouth shut. Just looking.",
-"So I started doing it again.",
-"Idk, maybe it means nothing. It just made sense to me."
-  ],
-  media: ["/gallery/far.jpg"],
-  link: "",
-},
-{
-  id: "14th-blog",
-  title: "My REM talks to me, and it provides me wisdom.",
-  subtitle: "This is the first time, I'm documenting it.",
-  date: "1245, 19 July 2026",
-  categories: ["reflection"],
-  body: [
-	"I dreamt of my past, and realised my whole life has been a loop of losing what I loved. School, people, places, a way of living. Every time I got attached, life moved on, and the separation fucked me up more than I realised.",
-"I think it's human to attach. To people, places, routines. Maybe that's what makes them feel like home.",
-"Now I'm detached from almost everything. People leave, places change, life moves, and I barely react. Even when I dream of those moments, I wake up and analyse the dream instead of missing what I lost.",
-"I don't think I want that anymore. I don't want absence, I want presence. I like people. I like what's around me. I just keep switching lives before I ever become part of one.",
-"I don't want to end up as just another thinker. I want to make games. I want characters that feel painfully human.",
-"The dream wasn't even about this. This is just what I got out of it. Lol."
-  ],
-  media: ["/gallery/gorilla.jpg"],
-  link: "",
-},
-{
-  id: "13th-blog",
-  title: "No place for non believers",
-  subtitle: "people need to share a certian common belief to coexist.",
-  date: "1220, 14 July 2026",
-  categories: ["reflection"],
-  body: [
-	"I became a non believer around two years ago. Not of God, of almost everything. Before that life was simple. Grow, work hard, build something. Life wasn't unfair to me either. Somehow it just kept unfolding its weird, esoteric side in front of me, even when I wasn't looking for it.",
-"Something changed. Now I question almost every model handed to me. Society, authority, success, even my own thoughts. Not because I want to rebel, my mind just refuses to accept anything before denying it first.",
-"The funny part is, I still want to build. Probably more than ever. I just don't hurry anymore. Which is also bullshit because I still haven't mastered myself. I still see a beautiful girl and fall for her. Around the 30th one now? And I still end up confessing.",
-"I'm lonely. Not because there are no people around me. I just don't fit where I want to fit. I want conversations about people, art, cinema, games, stories and weird observations. Instead I mostly talk about things that don't move me.",
-  ],
-  media: ["/gallery/lastdance.jpeg"],
-  link: "",
-},
+    ],
+    media: ["/gallery/mj.jpg"],
+    link: "",
+  },
+  {
+    id: "15th-blog",
+    title: "Look up if you want change.",
+    subtitle: "Not metaphorically, I mean actually!",
+    date: "1418, 25 July 2026",
+    categories: ["reflection"],
+    body: [
+      "When I'm lost, I stop looking far. My eyes stay somewhere around my head level. My phone, my laptop, the road, just... close. Very fucking close.",
+      "But last night I remembered something. Whenever I was actually changing, I used to look far. Trees, mountains, random cars, people, building tops, the sky. Even when listening to music, I'd just stare at the ceiling.",
+      "There was even a phase where I'd just look at the moon in freezing Himachali nights. Mouth shut. Just looking.",
+      "So I started doing it again.",
+      "Idk, maybe it means nothing. It just made sense to me."
+    ],
+    media: ["/gallery/far.jpg"],
+    link: "",
+  },
+  {
+    id: "14th-blog",
+    title: "My REM talks to me, and it provides me wisdom.",
+    subtitle: "This is the first time, I'm documenting it.",
+    date: "1245, 19 July 2026",
+    categories: ["reflection"],
+    body: [
+      "I dreamt of my past, and realised my whole life has been a loop of losing what I loved. School, people, places, a way of living. Every time I got attached, life moved on, and the separation fucked me up more than I realised.",
+      "I think it's human to attach. To people, places, routines. Maybe that's what makes them feel like home.",
+      "Now I'm detached from almost everything. People leave, places change, life moves, and I barely react. Even when I dream of those moments, I wake up and analyse the dream instead of missing what I lost.",
+      "I don't think I want that anymore. I don't want absence, I want presence. I like people. I like what's around me. I just keep switching lives before I ever become part of one.",
+      "I don't want to end up as just another thinker. I want to make games. I want characters that feel painfully human.",
+      "The dream wasn't even about this. This is just what I got out of it. Lol."
+    ],
+    media: ["/gallery/gorilla.jpg"],
+    link: "",
+  },
+  {
+    id: "13th-blog",
+    title: "No place for non believers",
+    subtitle: "people need to share a certian common belief to coexist.",
+    date: "1220, 14 July 2026",
+    categories: ["reflection"],
+    body: [
+      "I became a non believer around two years ago. Not of God, of almost everything. Before that life was simple. Grow, work hard, build something. Life wasn't unfair to me either. Somehow it just kept unfolding its weird, esoteric side in front of me, even when I wasn't looking for it.",
+      "Something changed. Now I question almost every model handed to me. Society, authority, success, even my own thoughts. Not because I want to rebel, my mind just refuses to accept anything before denying it first.",
+      "The funny part is, I still want to build. Probably more than ever. I just don't hurry anymore. Which is also bullshit because I still haven't mastered myself. I still see a beautiful girl and fall for her. Around the 30th one now? And I still end up confessing.",
+      "I'm lonely. Not because there are no people around me. I just don't fit where I want to fit. I want conversations about people, art, cinema, games, stories and weird observations. Instead I mostly talk about things that don't move me.",
+    ],
+    media: ["/gallery/lastdance.jpeg"],
+    link: "",
+  },
   {
     id: "12th-blog",
     title: "Liberation.",
@@ -671,16 +686,16 @@ export const BLOG_POSTS = [
     date: "1328, 26 April 2026",
     categories: ["reflection"],
     body: [
-		"Is liberation rejection or acceptance?",
-"Liberation starts with disgust. I look around, my messed up room. Suffocating, lifeless, everything shattered. Yet this room gives me a bed to sleep, a roof, a washroom to shit in private.",
-"We're all living in a costume. Some folks like it, some don't. I don't. I grew up with lack. Real lack. Of resources, affection, and freedom. The only cool thing I possess right now is my head.",
-"I tried making my life stable, but the more I owned, the more it owned me. A job, my emotions, affection, even my own mind.",
-"What do humans like me do? Death isn't a cool option. I have stories in my head. I daydream them. I lucid dream them.",
-"I want to tell those stories in my own way. The question is when? Play safe, make life stable, or use what you've already got and just fucking create.",
-"What if nobody likes what I create? Then ask yourself, did you do all this for validation?",
-"Play safe then. Idk man, I don't have the answers right now."
+      "Is liberation rejection or acceptance?",
+      "Liberation starts with disgust. I look around, my messed up room. Suffocating, lifeless, everything shattered. Yet this room gives me a bed to sleep, a roof, a washroom to shit in private.",
+      "We're all living in a costume. Some folks like it, some don't. I don't. I grew up with lack. Real lack. Of resources, affection, and freedom. The only cool thing I possess right now is my head.",
+      "I tried making my life stable, but the more I owned, the more it owned me. A job, my emotions, affection, even my own mind.",
+      "What do humans like me do? Death isn't a cool option. I have stories in my head. I daydream them. I lucid dream them.",
+      "I want to tell those stories in my own way. The question is when? Play safe, make life stable, or use what you've already got and just fucking create.",
+      "What if nobody likes what I create? Then ask yourself, did you do all this for validation?",
+      "Play safe then. Idk man, I don't have the answers right now."
     ],
-		media: ["/gallery/letgo.jpg"],
+    media: ["/gallery/letgo.jpg"],
     link: "",
   },
   {
@@ -691,13 +706,13 @@ export const BLOG_POSTS = [
     categories: ["reflection"],
     body: [
       "My previous blogs were not correct, I will contradict myself here.",
-			"I said meditation is letting go of thougts, I was wrong. Meditation is noticing your thoughts.",
+      "I said meditation is letting go of thougts, I was wrong. Meditation is noticing your thoughts.",
       "I used to think, we are our thoughts, our wiring of thoughts makes us different, which is correct in most cases, but, thoughts are temporary, really, everything is temporary, real battlefield is inside the head.",
-			"Meditation is about looking at your thoughts coming and going. That's it, you can't control your thoughts, they will come, always.",
-			"This is more about awareness, and attention. If you realise even your own wiring of system is just a side effect of being a human, you can bend your own reality.",
-			"Bending reality? No, not in the way you're thinking, it's not magic, it's just making your life more peaceful by just observing, no magic here, sorry.",
+      "Meditation is about looking at your thoughts coming and going. That's it, you can't control your thoughts, they will come, always.",
+      "This is more about awareness, and attention. If you realise even your own wiring of system is just a side effect of being a human, you can bend your own reality.",
+      "Bending reality? No, not in the way you're thinking, it's not magic, it's just making your life more peaceful by just observing, no magic here, sorry.",
     ],
-		media: ["/gallery/whatis.jpg"],
+    media: ["/gallery/whatis.jpg"],
     link: "",
   },
   {
@@ -708,13 +723,13 @@ export const BLOG_POSTS = [
     categories: ["reflection"],
     body: [
       "Creativity is a constant slavery your mind imposes on you.",
-			"Slavery will never bring you joy, and that's the reason you can't find bliss.",
+      "Slavery will never bring you joy, and that's the reason you can't find bliss.",
       "Eastern philosphies had a different way of dealing with it, 'mysticism'.",
-			"Buddha left with blissfullness and you're not him, and you don't need to be him.",
-			"Creative head calls for creativity, no matter what life gives you, your creativity keeps you in agony, I'm not talking about so called 'creatives', my talk is a little deeper.",
-			"They say meditate, let go of thoughts, you don't need to cater every thoughts of yours, like really think about it, what did your creativity bring to 'you'? So maybe just chill out, live with peace, after death is no peace, but, your consicousness is gone, you're gone. So, you gotta create peace right now.",
+      "Buddha left with blissfullness and you're not him, and you don't need to be him.",
+      "Creative head calls for creativity, no matter what life gives you, your creativity keeps you in agony, I'm not talking about so called 'creatives', my talk is a little deeper.",
+      "They say meditate, let go of thoughts, you don't need to cater every thoughts of yours, like really think about it, what did your creativity bring to 'you'? So maybe just chill out, live with peace, after death is no peace, but, your consicousness is gone, you're gone. So, you gotta create peace right now.",
     ],
-		media: ["/gallery/buddha.jpg"],
+    media: ["/gallery/buddha.jpg"],
     link: "",
   },
   {
@@ -725,13 +740,13 @@ export const BLOG_POSTS = [
     categories: ["reflection"],
     body: [
       "Suffering makes you stronger, too much suffering makes you humble, way too much suffering makes you hubristic.",
-			"If you're in an aware loop of 'way too much suffering', you constantly discover deeper dimensions of perception, and weirder sense of life.",
+      "If you're in an aware loop of 'way too much suffering', you constantly discover deeper dimensions of perception, and weirder sense of life.",
       "That constant discovery of yourself makes you lonelier, and difficult to adapt the innocence around you.",
-			"People are naive, they are pre-made, but you're not, that's where your ego kicks in, the worst form of ego; arrogance of justifying your sick life as discovery.",
-			"Life is meant to be understood slowly, that's where the fun lies in. Big brain too early... What will you do now? How will you adjust within yourself, when you've known there's no God, or if there is, you do not care?",
-			"What will you do now? If you take my advise, live with the rules of society, and nature. You'll be okay again, and trust me you will not loose your 'years of deep research'."
+      "People are naive, they are pre-made, but you're not, that's where your ego kicks in, the worst form of ego; arrogance of justifying your sick life as discovery.",
+      "Life is meant to be understood slowly, that's where the fun lies in. Big brain too early... What will you do now? How will you adjust within yourself, when you've known there's no God, or if there is, you do not care?",
+      "What will you do now? If you take my advise, live with the rules of society, and nature. You'll be okay again, and trust me you will not loose your 'years of deep research'."
     ],
-		media: ["/gallery/buddhamonkey.jpg"],
+    media: ["/gallery/buddhamonkey.jpg"],
     link: "",
   },
   {
@@ -744,7 +759,7 @@ export const BLOG_POSTS = [
       "My insomnia is bad, but I will fix it sooner.",
       "It starts today, I will go to bed right now, it's around 2 AM, very good. Good night folks.",
     ],
-		media: ["/gallery/tedk.jpg"],
+    media: ["/gallery/tedk.jpg"],
     link: "",
   },
   {
@@ -752,12 +767,12 @@ export const BLOG_POSTS = [
     title: "Late night jam.",
     subtitle: "",
     date: "16 Mar 2026",
-    categories: ["Guitar","Music"],
+    categories: ["Guitar", "Music"],
     body: [
       "In future I'll be giving more time to my music/guitar sessions",
       "For, now I share with you what I practised last night at 4.",
     ],
-		media: ["/gallery/terebinag.mp4","/gallery/was.gif"],
+    media: ["/gallery/terebinag.mp4", "/gallery/was.gif"],
     link: "",
   },
 ];
