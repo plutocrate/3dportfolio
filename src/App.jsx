@@ -3,7 +3,6 @@ import { MainScene } from '@/components/3d/MainScene'
 import { HUDOverlay } from '@/components/HUDOverlay'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { SectionPanel } from '@/components/SectionPanel'
-import { SunCorner } from '@/components/SunCorner'
 import { SwipeHint } from '@/components/SwipeHint'
 import { NewsBanner } from '@/components/NewsBanner'
 import { MobileAnnotationOverlay } from '@/components/MobileAnnotationOverlay'
@@ -112,7 +111,6 @@ function AppShell({ loading, showHint, onEnter }) {
       <div className="noise-overlay" />
       <div className="scan-overlay" />
 
-      <SunCorner visible={!loading} />
       <NewsBanner visible={!loading} />
 
       {loading && <LoadingScreen onComplete={handleEnter} />}
