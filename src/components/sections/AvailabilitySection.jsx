@@ -27,7 +27,7 @@ const STATUS_STYLES = {
   closed: {
     dot: 'bg-white/40',
     ring: '',
-    text: 'text-white/45',
+    text: 'text-white/67',
     border: 'border-white/12',
     pulse: false,
   },
@@ -74,7 +74,7 @@ export function AvailabilitySection({ variant = 'full' }) {
       </div>
 
       {AVAILABILITY.note && (
-        <p className="mt-2 font-body text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/35">
+        <p className="mt-2 font-body text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/61">
           {AVAILABILITY.note}
         </p>
       )}

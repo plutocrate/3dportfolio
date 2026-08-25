@@ -64,9 +64,9 @@ export function Lightbox() {
       <button
         onClick={handleClose}
         aria-label="Close"
-        className="fixed top-4 right-4 sm:top-6 sm:right-6 z-10 w-9 h-9 flex items-center justify-center border border-white/15 bg-black/40 text-white/60 hover:text-white hover:border-white/50 transition-all duration-200"
+        className="fixed top-4 right-4 sm:top-6 sm:right-6 z-10 w-[47px] h-[47px] sm:w-9 sm:h-9 flex items-center justify-center border border-white/15 bg-black/40 text-white/85 hover:text-white hover:border-white/50 transition-all duration-200"
       >
-        <X size={16} />
+        <X className="w-[21px] h-[21px] sm:w-4 sm:h-4" />
       </button>
 
       <figure
@@ -94,7 +94,7 @@ export function Lightbox() {
           />
         )}
         {caption && (
-          <figcaption className="mt-3 font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.16em] text-white/45 text-center">
+          <figcaption className="mt-3 font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.16em] text-white/67 text-center">
             {caption}
           </figcaption>
         )}

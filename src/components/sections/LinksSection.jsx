@@ -13,12 +13,12 @@ function LinkItem({ link }) {
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => playClick()}
-      className="group flex items-center gap-1 w-fit min-w-0 font-body text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/55 hover:text-white transition-colors"
+      className="group flex items-center gap-1 w-fit min-w-0 font-body text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/73 hover:text-white transition-colors"
     >
       <span className="border-b border-white/25 group-hover:border-white/60 transition-colors truncate">
         {link.label}
       </span>
-      <ArrowUpRight size={13} className="text-white/35 group-hover:text-white/70 transition-colors shrink-0" />
+      <ArrowUpRight size={13} className="text-white/61 group-hover:text-white/82 transition-colors shrink-0" />
     </a>
   )
 }
@@ -34,7 +34,7 @@ export function LinksSection() {
 
   return (
     <div>
-      <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/30 mb-3">Links</div>
+      <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-3">Links</div>
 
       <div className="flex flex-wrap gap-1.5 mb-5">
         {LINK_COLLECTIONS.map((c) => (
@@ -42,10 +42,10 @@ export function LinksSection() {
             key={c.id}
             onClick={() => { playClick(); go(`/about/links/${c.id}`) }}
             className={cn(
-              'font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.18em] px-3 py-1.5 border transition-all duration-200',
+              'font-mono text-[clamp(11.7px,calc(11px+0.18vw),14.3px)] sm:text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.18em] px-[16px] sm:px-3 py-2.5 sm:py-1.5 border transition-all duration-200',
               tab === c.id
                 ? 'border-white/60 text-white bg-white/5'
-                : 'border-white/12 text-white/35 hover:text-white/65 hover:border-white/30'
+                : 'border-white/12 text-white/70 hover:text-white/85 hover:border-white/30'
             )}
           >
             {c.label}
@@ -55,11 +55,11 @@ export function LinksSection() {
 
       {active && (
         <div>
-          <div className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.2em] text-white/25 mb-3">
+          <div className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.2em] text-white/55 mb-3">
             {active.heading}
           </div>
           {active.links.length === 0 ? (
-            <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/30">
+            <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/58">
               No links here yet.
             </p>
           ) : (

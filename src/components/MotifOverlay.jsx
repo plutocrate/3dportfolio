@@ -41,9 +41,11 @@ function MotifDisc({ motif, isPlaying, onToggle }) {
         <button
           onClick={onToggle}
           aria-label={isPlaying ? `Pause ${motif.title}` : `Play ${motif.title}`}
-          className="absolute inset-0 m-auto w-11 h-11 rounded-full flex items-center justify-center border border-white/25 bg-black/55 text-white/80 hover:text-white hover:border-white/60 transition-all duration-200"
+          className="absolute inset-0 m-auto w-[57px] h-[57px] sm:w-11 sm:h-11 rounded-full flex items-center justify-center border border-white/25 bg-black/55 text-white/92 hover:text-white hover:border-white/60 transition-all duration-200"
         >
-          {isPlaying ? <Pause size={16} /> : <Play size={16} className="ml-0.5" />}
+          {isPlaying
+            ? <Pause className="w-[21px] h-[21px] sm:w-4 sm:h-4" />
+            : <Play className="w-[21px] h-[21px] sm:w-4 sm:h-4 ml-0.5" />}
         </button>
       </div>
 
@@ -52,7 +54,7 @@ function MotifDisc({ motif, isPlaying, onToggle }) {
           {motif.title}
         </h3>
         {motif.note && (
-          <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-white/35 mt-1.5 leading-relaxed">
+          <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-white/61 mt-1.5 leading-relaxed">
             {motif.note}
           </p>
         )}
@@ -167,17 +169,17 @@ export function MotifOverlay() {
         <button
           onClick={handleClose}
           aria-label="Close"
-          className="sticky top-3 sm:top-4 float-right mr-3 sm:mr-4 z-10 w-9 h-9 flex items-center justify-center border border-white/15 bg-black/40 text-white/50 hover:text-white hover:border-white/50 transition-all duration-200"
+          className="sticky top-3 sm:top-4 float-right mr-3 sm:mr-4 z-10 w-[47px] h-[47px] sm:w-9 sm:h-9 flex items-center justify-center border border-white/15 bg-black/40 text-white/80 hover:text-white hover:border-white/50 transition-all duration-200"
         >
-          <X size={16} />
+          <X className="w-[21px] h-[21px] sm:w-4 sm:h-4" />
         </button>
 
         <div className="px-5 sm:px-12 pt-14 sm:pt-16 pb-12 sm:pb-16">
           <div className="flex items-center gap-2 mb-4">
-            <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/40">
+            <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/64">
               Cabinet
             </span>
-            <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/28 tabular-nums">
+            <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/57 tabular-nums">
               {MOTIFS.length} {MOTIFS.length === 1 ? 'track' : 'tracks'}
             </span>
           </div>
@@ -185,14 +187,14 @@ export function MotifOverlay() {
           <h1 className="font-display text-[clamp(20px,calc(18.2px+1vw),25px)] text-white leading-[1.05] tracking-wide mb-2">
             Motif
           </h1>
-          <p className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/45 leading-relaxed max-w-[560px] mb-10">
+          <p className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/67 leading-relaxed max-w-[560px] mb-10">
             Music, pressed to disc.
           </p>
 
           {MOTIFS.length === 0 ? (
-            <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/30">
-              No discs yet. Add entries to <span className="font-mono text-white/40">MOTIFS</span> in{' '}
-              <span className="font-mono text-white/40">src/data/motifs.js</span>
+            <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/58">
+              No discs yet. Add entries to <span className="font-mono text-white/64">MOTIFS</span> in{' '}
+              <span className="font-mono text-white/64">src/data/motifs.js</span>
             </p>
           ) : (
             <div className="flex flex-wrap justify-center gap-x-10 gap-y-12 pb-4">

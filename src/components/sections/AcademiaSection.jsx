@@ -24,7 +24,7 @@ export function AcademiaSection() {
   return (
     <div className="space-y-6">
       <div>
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.16vw),13px)] uppercase tracking-[0.25em] text-white/30 mb-1">
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.16vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-1">
           Field Record
         </div>
         <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">ACADEMIA</h2>
@@ -38,10 +38,10 @@ export function AcademiaSection() {
             key={t.id}
             onClick={() => { playClick(); go(`/academia/${t.id}`) }}
             className={cn(
-              'font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.18em] px-3 py-1.5 border transition-all duration-200',
+              'font-mono text-[clamp(11.7px,calc(11px+0.18vw),14.3px)] sm:text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.18em] px-[16px] sm:px-3 py-2.5 sm:py-1.5 border transition-all duration-200',
               tab === t.id
                 ? 'border-white/60 text-white bg-white/5'
-                : 'border-white/12 text-white/35 hover:text-white/65 hover:border-white/30'
+                : 'border-white/12 text-white/70 hover:text-white/85 hover:border-white/30'
             )}
           >
             {t.label}

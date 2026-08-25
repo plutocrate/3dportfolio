@@ -36,7 +36,7 @@ export function TalkSection() {
   return (
     <div className="space-y-6">
       <div>
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/30 mb-1">
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-1">
           Get In Touch
         </div>
         <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide mb-3">TALK</h2>
@@ -46,7 +46,7 @@ export function TalkSection() {
 
       <Separator />
 
-      <p className="font-body text-[clamp(14px,calc(13.3px+0.28vw),16px)] text-white/55 leading-relaxed">
+      <p className="font-body text-[clamp(14px,calc(13.3px+0.28vw),16px)] text-white/73 leading-relaxed">
         Have a project in mind, a role to fill, or just want to say hi?
         Drop a message and I'll get back to you.
       </p>
@@ -56,13 +56,13 @@ export function TalkSection() {
       {status === 'sent' ? (
         <div className="flex flex-col gap-3 py-4">
           <div className="w-6 h-6 border border-white/30 flex items-center justify-center">
-            <span className="text-white/70 text-xs">✓</span>
+            <span className="text-white/82 text-xs">✓</span>
           </div>
-          <p className="font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/60 uppercase tracking-widest">Message sent.</p>
-          <p className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/35">I'll reply to your email soon.</p>
+          <p className="font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/76 uppercase tracking-widest">Message sent.</p>
+          <p className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/61">I'll reply to your email soon.</p>
           <button
             onClick={() => { playClick(); setStatus('idle') }}
-            className="mt-2 font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.2em] text-white/30 hover:text-white/60 transition-colors text-left"
+            className="mt-2 font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.2em] text-white/58 hover:text-white/76 transition-colors text-left"
           >
             ← Send another
           </button>
@@ -70,27 +70,27 @@ export function TalkSection() {
       ) : (
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-white/30">Name</label>
+            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-white/58">Name</label>
             <input
               type="text" name="from_name" value={fields.from_name}
               onChange={handleChange} required placeholder="Your name"
-              className="w-full bg-transparent border border-white/12 px-3 py-2 font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/80 placeholder:text-white/18 focus:outline-none focus:border-white/40 transition-colors"
+              className="w-full bg-transparent border border-white/12 px-3 py-2 font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/88 placeholder:text-white/51 focus:outline-none focus:border-white/40 transition-colors"
             />
           </div>
           <div className="space-y-1.5">
-            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-white/30">Email</label>
+            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-white/58">Email</label>
             <input
               type="email" name="from_email" value={fields.from_email}
               onChange={handleChange} required placeholder="you@email.com"
-              className="w-full bg-transparent border border-white/12 px-3 py-2 font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/80 placeholder:text-white/18 focus:outline-none focus:border-white/40 transition-colors"
+              className="w-full bg-transparent border border-white/12 px-3 py-2 font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/88 placeholder:text-white/51 focus:outline-none focus:border-white/40 transition-colors"
             />
           </div>
           <div className="space-y-1.5">
-            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-white/30">Message</label>
+            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-white/58">Message</label>
             <textarea
               name="message" value={fields.message}
               onChange={handleChange} required rows={5} placeholder="What's on your mind?"
-              className="w-full bg-transparent border border-white/12 px-3 py-2 font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/80 placeholder:text-white/18 focus:outline-none focus:border-white/40 transition-colors resize-none"
+              className="w-full bg-transparent border border-white/12 px-3 py-2 font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/88 placeholder:text-white/51 focus:outline-none focus:border-white/40 transition-colors resize-none"
             />
           </div>
           {status === 'error' && (
@@ -98,7 +98,7 @@ export function TalkSection() {
           )}
           <button
             type="submit" disabled={status === 'sending'}
-            className="w-full border border-white/20 hover:border-white/50 py-2.5 font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/50 hover:text-white transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none"
+            className="w-full border border-white/20 hover:border-white/50 py-[16px] sm:py-2.5 font-mono text-[clamp(14.3px,calc(13.5px+0.26vw),16.9px)] sm:text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/78 hover:text-white transition-all duration-200 disabled:opacity-40 disabled:pointer-events-none"
           >
             {status === 'sending' ? 'Sending...' : '[ Send Message ]'}
           </button>
@@ -108,15 +108,15 @@ export function TalkSection() {
       <Separator />
 
       <div className="space-y-2">
-        <div className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-white/25 mb-2">Or reach directly</div>
+        <div className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-white/55 mb-2">Or reach directly</div>
         {[
           { label: 'Email',    value: 'prathampurohitonline@outlook.com' },
           { label: 'GitHub',   value: 'github.com/plutocrate' },
           { label: 'LinkedIn', value: 'linkedin.com/in/prathammpurohit' },
         ].map(({ label, value }) => (
           <div key={label} className="flex items-baseline gap-3">
-            <span className="font-mono text-[clamp(10px,calc(9.39px+0.16vw),12px)] text-white/20 w-14 uppercase tracking-wider">{label}</span>
-            <span className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/50">{value}</span>
+            <span className="font-mono text-[clamp(10px,calc(9.39px+0.16vw),12px)] text-white/52 w-14 uppercase tracking-wider">{label}</span>
+            <span className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/70">{value}</span>
           </div>
         ))}
       </div>

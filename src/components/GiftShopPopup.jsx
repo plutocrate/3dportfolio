@@ -60,14 +60,14 @@ export function GiftShopPopup() {
         <button
           onClick={handleClose}
           aria-label="Close"
-          className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center border border-white/15 text-white/50 hover:text-white hover:border-white/50 transition-all duration-200"
+          className="absolute top-3 right-3 w-[42px] h-[42px] sm:w-8 sm:h-8 flex items-center justify-center border border-white/15 text-white/80 hover:text-white hover:border-white/50 transition-all duration-200"
         >
-          <X size={14} />
+          <X className="w-[18px] h-[18px] sm:w-[14px] sm:h-[14px]" />
         </button>
 
         <div className="flex items-center gap-2 mb-5">
-          <Gift size={14} className="text-white/40" />
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/40">
+          <Gift size={14} className="text-white/72" />
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/72">
             A Gift, For You
           </span>
         </div>
@@ -78,9 +78,9 @@ export function GiftShopPopup() {
 
         <button
           onClick={handleReroll}
-          className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-white/35 hover:text-white/70 transition-colors border-b border-white/15 hover:border-white/40 pb-px"
+          className="inline-flex items-center gap-1.5 py-1.5 sm:py-0 font-mono text-[13px] sm:text-[10px] uppercase tracking-[0.18em] text-white/70 hover:text-white/90 transition-colors border-b border-white/15 hover:border-white/40 pb-px"
         >
-          <RefreshCw size={11} />
+          <RefreshCw className="w-[14px] h-[14px] sm:w-[11px] sm:h-[11px]" />
           Another One
         </button>
       </div>

@@ -38,7 +38,7 @@ function GalleryGridTile({ item, onOpen }) {
         />
       )}
       {item.caption && (
-        <span className="block px-2 py-1.5 font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.14em] text-white/35 group-hover:text-white/65 transition-colors">
+        <span className="block px-2 py-1.5 font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.14em] text-white/61 group-hover:text-white/79 transition-colors">
           {item.caption}
         </span>
       )}
@@ -113,18 +113,18 @@ export function GalleryOverlay() {
         <button
           onClick={handleClose}
           aria-label="Close"
-          className="sticky top-3 sm:top-4 float-right mr-3 sm:mr-4 z-10 w-9 h-9 flex items-center justify-center border border-white/15 bg-black/40 text-white/50 hover:text-white hover:border-white/50 transition-all duration-200"
+          className="sticky top-3 sm:top-4 float-right mr-3 sm:mr-4 z-10 w-[47px] h-[47px] sm:w-9 sm:h-9 flex items-center justify-center border border-white/15 bg-black/40 text-white/80 hover:text-white hover:border-white/50 transition-all duration-200"
         >
-          <X size={16} />
+          <X className="w-[21px] h-[21px] sm:w-4 sm:h-4" />
         </button>
 
         <div className="px-5 sm:px-12 pt-14 sm:pt-16 pb-12 sm:pb-16">
           {/* Category + meta — mirrors Chronicle header format */}
           <div className="flex items-center gap-2 mb-4">
-            <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/40">
+            <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/64">
               Gallery
             </span>
-            <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/28 tabular-nums">
+            <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/57 tabular-nums">
               {GALLERY_IMAGES.length} {GALLERY_IMAGES.length === 1 ? 'item' : 'items'}
             </span>
           </div>
@@ -134,7 +134,7 @@ export function GalleryOverlay() {
           </h1>
 
           {GALLERY_IMAGES.length === 0 ? (
-            <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/30">
+            <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/58">
               No images yet.
             </p>
           ) : (

@@ -29,7 +29,7 @@ function EvidenceTile({ item, onOpen }) {
         />
       </div>
       {item.text && (
-        <span className="block px-2.5 py-2 font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/40 group-hover:text-white/70 leading-snug transition-colors">
+        <span className="block px-2.5 py-2 font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/64 group-hover:text-white/82 leading-snug transition-colors">
           {item.text}
         </span>
       )}
@@ -101,17 +101,17 @@ export function EvidenceOverlay() {
         <button
           onClick={handleClose}
           aria-label="Close"
-          className="sticky top-3 sm:top-4 float-right mr-3 sm:mr-4 z-10 w-9 h-9 flex items-center justify-center border border-white/15 bg-black/40 text-white/50 hover:text-white hover:border-white/50 transition-all duration-200"
+          className="sticky top-3 sm:top-4 float-right mr-3 sm:mr-4 z-10 w-[47px] h-[47px] sm:w-9 sm:h-9 flex items-center justify-center border border-white/15 bg-black/40 text-white/80 hover:text-white hover:border-white/50 transition-all duration-200"
         >
-          <X size={16} />
+          <X className="w-[21px] h-[21px] sm:w-4 sm:h-4" />
         </button>
 
         <div className="px-5 sm:px-12 pt-14 sm:pt-16 pb-12 sm:pb-16">
           <div className="flex items-center gap-2 mb-4">
-            <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/40">
+            <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/64">
               Cabinet
             </span>
-            <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/28 tabular-nums">
+            <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/57 tabular-nums">
               {EVIDENCE_ITEMS.length} {EVIDENCE_ITEMS.length === 1 ? 'item' : 'items'}
             </span>
           </div>
@@ -119,18 +119,18 @@ export function EvidenceOverlay() {
           <h1 className="font-display text-[clamp(20px,calc(18.2px+1vw),25px)] text-white leading-[1.05] tracking-wide mb-2">
             Evidence Locker
           </h1>
-          <p className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/45 leading-relaxed max-w-[560px] mb-8">
+          <p className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/67 leading-relaxed max-w-[560px] mb-8">
             Small proof of a life being lived.
           </p>
 
           {EVIDENCE_ITEMS.length === 0 ? (
             <div className="flex flex-col gap-2 py-4">
-              <div className="font-mono text-[clamp(10px,calc(9.26px+0.18vw),13px)] text-white/25 uppercase tracking-widest">
+              <div className="font-mono text-[clamp(10px,calc(9.26px+0.18vw),13px)] text-white/55 uppercase tracking-widest">
                 The locker is empty.
               </div>
-              <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/30">
-                Drop images into <span className="font-mono text-white/40">public/evidence/</span> and
-                list them in <span className="font-mono text-white/40">src/data/evidence.js</span>
+              <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/58">
+                Drop images into <span className="font-mono text-white/64">public/evidence/</span> and
+                list them in <span className="font-mono text-white/64">src/data/evidence.js</span>
               </p>
             </div>
           ) : (

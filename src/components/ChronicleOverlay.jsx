@@ -54,7 +54,7 @@ function MediaBlock({ item }) {
         )}
       </div>
       {item.caption && (
-        <figcaption className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.14em] text-white/30 mt-2">
+        <figcaption className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.14em] text-white/58 mt-2">
           {item.caption}
         </figcaption>
       )}
@@ -165,21 +165,21 @@ export function ChronicleOverlay() {
         <button
           onClick={handleClose}
           aria-label="Close"
-          className="sticky top-3 sm:top-4 float-right mr-3 sm:mr-4 z-10 w-9 h-9 flex items-center justify-center border border-white/15 bg-black/40 text-white/50 hover:text-white hover:border-white/50 transition-all duration-200"
+          className="sticky top-3 sm:top-4 float-right mr-3 sm:mr-4 z-10 w-[47px] h-[47px] sm:w-9 sm:h-9 flex items-center justify-center border border-white/15 bg-black/40 text-white/80 hover:text-white hover:border-white/50 transition-all duration-200"
         >
-          <X size={16} />
+          <X className="w-[21px] h-[21px] sm:w-4 sm:h-4" />
         </button>
 
         <div className="px-5 sm:px-12 pt-14 sm:pt-16 pb-20 sm:pb-24">
           <div className="max-w-[860px] mx-auto">
             <div className="flex items-center gap-2 mb-4 flex-wrap">
-              <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/40">
+              <span className="font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border border-white/15 text-white/64">
                 {chronicle.category}
               </span>
               <span className={`font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.18em] px-2 py-0.5 border ${getStatusMeta(chronicle.status).className}`}>
                 {getStatusMeta(chronicle.status).label}
               </span>
-              <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/28 tabular-nums">
+              <span className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/57 tabular-nums">
                 {chronicle.date} · {readingTime}
               </span>
             </div>
@@ -188,7 +188,7 @@ export function ChronicleOverlay() {
               {chronicle.title}
             </h1>
             {chronicle.dek && (
-              <p className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/45 leading-relaxed mb-8 italic">
+              <p className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/67 leading-relaxed mb-8 italic">
                 {chronicle.dek}
               </p>
             )}
@@ -217,7 +217,7 @@ export function ChronicleOverlay() {
                 typeof item === 'string' ? (
                   <p
                     key={i}
-                    className="font-body text-[clamp(14px,calc(13.4px+0.2vw),16px)] text-white/78 leading-[1.85]"
+                    className="font-body text-[clamp(14px,calc(13.4px+0.2vw),16px)] text-white/87 leading-[1.85]"
                   >
                     {item}
                   </p>
@@ -237,7 +237,7 @@ export function ChronicleOverlay() {
 
             {chronicle.links && chronicle.links.length > 0 && (
               <div className="mt-10 pt-6 border-t border-white/10 space-y-2.5">
-                <div className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.2em] text-white/25 mb-3">
+                <div className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.2em] text-white/55 mb-3">
                   Further Reading
                 </div>
                 {chronicle.links.map((link, i) => (
@@ -246,12 +246,12 @@ export function ChronicleOverlay() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-1 w-fit font-body text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/55 hover:text-white transition-colors"
+                    className="group flex items-center gap-1 w-fit font-body text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/73 hover:text-white transition-colors"
                   >
                     <span className="border-b border-white/25 group-hover:border-white/60 transition-colors">
                       {link.label}
                     </span>
-                    <ArrowUpRight size={14} className="text-white/35 group-hover:text-white/70 transition-colors shrink-0" />
+                    <ArrowUpRight size={14} className="text-white/61 group-hover:text-white/82 transition-colors shrink-0" />
                   </a>
                 ))}
               </div>
@@ -268,10 +268,12 @@ export function ChronicleOverlay() {
           onClick={toggleMusic}
           aria-label={musicOn ? 'Mute chronicle music' : 'Play chronicle music'}
           title={musicOn ? 'Mute' : 'Play music'}
-          className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[80] w-10 h-10 flex items-center justify-center rounded-full border border-white/15 bg-black/50 text-white/40 hover:text-white/80 hover:border-white/35 transition-all duration-200"
+          className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[80] w-[52px] h-[52px] sm:w-10 sm:h-10 flex items-center justify-center rounded-full border border-white/15 bg-black/50 text-white/74 hover:text-white/92 hover:border-white/35 transition-all duration-200"
           style={{ backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}
         >
-          {musicOn ? <Volume2 size={16} strokeWidth={1.5} /> : <VolumeX size={16} strokeWidth={1.5} />}
+          {musicOn
+            ? <Volume2 className="w-[21px] h-[21px] sm:w-4 sm:h-4" strokeWidth={1.5} />
+            : <VolumeX className="w-[21px] h-[21px] sm:w-4 sm:h-4" strokeWidth={1.5} />}
         </button>
       )}
     </div>

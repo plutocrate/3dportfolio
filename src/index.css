@@ -5,11 +5,11 @@
 @layer base {
   :root {
     --background: 0 0% 4%;
-    --foreground: 0 0% 96%;
+    --foreground: 0 0% 98%;
     --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 55%;
-    --border: 0 0% 16%;
-    --accent: 0 0% 96%;
+    --muted-foreground: 0 0% 72%;
+    --border: 0 0% 24%;
+    --accent: 0 0% 98%;
     --accent-foreground: 0 0% 4%;
     --radius: 2px;
   }
@@ -191,13 +191,13 @@
     -webkit-text-fill-color: transparent;
     background-image: linear-gradient(
       90deg,
-      rgba(255,255,255,0.42) 0%,
-      rgba(255,255,255,0.42) 42%,
-      rgba(255,255,255,0.95) 50%,
-      rgba(255,255,255,0.42) 58%,
-      rgba(255,255,255,0.42) 100%
+      rgba(255,255,255,0.38) 0%,
+      rgba(255,255,255,0.38) 32%,
+      rgba(255,255,255,0.62) 50%,
+      rgba(255,255,255,0.38) 68%,
+      rgba(255,255,255,0.38) 100%
     );
-    background-size: 250% 100%;
+    background-size: 280% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-animation: shine-sweep 6.5s linear infinite;
@@ -213,8 +213,8 @@
      so BLOG/CHRONICLES get a pulsing glow ring on the dot itself instead —
      this is the mobile-only counterpart to `.awwwards-nav-highlight`. */
   @keyframes dot-glow-pulse {
-    0%, 100% { box-shadow: 0 0 4px rgba(255,255,255,0.35), 0 0 9px rgba(255,255,255,0.16); }
-    50%      { box-shadow: 0 0 8px rgba(255,255,255,0.75), 0 0 18px rgba(255,255,255,0.35); }
+    0%, 100% { box-shadow: 0 0 5px rgba(255,255,255,0.18), 0 0 14px rgba(255,255,255,0.08); }
+    50%      { box-shadow: 0 0 12px rgba(255,255,255,0.32), 0 0 26px rgba(255,255,255,0.14); }
   }
 
   .mobile-nav-glow {
@@ -229,7 +229,7 @@
   .flow-glow {
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 6px rgba(255,255,255,0.14), 0 0 14px rgba(255,255,255,0.06);
+    box-shadow: 0 0 8px rgba(255,255,255,0.09), 0 0 20px rgba(255,255,255,0.04);
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
   }
@@ -242,7 +242,7 @@
   .glow-static {
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 6px rgba(255,255,255,0.14), 0 0 14px rgba(255,255,255,0.06);
+    box-shadow: 0 0 8px rgba(255,255,255,0.09), 0 0 20px rgba(255,255,255,0.04);
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
   }
@@ -252,9 +252,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 40%;
+    width: 60%;
     height: 100%;
-    background-image: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%);
+    background-image: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.20) 50%, transparent 100%);
+    filter: blur(5px);
     -webkit-animation: shine-sweep-x 6.5s linear infinite;
     animation: shine-sweep-x 6.5s linear infinite;
     will-change: transform;

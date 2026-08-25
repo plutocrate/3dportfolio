@@ -14,7 +14,7 @@ function LiveClock() {
   }, [])
   const p = (n) => String(n).padStart(2, '0')
   return (
-    <span className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/50 tabular-nums tracking-widest">
+    <span className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/70 tabular-nums tracking-widest">
       {p(t.getHours())}:{p(t.getMinutes())}:{p(t.getSeconds())}
     </span>
   )
@@ -28,7 +28,7 @@ function Uptime() {
   }, [])
   const p = (n) => String(n).padStart(2, '0')
   return (
-    <span className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/50 tabular-nums tracking-widest">
+    <span className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] text-white/70 tabular-nums tracking-widest">
       {p(Math.floor(s / 3600))}:{p(Math.floor((s % 3600) / 60))}:{p(s % 60)}
     </span>
   )
@@ -60,18 +60,18 @@ function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks }
     <div className="flex items-center gap-2">
       <button
         onClick={onToggle}
-        className="flex items-center gap-1.5 px-2.5 py-1.5 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
+        className="flex items-center gap-1.5 px-[13px] sm:px-2.5 py-2 sm:py-1.5 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
         aria-label={playing ? 'Mute' : 'Unmute'}
       >
         <MusicBars playing={playing} />
-        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.18em] text-white/40 group-hover:text-white/70 transition-colors">
+        <span className="font-mono text-[clamp(13px,calc(12.5px+0.21vw),15.6px)] sm:text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.18em] text-white/64 group-hover:text-white/82 transition-colors">
           {playing ? 'AMB' : 'OFF'}
         </span>
       </button>
 
       {/* Now-playing track name */}
       <span
-        className="font-mono text-[clamp(8px,calc(7.7px+0.1vw),9px)] text-white/22 uppercase tracking-[0.12em] max-w-[90px] sm:max-w-[110px] truncate transition-colors"
+        className="font-mono text-[clamp(8px,calc(7.7px+0.1vw),9px)] text-white/53 uppercase tracking-[0.12em] max-w-[90px] sm:max-w-[110px] truncate transition-colors"
         title={trackName}
       >
         {trackName}
@@ -83,12 +83,12 @@ function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks }
           onClick={onNext}
           aria-label="Next track"
           title="Next track"
-          className="flex items-center gap-1 px-2.5 py-1.5 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
+          className="flex items-center gap-1 px-[13px] sm:px-2.5 py-2 sm:py-1.5 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
         >
-          <span className="font-mono text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/40 group-hover:text-white/80 transition-colors leading-none">
+          <span className="font-mono text-[clamp(16px,calc(15.3px+0.26vw),18.2px)] sm:text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/64 group-hover:text-white/88 transition-colors leading-none">
             ⏭
           </span>
-          <span className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] uppercase tracking-[0.14em] text-white/40 group-hover:text-white/80 transition-colors hidden sm:inline">
+          <span className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] uppercase tracking-[0.14em] text-white/64 group-hover:text-white/88 transition-colors hidden sm:inline">
             Next
           </span>
         </button>
@@ -135,7 +135,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
             <div className="font-display text-[clamp(18px,calc(16.6px+0.5vw),22px)] sm:text-[clamp(22px,calc(20.2px+0.6vw),27px)] md:text-[clamp(25px,calc(23px+0.7vw),31px)] text-white leading-none tracking-widest">
               {PERSONAL.name.toUpperCase()}
             </div>
-            <div className="font-mono text-[clamp(8px,calc(7.5px+0.16vw),10px)] sm:text-[clamp(9px,calc(8.6px+0.16vw),11px)] text-white/30 uppercase tracking-[0.22em]">
+            <div className="font-mono text-[clamp(8px,calc(7.5px+0.16vw),10px)] sm:text-[clamp(9px,calc(8.6px+0.16vw),11px)] text-white/58 uppercase tracking-[0.22em]">
               {PERSONAL.tagline}
             </div>
           </div>
@@ -143,7 +143,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
           {/* Right: status dot */}
           <div className="flex items-center gap-1.5 mt-1">
             <div className="w-1.5 h-1.5 rounded-full bg-white/35 animate-pulse" />
-            <span className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/22 uppercase tracking-wider hidden sm:block">
+            <span className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/53 uppercase tracking-wider hidden sm:block">
               {activeSection ? `— ${activeSection}` : 'Interactive'}
             </span>
           </div>
@@ -178,7 +178,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
                     )} />
                     <span className={cn(
                       'nav-label font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.16em] transition-colors',
-                      isActive ? 'text-white' : 'text-white/30 group-hover:text-white/65'
+                      isActive ? 'text-white' : 'text-white/58 group-hover:text-white/79'
                     )}>
                       {ann.label}
                     </span>
@@ -199,14 +199,18 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
                       playClick()
                       isActive ? goHome() : go(`/${ann.id}`)
                     }}
-                    className={cn(
-                      'hud-float w-2 h-2 rounded-full transition-all duration-200',
-                      isActive ? 'bg-white scale-125' : 'bg-white/22',
-                      isGlowing && !isActive && 'mobile-nav-glow'
-                    )}
+                    className="hud-float flex items-center justify-center p-2 -m-2"
                     style={{ '--float-delay': `${i * 0.35}s` }}
                     title={ann.label}
-                  />
+                  >
+                    <span
+                      className={cn(
+                        'w-[10px] h-[10px] rounded-full transition-all duration-200 pointer-events-none',
+                        isActive ? 'bg-white scale-125' : 'bg-white/22',
+                        isGlowing && !isActive && 'mobile-nav-glow'
+                      )}
+                    />
+                  </button>
                 )
               })}
             </div>
@@ -216,14 +220,14 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
 
             {/* Uptime — same left edge as nav items */}
             <div className="flex flex-col gap-0.5">
-              <span className="font-mono text-[clamp(7px,calc(6.8px+0.1vw),8px)] sm:text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/18 uppercase tracking-[0.2em]">Uptime</span>
+              <span className="font-mono text-[clamp(7px,calc(6.8px+0.1vw),8px)] sm:text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/51 uppercase tracking-[0.2em]">Uptime</span>
               <Uptime />
             </div>
           </div>
 
           {/* Center hint — desktop only */}
           <div className="hidden md:block absolute left-1/2 bottom-4 sm:bottom-6 -translate-x-1/2">
-            <span className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/13 uppercase tracking-[0.2em]">
+            <span className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/48 uppercase tracking-[0.2em]">
               Drag · Pinch · Click
             </span>
           </div>
@@ -231,7 +235,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
           {/* Right: local time + music */}
           <div className="flex flex-col items-end gap-2 pointer-events-auto">
             <div className="flex flex-col items-end gap-0.5">
-              <span className="font-mono text-[clamp(7px,calc(6.8px+0.1vw),8px)] sm:text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/18 uppercase tracking-[0.2em]">Local Time</span>
+              <span className="font-mono text-[clamp(7px,calc(6.8px+0.1vw),8px)] sm:text-[clamp(9px,calc(8.6px+0.13vw),11px)] text-white/51 uppercase tracking-[0.2em]">Local Time</span>
               <LiveClock />
             </div>
             <div className="w-14 sm:w-20 h-px bg-white/8" />

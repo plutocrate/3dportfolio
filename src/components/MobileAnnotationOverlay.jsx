@@ -7,8 +7,8 @@ import { cn } from '@/lib/utils'
 
 const _v = new THREE.Vector3()
 
-const BTN_W      = 80   // fixed width px — big enough to tap
-const BTN_H      = 32   // fixed height px
+const BTN_W      = 104  // fixed width px — big enough to tap (1.3x)
+const BTN_H      = 42   // fixed height px (1.3x)
 const PAD_X      = 12   // min distance from left/right edge
 const PAD_TOP    = 64   // below name bar
 const PAD_BOTTOM = 90   // above uptime bar
@@ -79,7 +79,7 @@ export function MobileAnnotationOverlay({ onAnnotationClick }) {
               WebkitBackdropFilter: 'blur(12px)',
               border: isActive
                 ? '1px solid rgba(255,255,255,1)'
-                : '1px solid rgba(255,255,255,0.18)',
+                : '1px solid rgba(255,255,255,0.32)',
               boxShadow: isActive
                 ? '0 0 12px rgba(255,255,255,0.25)'
                 : '0 2px 12px rgba(0,0,0,0.45)',
@@ -94,11 +94,11 @@ export function MobileAnnotationOverlay({ onAnnotationClick }) {
           >
             <span style={{
               fontFamily: 'monospace',
-              fontSize: 9,
+              fontSize: 11.5,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
-              color: isActive ? '#000' : 'rgba(255,255,255,0.75)',
-              fontWeight: isActive ? 700 : 400,
+              color: isActive ? '#000' : 'rgba(255,255,255,0.92)',
+              fontWeight: isActive ? 700 : 500,
             }}>
               {p.label}
             </span>

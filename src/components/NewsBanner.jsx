@@ -165,7 +165,7 @@ export function NewsBanner({ visible }) {
         className="shrink-0 flex items-center px-2 h-full border-r"
         style={{ borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.04)' }}
       >
-        <span className="font-mono text-[clamp(8px,calc(7.08px+0.24vw),11px)] uppercase tracking-[0.22em] text-white/30">
+        <span className="font-mono text-[clamp(8px,calc(7.08px+0.24vw),11px)] uppercase tracking-[0.22em] text-white/58">
           LATEST
         </span>
       </div>
@@ -175,27 +175,28 @@ export function NewsBanner({ visible }) {
         className="flex-1 overflow-hidden flex items-center px-3 cursor-pointer group"
         onClick={() => { playClick(); if (item.href) go(item.href) }}
       >
-        <span className="font-mono text-[clamp(10px,calc(9.39px+0.16vw),12px)] uppercase tracking-[0.16em] text-white/35 mr-2 shrink-0">
+        <span className="font-mono text-[clamp(10px,calc(9.39px+0.16vw),12px)] uppercase tracking-[0.16em] text-white/61 mr-2 shrink-0">
           {item.prefix}
         </span>
         <span
-          className="font-mono text-[clamp(10px,calc(9.39px+0.16vw),12px)] uppercase tracking-[0.12em] text-white/70 group-hover:text-white transition-colors truncate"
+          className="font-mono text-[clamp(10px,calc(9.39px+0.16vw),12px)] uppercase tracking-[0.12em] text-white/82 group-hover:text-white transition-colors truncate"
         >
           — {item.label}
         </span>
       </div>
 
       {/* Dots */}
-      <div className="shrink-0 flex items-center gap-1 px-3">
+      <div className="shrink-0 flex items-center gap-1.5 sm:gap-1 px-3">
         {TICKER_ITEMS.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
+            aria-label={`Show item ${i + 1}`}
             style={{
-              width: i === current ? 12 : 4,
-              height: 4,
+              width: i === current ? 15.6 : 5.2,
+              height: 5.2,
               borderRadius: 2,
-              background: i === current ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.18)',
+              background: i === current ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.32)',
               border: 'none',
               padding: 0,
               cursor: 'pointer',
@@ -208,7 +209,8 @@ export function NewsBanner({ visible }) {
       {/* Dismiss */}
       <button
         onClick={() => setDismissed(true)}
-        className="shrink-0 flex items-center justify-center w-7 h-full border-l text-white/25 hover:text-white/60 transition-colors font-mono text-[clamp(12px,calc(10.78px+0.33vw),16px)]"
+        aria-label="Dismiss"
+        className="shrink-0 flex items-center justify-center w-9 sm:w-7 h-full border-l text-white/68 hover:text-white/88 transition-colors font-mono text-[clamp(15.6px,calc(14px+0.43vw),20.8px)] sm:text-[clamp(12px,calc(10.78px+0.33vw),16px)]"
         style={{ borderColor: 'rgba(255,255,255,0.08)' }}
       >
         ×

@@ -81,7 +81,7 @@ function MobileButton({ annotation, onClick }) {
           'px-1.5 py-0.5 text-[clamp(9px,calc(8.6px+0.13vw),11px)] tracking-[0.10em]',
           isActive
             ? 'bg-white text-black border-white'
-            : 'bg-black/85 text-white/60 border-white/20',
+            : 'bg-black/85 text-white/76 border-white/20',
           showGlow && 'glow-static'
         )}
         onClick={() => { playClick(); onClick(annotation) }}
@@ -96,9 +96,10 @@ function MobileButton({ annotation, onClick }) {
               position: 'absolute',
               top: 0,
               left: 0,
-              width: '40%',
+              width: '60%',
               height: '100%',
-              backgroundImage: 'linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%)',
+              backgroundImage: 'linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.20) 50%, transparent 100%)',
+              filter: 'blur(5px)',
               pointerEvents: 'none',
             }}
           />
@@ -194,14 +195,14 @@ export function AnnotationMarker({ annotation, onClick }) {
             'px-2.5 py-1 text-[clamp(10px,calc(9.6px+0.16vw),12px)] tracking-[0.18em]',
             isActive
               ? 'bg-white text-black border-white'
-              : 'bg-black/85 text-white/60 border-white/20',
+              : 'bg-black/85 text-white/76 border-white/20',
             !isActive && (id === 'blog' || id === 'chronicles') && 'flow-glow'
           )}>
             {label}
           </div>
           <div className={cn(
             'font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] mt-0.5 transition-colors duration-200 whitespace-nowrap',
-            isActive ? 'text-white/55' : 'text-white/22',
+            isActive ? 'text-white/73' : 'text-white/53',
             side === 'right' ? 'pl-0.5' : 'pr-0.5'
           )}>
             {description}

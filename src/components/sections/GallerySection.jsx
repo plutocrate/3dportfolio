@@ -41,7 +41,7 @@ function GalleryTile({ item, onOpen }) {
         />
       )}
       {item.caption && (
-        <span className="block px-2 py-1.5 font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.14em] text-white/35 group-hover:text-white/65 transition-colors">
+        <span className="block px-2 py-1.5 font-mono text-[clamp(8px,calc(7.72px+0.07vw),9px)] uppercase tracking-[0.14em] text-white/61 group-hover:text-white/79 transition-colors">
           {item.caption}
         </span>
       )}
@@ -104,14 +104,14 @@ export function GallerySection() {
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/30">Gallery</div>
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58">Gallery</div>
 
         {GALLERY_IMAGES.length > 0 && (
           <button
             onClick={handleViewAll}
-            className="group flex items-center gap-1.5 font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.16em] px-2.5 py-1 border border-white/15 text-white/40 hover:text-white hover:border-white/40 transition-all duration-200"
+            className="group flex items-center gap-1.5 font-mono text-[clamp(11.7px,calc(11px+0.18vw),14.3px)] sm:text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.16em] px-[16px] sm:px-2.5 py-2 sm:py-1 border border-white/15 text-white/72 hover:text-white hover:border-white/40 transition-all duration-200"
           >
-            <Expand size={12} className="text-white/40 group-hover:text-white transition-colors" />
+            <Expand className="w-[16px] h-[16px] sm:w-3 sm:h-3 text-white/72 group-hover:text-white transition-colors" />
             View All
           </button>
         )}
@@ -119,10 +119,10 @@ export function GallerySection() {
 
       {GALLERY_IMAGES.length === 0 ? (
         <div className="flex flex-col gap-2 py-4">
-          <div className="font-mono text-[clamp(10px,calc(9.26px+0.18vw),13px)] text-white/25 uppercase tracking-widest">No images yet.</div>
-          <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/30">
-            Drop images into <span className="font-mono text-white/40">public/gallery/</span> — captions can
-            be set in <span className="font-mono text-white/40">src/data/gallery.js</span>.
+          <div className="font-mono text-[clamp(10px,calc(9.26px+0.18vw),13px)] text-white/55 uppercase tracking-widest">No images yet.</div>
+          <p className="font-body text-[clamp(12px,calc(11.08px+0.28vw),15px)] text-white/58">
+            Drop images into <span className="font-mono text-white/64">public/gallery/</span> — captions can
+            be set in <span className="font-mono text-white/64">src/data/gallery.js</span>.
           </p>
         </div>
       ) : (
@@ -138,7 +138,7 @@ export function GallerySection() {
               />
             ))}
           </div>
-          <p className="mt-3 font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/20 uppercase tracking-[0.16em]">
+          <p className="mt-3 font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] text-white/52 uppercase tracking-[0.16em]">
             Tap any image to view
           </p>
         </>

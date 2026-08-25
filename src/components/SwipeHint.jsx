@@ -45,7 +45,7 @@ export function SwipeHint({ visible }) {
           <path d="M5 2L10 7L5 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </div>
-      <span className="font-mono text-[clamp(10px,calc(9.39px+0.16vw),12px)] text-white/30 uppercase tracking-[0.25em]">
+      <span className="font-mono text-[clamp(10px,calc(9.39px+0.16vw),12px)] text-white/58 uppercase tracking-[0.25em]">
         Drag to explore
       </span>
     </div>

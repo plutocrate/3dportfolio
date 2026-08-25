@@ -212,7 +212,7 @@ export function SectionPanel({ onClose }) {
           />
           {/* Section label */}
           <div
-            className="absolute font-mono text-[clamp(11px,calc(10.08px+0.24vw),14px)] text-white/15 uppercase tracking-[0.4em] select-none pointer-events-none"
+            className="absolute font-mono text-[clamp(11px,calc(10.08px+0.24vw),14px)] text-white/49 uppercase tracking-[0.4em] select-none pointer-events-none"
             style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
           >
             {activeSection}
@@ -227,7 +227,9 @@ export function SectionPanel({ onClose }) {
       >
         <button
           onClick={handleCloseClick}
-          className="w-9 h-9 flex items-center justify-center border border-white/15 text-white/40 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-lg"
+          className={isMobile
+            ? 'w-[47px] h-[47px] flex items-center justify-center border border-white/15 text-white/78 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-[23px]'
+            : 'w-9 h-9 flex items-center justify-center border border-white/15 text-white/78 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-lg'}
           aria-label="Close"
         >×</button>
       </div>
@@ -241,10 +243,10 @@ export function SectionPanel({ onClose }) {
 
       {/* Footer */}
       <div className="absolute bottom-0 left-px right-0 border-t border-white/8 px-6 sm:px-8 py-3 flex items-center justify-between">
-        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/18 uppercase tracking-widest">
+        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/51 uppercase tracking-widest">
           prathamis.cool
         </span>
-        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/18 tabular-nums">
+        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/51 tabular-nums">
           {new Date().getFullYear()}
         </span>
       </div>
