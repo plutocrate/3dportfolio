@@ -299,10 +299,10 @@ export const CHRONICLES = [
   },
   {
     id: "after-fall",
-    title: "The Blocks",
+    title: "The Setting",
     dek: "How it started",
     date: "02 Sep 2026",
-    category: "After Fall",
+    category: "After Fall - Lore Bible",
     status: "In Progress",
     coverImage: "/gallery/Stalker.jpg",
     coverPosition: "",
