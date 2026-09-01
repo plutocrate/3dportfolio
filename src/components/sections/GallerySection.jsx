@@ -104,7 +104,7 @@ export function GallerySection() {
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58">Gallery</div>
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-ember/75">Gallery</div>
 
         {GALLERY_IMAGES.length > 0 && (
           <button

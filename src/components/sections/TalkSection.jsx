@@ -36,7 +36,7 @@ export function TalkSection() {
   return (
     <div className="space-y-6">
       <div>
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-1">
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-ember/75 mb-1">
           Get In Touch
         </div>
         <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide mb-3">TALK</h2>
@@ -62,7 +62,7 @@ export function TalkSection() {
           <p className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/61">I'll reply to your email soon.</p>
           <button
             onClick={() => { playClick(); setStatus('idle') }}
-            className="mt-2 font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.2em] text-white/58 hover:text-white/76 transition-colors text-left"
+            className="mt-2 font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.2em] text-ember/75 hover:text-white/76 transition-colors text-left"
           >
             ← Send another
           </button>
@@ -70,7 +70,7 @@ export function TalkSection() {
       ) : (
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-white/58">Name</label>
+            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-ember/75">Name</label>
             <input
               type="text" name="from_name" value={fields.from_name}
               onChange={handleChange} required placeholder="Your name"
@@ -78,7 +78,7 @@ export function TalkSection() {
             />
           </div>
           <div className="space-y-1.5">
-            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-white/58">Email</label>
+            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-ember/75">Email</label>
             <input
               type="email" name="from_email" value={fields.from_email}
               onChange={handleChange} required placeholder="you@email.com"
@@ -86,7 +86,7 @@ export function TalkSection() {
             />
           </div>
           <div className="space-y-1.5">
-            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-white/58">Message</label>
+            <label className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.22em] text-ember/75">Message</label>
             <textarea
               name="message" value={fields.message}
               onChange={handleChange} required rows={5} placeholder="What's on your mind?"

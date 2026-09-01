@@ -1,4 +1,18 @@
 /** @type {import('tailwindcss').Config} */
+
+// Tailwind's default opacity scale only defines multiples of 5 (5, 10, ...,
+// 100), so the bare `/NN` modifier shorthand used all over this codebase
+// (text-white/58, text-white/73, text-white/81, etc.) was silently failing
+// to compile for every non-multiple-of-5 value — Tailwind just drops
+// unknown utilities instead of erroring. The practical effect: nearly all
+// "dimmed" text across the site was rendering at full white opacity, which
+// is why everything looked like the same color. Filling in every integer
+// 0–100 makes every `/NN` opacity modifier already used in the markup
+// actually generate a rule.
+const FULL_OPACITY_SCALE = Object.fromEntries(
+  Array.from({ length: 101 }, (_, i) => [String(i), (i / 100).toString()])
+)
+
 export default {
   darkMode: ["class"],
   content: [
@@ -7,6 +21,7 @@ export default {
   ],
   theme: {
     extend: {
+      opacity: FULL_OPACITY_SCALE,
       fontFamily: {
         mono: ['"Space Mono"', '"Courier New"', 'monospace'],
         display: ['"Bebas Neue"', 'Impact', 'sans-serif'],
@@ -23,6 +38,14 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+        },
+        // Warm ember accent — echoes the character's goggle glow. Used for
+        // section eyebrow labels and links only, so it reads as a distinct
+        // hierarchy tier against the mostly-white/gray body copy instead of
+        // everything sharing one shade of white.
+        ember: {
+          DEFAULT: "#e0924f",
+          bright: "#f2a869",
         },
       },
       borderRadius: {

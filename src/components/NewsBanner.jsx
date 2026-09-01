@@ -165,7 +165,7 @@ export function NewsBanner({ visible }) {
         className="shrink-0 flex items-center px-2 h-full border-r"
         style={{ borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.04)' }}
       >
-        <span className="font-mono text-[clamp(8px,calc(7.08px+0.24vw),11px)] uppercase tracking-[0.22em] text-white/58">
+        <span className="font-mono text-[clamp(8px,calc(7.08px+0.24vw),11px)] uppercase tracking-[0.22em] text-ember/75">
           LATEST
         </span>
       </div>

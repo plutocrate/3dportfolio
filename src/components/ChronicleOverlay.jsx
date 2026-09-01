@@ -54,7 +54,7 @@ function MediaBlock({ item }) {
         )}
       </div>
       {item.caption && (
-        <figcaption className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.14em] text-white/58 mt-2">
+        <figcaption className="font-mono text-[clamp(9px,calc(8.44px+0.14vw),11px)] uppercase tracking-[0.14em] text-ember/75 mt-2">
           {item.caption}
         </figcaption>
       )}

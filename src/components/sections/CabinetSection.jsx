@@ -86,7 +86,7 @@ export function CabinetSection() {
   return (
     <div className="space-y-6">
       <div>
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.16vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-1">
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.16vw),13px)] uppercase tracking-[0.25em] text-ember/75 mb-1">
           A Drawer Of Small Things
         </div>
         <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">CABINET</h2>

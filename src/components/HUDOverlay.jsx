@@ -135,7 +135,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
             <div className="font-display text-[clamp(18px,calc(16.6px+0.5vw),22px)] sm:text-[clamp(22px,calc(20.2px+0.6vw),27px)] md:text-[clamp(25px,calc(23px+0.7vw),31px)] text-white leading-none tracking-widest">
               {PERSONAL.name.toUpperCase()}
             </div>
-            <div className="font-mono text-[clamp(8px,calc(7.5px+0.16vw),10px)] sm:text-[clamp(9px,calc(8.6px+0.16vw),11px)] text-white/58 uppercase tracking-[0.22em]">
+            <div className="font-mono text-[clamp(8px,calc(7.5px+0.16vw),10px)] sm:text-[clamp(9px,calc(8.6px+0.16vw),11px)] text-ember/75 uppercase tracking-[0.22em]">
               {PERSONAL.tagline}
             </div>
           </div>
@@ -187,10 +187,10 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
               })}
             </div>
 
-            {/* Mobile dot nav */}
+            {/* Mobile dot nav — no glow effect on phone (see index.css note on
+                .mobile-nav-glow being intentionally unused here) */}
             <div className="flex sm:hidden items-center gap-2 pointer-events-auto">
               {ANNOTATIONS.map((ann, i) => {
-                const isGlowing = ann.id === 'blog' || ann.id === 'chronicles'
                 const isActive = activeSection === ann.id
                 return (
                   <button
@@ -206,8 +206,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
                     <span
                       className={cn(
                         'w-[10px] h-[10px] rounded-full transition-all duration-200 pointer-events-none',
-                        isActive ? 'bg-white scale-125' : 'bg-white/22',
-                        isGlowing && !isActive && 'mobile-nav-glow'
+                        isActive ? 'bg-white scale-125' : 'bg-white/22'
                       )}
                     />
                   </button>

@@ -9,6 +9,12 @@ const FOV        = 52
 const CHAR_H     = 2.1   // character world-space height in units
 const FILL_RATIO = 0.75  // want character to fill 75% of screen height
 
+// Phone-only zoom-in factor. Applied as a final step below (after the
+// arm-width safety clamp and the 3.5 max-distance cap) so it always wins:
+// on narrow phones the arm-width guard can otherwise push z back out to the
+// 3.5 cap and silently cancel out a change to FILL_RATIO alone.
+const MOBILE_SIZE_MULT = 1.3
+
 // Z so character fills FILL_RATIO of screen height.
 // visible_height = 2 * Z * tan(FOV/2)  →  Z = (CHAR_H / FILL_RATIO) / (2 * tan(FOV/2))
 function idealZ() {
@@ -16,7 +22,8 @@ function idealZ() {
 }
 
 function getDefaults(width, height) {
-  const aspect = width / height
+  const aspect   = width / height
+  const isMobile = width < 1024
   let z = idealZ()  // ~2.87 units
 
   // On very narrow portrait screens the arms extend ~1.5 units wide.
@@ -24,8 +31,19 @@ function getDefaults(width, height) {
   const frustumW = 2 * z * Math.tan((FOV * Math.PI / 180) / 2) * aspect
   if (frustumW < 3.2 && aspect < 0.65) z = 3.2 / (2 * Math.tan((FOV * Math.PI / 180) / 2) * aspect)
 
+  z = Math.min(z, 3.5)
+
+  // Phone: bring the camera in ~1.3x closer than whatever z the logic above
+  // landed on (fill-ratio branch or arm-width-guard branch), so the model
+  // reliably reads bigger on phone specifically. Floor it a bit above
+  // OrbitControls' minDistance so it can't zoom through the character.
+  if (isMobile) z = Math.max(z / MOBILE_SIZE_MULT, 1.6)
+
   return {
-    pos:    [0, 1.0, Math.min(z, 3.5)],
+    // x stays 0 on both position and target, so the model — and every
+    // annotation button anchored to it in world-space — is always
+    // horizontally centered together as one group.
+    pos:    [0, 1.0, z],
     target: [0, 0.88, 0],
   }
 }

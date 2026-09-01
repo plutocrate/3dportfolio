@@ -198,7 +198,7 @@ function BlogEntry({ post, isLast }) {
             href={post.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-3 font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.18em] text-white/58 hover:text-white/82 transition-colors border-b border-white/15 hover:border-white/40 pb-px"
+            className="inline-block mt-3 font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.18em] text-ember/75 hover:text-white/82 transition-colors border-b border-white/15 hover:border-white/40 pb-px"
           >
             Read more →
           </a>
@@ -213,7 +213,7 @@ export function BlogSection() {
   return (
     <div className="space-y-6">
       <div>
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-1">
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-ember/75 mb-1">
           Thoughts & Writes
         </div>
         <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">JOURNAL</h2>

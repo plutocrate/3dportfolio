@@ -57,7 +57,7 @@ export function LoadingScreen({ onComplete }) {
         <div className="font-display text-[clamp(28px,calc(25.6px+0.85vw),35px)] sm:text-[clamp(34px,calc(31.2px+0.9vw),42px)] md:text-[clamp(38px,calc(35px+1vw),48px)] text-white tracking-widest leading-none mb-2">
           {PERSONAL.name.toUpperCase()}
         </div>
-        <div className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] sm:text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/58 uppercase tracking-[0.35em]">
+        <div className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] sm:text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-ember/75 uppercase tracking-[0.35em]">
           {PERSONAL.tagline}
         </div>
       </div>

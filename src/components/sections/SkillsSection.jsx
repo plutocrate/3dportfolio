@@ -26,12 +26,12 @@ export function SkillsSection() {
   return (
     <div className="space-y-6">
       <div>
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-1">Arsenal</div>
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-ember/75 mb-1">Arsenal</div>
         <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">SKILLS</h2>
       </div>
       <Separator />
       <div>
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-4">Technical</div>
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-ember/75 mb-4">Technical</div>
         <div className="space-y-3.5">
           {SKILLS.technical.map((s, i) => (
             <SkillBar key={s.name} name={s.name} level={s.level} delay={i * 0.07} />
@@ -40,7 +40,7 @@ export function SkillsSection() {
       </div>
       <Separator />
       <div>
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-3">Domains</div>
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-ember/75 mb-3">Domains</div>
         <div className="flex flex-wrap gap-2">
           {SKILLS.domains.map((d) => (
             <span key={d} className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-wider px-2.5 py-1 border border-white/15 text-white/70">{d}</span>
@@ -49,7 +49,7 @@ export function SkillsSection() {
       </div>
       <Separator />
       <div>
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-2">Soft Skills</div>
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-ember/75 mb-2">Soft Skills</div>
         <div className="flex flex-wrap gap-2">
           {SKILLS.soft.map((s) => (
             <span key={s} className="font-body text-[clamp(13px,calc(12.4px+0.24vw),15px)] text-white/64 border-b border-white/10 pb-0.5">{s}</span>

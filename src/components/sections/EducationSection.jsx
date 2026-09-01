@@ -10,7 +10,7 @@ export function EducationSection() {
   return (
     <div className="space-y-6">
       <div>
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-1">Training Log</div>
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-ember/75 mb-1">Training Log</div>
         <h2 className="font-display text-[clamp(19px,calc(17.2px+0.9vw),23px)] text-white leading-none tracking-wide">EDUCATION</h2>
       </div>
       <Separator />
@@ -35,7 +35,7 @@ export function EducationSection() {
       </div>
       <Separator />
       <div>
-        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-3">Certifications</div>
+        <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-ember/75 mb-3">Certifications</div>
         <div className="space-y-2.5">
           {CERTIFICATIONS.map((c, i) => (
             <div key={i} className="flex items-baseline justify-between gap-2">

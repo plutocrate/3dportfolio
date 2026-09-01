@@ -34,7 +34,7 @@ export function LinksSection() {
 
   return (
     <div>
-      <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-white/58 mb-3">Links</div>
+      <div className="font-mono text-[clamp(11px,calc(10.4px+0.2vw),13px)] uppercase tracking-[0.25em] text-ember/75 mb-3">Links</div>
 
       <div className="flex flex-wrap gap-1.5 mb-5">
         {LINK_COLLECTIONS.map((c) => (

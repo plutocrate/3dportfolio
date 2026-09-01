@@ -209,18 +209,9 @@
     100% { background-position: -60% 0; }
   }
 
-  /* Mobile bottom dot-nav has no text to run a text-gradient shine across,
-     so BLOG/CHRONICLES get a pulsing glow ring on the dot itself instead —
-     this is the mobile-only counterpart to `.awwwards-nav-highlight`. */
-  @keyframes dot-glow-pulse {
-    0%, 100% { box-shadow: 0 0 5px rgba(255,255,255,0.18), 0 0 14px rgba(255,255,255,0.08); }
-    50%      { box-shadow: 0 0 12px rgba(255,255,255,0.32), 0 0 26px rgba(255,255,255,0.14); }
-  }
-
-  .mobile-nav-glow {
-    -webkit-animation: dot-glow-pulse 2.4s ease-in-out infinite;
-    animation: dot-glow-pulse 2.4s ease-in-out infinite;
-  }
+  /* NOTE: the mobile bottom dot-nav intentionally has no glow effect —
+     phone specifically should not glow, per design. (Desktop's text nav
+     still gets its shine via `.awwwards-nav-highlight` above.) */
 
   /* Same flowing shine, adapted for the bordered annotation buttons that sit
      directly on the 3D character (blog / chronicles), the ENTER/EXPLORE
