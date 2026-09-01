@@ -52,9 +52,9 @@ function MusicBars({ playing }) {
 }
 
 // ── Compact "now playing" music player — sits where the old AMB button was ──
-// Order: AMB toggle → track name → change-track button. The AMB pill and the
-// change-track pill are the same height/padding so both are equally easy to
-// tap on phone (the old "»" text link was a tiny, hard-to-hit target).
+// Order: AMB toggle → track name → change-track button. The AMB pill stays
+// full-size since it's the primary control; the NEXT pill is intentionally
+// smaller (see below) since it's secondary.
 function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks }) {
   return (
     <div className="flex items-center gap-2">
@@ -77,19 +77,17 @@ function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks }
         {trackName}
       </span>
 
-      {/* Skip to another random track — same size/touch-target as the AMB pill */}
+      {/* Skip to the next track — deliberately smaller than the AMB pill so
+          it doesn't compete with it visually; it's a secondary action. */}
       {hasMultipleTracks && (
         <button
           onClick={onNext}
           aria-label="Next track"
           title="Next track"
-          className="flex items-center gap-1 px-[13px] sm:px-2.5 py-2 sm:py-1.5 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
+          className="flex items-center justify-center px-2 py-1.5 sm:px-1.5 sm:py-1 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
         >
-          <span className="font-mono text-[clamp(16px,calc(15.3px+0.26vw),18.2px)] sm:text-[clamp(12px,calc(11.4px+0.2vw),14px)] text-white/64 group-hover:text-white/88 transition-colors leading-none">
+          <span className="font-mono text-[clamp(13px,calc(12.5px+0.2vw),15px)] sm:text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/64 group-hover:text-white/88 transition-colors leading-none">
             ⏭
-          </span>
-          <span className="font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] uppercase tracking-[0.14em] text-white/64 group-hover:text-white/88 transition-colors hidden sm:inline">
-            Next
           </span>
         </button>
       )}
@@ -98,9 +96,9 @@ function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks }
 }
 
 export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, trackName, hasMultipleTracks }) {
-  const hudRef        = useRef()
+  const hudRef = useRef()
   const activeSection = useSceneStore((s) => s.activeSection)
-  const playClick     = useClickSound()
+  const playClick = useClickSound()
   const { go, goHome } = useGo()
 
   useEffect(() => {

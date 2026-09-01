@@ -50,16 +50,16 @@ function buildQueue(length, avoidFirst = -1) {
   const order = shuffle(Array.from({ length }, (_, i) => i))
   if (length > 1 && order[0] === avoidFirst) {
     const swapWith = 1 + Math.floor(Math.random() * (length - 1))
-    ;[order[0], order[swapWith]] = [order[swapWith], order[0]]
+      ;[order[0], order[swapWith]] = [order[swapWith], order[0]]
   }
   return order
 }
 
 export function useAmbientMusic() {
   const playlist = useMemo(buildPlaylist, [])
-  const audioRef       = useRef(null)
-  const [playing, setPlaying]         = useState(false)
-  const [trackIndex, setTrackIndex]   = useState(0)
+  const audioRef = useRef(null)
+  const [playing, setPlaying] = useState(false)
+  const [trackIndex, setTrackIndex] = useState(0)
   // Tracks if music was playing before a video paused it
   const pausedByVideo = useRef(false)
 
@@ -75,7 +75,7 @@ export function useAmbientMusic() {
     if (!track) return
     audioRef.current.src = track.url
     if (autoplay) {
-      audioRef.current.play().catch(() => {})
+      audioRef.current.play().catch(() => { })
     }
   }, [playlist])
 
@@ -98,12 +98,20 @@ export function useAmbientMusic() {
   const init = useCallback(() => {
     if (audioRef.current) return
     const a = new Audio()
-    a.loop   = false // playlist auto-advances instead of looping a single track
+    a.loop = false // playlist auto-advances instead of looping a single track
     a.volume = 0.35
     queueRef.current = buildQueue(playlist.length)
     queuePosRef.current = 0
     const startIndex = queueRef.current[0]
     a.addEventListener('ended', () => advance(true))
+    // Mirror the *real* element state into React state, instead of us
+    // guessing at it after every play()/pause() call. This is what makes the
+    // HUD correct even when something else (the chronicle-overlay "duck the
+    // ambient track while a chronicle plays its own music" logic, a video
+    // playing, etc.) pauses/resumes the audio out from under us — no matter
+    // who paused or resumed it, the label always matches reality.
+    a.addEventListener('play', () => setPlaying(true))
+    a.addEventListener('pause', () => setPlaying(false))
     audioRef.current = a
     setTrackIndex(startIndex)
     a.src = playlist[startIndex]?.url
@@ -112,12 +120,20 @@ export function useAmbientMusic() {
   const start = useCallback(async () => {
     init()
     if (!audioRef.current) return
+    setUserWantsMusic(true)
     try {
+      // Don't set `playing` here — the 'play' event listener above does it,
+      // and only once playback has actually, truly started. Setting it
+      // eagerly is exactly what caused the bug where the HUD said "OFF"
+      // while music was audibly playing: if this play() request got
+      // interrupted (e.g. a chronicle opened at the same instant and
+      // ducked the ambient track), the promise rejects, so a manual
+      // `setPlaying(true)` here would already be wrong.
       await audioRef.current.play()
-      setPlaying(true)
-      setUserWantsMusic(true)
     } catch (e) {
-      // Autoplay may be blocked until the user interacts — safe to ignore
+      // Autoplay may be blocked until the user interacts, or this attempt
+      // got pre-empted by another pause/play — either way, the 'play'/
+      // 'pause' events (not this catch block) are what decide the HUD state.
     }
   }, [init])
 
@@ -132,22 +148,25 @@ export function useAmbientMusic() {
     if (!audioRef.current) return
     if (playing) {
       audioRef.current.pause()
-      setPlaying(false)
       setUserWantsMusic(false)
       pausedByVideo.current = false // user manually turned off
     } else {
-      audioRef.current.play().catch(() => {})
-      setPlaying(true)
+      audioRef.current.play().catch(() => { })
       setUserWantsMusic(true)
     }
+    // `playing` itself updates from the element's own 'play'/'pause' events.
   }, [playing])
 
   // Skip to the next track in the shuffled queue (not a fresh random pick —
-  // see `advance` above).
+  // see `advance` above). Whether to autoplay the new track is decided by
+  // the visitor's actual intent (getUserWantsMusic), not the `playing`
+  // state snapshot — `playing` can lag by a render or be transiently false
+  // while a chronicle is ducking the ambient track, and using it here was
+  // why NEXT used to silently load a track without playing it.
   const next = useCallback(() => {
     if (!audioRef.current || playlist.length <= 1) return
-    advance(playing)
-  }, [playlist, playing, advance])
+    advance(getUserWantsMusic())
+  }, [playlist, advance])
 
   // Video starts — remember if music was on, then pause it
   const pauseForVideo = useCallback(() => {
@@ -162,7 +181,7 @@ export function useAmbientMusic() {
     if (!getUserWantsMusic()) return
     if (!audioRef.current || !pausedByVideo.current) return
     pausedByVideo.current = false
-    audioRef.current.play().catch(() => {})
+    audioRef.current.play().catch(() => { })
   }, [])
 
   const currentTrack = playlist[trackIndex] || playlist[0]
