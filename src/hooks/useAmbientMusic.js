@@ -33,13 +33,26 @@ function buildPlaylist() {
   }))
 }
 
-function shuffledIndices(length, excludeIndex = -1) {
-  const idx = Array.from({ length }, (_, i) => i).filter((i) => i !== excludeIndex)
-  for (let i = idx.length - 1; i > 0; i--) {
+function shuffle(array) {
+  const arr = array.slice()
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [idx[i], idx[j]] = [idx[j], idx[i]]
+    [arr[i], arr[j]] = [arr[j], arr[i]]
   }
-  return idx
+  return arr
+}
+
+// Builds a fresh shuffled play order covering every track exactly once.
+// `avoidFirst` (the last track played before this reshuffle) is kept out of
+// slot 0 when possible, so looping the queue never plays the same song twice
+// in a row right at the seam between one shuffle and the next.
+function buildQueue(length, avoidFirst = -1) {
+  const order = shuffle(Array.from({ length }, (_, i) => i))
+  if (length > 1 && order[0] === avoidFirst) {
+    const swapWith = 1 + Math.floor(Math.random() * (length - 1))
+    ;[order[0], order[swapWith]] = [order[swapWith], order[0]]
+  }
+  return order
 }
 
 export function useAmbientMusic() {
@@ -49,6 +62,12 @@ export function useAmbientMusic() {
   const [trackIndex, setTrackIndex]   = useState(0)
   // Tracks if music was playing before a video paused it
   const pausedByVideo = useRef(false)
+
+  // The shuffled play order + where we are in it. Refs, not state — advancing
+  // through the queue shouldn't trigger a re-render on its own; only the
+  // resulting trackIndex (for the HUD's track name) needs to.
+  const queueRef = useRef([])
+  const queuePosRef = useRef(0)
 
   const loadTrack = useCallback((index, autoplay) => {
     if (!audioRef.current) return
@@ -60,25 +79,35 @@ export function useAmbientMusic() {
     }
   }, [playlist])
 
+  // Move to the next slot in the shuffled queue, reshuffling once we've
+  // played every track (so listeners hear the whole set before anything
+  // repeats, instead of the old "random every time" approach that could
+  // resurface the same song after just one or two skips).
+  const advance = useCallback((autoplay) => {
+    queuePosRef.current += 1
+    if (queuePosRef.current >= queueRef.current.length) {
+      const lastPlayed = queueRef.current[queueRef.current.length - 1]
+      queueRef.current = buildQueue(playlist.length, lastPlayed)
+      queuePosRef.current = 0
+    }
+    const nextIdx = queueRef.current[queuePosRef.current]
+    loadTrack(nextIdx, autoplay)
+    setTrackIndex(nextIdx)
+  }, [playlist, loadTrack])
+
   const init = useCallback(() => {
     if (audioRef.current) return
     const a = new Audio()
     a.loop   = false // playlist auto-advances instead of looping a single track
     a.volume = 0.35
-    const startIndex = Math.floor(Math.random() * playlist.length)
-    a.addEventListener('ended', () => {
-      setTrackIndex((prev) => {
-        const next = playlist.length > 1
-          ? shuffledIndices(playlist.length, prev)[0]
-          : prev
-        loadTrack(next, true)
-        return next
-      })
-    })
+    queueRef.current = buildQueue(playlist.length)
+    queuePosRef.current = 0
+    const startIndex = queueRef.current[0]
+    a.addEventListener('ended', () => advance(true))
     audioRef.current = a
     setTrackIndex(startIndex)
     a.src = playlist[startIndex]?.url
-  }, [playlist, loadTrack])
+  }, [playlist, advance])
 
   const start = useCallback(async () => {
     init()
@@ -113,16 +142,12 @@ export function useAmbientMusic() {
     }
   }, [playing])
 
-  // Skip to another random track in the playlist
+  // Skip to the next track in the shuffled queue (not a fresh random pick —
+  // see `advance` above).
   const next = useCallback(() => {
     if (!audioRef.current || playlist.length <= 1) return
-    const wasPlaying = playing
-    setTrackIndex((prev) => {
-      const nextIdx = shuffledIndices(playlist.length, prev)[0]
-      loadTrack(nextIdx, wasPlaying)
-      return nextIdx
-    })
-  }, [playlist, playing, loadTrack])
+    advance(playing)
+  }, [playlist, playing, advance])
 
   // Video starts — remember if music was on, then pause it
   const pauseForVideo = useCallback(() => {

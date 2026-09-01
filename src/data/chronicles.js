@@ -298,7 +298,7 @@ export const CHRONICLES = [
     ],
   },
   {
-    id: "after-fall",
+    id: "after-fall-setting",
     title: "The Setting",
     dek: "How it started",
     date: "02 Sep 2026",

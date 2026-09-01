@@ -1,19 +1,34 @@
-import { useState, useEffect } from 'react'
-import { MainScene } from '@/components/3d/MainScene'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { HUDOverlay } from '@/components/HUDOverlay'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { SectionPanel } from '@/components/SectionPanel'
 import { SwipeHint } from '@/components/SwipeHint'
 import { NewsBanner } from '@/components/NewsBanner'
 import { MobileAnnotationOverlay } from '@/components/MobileAnnotationOverlay'
-import { ChronicleOverlay } from '@/components/ChronicleOverlay'
-import { ChronicleCategoryOverlay } from '@/components/ChronicleCategoryOverlay'
-import { EvidenceOverlay } from '@/components/EvidenceOverlay'
-import { MotifOverlay } from '@/components/MotifOverlay'
-import { FailureConfessionsOverlay } from '@/components/FailureConfessionsOverlay'
-import { GiftShopPopup } from '@/components/GiftShopPopup'
-import { GalleryOverlay } from '@/components/GalleryOverlay'
-import { Lightbox } from '@/components/Lightbox'
+
+// ── Code-split everything that isn't needed for first paint ──────────────────
+// MainScene pulls in three.js + @react-three/fiber + drei (~900 KiB
+// uncompressed). It was a static import before, which meant React couldn't
+// render *anything* — not even the lightweight LoadingScreen — until that
+// whole chunk had downloaded and been parsed. That's what was blowing up
+// FCP/LCP. Splitting it means the loading screen (gsap + lucide-react only,
+// a few KB) paints immediately while the 3D chunk streams in behind it.
+const MainScene = lazy(() =>
+  import('@/components/3d/MainScene').then((m) => ({ default: m.MainScene }))
+)
+
+// These overlays are only ever visible after the visitor navigates into a
+// specific section, so there's no reason to ship their code (and their data/
+// icon imports) in the initial bundle. Each becomes its own tiny chunk that's
+// fetched on demand instead of parsed up front.
+const ChronicleOverlay          = lazy(() => import('@/components/ChronicleOverlay').then(m => ({ default: m.ChronicleOverlay })))
+const ChronicleCategoryOverlay  = lazy(() => import('@/components/ChronicleCategoryOverlay').then(m => ({ default: m.ChronicleCategoryOverlay })))
+const EvidenceOverlay           = lazy(() => import('@/components/EvidenceOverlay').then(m => ({ default: m.EvidenceOverlay })))
+const MotifOverlay              = lazy(() => import('@/components/MotifOverlay').then(m => ({ default: m.MotifOverlay })))
+const FailureConfessionsOverlay = lazy(() => import('@/components/FailureConfessionsOverlay').then(m => ({ default: m.FailureConfessionsOverlay })))
+const GiftShopPopup             = lazy(() => import('@/components/GiftShopPopup').then(m => ({ default: m.GiftShopPopup })))
+const GalleryOverlay            = lazy(() => import('@/components/GalleryOverlay').then(m => ({ default: m.GalleryOverlay })))
+const Lightbox                  = lazy(() => import('@/components/Lightbox').then(m => ({ default: m.Lightbox })))
 
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useAmbientMusic } from '@/hooks/useAmbientMusic'
@@ -116,11 +131,13 @@ function AppShell({ loading, showHint, onEnter }) {
       {loading && <LoadingScreen onComplete={handleEnter} />}
 
       <div className="absolute inset-0">
-        <MainScene
-          onAnnotationClick={handleAnnotationClick}
-          onModelLoaded={() => {}}
-          isMobile={mobile}
-        />
+        <Suspense fallback={null}>
+          <MainScene
+            onAnnotationClick={handleAnnotationClick}
+            onModelLoaded={() => {}}
+            isMobile={mobile}
+          />
+        </Suspense>
       </div>
 
       {mobile && (
@@ -140,14 +157,16 @@ function AppShell({ loading, showHint, onEnter }) {
 
       <SectionPanel onClose={() => { playClick(); goHome() }} />
 
-      <ChronicleCategoryOverlay />
-      <EvidenceOverlay />
-      <MotifOverlay />
-      <FailureConfessionsOverlay />
-      <ChronicleOverlay />
-      <GalleryOverlay />
-      <Lightbox />
-      <GiftShopPopup />
+      <Suspense fallback={null}>
+        <ChronicleCategoryOverlay />
+        <EvidenceOverlay />
+        <MotifOverlay />
+        <FailureConfessionsOverlay />
+        <ChronicleOverlay />
+        <GalleryOverlay />
+        <Lightbox />
+        <GiftShopPopup />
+      </Suspense>
     </div>
   )
 }

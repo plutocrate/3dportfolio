@@ -84,11 +84,18 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
 
-    <!-- Preload the 3D model + texture — biggest assets, start fetching immediately -->
-    <link rel="preload" href="/models/NikitaMesh_A_Pose.gltf" as="fetch" crossorigin />
-    <link rel="preload" href="/models/Nikita1024_UV_Template.png" as="image" />
+    <!--
+      The 3D model + texture used to be preloaded here with fetchpriority-by-
+      default (browsers treat a bare <link rel=preload> as high priority).
+      That put ~900 KiB of model/texture fetches in direct competition with
+      the JS the page actually needs to paint anything (fonts, app bundle).
+      Now that MainScene is lazy-loaded (see src/App.jsx), the model is only
+      requested once the three.js chunk itself has loaded, so this preload
+      is removed — drei's useGLTF loader handles fetching it at the right
+      time instead of front-running the critical path.
+    -->
 
     <style>
       #root > main { display: none !important; }
