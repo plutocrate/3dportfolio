@@ -60,14 +60,14 @@ function applyMeta(html, { url, title, description, image, ogType }) {
     '<meta property="og:description" content="Pratham Purohit — Full-Stack Developer. React, Three.js, Node.js, TypeScript & WebGL specialist. Interactive 3D portfolio showcasing real-world projects and experience." />',
     `<meta property="og:description" content="${escDesc}" />`
   )
-  out = replaceOnce(out, '<meta property="og:image" content="https://prathamis.cool/og-image.png" />', `<meta property="og:image" content="${image}" />`)
+  out = replaceOnce(out, '<meta property="og:image" content="https://prathamis.cool/og-image.jpg" />', `<meta property="og:image" content="${image}" />`)
   out = replaceOnce(out, '<meta name="twitter:title" content="Pratham Purohit — Full-Stack Developer" />', `<meta name="twitter:title" content="${escTitle}" />`)
   out = replaceOnce(
     out,
     '<meta name="twitter:description" content="Full-Stack Developer specialising in React, Three.js, and Node.js. Interactive 3D portfolio." />',
     `<meta name="twitter:description" content="${escDesc}" />`
   )
-  out = replaceOnce(out, '<meta name="twitter:image" content="https://prathamis.cool/og-image.png" />', `<meta name="twitter:image" content="${image}" />`)
+  out = replaceOnce(out, '<meta name="twitter:image" content="https://prathamis.cool/og-image.jpg" />', `<meta name="twitter:image" content="${image}" />`)
   return out
 }
 
@@ -81,7 +81,7 @@ function crawlerMain(inner) {
 function pageForPath(path) {
   const route = parsePath(path)
   const url = `${SITE_URL}${path === '/' ? '/' : path}`
-  const defaultImage = `${SITE_URL}/og-image.png`
+  const defaultImage = `${SITE_URL}/og-image.jpg`
 
   if (route.chronicleId) {
     const chronicle = getChronicleById(route.chronicleId)
@@ -93,7 +93,7 @@ function pageForPath(path) {
       const readingTime = getReadingTime(chronicle)
       return {
         url,
-        title: `${chronicle.title} — ${PERSONAL.name}`,
+        title: `${chronicle.category} — ${chronicle.title} — ${PERSONAL.name}`,
         description: chronicle.dek || `An essay by ${PERSONAL.name} — ${chronicle.category}.`,
         image: chronicle.coverImage ? `${SITE_URL}${chronicle.coverImage}` : defaultImage,
         ogType: 'article',
@@ -135,7 +135,7 @@ function pageForPath(path) {
     if (proj) {
       return {
         url,
-        title: `${proj.name} — ${PERSONAL.name}`,
+        title: `Projects — ${proj.name} — ${PERSONAL.name}`,
         description: proj.description || proj.subtitle || `A project by ${PERSONAL.name}.`,
         image: defaultImage,
         ogType: 'website',
@@ -150,7 +150,7 @@ function pageForPath(path) {
       const highlights = (exp.highlights || []).map((h) => `<li>${escapeHtml(h)}</li>`).join('')
       return {
         url,
-        title: `${exp.role} at ${exp.company} — ${PERSONAL.name}`,
+        title: `Experience — ${exp.role} at ${exp.company} — ${PERSONAL.name}`,
         description: `${exp.role} at ${exp.company}, ${exp.location}.`,
         image: defaultImage,
         ogType: 'website',
@@ -164,7 +164,7 @@ function pageForPath(path) {
     if (edu) {
       return {
         url,
-        title: `${edu.degree} — ${PERSONAL.name}`,
+        title: `Education — ${edu.degree} — ${PERSONAL.name}`,
         description: `${edu.degree} at ${edu.institution}.`,
         image: defaultImage,
         ogType: 'website',
@@ -177,11 +177,14 @@ function pageForPath(path) {
     const post = BLOG_POSTS.find((p) => p.id === route.focusId)
     if (post) {
       const body = (Array.isArray(post.body) ? post.body : [post.body]).map((p) => `<p>${escapeHtml(p)}</p>`).join('\n        ')
+      const postImage = Array.isArray(post.media) && post.media.length && /\.(jpe?g|png|gif|webp|avif)$/i.test(post.media[0])
+        ? `${SITE_URL}${post.media[0]}`
+        : defaultImage
       return {
         url,
-        title: `${post.title} — ${PERSONAL.name}`,
+        title: `Journal — ${post.title} — ${PERSONAL.name}`,
         description: post.subtitle || `A journal entry by ${PERSONAL.name}.`,
-        image: defaultImage,
+        image: postImage,
         ogType: 'article',
         main: crawlerMain(`<h1>${escapeHtml(post.title)}</h1><p><em>${escapeHtml(post.subtitle || '')}</em></p>${body}`),
       }
@@ -194,7 +197,7 @@ function pageForPath(path) {
       const list = col.links.map((l) => `<li><a href="${escapeHtml(l.href)}">${escapeHtml(l.label)}</a></li>`).join('')
       return {
         url,
-        title: `${col.label} — ${PERSONAL.name}`,
+        title: `About — ${col.label} — ${PERSONAL.name}`,
         description: col.heading,
         image: defaultImage,
         ogType: 'website',

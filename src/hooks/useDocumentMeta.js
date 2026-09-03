@@ -7,7 +7,7 @@ const SITE_URL = `https://${PERSONAL.website}`
 const DEFAULT_TITLE = `${PERSONAL.name} — ${PERSONAL.title} & Software Engineer`
 const DEFAULT_DESCRIPTION =
   `${PERSONAL.name} — Full-Stack Developer based in ${PERSONAL.location}. Expert in React, Three.js, Node.js, TypeScript & WebGL. Interactive 3D portfolio, projects & blog at ${PERSONAL.website}.`
-const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`
+const DEFAULT_IMAGE = `${SITE_URL}/og-image.jpg`
 
 const JSONLD_ID = 'route-jsonld'
 
@@ -109,7 +109,7 @@ export function useDocumentMeta({
     const canonical = `${SITE_URL}${pathForRoute(route)}`
 
     if (chronicle) {
-      title = `${chronicle.title} — ${PERSONAL.name}`
+      title = `${chronicle.category} — ${chronicle.title} — ${PERSONAL.name}`
       description = chronicle.dek || DEFAULT_DESCRIPTION
       image = chronicle.coverImage ? `${SITE_URL}${chronicle.coverImage}` : DEFAULT_IMAGE
       ogType = 'article'
