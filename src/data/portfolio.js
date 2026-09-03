@@ -279,6 +279,39 @@ export const LINK_COLLECTIONS = [
 // BLOG
 export const BLOG_POSTS = [
   {
+    id: "23th-blog",
+    title: "Real battle starts after you're healed mentally.",
+    subtitle: "Atleast for me.",
+    date: "1900, 03 Sep 2026",
+    categories: ["reflection"],
+    body: [
+      "Around 15 days ago, I was going through some tough times, and trust me, it was painful, really painful.",
+
+      "But you see, it was not my first suffering, so I coped quite fast. I started jogging, walking, going to the gym, and doing all of it with all my heart. I promised myself a lot of things, things I would never repeat again, things I would change to stop this loop of suffering and actually start living for myself. And yes, eventually have a peaceful and successful life. Common pain remedies.",
+
+      "And I was doing great. I was recovering fast, moving fast, until my mental shock was fixed.",
+
+      "I'm not back in that shock again, no, no, not like that. The thing is, I'm not keeping the promises I made to myself. And you know, this was obviously not my first time giving myself private promises. I have done this before, and with even more intensity in my past.",
+
+      "And I never stood by my words. I chased comfort. Not in the sense of a good bed or shit, I chased mental comfort. Easy targets. Things that could make me feel better without asking much from me.",
+
+      "And this chase is exactly paying me what I deserved. Not only in how the world treats me, but in how I treat myself. You see, after the shock was fixed, I'm normal again. And my normal is escaping.",
+
+      "But there's something new here. I realise it. I see it. I smell it.",
+
+      "So, I fix it now.",
+
+      "No more running away.",
+
+      "I'll complete what I started.",
+
+      "What I promised.",
+
+    ],
+    media: ["/gallery/moh.jpg"],
+    link: "",
+  },
+  {
     id: "22th-blog",
     title: "These Motherfuckers at Github suck.",
     subtitle: "I will fucking lose my account?",
