@@ -287,7 +287,7 @@ export const BLOG_POSTS = [
     body: [
       "Around 15 days ago, I was going through some tough times, and trust me, it was painful, really painful.",
 
-      "But you see, it was not my first suffering, so I coped quite fast. I started jogging, walking, going to the gym, and doing all of it with all my heart. I promised myself a lot of things, things I would never repeat again, things I would change to stop this loop of suffering and actually start living for myself. And yes, eventually have a peaceful and successful life. Common pain remedies.",
+      "But you see, it was not my first suffering, so I coped quite fast. I started jogging, walking, going to the gym, and doing all of it with all my heart. I promised myself a lot of things, things I would never repeat again, things I would change to stop this loop of suffering and actually start living for myself. And yes, eventually have a peaceful and successful life.(avg healing pain remedies)",
 
       "And I was doing great. I was recovering fast, moving fast, until my mental shock was fixed.",
 
