@@ -427,6 +427,22 @@ export const CHRONICLES = [
     links: [
     ],
   },
+  {
+    id: "after-fall-chapter-0",
+    title: "Chapter 0",
+    dek: "TBD",
+    date: "03 Sep 2026",
+    category: "After Fall - Lore Bible",
+    status: "In Progress",
+    coverImage: "/gallery/ch01.jpg",
+    coverPosition: "",
+    music: "/music/rukh_se_parda.mp3",
+    body: [
+      "Hah, I'll write it sooner, untill then enjoy this song",
+    ],
+    links: [
+    ],
+  },
 
 ]
 
