@@ -43,8 +43,8 @@ function getDefaults(width, height) {
     // x stays 0 on both position and target, so the model — and every
     // annotation button anchored to it in world-space — is always
     // horizontally centered together as one group.
-    pos:    [0, 1.0, z],
-    target: [0, 0.88, 0],
+    pos:    [0, 1.15, z],
+    target: [0, 0.75, 0],
   }
 }
 

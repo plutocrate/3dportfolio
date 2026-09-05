@@ -5,6 +5,7 @@ import { ANNOTATIONS, PERSONAL } from '@/data/portfolio'
 import { useClickSound } from '@/hooks/useClickSound'
 import { useGo } from '@/hooks/useAppNavigation'
 import { cn } from '@/lib/utils'
+import { SwirlSurface } from '@/components/SwirlSurface'
 
 function LiveClock() {
   const [t, setT] = useState(new Date())
@@ -55,16 +56,17 @@ function MusicBars({ playing }) {
 // Order: AMB toggle → track name → change-track button. The AMB pill stays
 // full-size since it's the primary control; the NEXT pill is intentionally
 // smaller (see below) since it's secondary.
-function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks }) {
+function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks, isSwirlTrack }) {
   return (
     <div className="flex items-center gap-2">
       <button
         onClick={onToggle}
-        className="flex items-center gap-1.5 px-[13px] sm:px-2.5 py-2 sm:py-1.5 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
+        className="relative isolate overflow-hidden flex items-center gap-1.5 px-[13px] sm:px-2.5 py-2 sm:py-1.5 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
         aria-label={playing ? 'Mute' : 'Unmute'}
       >
+        {isSwirlTrack && <SwirlSurface />}
         <MusicBars playing={playing} />
-        <span className="font-mono text-[clamp(13px,calc(12.5px+0.21vw),15.6px)] sm:text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.18em] text-white/64 group-hover:text-white/82 transition-colors">
+        <span className="relative z-10 font-mono text-[clamp(13px,calc(12.5px+0.21vw),15.6px)] sm:text-[clamp(10px,calc(9.6px+0.16vw),12px)] uppercase tracking-[0.18em] text-white/64 group-hover:text-white/82 transition-colors">
           {playing ? 'AMB' : 'OFF'}
         </span>
       </button>
@@ -84,9 +86,10 @@ function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks }
           onClick={onNext}
           aria-label="Next track"
           title="Next track"
-          className="flex items-center justify-center px-2 py-1.5 sm:px-1.5 sm:py-1 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
+          className="relative isolate overflow-hidden flex items-center justify-center px-2 py-1.5 sm:px-1.5 sm:py-1 border border-white/12 hover:border-white/35 active:border-white/50 transition-all duration-200 group"
         >
-          <span className="font-mono text-[clamp(13px,calc(12.5px+0.2vw),15px)] sm:text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/64 group-hover:text-white/88 transition-colors leading-none">
+          {isSwirlTrack && <SwirlSurface intensity={1.2} />}
+          <span className="relative z-10 font-mono text-[clamp(13px,calc(12.5px+0.2vw),15px)] sm:text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/64 group-hover:text-white/88 transition-colors leading-none">
             ⏭
           </span>
         </button>
@@ -95,7 +98,7 @@ function MusicPlayer({ playing, onToggle, onNext, trackName, hasMultipleTracks }
   )
 }
 
-export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, trackName, hasMultipleTracks }) {
+export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, trackName, hasMultipleTracks, isSwirlTrack }) {
   const hudRef = useRef()
   const activeSection = useSceneStore((s) => s.activeSection)
   const playClick = useClickSound()
@@ -243,6 +246,7 @@ export function HUDOverlay({ visible, musicPlaying, onMusicToggle, onMusicNext, 
                 onNext={onMusicNext}
                 trackName={trackName}
                 hasMultipleTracks={hasMultipleTracks}
+                isSwirlTrack={isSwirlTrack}
               />
             </div>
           </div>

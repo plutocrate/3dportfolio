@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import gsap from 'gsap'
 
@@ -51,11 +51,13 @@ function getPalette(name) {
   return PALETTE.body
 }
 
-export function CharacterModel({ onLoaded }) {
+export function CharacterModel({ onLoaded, auraRef }) {
   const group  = useRef()
   const floatY = useRef(0)   // accumulated float offset
   const { scene } = useGLTF(import.meta.env.BASE_URL + 'models/NikitaMesh_A_Pose.gltf')
   const ready  = useRef(false)
+  const { camera, size } = useThree()
+  const worldPos = useRef(new THREE.Vector3())
 
   useEffect(() => {
     if (!scene) return
@@ -93,6 +95,17 @@ export function CharacterModel({ onLoaded }) {
     group.current.position.y = Math.sin(t * 0.7) * 0.06
     // Very gentle idle yaw sway
     group.current.rotation.y = Math.sin(t * 0.18) * 0.04
+
+    // Keep the swirl aura (a plain DOM overlay, rendered outside the
+    // canvas) glued to wherever the character actually is on screen.
+    if (auraRef?.current) {
+      group.current.getWorldPosition(worldPos.current)
+      worldPos.current.y += 0.9 // aim near chest/head height, not the feet
+      worldPos.current.project(camera)
+      const x = (worldPos.current.x * 0.5 + 0.5) * size.width
+      const y = (-worldPos.current.y * 0.5 + 0.5) * size.height
+      auraRef.current.setPosition(x, y)
+    }
   })
 
   return <group ref={group}><primitive object={scene} /></group>

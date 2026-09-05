@@ -4,6 +4,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
+import { SwirlSurface } from '@/components/SwirlSurface'
 import { cn } from '@/lib/utils'
 
 // ── Mobile button: projects 3D world pos → screen px each frame,
@@ -16,6 +17,7 @@ function MobileButton({ annotation, onClick }) {
   const { id, label, position, side } = annotation
   const activeSection = useSceneStore((s) => s.activeSection)
   const isActive      = activeSection === id
+  const isSwirlTrack  = useSceneStore((s) => s.isSwirlTrack)
   const playClick     = useClickSound()
   const { camera, size } = useThree()
   const [pos, setPos] = useState({ x: -999, y: -999, visible: false })
@@ -86,7 +88,8 @@ function MobileButton({ annotation, onClick }) {
         )}
         onClick={() => { playClick(); onClick(annotation) }}
       >
-        {label}
+        {isSwirlTrack && !isActive && <SwirlSurface intensity={1.15} baseOpacity={0.7} />}
+        <span className="relative z-10">{label}</span>
         {showGlow && (
           <span
             ref={glowBarRef}
@@ -115,6 +118,7 @@ export function AnnotationMarker({ annotation, onClick }) {
   const activeSection     = useSceneStore((s) => s.activeSection)
   const hoveredAnnotation = useSceneStore((s) => s.hoveredAnnotation)
   const setHovered        = useSceneStore((s) => s.setHovered)
+  const isSwirlTrack      = useSceneStore((s) => s.isSwirlTrack)
   const isActive  = activeSection === id
   const isHovered = hoveredAnnotation === id
   const playClick = useClickSound()
@@ -192,13 +196,15 @@ export function AnnotationMarker({ annotation, onClick }) {
         >
           <div className={cn(
             'font-mono uppercase border whitespace-nowrap transition-all duration-200',
+            'relative isolate overflow-hidden',
             'px-2.5 py-1 text-[clamp(10px,calc(9.6px+0.16vw),12px)] tracking-[0.18em]',
             isActive
               ? 'bg-white text-black border-white'
               : 'bg-black/85 text-white/76 border-white/20',
             !isActive && (id === 'blog' || id === 'chronicles') && 'flow-glow'
           )}>
-            {label}
+            {isSwirlTrack && !isActive && <SwirlSurface intensity={1.2} baseOpacity={0.75} />}
+            <span className="relative z-10">{label}</span>
           </div>
           <div className={cn(
             'font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] mt-0.5 transition-colors duration-200 whitespace-nowrap',

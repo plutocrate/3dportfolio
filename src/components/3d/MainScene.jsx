@@ -19,7 +19,7 @@ function AnnotationLayer({ onAnnotationClick, isMobile }) {
   )
 }
 
-export function MainScene({ onAnnotationClick, onModelLoaded, isMobile }) {
+export function MainScene({ onAnnotationClick, onModelLoaded, isMobile, characterAuraRef }) {
   return (
     <Canvas
       camera={{ position: [0, 1.05, 2.6], fov: 52, near: 0.05, far: 100 }}
@@ -40,7 +40,7 @@ export function MainScene({ onAnnotationClick, onModelLoaded, isMobile }) {
       <SceneLighting />
       <SceneEnvironment />
       <Suspense fallback={null}>
-        <CharacterModel onLoaded={onModelLoaded} />
+        <CharacterModel onLoaded={onModelLoaded} auraRef={characterAuraRef} />
         <AnnotationLayer onAnnotationClick={onAnnotationClick} isMobile={isMobile} />
       </Suspense>
     </Canvas>

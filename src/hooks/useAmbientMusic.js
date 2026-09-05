@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback, useMemo } from 'react'
 import musicFiles from 'virtual:music-manifest'
 import { setUserWantsMusic, getUserWantsMusic } from '@/hooks/useMusicBridge'
+import { isSwirlTrack } from '@/lib/isSwirlTrack'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AMBIENT MUSIC PLAYER
@@ -196,5 +197,9 @@ export function useAmbientMusic() {
     resumeAfterVideo,
     trackName: currentTrack?.name || 'Ambience',
     hasMultipleTracks: playlist.length > 1,
+    // True while the *currently loaded* track's filename ends in "-b"
+    // (e.g. "balatro-b.mp3") — drives the Balatro-style swirl background.
+    // Gated on `playing` too, so the swirl fades out if the track is paused.
+    isSwirlTrack: playing && isSwirlTrack(currentTrack?.url),
   }
 }

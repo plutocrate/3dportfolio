@@ -1,5 +1,6 @@
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { HUDOverlay } from '@/components/HUDOverlay'
+import { BalatroBackground } from '@/components/BalatroBackground'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { SectionPanel } from '@/components/SectionPanel'
 import { SwipeHint } from '@/components/SwipeHint'
@@ -21,14 +22,14 @@ const MainScene = lazy(() =>
 // specific section, so there's no reason to ship their code (and their data/
 // icon imports) in the initial bundle. Each becomes its own tiny chunk that's
 // fetched on demand instead of parsed up front.
-const ChronicleOverlay          = lazy(() => import('@/components/ChronicleOverlay').then(m => ({ default: m.ChronicleOverlay })))
-const ChronicleCategoryOverlay  = lazy(() => import('@/components/ChronicleCategoryOverlay').then(m => ({ default: m.ChronicleCategoryOverlay })))
-const EvidenceOverlay           = lazy(() => import('@/components/EvidenceOverlay').then(m => ({ default: m.EvidenceOverlay })))
-const MotifOverlay              = lazy(() => import('@/components/MotifOverlay').then(m => ({ default: m.MotifOverlay })))
+const ChronicleOverlay = lazy(() => import('@/components/ChronicleOverlay').then(m => ({ default: m.ChronicleOverlay })))
+const ChronicleCategoryOverlay = lazy(() => import('@/components/ChronicleCategoryOverlay').then(m => ({ default: m.ChronicleCategoryOverlay })))
+const EvidenceOverlay = lazy(() => import('@/components/EvidenceOverlay').then(m => ({ default: m.EvidenceOverlay })))
+const MotifOverlay = lazy(() => import('@/components/MotifOverlay').then(m => ({ default: m.MotifOverlay })))
 const FailureConfessionsOverlay = lazy(() => import('@/components/FailureConfessionsOverlay').then(m => ({ default: m.FailureConfessionsOverlay })))
-const GiftShopPopup             = lazy(() => import('@/components/GiftShopPopup').then(m => ({ default: m.GiftShopPopup })))
-const GalleryOverlay            = lazy(() => import('@/components/GalleryOverlay').then(m => ({ default: m.GalleryOverlay })))
-const Lightbox                  = lazy(() => import('@/components/Lightbox').then(m => ({ default: m.Lightbox })))
+const GiftShopPopup = lazy(() => import('@/components/GiftShopPopup').then(m => ({ default: m.GiftShopPopup })))
+const GalleryOverlay = lazy(() => import('@/components/GalleryOverlay').then(m => ({ default: m.GalleryOverlay })))
+const Lightbox = lazy(() => import('@/components/Lightbox').then(m => ({ default: m.Lightbox })))
 
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useAmbientMusic } from '@/hooks/useAmbientMusic'
@@ -50,28 +51,40 @@ function useIsMobile() {
 
 function AppShell({ loading, showHint, onEnter }) {
   const { go, goHome, goParent } = useGo()
-  const activeSection         = useSceneStore((s) => s.activeSection)
-  const openChronicleId       = useSceneStore((s) => s.openChronicleId)
-  const academiaTab           = useSceneStore((s) => s.academiaTab)
-  const linksTab              = useSceneStore((s) => s.linksTab)
+  const activeSection = useSceneStore((s) => s.activeSection)
+  const openChronicleId = useSceneStore((s) => s.openChronicleId)
+  const academiaTab = useSceneStore((s) => s.academiaTab)
+  const linksTab = useSceneStore((s) => s.linksTab)
   const openChronicleCategory = useSceneStore((s) => s.openChronicleCategory)
-  const galleryOverlayOpen    = useSceneStore((s) => s.galleryOverlayOpen)
-  const evidenceOverlayOpen   = useSceneStore((s) => s.evidenceOverlayOpen)
-  const motifOverlayOpen      = useSceneStore((s) => s.motifOverlayOpen)
-  const failureOverlayOpen    = useSceneStore((s) => s.failureOverlayOpen)
-  const giftPopupOpen         = useSceneStore((s) => s.giftPopupOpen)
+  const galleryOverlayOpen = useSceneStore((s) => s.galleryOverlayOpen)
+  const evidenceOverlayOpen = useSceneStore((s) => s.evidenceOverlayOpen)
+  const motifOverlayOpen = useSceneStore((s) => s.motifOverlayOpen)
+  const failureOverlayOpen = useSceneStore((s) => s.failureOverlayOpen)
+  const giftPopupOpen = useSceneStore((s) => s.giftPopupOpen)
 
   const openChronicleObj = openChronicleId ? getChronicleById(openChronicleId) : null
 
   const {
     playing, start, prepare, toggle, next,
-    trackName, hasMultipleTracks,
+    trackName, hasMultipleTracks, isSwirlTrack,
     pauseForVideo, resumeAfterVideo,
   } = useAmbientMusic()
 
   setMusicBridge(pauseForVideo, resumeAfterVideo)
   const playClick = useClickSound()
   const mobile = useIsMobile()
+
+  // Shared imperative handle: CharacterModel (inside <Canvas>) calls
+  // characterAuraRef.current?.setPosition(x, y) every frame to keep the
+  // DOM aura glued to the character's on-screen position.
+  const characterAuraRef = useRef(null)
+
+  // Mirror isSwirlTrack into the store so 3D-tree components (annotation
+  // labels) can read it without prop-drilling through MainScene.
+  const setIsSwirlTrack = useSceneStore((s) => s.setIsSwirlTrack)
+  useEffect(() => {
+    setIsSwirlTrack(isSwirlTrack)
+  }, [isSwirlTrack, setIsSwirlTrack])
 
   useDocumentMeta({
     activeSection,
@@ -81,10 +94,10 @@ function AppShell({ loading, showHint, onEnter }) {
     category: openChronicleCategory,
     overlay: galleryOverlayOpen ? 'gallery'
       : evidenceOverlayOpen ? 'evidence'
-      : motifOverlayOpen ? 'motif'
-      : failureOverlayOpen ? 'failure'
-      : giftPopupOpen ? 'gift'
-      : null,
+        : motifOverlayOpen ? 'motif'
+          : failureOverlayOpen ? 'failure'
+            : giftPopupOpen ? 'gift'
+              : null,
   })
 
   useEffect(() => {
@@ -126,16 +139,19 @@ function AppShell({ loading, showHint, onEnter }) {
       <div className="noise-overlay" />
       <div className="scan-overlay" />
 
+      <BalatroBackground active={isSwirlTrack} />
+
       <NewsBanner visible={!loading} />
 
       {loading && <LoadingScreen onComplete={handleEnter} />}
 
-      <div className="absolute inset-0">
+      <div className="absolute inset-0" style={{ zIndex: 2 }}>
         <Suspense fallback={null}>
           <MainScene
             onAnnotationClick={handleAnnotationClick}
-            onModelLoaded={() => {}}
+            onModelLoaded={() => { }}
             isMobile={mobile}
+            characterAuraRef={characterAuraRef}
           />
         </Suspense>
       </div>
@@ -151,6 +167,7 @@ function AppShell({ loading, showHint, onEnter }) {
         onMusicNext={next}
         trackName={trackName}
         hasMultipleTracks={hasMultipleTracks}
+        isSwirlTrack={isSwirlTrack}
       />
 
       <SwipeHint visible={showHint} />
@@ -172,7 +189,7 @@ function AppShell({ loading, showHint, onEnter }) {
 }
 
 export default function App() {
-  const [loading,  setLoading]  = useState(true)
+  const [loading, setLoading] = useState(true)
   const [showHint, setShowHint] = useState(false)
 
   const handleEntered = () => {

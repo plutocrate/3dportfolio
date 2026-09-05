@@ -9,6 +9,11 @@ export const useSceneStore = create((set, get) => ({
   hoveredAnnotation: null,
   introPlayed: false,
 
+  // Mirrors useAmbientMusic()'s isSwirlTrack so any component deep in the
+  // 3D tree (annotation labels, etc.) can react to it without prop-drilling.
+  isSwirlTrack: false,
+  setIsSwirlTrack: (v) => set({ isSwirlTrack: v }),
+
   fontSize: 1,
   setFontSize: (v) => set({ fontSize: Math.max(0.75, Math.min(1.5, v)) }),
   cameraState: null,
