@@ -1,11 +1,16 @@
 // ─────────────────────────────────────────────────────────────────────────
-// BALATRO SWIRL ENGINE
-// One shader, rendered into as many canvases as you like. A "background"
-// canvas covers the whole screen at low opacity. "surface" canvases are
-// small (sized to a button, or to an aura around your character) and
-// sample the *exact same field* — offset by their own screen position —
-// so the pattern reads as one continuous flow, just brighter/more opaque
-// wherever it "pops through" a surface.
+// BALATRO SWIRL ENGINE (perf-tuned)
+// Same shader, rendered into as many canvases as you like. Three changes
+// from the first version fix the lag:
+//   1. Zero GPU work while the swirl is fully faded out (was: full shader
+//      cost 60x/sec on every canvas, all the time, even when invisible).
+//   2. Noise loop cut from 6 octaves x 7 calls/pixel to 3 octaves x 5 calls
+//      (~2.8x fewer noise evaluations) — one warp pass instead of two.
+//   3. Resolution capped hard: background no longer renders at 2x device
+//      pixel ratio, and small "surface" canvases (buttons) render at a
+//      tiny fixed internal size and let CSS scale them up — they're
+//      blurred/blended anyway, so nobody can tell, and it's a huge win
+//      per canvas when you've got 6-8 of them on screen.
 // ─────────────────────────────────────────────────────────────────────────
 
 const VERTEX_SRC = `
@@ -15,12 +20,6 @@ void main(){
 }
 `;
 
-// `uOffset` + `uGlobalRes` are what keep every surface canvas lined up with
-// the background: instead of using the small canvas's own pixel coords, we
-// add its page position and divide by the *window's* resolution, so it's
-// sampling the same point in the field the background would show there.
-// `uSurface` (0 or 1) turns off the CRT degrade (scanlines/vignette/flicker)
-// and cranks saturation + gloss so surfaces read as more vivid / "popped".
 const FRAGMENT_SRC = `
 precision highp float;
 
@@ -46,10 +45,12 @@ float noise(vec2 p){
   return mix(a,b,u.x) + (c-a)*u.y*(1.0-u.x) + (d-b)*u.x*u.y;
 }
 
+// 3 octaves instead of 6 — still reads as organic marbling at the
+// viewing distance/blur this is used at, at roughly half the cost.
 float fbm(vec2 p){
   float v = 0.0;
   float a = 0.5;
-  for(int i=0;i<6;i++){
+  for(int i=0;i<3;i++){
     v += a * noise(p);
     p *= 2.0;
     a *= 0.5;
@@ -75,13 +76,10 @@ void main(){
   );
 
   float swirl = fbm(p * 1.5) * 6.2831;
-  vec2 warped = rot(p + flow * 0.35, swirl + uTime * 0.15);
-
-  vec2 warp2 = vec2(
-    fbm(warped * 2.5 + uTime * 0.2),
-    fbm(warped * 2.5 - uTime * 0.18)
-  );
-  warped += warp2 * 0.5;
+  // single warp pass (the original's second domain-warp pass is folded
+  // into this one via a slightly larger flow contribution) — visually
+  // very close, much cheaper
+  vec2 warped = rot(p + flow * 0.55, swirl + uTime * 0.15);
 
   vec2 m = uMouse / uGlobalRes;
   float d = distance(uv, m);
@@ -114,7 +112,6 @@ void main(){
 
     col *= 0.97 + 0.03 * sin(uTime * 10.0);
   } else {
-    // surfaces get punchier saturation instead of the CRT degrade
     float lum = dot(col, vec3(0.299, 0.587, 0.114));
     col = mix(vec3(lum), col, 1.35);
   }
@@ -174,8 +171,8 @@ export function createSwirlField() {
   const field = {
     mouse: [0, 0],
     startTime: performance.now(),
-    active: false,      // whether the swirl should currently be shown
-    opacity: 0,          // animated 0→1 fade driven by setActive()
+    active: false,
+    opacity: 0,
     _targetOpacity: 0,
     _fadeMs: 900,
   };
@@ -198,6 +195,11 @@ export function createSwirlField() {
     }
   };
 
+  // True whenever there's any reason to be drawing at all — actively on,
+  // or mid fade-out. Every mounted canvas checks this before doing any
+  // GPU work, so the whole effect costs ~nothing while switched off.
+  field.isLive = () => field.opacity > 0.001 || field._targetOpacity > 0;
+
   field.elapsed = () => (performance.now() - field.startTime) * 0.001;
 
   return field;
@@ -207,13 +209,30 @@ export function createSwirlField() {
 // element, driven by the shared field. Returns { destroy }. ─────────────
 export function mountSwirl(canvasEl, field, opts = {}) {
   const {
-    surface = false,          // false = full CRT background look, true = punchy "pop" surface
-    baseOpacity = surface ? 0.85 : 0.4, // max canvas opacity once fully faded in
-    intensity = surface ? 1.35 : 1.0,   // color intensity multiplier
-    followOffset = true,      // surfaces: keep aligned to the element's page position
+    surface = false,
+    baseOpacity = surface ? 0.85 : 0.4,
+    intensity = surface ? 1.35 : 1.0,
+    followOffset = true,
+    // Background: capped device-pixel ratio (was uncapped-ish at 2x — the
+    // single biggest cost on retina/high-DPI screens, since cost scales
+    // with pixel count). Surfaces: small fixed backing resolution — they're
+    // tiny, blended, and often blurred, so a low-res buffer upscaled by
+    // the GPU looks identical but costs a fraction as much to shade.
+    maxDpr = surface ? 1 : 1.25,
+    surfaceMaxDim = 96,
+    // Background redraws at ~30fps instead of 60 — halves shader cost for
+    // motion nobody would notice the difference on. Surfaces skip this
+    // (they're cheap enough after the resolution cut, and buttons benefit
+    // from staying crisp/responsive to the shared clock).
+    targetFps = surface ? 60 : 30,
   } = opts;
 
-  const gl = canvasEl.getContext('webgl', { alpha: true, premultipliedAlpha: false });
+  const gl = canvasEl.getContext('webgl', {
+    alpha: true,
+    premultipliedAlpha: false,
+    antialias: false,
+    powerPreference: 'low-power',
+  });
   if (!gl) { console.warn('WebGL unavailable for Balatro swirl'); return { destroy() {} }; }
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -221,14 +240,31 @@ export function mountSwirl(canvasEl, field, opts = {}) {
   const u = buildProgram(gl);
   let raf = null;
   let lastT = performance.now();
+  let lastDrawT = 0;
+  const minFrameMs = 1000 / targetFps;
   let destroyed = false;
+  let lastW = 0, lastH = 0;
 
   function resize() {
     const rect = canvasEl.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvasEl.width  = Math.max(1, Math.round(rect.width * dpr));
-    canvasEl.height = Math.max(1, Math.round(rect.height * dpr));
-    gl.viewport(0, 0, canvasEl.width, canvasEl.height);
+    let w, h;
+    if (surface) {
+      // Fixed small backing buffer, aspect-matched to the element, capped
+      // at surfaceMaxDim on the long edge — resolution independent of DPR.
+      const scale = Math.min(1, surfaceMaxDim / Math.max(rect.width, rect.height, 1));
+      w = Math.max(1, Math.round(rect.width * scale));
+      h = Math.max(1, Math.round(rect.height * scale));
+    } else {
+      const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+      w = Math.max(1, Math.round(rect.width * dpr));
+      h = Math.max(1, Math.round(rect.height * dpr));
+    }
+    if (w !== lastW || h !== lastH) {
+      canvasEl.width = w;
+      canvasEl.height = h;
+      lastW = w; lastH = h;
+      gl.viewport(0, 0, w, h);
+    }
   }
 
   const ro = new ResizeObserver(resize);
@@ -241,19 +277,45 @@ export function mountSwirl(canvasEl, field, opts = {}) {
     lastT = now;
     field.tick(dt);
 
-    const rect = canvasEl.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    gl.uniform2f(u.uGlobalRes, window.innerWidth * dpr, window.innerHeight * dpr);
-    if (followOffset && surface) {
-      // page-space offset (in device pixels) so this canvas's local (0,0)
-      // lines up with its true position in the shared field
-      gl.uniform2f(u.uOffset, rect.left * dpr, (window.innerHeight - rect.bottom) * dpr);
-    } else {
-      gl.uniform2f(u.uOffset, 0, 0);
+    // The single biggest win: do nothing at all while the swirl isn't
+    // showing and isn't fading out. Opacity is already 0 from the last
+    // real frame (or default), so the canvas stays invisible for free.
+    if (!field.isLive()) {
+      raf = requestAnimationFrame(frame);
+      return;
     }
+
+    // Frame-rate cap (background only, by default) — still ticks the
+    // fade/opacity every rAF for smoothness, just skips the expensive
+    // draw call on in-between frames.
+    if (now - lastDrawT < minFrameMs) {
+      canvasEl.style.opacity = String(field.opacity * baseOpacity);
+      raf = requestAnimationFrame(frame);
+      return;
+    }
+    lastDrawT = now;
+
+    resize(); // cheap no-op unless size actually changed
+
+    let offX = 0, offY = 0;
+    let resW = canvasEl.width, resH = canvasEl.height;
+    if (surface && followOffset) {
+      const rect = canvasEl.getBoundingClientRect();
+      // Map this canvas's low-res backing buffer back into the SAME
+      // field-space scale as the background (window inner size), so the
+      // pattern still lines up despite the smaller buffer.
+      const scaleX = canvasEl.width / Math.max(rect.width, 1);
+      const scaleY = canvasEl.height / Math.max(rect.height, 1);
+      offX = rect.left * scaleX;
+      offY = (window.innerHeight - rect.bottom) * scaleY;
+      resW = window.innerWidth * scaleX;
+      resH = window.innerHeight * scaleY;
+    }
+
+    gl.uniform2f(u.uGlobalRes, resW, resH);
+    gl.uniform2f(u.uOffset, offX, offY);
     gl.uniform1f(u.uTime, field.elapsed());
-    gl.uniform2f(u.uMouse, field.mouse[0] * dpr, field.mouse[1] * dpr);
+    gl.uniform2f(u.uMouse, field.mouse[0] * (resW / window.innerWidth), field.mouse[1] * (resH / window.innerHeight));
     gl.uniform1f(u.uSurface, surface ? 1 : 0);
     gl.uniform1f(u.uIntensity, intensity);
 
