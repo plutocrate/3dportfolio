@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { ANNOTATIONS } from '@/data/portfolio'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
+import { SwirlSurface } from '@/components/SwirlSurface'
 import { cn } from '@/lib/utils'
 
 const _v = new THREE.Vector3()
@@ -37,6 +38,7 @@ function computePositions(camera, size) {
 
 export function MobileAnnotationOverlay({ onAnnotationClick }) {
   const activeSection = useSceneStore((s) => s.activeSection)
+  const isSwirlTrack  = useSceneStore((s) => s.isSwirlTrack)
   const playClick     = useClickSound()
   const posRef        = useRef([])
   const rafRef        = useRef(null)
@@ -69,6 +71,7 @@ export function MobileAnnotationOverlay({ onAnnotationClick }) {
               top: p.by,
               width: BTN_W,
               height: BTN_H,
+              overflow: 'hidden',
               pointerEvents: 'auto',
               willChange: 'left, top',
               // Glassmorphism
@@ -92,7 +95,10 @@ export function MobileAnnotationOverlay({ onAnnotationClick }) {
             }}
             onClick={() => { playClick(); onAnnotationClick(p.annotation) }}
           >
+            {isSwirlTrack && !isActive && <SwirlSurface intensity={1.15} baseOpacity={0.7} style={{ borderRadius: 2 }} />}
             <span style={{
+              position: 'relative',
+              zIndex: 1,
               fontFamily: 'monospace',
               fontSize: 11.5,
               letterSpacing: '0.15em',
