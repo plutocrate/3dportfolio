@@ -19,7 +19,9 @@
     box-sizing: border-box;
   }
 
-  html, body, #root {
+  html,
+  body,
+  #root {
     width: 100%;
     height: 100%;
     margin: 0;
@@ -48,9 +50,11 @@
   ::-webkit-scrollbar {
     width: 2px;
   }
+
   ::-webkit-scrollbar-track {
     background: hsl(var(--background));
   }
+
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--border));
   }
@@ -74,13 +78,11 @@
   .scan-overlay {
     position: fixed;
     inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.03) 2px,
-      rgba(0, 0, 0, 0.03) 4px
-    );
+    background: repeating-linear-gradient(0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px);
     pointer-events: none;
     z-index: 9998;
   }
@@ -107,7 +109,7 @@
     height: 8px;
     border-radius: 50%;
     background: white;
-    box-shadow: 0 0 8px rgba(255,255,255,0.6), 0 0 20px rgba(255,255,255,0.2);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.2);
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
@@ -115,13 +117,13 @@
   .annotation-dot:hover,
   .annotation-dot.active {
     transform: scale(1.5);
-    box-shadow: 0 0 12px rgba(255,255,255,0.9), 0 0 30px rgba(255,255,255,0.4);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.4);
   }
 
   .section-panel {
     background: rgba(8, 8, 8, 0.95);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .glitch-text::before,
@@ -136,26 +138,42 @@
 
   .glitch-text::before {
     left: 2px;
-    text-shadow: -1px 0 rgba(255,255,255,0.3);
+    text-shadow: -1px 0 rgba(255, 255, 255, 0.3);
     clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
     animation: glitch-1 3s infinite linear alternate-reverse;
   }
 
   .glitch-text::after {
     left: -2px;
-    text-shadow: 1px 0 rgba(255,255,255,0.2);
+    text-shadow: 1px 0 rgba(255, 255, 255, 0.2);
     clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
     animation: glitch-2 3s infinite linear alternate-reverse;
   }
 
   @keyframes glitch-1 {
-    0%, 90%, 100% { transform: translate(0); }
-    95% { transform: translate(-2px, 1px); }
+
+    0%,
+    90%,
+    100% {
+      transform: translate(0);
+    }
+
+    95% {
+      transform: translate(-2px, 1px);
+    }
   }
 
   @keyframes glitch-2 {
-    0%, 85%, 100% { transform: translate(0); }
-    90% { transform: translate(2px, -1px); }
+
+    0%,
+    85%,
+    100% {
+      transform: translate(0);
+    }
+
+    90% {
+      transform: translate(2px, -1px);
+    }
   }
 
   /* ── Awwwards-level idle state ───────────────────────────────────────────
@@ -163,7 +181,7 @@
      shine as the Blog / Chronicles buttons — see .flow-glow below. */
 
 
-  /* ── Subtle flowing glow ──────────────────────────────────────────────────
+  /* ── Subtle flowing glow ──────────────────────────────��───────────────────
      A calm, continuous shine that drifts right → left across the button.
      NOTE: this used to animate `background-position`, which mobile browsers
      (Safari iOS / Chrome Android) frequently fail to composite/animate when
@@ -176,27 +194,30 @@
      each glow element onto its own compositor layer with `translateZ(0)` /
      `will-change` so mobile browsers don't skip the animation. */
   @keyframes shine-sweep-x {
-    0%   { transform: translateX(-120%); }
-    100% { transform: translateX(220%); }
+    0% {
+      transform: translateX(-120%);
+    }
+
+    100% {
+      transform: translateX(220%);
+    }
   }
 
   .awwwards-nav-highlight .nav-dot {
-    background: rgba(255,255,255,0.55) !important;
-    box-shadow: 0 0 5px rgba(255,255,255,0.45), 0 0 10px rgba(255,255,255,0.18);
+    background: rgba(255, 255, 255, 0.55) !important;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.45), 0 0 10px rgba(255, 255, 255, 0.18);
   }
 
   .awwwards-nav-highlight .nav-label {
     position: relative;
     color: transparent !important;
     -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(
-      90deg,
-      rgba(255,255,255,0.38) 0%,
-      rgba(255,255,255,0.38) 32%,
-      rgba(255,255,255,0.62) 50%,
-      rgba(255,255,255,0.38) 68%,
-      rgba(255,255,255,0.38) 100%
-    );
+    background-image: linear-gradient(90deg,
+        rgba(255, 255, 255, 0.38) 0%,
+        rgba(255, 255, 255, 0.38) 32%,
+        rgba(255, 255, 255, 0.62) 50%,
+        rgba(255, 255, 255, 0.38) 68%,
+        rgba(255, 255, 255, 0.38) 100%);
     background-size: 280% 100%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -205,8 +226,13 @@
   }
 
   @keyframes shine-sweep {
-    0%   { background-position: 160% 0; }
-    100% { background-position: -60% 0; }
+    0% {
+      background-position: 160% 0;
+    }
+
+    100% {
+      background-position: -60% 0;
+    }
   }
 
   /* NOTE: the mobile bottom dot-nav intentionally has no glow effect —
@@ -220,7 +246,7 @@
   .flow-glow {
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 8px rgba(255,255,255,0.09), 0 0 20px rgba(255,255,255,0.04);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.09), 0 0 20px rgba(255, 255, 255, 0.04);
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
   }
@@ -233,7 +259,7 @@
   .glow-static {
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 8px rgba(255,255,255,0.09), 0 0 20px rgba(255,255,255,0.04);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.09), 0 0 20px rgba(255, 255, 255, 0.04);
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
   }
@@ -245,7 +271,7 @@
     left: 0;
     width: 60%;
     height: 100%;
-    background-image: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.20) 50%, transparent 100%);
+    background-image: linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.20) 50%, transparent 100%);
     filter: blur(5px);
     -webkit-animation: shine-sweep-x 6.5s linear infinite;
     animation: shine-sweep-x 6.5s linear infinite;
@@ -261,8 +287,15 @@
      tapping/clicking. Use the --float-delay custom property to stagger
      multiple buttons so they don't all bob in lockstep. */
   @keyframes hud-float {
-    0%, 100% { transform: translateY(0px); }
-    50%      { transform: translateY(-3px); }
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-3px);
+    }
   }
 
   .hud-float {
@@ -283,12 +316,253 @@
      animation-play-state while that disc isn't the one playing. See
      MotifOverlay. */
   @keyframes disc-spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   @keyframes gallery-marquee-up {
-    0%   { transform: translateY(0%); }
-    100% { transform: translateY(-50%); }
+    0% {
+      transform: translateY(0%);
+    }
+
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+
+  /* ── Hidden card game ─────────────────────────────────────────────────────
+     The website blurs away behind this. The panel itself is TRUE glass: no
+     background color at all, just refraction (backdrop-filter) + a hairline
+     border + a soft shadow to lift it off the blurred scene. Cards (see
+     PokerCard.jsx) are deliberately more opaque than this panel so they read
+     as solid objects resting on top of glass rather than more glass. */
+  .poker-glass-panel {
+    background: transparent;
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    backdrop-filter: blur(22px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow:
+      0 24px 60px -20px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  /* Faint purple/pink wash + scanlines INSIDE the glass only, so it still
+     reads as "this website's glass" rather than generic frosted UI. Kept as
+     a pseudo-element so it never adds an actual background-color to the
+     panel itself. */
+  .poker-glass-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 3px),
+      radial-gradient(120% 90% at 15% 0%, rgba(124, 108, 224, 0.10), transparent 60%),
+      radial-gradient(120% 90% at 85% 100%, rgba(242, 118, 154, 0.08), transparent 60%);
+    mix-blend-mode: screen;
+    opacity: 0.9;
+  }
+
+  @keyframes poker-pop-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.94) translateY(6px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .poker-card:hover {
+    filter: brightness(1.02);
+  }
+
+  .poker-card:hover span:first-of-type {
+    transform: translateY(-2px);
+  }
+
+  /* The "this card is selected" pop-up. Applied purely off `selected` —
+     never gated on whether the card is currently scoring in the detected
+     hand (that's `dead`, a separate opacity/greyscale-only treatment) —
+     so every selected card lifts the same way whether it ends up part of
+     a pair, a flush, a lone high card, or anything else. */
+  .poker-card {
+    transform: translateY(0) scale(1);
+  }
+
+  .poker-card-lifted {
+    transform: translateY(-18px) scale(1.05);
+  }
+
+  @media (max-width: 640px) {
+    .poker-card-lifted {
+      transform: translateY(-10px) scale(1.04);
+    }
+  }
+
+  /* Deal-in / discard-out choreography (item 22/addendum): new cards drift
+     up from below the hand and fade in; cards leaving (played or discarded)
+     drift up and fade out in place. The card stays mounted with this class
+     for the animation's duration — the parent swaps the actual hand array
+     only once it's done, so nothing pops or jumps. */
+  @keyframes poker-card-drift-in {
+    0% {
+      opacity: 0;
+      transform: translateY(46px) scale(0.92);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes poker-card-drift-out {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translateY(-46px) scale(0.92);
+    }
+  }
+
+  .poker-card-entering {
+    animation: poker-card-drift-in 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .poker-card-leaving {
+    animation: poker-card-drift-out 260ms cubic-bezier(0.4, 0, 1, 1) both;
+    pointer-events: none;
+  }
+
+  /* ── Jokers ───────────────────────────────────────────────���────────────
+     Deliberately the opposite of the clean white poker cards: dark,
+     holographic, faintly grainy, a little crooked — "stranger, more
+     abstract, more surreal" per the brief, while staying a one-glance read. */
+  .joker-card {
+    border: 1px solid rgba(200, 160, 255, 0.35);
+    background:
+      radial-gradient(120% 140% at 15% 0%, rgba(150, 90, 230, 0.55), transparent 55%),
+      radial-gradient(120% 140% at 100% 100%, rgba(240, 100, 170, 0.4), transparent 55%),
+      linear-gradient(160deg, #1a0f2b, #0c0714);
+    box-shadow: 0 12px 30px -12px rgba(90, 30, 150, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  }
+
+  .joker-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    clip-path: inherit;
+    background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.10) 45%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .joker-card-noise {
+    position: absolute;
+    inset: 0;
+    clip-path: inherit;
+    opacity: 0.5;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 3px);
+    mix-blend-mode: screen;
+  }
+
+  /* Per-Joker accent pattern — a soft color wash plus a fine diagonal
+     hatch, tinted with that Joker's own accent color (set inline per
+     instance), sitting under the icon/name. This, plus the icon and the
+     accent-colored badge, is what makes each Joker actually look distinct
+     from the rest instead of a recolored rectangle. */
+  .joker-card-pattern {
+    position: absolute;
+    inset: 0;
+    clip-path: inherit;
+    pointer-events: none;
+  }
+
+  .joker-detail-overlay {
+    clip-path: inherit;
+    border-radius: inherit;
+  }
+
+  .joker-card:not(:disabled):hover {
+    transform: rotate(0deg) translateY(-8px) !important;
+    box-shadow: 0 20px 40px -14px rgba(150, 60, 220, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    border-color: rgba(230, 190, 255, 0.65);
+  }
+
+  .joker-card-locked {
+    border-color: rgba(130, 240, 190, 0.6);
+    box-shadow: 0 0 30px -6px rgba(110, 230, 170, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .joker-locked-badge {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    z-index: 20;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: #8ff0c0;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* Small chips shown in the header for jokers already owned this run */
+  .joker-chip {
+    border: 1px solid rgba(200, 160, 255, 0.4);
+    background: linear-gradient(160deg, rgba(60, 30, 90, 0.6), rgba(20, 10, 30, 0.7));
+  }
+
+  /* ── Poker overlay mobile layout ─────────────────────────────────────────
+     Narrow phones get a tighter panel, smaller type in the top bar (which
+     otherwise wraps awkwardly at 3 columns), and a scrollable center column
+     so a full 8-card hand + joker chips + preview never gets clipped by the
+     panel's fixed height. */
+  @media (max-width: 640px) {
+    .poker-glass-panel {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .poker-topbar {
+      gap: 8px;
+    }
+
+    .poker-topbar-round {
+      font-size: 1.25rem;
+    }
+
+    .poker-topbar-score {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* The character/model + rest of the website recede behind the game
+     without ever fully vanishing — the site should still feel "there". */
+  .poker-blurred-site {
+    /* `filter` on this wrapper makes it the containing block for every
+       `position: fixed` descendant inside it (HUDOverlay, SectionPanel,
+       SwipeHint, MobileAnnotationOverlay all use `fixed inset-0`) — per
+       spec, an element with a filter establishes a new containing block for
+       fixed/absolute children. Without an explicit full-viewport box here,
+       those children would collapse against this otherwise-unsized wrapper
+       instead of just blurring in place. Pinning it to inset:0 keeps every
+       "fixed inset-0" descendant exactly where it already was. */
+    position: fixed;
+    inset: 0;
+    filter: blur(14px) saturate(0.8) brightness(0.55);
+    transition: filter 0.6s ease;
+    pointer-events: none;
   }
 }

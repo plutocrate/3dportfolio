@@ -157,10 +157,10 @@ function buildProgram(gl) {
   return {
     prog,
     uGlobalRes: gl.getUniformLocation(prog, 'uGlobalRes'),
-    uOffset:    gl.getUniformLocation(prog, 'uOffset'),
-    uTime:      gl.getUniformLocation(prog, 'uTime'),
-    uMouse:     gl.getUniformLocation(prog, 'uMouse'),
-    uSurface:   gl.getUniformLocation(prog, 'uSurface'),
+    uOffset: gl.getUniformLocation(prog, 'uOffset'),
+    uTime: gl.getUniformLocation(prog, 'uTime'),
+    uMouse: gl.getUniformLocation(prog, 'uMouse'),
+    uSurface: gl.getUniformLocation(prog, 'uSurface'),
     uIntensity: gl.getUniformLocation(prog, 'uIntensity'),
   };
 }
@@ -233,7 +233,7 @@ export function mountSwirl(canvasEl, field, opts = {}) {
     antialias: false,
     powerPreference: 'low-power',
   });
-  if (!gl) { console.warn('WebGL unavailable for Balatro swirl'); return { destroy() {} }; }
+  if (!gl) { console.warn('WebGL unavailable for Balatro swirl'); return { destroy() { } }; }
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
@@ -335,3 +335,4 @@ export function mountSwirl(canvasEl, field, opts = {}) {
     },
   };
 }
+

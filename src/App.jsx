@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { HUDOverlay } from '@/components/HUDOverlay'
 import { BalatroBackground } from '@/components/BalatroBackground'
+import { PokerGameOverlay } from '@/components/PokerGameOverlay'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { SectionPanel } from '@/components/SectionPanel'
 import { SwipeHint } from '@/components/SwipeHint'
@@ -38,6 +39,7 @@ import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { setMusicBridge, setUserWantsMusic } from '@/hooks/useMusicBridge'
 import { NavigationProvider, useGo } from '@/hooks/useAppNavigation'
 import { getChronicleById } from '@/data/chronicles'
+import { cn } from '@/lib/utils'
 
 function useIsMobile() {
   const [mobile, setMobile] = useState(() => window.innerWidth < 1024)
@@ -66,8 +68,9 @@ function AppShell({ loading, showHint, onEnter }) {
 
   const {
     playing, start, prepare, toggle, next,
-    trackName, hasMultipleTracks, isSwirlTrack,
+    trackName, hasMultipleTracks, isSwirlTrack, currentTrackUrl,
     pauseForVideo, resumeAfterVideo,
+    setTrackEndBehavior, replayCurrentTrack, playTrackMatching,
   } = useAmbientMusic()
 
   setMusicBridge(pauseForVideo, resumeAfterVideo)
@@ -76,8 +79,23 @@ function AppShell({ loading, showHint, onEnter }) {
 
   // Shared imperative handle: CharacterModel (inside <Canvas>) calls
   // characterAuraRef.current?.setPosition(x, y) every frame to keep the
-  // DOM aura glued to the character's on-screen position.
+  // DOM aura glued to the character's on-screen position. The hidden card
+  // game's permanent "PLAY CARDS" button rides the exact same coordinate
+  // (roughly chest/torso height) via playCardsAnchorRef, so both stay glued
+  // to the character without CharacterModel needing to know either exists.
   const characterAuraRef = useRef(null)
+  const playCardsAnchorRef = useRef(null)
+  const combinedAuraRef = useRef({
+    setPosition(x, y) {
+      characterAuraRef.current?.setPosition?.(x, y)
+      playCardsAnchorRef.current?.setPosition?.(x, y)
+    },
+  })
+
+  // Whether the hidden card game is currently up — drives the "rest of the
+  // website recedes behind the game" blur (rule #2: the site should still
+  // feel like it's there underneath, just blurred and visually distant).
+  const [pokerGameActive, setPokerGameActive] = useState(false)
 
   // Mirror isSwirlTrack into the store so 3D-tree components (annotation
   // labels) can read it without prop-drilling through MainScene.
@@ -145,45 +163,59 @@ function AppShell({ loading, showHint, onEnter }) {
 
       {loading && <LoadingScreen onComplete={handleEnter} />}
 
-      <div className="absolute inset-0" style={{ zIndex: 2 }}>
+      {/* Everything that isn't the card game itself recedes behind it while
+          a run is active — blurred and visually distant, but never removed,
+          per the "the website should feel like it still exists underneath
+          the game" rule. */}
+      <div className={cn(pokerGameActive && 'poker-blurred-site')}>
+        <div className="absolute inset-0" style={{ zIndex: 2 }}>
+          <Suspense fallback={null}>
+            <MainScene
+              onAnnotationClick={handleAnnotationClick}
+              onModelLoaded={() => { }}
+              isMobile={mobile}
+              characterAuraRef={combinedAuraRef}
+            />
+          </Suspense>
+        </div>
+
+        {mobile && (
+          <MobileAnnotationOverlay onAnnotationClick={handleAnnotationClick} />
+        )}
+
+        <HUDOverlay
+          visible={!loading}
+          musicPlaying={playing}
+          onMusicToggle={toggle}
+          onMusicNext={next}
+          trackName={trackName}
+          hasMultipleTracks={hasMultipleTracks}
+          isSwirlTrack={isSwirlTrack}
+        />
+
+        <SwipeHint visible={showHint} />
+
+        <SectionPanel onClose={() => { playClick(); goHome() }} />
+
         <Suspense fallback={null}>
-          <MainScene
-            onAnnotationClick={handleAnnotationClick}
-            onModelLoaded={() => { }}
-            isMobile={mobile}
-            characterAuraRef={characterAuraRef}
-          />
+          <ChronicleCategoryOverlay />
+          <EvidenceOverlay />
+          <MotifOverlay />
+          <FailureConfessionsOverlay />
+          <ChronicleOverlay />
+          <GalleryOverlay />
+          <Lightbox />
+          <GiftShopPopup />
         </Suspense>
       </div>
 
-      {mobile && (
-        <MobileAnnotationOverlay onAnnotationClick={handleAnnotationClick} />
-      )}
-
-      <HUDOverlay
-        visible={!loading}
-        musicPlaying={playing}
-        onMusicToggle={toggle}
-        onMusicNext={next}
-        trackName={trackName}
-        hasMultipleTracks={hasMultipleTracks}
+      <PokerGameOverlay
         isSwirlTrack={isSwirlTrack}
+        currentTrackUrl={currentTrackUrl}
+        playCardsAnchorRef={playCardsAnchorRef}
+        onActiveChange={setPokerGameActive}
+        ambientMusic={{ setTrackEndBehavior, replayCurrentTrack, playTrackMatching, next }}
       />
-
-      <SwipeHint visible={showHint} />
-
-      <SectionPanel onClose={() => { playClick(); goHome() }} />
-
-      <Suspense fallback={null}>
-        <ChronicleCategoryOverlay />
-        <EvidenceOverlay />
-        <MotifOverlay />
-        <FailureConfessionsOverlay />
-        <ChronicleOverlay />
-        <GalleryOverlay />
-        <Lightbox />
-        <GiftShopPopup />
-      </Suspense>
     </div>
   )
 }

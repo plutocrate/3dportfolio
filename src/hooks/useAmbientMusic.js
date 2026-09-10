@@ -70,6 +70,15 @@ export function useAmbientMusic() {
   const queueRef = useRef([])
   const queuePosRef = useRef(0)
 
+  // ── Hidden-card-game hooks ─────────────────────────────────────────────
+  // When the poker game is active it needs to override what normally
+  // happens when a track finishes: instead of auto-advancing to a random
+  // new song (which would silently end the game), it wants either to loop
+  // the current "-b" track forever, or to ask the player whether to keep
+  // going. `endOverrideRef.current` is null when no game is active (default
+  // behavior below is untouched).
+  const endOverrideRef = useRef(null) // 'loop' | (() => void) | null
+
   const loadTrack = useCallback((index, autoplay) => {
     if (!audioRef.current) return
     const track = playlist[index]
@@ -104,7 +113,19 @@ export function useAmbientMusic() {
     queueRef.current = buildQueue(playlist.length)
     queuePosRef.current = 0
     const startIndex = queueRef.current[0]
-    a.addEventListener('ended', () => advance(true))
+    a.addEventListener('ended', () => {
+      const override = endOverrideRef.current
+      if (override === 'loop') {
+        a.currentTime = 0
+        a.play().catch(() => { })
+        return
+      }
+      if (typeof override === 'function') {
+        override()
+        return
+      }
+      advance(true)
+    })
     // Mirror the *real* element state into React state, instead of us
     // guessing at it after every play()/pause() call. This is what makes the
     // HUD correct even when something else (the chronicle-overlay "duck the
@@ -187,6 +208,34 @@ export function useAmbientMusic() {
 
   const currentTrack = playlist[trackIndex] || playlist[0]
 
+  // Sets what happens the next time the CURRENT track ends. Pass 'loop' to
+  // replay it forever, a function to have that function decide instead
+  // (used to pop the "still want to play?" prompt the one time), or null to
+  // restore normal shuffle-advance behavior (called when the game closes).
+  const setTrackEndBehavior = useCallback((behavior) => {
+    endOverrideRef.current = behavior
+  }, [])
+
+  // Restarts the currently loaded track from 0 — used after the player
+  // answers "yes, keep playing" to the end-of-track prompt.
+  const replayCurrentTrack = useCallback(() => {
+    if (!audioRef.current) return
+    audioRef.current.currentTime = 0
+    audioRef.current.play().catch(() => { })
+  }, [])
+
+  // Jumps straight to a specific track by filename match (used by the
+  // hidden card game's "PLAY CARDS" button, which always wants the "-b"
+  // swirl track playing before it opens the game overlay).
+  const playTrackMatching = useCallback((pattern) => {
+    const idx = playlist.findIndex((t) => pattern.test(t.url))
+    if (idx === -1) return false
+    loadTrack(idx, true)
+    setTrackIndex(idx)
+    setUserWantsMusic(true)
+    return true
+  }, [playlist, loadTrack])
+
   return {
     playing,
     start,
@@ -195,6 +244,10 @@ export function useAmbientMusic() {
     next,
     pauseForVideo,
     resumeAfterVideo,
+    setTrackEndBehavior,
+    replayCurrentTrack,
+    playTrackMatching,
+    currentTrackUrl: currentTrack?.url || '',
     trackName: currentTrack?.name || 'Ambience',
     hasMultipleTracks: playlist.length > 1,
     // True while the *currently loaded* track's filename ends in "-b"
