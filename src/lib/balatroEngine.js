@@ -255,9 +255,6 @@ export function mountSwirl(canvasEl, field, opts = {}) {
     powerPreference: 'low-power',
   });
   if (!gl) { console.warn('WebGL unavailable for Balatro swirl'); return { destroy() { } }; }
-  gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
   // Chrome (unlike Firefox) enforces a fairly low hard cap on how many
   // WebGL contexts can be alive at once across the whole page — and this
   // engine creates a brand new one per mounted canvas (background,
@@ -267,16 +264,33 @@ export function mountSwirl(canvasEl, field, opts = {}) {
   // player moved around the site, and once Chrome hit its cap it started
   // silently EVICTING one (firing 'webglcontextlost', which we didn't
   // listen for). A lost context makes every draw call a silent no-op
-  // forever: no error, no visual, nothing — which is exactly "the effect
-  // just stops and never comes back". The idle background canvas (fully
-  // faded out, not drawing) is a prime eviction target, which is why it
-  // was hit hardest, but any canvas — including the always-on Play Cards
-  // button — can be picked. Two-part fix: actually release the context on
-  // destroy() (loseContext, below) so the budget doesn't leak, AND detect
-  // + recover from a loss if the browser ever forces one anyway.
-  let u = buildProgram(gl);
-  const loseCtxExt = gl.getExtension('WEBGL_lose_context');
-  let contextLost = false;
+  // forever: no error, no visual, nothing. Two-part fix: actually release
+  // the context on destroy() (loseContext, below) so the budget doesn't
+  // leak, AND detect + recover from a loss — whether Chrome forced it, or
+  // (see below) we're recovering from our OWN release.
+  // NOTE: earlier versions of this function proactively released the
+  // context on unmount (WEBGL_lose_context.loseContext()) to stop Chrome's
+  // per-page context budget from leaking as canvases came and went. That
+  // is real and worth having, but React.StrictMode (dev only) doubles-back
+  // on every effect — mount, fake cleanup, mount again — on the SAME
+  // already-rendered <canvas>, and an extension-triggered loss does NOT
+  // auto-restore the way a real GPU-driver eviction does; getting that
+  // exactly right depends on precise timing around the (always-async)
+  // 'webglcontextlost' event that's genuinely fiddly to nail down for
+  // certain across engines. Given the choice between "leans on the
+  // browser's own GC to eventually reclaim contexts from canvases that
+  // are truly gone" (slightly less eager, but never wrong) and "reliably
+  // breaks the effect for good under StrictMode" (the last two rounds of
+  // this), this keeps ONLY the passive recovery below — which still fully
+  // protects against a genuine Chrome-forced eviction — and drops the
+  // proactive release.
+  let contextLost = gl.isContextLost();
+  if (!contextLost) {
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+  }
+
+  let u = contextLost ? null : buildProgram(gl);
 
   function onContextLost(e) {
     // Required by spec to have any chance of getting the context back —
@@ -418,10 +432,9 @@ export function mountSwirl(canvasEl, field, opts = {}) {
       unregisterWaker();
       canvasEl.removeEventListener('webglcontextlost', onContextLost, false);
       canvasEl.removeEventListener('webglcontextrestored', onContextRestored, false);
-      // The actual leak fix: hand the context back to the browser instead
-      // of just walking away from it, so Chrome's context budget recovers
-      // as canvases unmount rather than slowly filling up over a session.
-      loseCtxExt?.loseContext();
+      // Deliberately NOT calling WEBGL_lose_context.loseContext() here —
+      // see the note above. The browser reclaims the context on its own
+      // once this canvas is actually garbage collected.
     },
   };
 }
