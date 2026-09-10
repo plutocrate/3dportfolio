@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────────────────
 // BALATRO SWIRL ENGINE (perf-tuned)
-// Same shader, rendered into as many canvases as you like. Three changes
-// from the first version fix the lag:
+// Same shader, rendered into as many canvases as you like. Changes that fix
+// the lag:
 //   1. Zero GPU work while the swirl is fully faded out (was: full shader
 //      cost 60x/sec on every canvas, all the time, even when invisible).
 //   2. Noise loop cut from 6 octaves x 7 calls/pixel to 3 octaves x 5 calls
@@ -11,6 +11,13 @@
 //      tiny fixed internal size and let CSS scale them up — they're
 //      blurred/blended anyway, so nobody can tell, and it's a huge win
 //      per canvas when you've got 6-8 of them on screen.
+//   4. The rAF loop itself now actually stops when the swirl is off,
+//      instead of quietly ticking 60x/sec forever in the background for
+//      the whole lifetime of the page. Each canvas registers a "wake"
+//      callback with the shared field and only starts requesting frames
+//      again once setActive(true) explicitly calls it — so "not showing
+//      the swirl" now genuinely means zero per-frame cost, not just zero
+//      draw calls.
 // ─────────────────────────────────────────────────────────────────────────
 
 const VERTEX_SRC = `
@@ -175,6 +182,7 @@ export function createSwirlField() {
     opacity: 0,
     _targetOpacity: 0,
     _fadeMs: 900,
+    _wakers: new Set(),
   };
 
   window.addEventListener('mousemove', (e) => {
@@ -184,6 +192,11 @@ export function createSwirlField() {
   field.setActive = (on) => {
     field.active = on;
     field._targetOpacity = on ? 1 : 0;
+    // Every mounted canvas stops its own rAF loop entirely once it fades
+    // out (see mountSwirl below) — so turning the swirl back on has to
+    // explicitly nudge each one awake again, rather than relying on a
+    // loop that was never actually still running in the background.
+    if (on) field._wakers.forEach((wake) => wake());
   };
 
   field.tick = (dtMs) => {
@@ -196,11 +209,19 @@ export function createSwirlField() {
   };
 
   // True whenever there's any reason to be drawing at all — actively on,
-  // or mid fade-out. Every mounted canvas checks this before doing any
-  // GPU work, so the whole effect costs ~nothing while switched off.
+  // or mid fade-out.
   field.isLive = () => field.opacity > 0.001 || field._targetOpacity > 0;
 
   field.elapsed = () => (performance.now() - field.startTime) * 0.001;
+
+  // A canvas registers a "wake" callback while it's alive but its own rAF
+  // loop has stopped (fully faded out) — setActive(true) calls every
+  // registered waker so the right canvases restart, without any canvas
+  // having to poll in the background to find out it should turn back on.
+  field.registerWaker = (fn) => {
+    field._wakers.add(fn);
+    return () => field._wakers.delete(fn);
+  };
 
   return field;
 }
@@ -237,12 +258,54 @@ export function mountSwirl(canvasEl, field, opts = {}) {
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
-  const u = buildProgram(gl);
+  // Chrome (unlike Firefox) enforces a fairly low hard cap on how many
+  // WebGL contexts can be alive at once across the whole page — and this
+  // engine creates a brand new one per mounted canvas (background,
+  // character aura, every "surface" button). Previously nothing here ever
+  // actually released a context back to the browser on unmount, only
+  // stopped drawing into it — so contexts quietly accumulated as the
+  // player moved around the site, and once Chrome hit its cap it started
+  // silently EVICTING one (firing 'webglcontextlost', which we didn't
+  // listen for). A lost context makes every draw call a silent no-op
+  // forever: no error, no visual, nothing — which is exactly "the effect
+  // just stops and never comes back". The idle background canvas (fully
+  // faded out, not drawing) is a prime eviction target, which is why it
+  // was hit hardest, but any canvas — including the always-on Play Cards
+  // button — can be picked. Two-part fix: actually release the context on
+  // destroy() (loseContext, below) so the budget doesn't leak, AND detect
+  // + recover from a loss if the browser ever forces one anyway.
+  let u = buildProgram(gl);
+  const loseCtxExt = gl.getExtension('WEBGL_lose_context');
+  let contextLost = false;
+
+  function onContextLost(e) {
+    // Required by spec to have any chance of getting the context back —
+    // without this, the browser treats the loss as permanent.
+    e.preventDefault();
+    contextLost = true;
+    running = false;
+    canvasEl.style.opacity = '0';
+  }
+
+  function onContextRestored() {
+    contextLost = false;
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    u = buildProgram(gl); // program/buffers were wiped by the loss, rebuild them
+    lastW = 0; lastH = 0; // force resize() to actually re-apply the viewport
+    resize();
+    wake();
+  }
+
+  canvasEl.addEventListener('webglcontextlost', onContextLost, false);
+  canvasEl.addEventListener('webglcontextrestored', onContextRestored, false);
+
   let raf = null;
   let lastT = performance.now();
   let lastDrawT = 0;
   const minFrameMs = 1000 / targetFps;
   let destroyed = false;
+  let running = false;
   let lastW = 0, lastH = 0;
 
   function resize() {
@@ -271,26 +334,32 @@ export function mountSwirl(canvasEl, field, opts = {}) {
   ro.observe(canvasEl);
   resize();
 
-  function frame(now) {
+  // The actual fix: this loop no longer reschedules itself unconditionally.
+  // Previously requestAnimationFrame fired 60x/sec for the entire life of
+  // the page — for the background canvas AND every "surface" button canvas
+  // — even while fully invisible, since the old version always called
+  // `raf = requestAnimationFrame(frame)` at the end no matter what. Now,
+  // the moment the field goes fully dead (not active, fully faded out), the
+  // loop just stops: no more rAF calls, no more per-frame work, nothing.
+  // It only starts again when field.setActive(true) explicitly wakes it —
+  // see registerWaker above — so idle time on a phone genuinely goes back
+  // to being idle instead of quietly burning a frame budget forever.
+  function loop(now) {
     if (destroyed) return;
+    if (contextLost) { running = false; return; } // stays asleep until 'webglcontextrestored' wakes it
     const dt = now - lastT;
     lastT = now;
     field.tick(dt);
 
-    // The single biggest win: do nothing at all while the swirl isn't
-    // showing and isn't fading out. Opacity is already 0 from the last
-    // real frame (or default), so the canvas stays invisible for free.
     if (!field.isLive()) {
-      raf = requestAnimationFrame(frame);
-      return;
+      running = false;
+      canvasEl.style.opacity = '0';
+      return; // no reschedule — asleep until woken
     }
 
-    // Frame-rate cap (background only, by default) — still ticks the
-    // fade/opacity every rAF for smoothness, just skips the expensive
-    // draw call on in-between frames.
     if (now - lastDrawT < minFrameMs) {
       canvasEl.style.opacity = String(field.opacity * baseOpacity);
-      raf = requestAnimationFrame(frame);
+      raf = requestAnimationFrame(loop);
       return;
     }
     lastDrawT = now;
@@ -323,16 +392,36 @@ export function mountSwirl(canvasEl, field, opts = {}) {
 
     canvasEl.style.opacity = String(field.opacity * baseOpacity);
 
-    raf = requestAnimationFrame(frame);
+    raf = requestAnimationFrame(loop);
   }
-  raf = requestAnimationFrame(frame);
+
+  function wake() {
+    if (running || destroyed || contextLost) return;
+    running = true;
+    lastT = performance.now();
+    raf = requestAnimationFrame(loop);
+  }
+
+  const unregisterWaker = field.registerWaker(wake);
+
+  // Only actually start the loop if there's already a reason to be live —
+  // e.g. this canvas mounted mid-fade, or after the field was already
+  // turned on. Otherwise it stays fully idle until setActive(true) wakes
+  // it, rather than running one perpetual "is anything happening?" loop.
+  if (field.isLive()) wake();
 
   return {
     destroy() {
       destroyed = true;
       if (raf) cancelAnimationFrame(raf);
       ro.disconnect();
+      unregisterWaker();
+      canvasEl.removeEventListener('webglcontextlost', onContextLost, false);
+      canvasEl.removeEventListener('webglcontextrestored', onContextRestored, false);
+      // The actual leak fix: hand the context back to the browser instead
+      // of just walking away from it, so Chrome's context budget recovers
+      // as canvases unmount rather than slowly filling up over a session.
+      loseCtxExt?.loseContext();
     },
   };
 }
-

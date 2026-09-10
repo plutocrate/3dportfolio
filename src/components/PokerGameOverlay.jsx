@@ -7,6 +7,7 @@ import { pokerSfx } from '@/lib/pokerSfx'
 import { jokerVisual } from '@/lib/jokerVisuals'
 import { cn } from '@/lib/utils'
 import { HelpCircle } from 'lucide-react'
+import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
 
 const SWIRL_TRACK_PATTERN = /-b\.[a-z0-9]+$/i
 const MET_GAME_KEY = 'poker.hasMet.v1'
@@ -88,6 +89,7 @@ export function PokerGameOverlay({
       clearTimeout(noSlapTimer.current)
       markMet()
       setStage('hidden')
+      setHelpOpen(false) // don't leave help floating over a game that just closed
       ambientMusic.setTrackEndBehavior(null)
     }
     wasTrackSwirl.current = trackIsSwirl
@@ -144,22 +146,34 @@ export function PokerGameOverlay({
     setStage('game')
   }
 
-  // Esc always does *something* useful: close the help panel if that's
-  // what's open, otherwise leave the table entirely — same as walking
-  // away, so it also has to change the track (see handleChangeMusic)
-  // rather than just hiding the overlay, or the still-playing swirl track
-  // would just pop the game back open a second later.
+  // Makes the game (and the help panel on top of it) behave like real
+  // pages in browser/mobile history: opening either pushes a marked entry,
+  // and pressing Back — hardware button, edge-swipe, whatever the platform
+  // offers — closes just the top-most one instead of leaving the site or
+  // falling through both at once. Also owns the Escape key for both,
+  // nesting-safe (see useHistoryOverlay), which is why the old bespoke Esc
+  // listener that lived here is gone — this replaces it.
+  //
+  // "Leaving the game" has to mean more than just hiding it, or the
+  // swirl track (still playing) would just pop the game back open a
+  // moment later — so its close action is handleChangeMusic, same as
+  // every other way of walking away from the table.
+  const consumeGameHistoryEntry = useHistoryOverlay('poker-game', stage !== 'hidden', handleChangeMusic)
+  const consumeHelpHistoryEntry = useHistoryOverlay('poker-help', helpOpen, () => setHelpOpen(false))
+
+  // Safety net for the OTHER ways the game/help can close — the "walked
+  // away" effect above, the run-ending auto-close below, or just clicking
+  // CHANGE MUSIC directly — none of which go through history.back(). Any
+  // of those leave the entry useHistoryOverlay pushed still sitting on the
+  // stack unless something pops it; this cleans it up so Back always does
+  // the right thing next time, and is a safe no-op if the entry's already
+  // gone (e.g. it WAS closed via Back).
   useEffect(() => {
-    if (stage === 'hidden') return
-    const onKeyDown = (e) => {
-      if (e.key !== 'Escape') return
-      if (helpOpen) { setHelpOpen(false); return }
-      handleChangeMusic()
-    }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage, helpOpen])
+    if (stage === 'hidden') consumeGameHistoryEntry()
+  }, [stage, consumeGameHistoryEntry])
+  useEffect(() => {
+    if (!helpOpen) consumeHelpHistoryEntry()
+  }, [helpOpen, consumeHelpHistoryEntry])
 
   // Failure bookkeeping
   useEffect(() => {
@@ -176,6 +190,7 @@ export function PokerGameOverlay({
     if (game.phase !== 'gameWon' && game.phase !== 'roundFailed') return
     const t = setTimeout(() => {
       setStage('hidden')
+      setHelpOpen(false)
       ambientMusic.setTrackEndBehavior(null)
       ambientMusic.next()
     }, RUN_END_HOLD_MS)

@@ -18,7 +18,15 @@ export const PlayCardsButton = forwardRef(function PlayCardsButton({ visible, on
   useImperativeHandle(ref, () => ({
     setPosition(x, y) {
       if (!wrapRef.current) return
-      wrapRef.current.style.transform = `translate(${x - 78}px, ${y - 18}px)`
+      // Measured live instead of a hardcoded half-width/half-height offset,
+      // so this stays correctly centered on the character whether it's
+      // rendering at its full desktop size or the smaller mobile size (see
+      // the responsive width/padding below) — no magic numbers to keep in
+      // sync with the CSS by hand.
+      const rect = wrapRef.current.getBoundingClientRect()
+      const w = rect.width || 156
+      const h = rect.height || 36
+      wrapRef.current.style.transform = `translate(${x - w / 2}px, ${y - h / 2}px)`
     },
   }), [])
 
@@ -41,9 +49,8 @@ export const PlayCardsButton = forwardRef(function PlayCardsButton({ visible, on
       onClick={onClick}
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
-      className="fixed left-0 top-0 z-[40] isolate overflow-hidden rounded-full px-5 py-2 font-mono text-[11px] tracking-[0.25em] text-white/90 transition-opacity duration-500"
+      className="fixed left-0 top-0 z-[40] isolate w-[124px] overflow-hidden rounded-full px-3.5 py-1.5 font-mono text-[9px] tracking-[0.2em] text-white/90 transition-opacity duration-500 sm:w-[156px] sm:px-5 sm:py-2 sm:text-[11px] sm:tracking-[0.25em]"
       style={{
-        width: 156,
         border: '1px solid rgba(255,255,255,0.22)',
         background: 'rgba(10,6,16,0.35)',
         backdropFilter: 'blur(3px)',
