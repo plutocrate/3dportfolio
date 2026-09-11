@@ -16,9 +16,8 @@ const GLOW_SWEEP_PERIOD = 6.5
 function MobileButton({ annotation, onClick }) {
   const { id, label, position, side } = annotation
   const activeSection = useSceneStore((s) => s.activeSection)
-  const isActive      = activeSection === id
-  const isSwirlTrack  = useSceneStore((s) => s.isSwirlTrack)
-  const playClick     = useClickSound()
+  const isActive = activeSection === id
+  const playClick = useClickSound()
   const { camera, size } = useThree()
   const [pos, setPos] = useState({ x: -999, y: -999, visible: false })
 
@@ -30,8 +29,8 @@ function MobileButton({ annotation, onClick }) {
   useFrame(({ clock }) => {
     const v = worldPos.current.clone().project(camera)
     // NDC → pixels
-    const x = (v.x  *  0.5 + 0.5) * size.width
-    const y = (-v.y *  0.5 + 0.5) * size.height
+    const x = (v.x * 0.5 + 0.5) * size.width
+    const y = (-v.y * 0.5 + 0.5) * size.height
     // Only show if in front of camera
     setPos({ x, y, visible: v.z < 1 })
 
@@ -88,7 +87,15 @@ function MobileButton({ annotation, onClick }) {
         )}
         onClick={() => { playClick(); onClick(annotation) }}
       >
-        {isSwirlTrack && !isActive && <SwirlSurface intensity={1.15} baseOpacity={0.7} />}
+        {/* No SwirlSurface here (unlike the desktop marker below) — every
+            mobile annotation button mounting its own WebGL context, on
+            top of the background + character aura + Play Cards button,
+            was almost certainly what pushed phones over their (much
+            lower than desktop) simultaneous-context budget, silently
+            costing the background canvas its own context in the process.
+            This is a minor decorative flourish; losing the game's actual
+            background effect to make room for it on a phone isn't worth
+            the trade. */}
         <span className="relative z-10">{label}</span>
         {showGlow && (
           <span
@@ -115,14 +122,14 @@ function MobileButton({ annotation, onClick }) {
 // ── Desktop marker: original lines + dots + label
 export function AnnotationMarker({ annotation, onClick }) {
   const { id, label, description, position, side } = annotation
-  const activeSection     = useSceneStore((s) => s.activeSection)
+  const activeSection = useSceneStore((s) => s.activeSection)
   const hoveredAnnotation = useSceneStore((s) => s.hoveredAnnotation)
-  const setHovered        = useSceneStore((s) => s.setHovered)
-  const isSwirlTrack      = useSceneStore((s) => s.isSwirlTrack)
-  const isActive  = activeSection === id
+  const setHovered = useSceneStore((s) => s.setHovered)
+  const isSwirlTrack = useSceneStore((s) => s.isSwirlTrack)
+  const isActive = activeSection === id
   const isHovered = hoveredAnnotation === id
   const playClick = useClickSound()
-  const { size }  = useThree()
+  const { size } = useThree()
 
   const isMobile = size.width < 1024
 
@@ -143,8 +150,8 @@ export function AnnotationMarker({ annotation, onClick }) {
   // Desktop: original behaviour
   const lineOffset = 0.72
   const distFactor = 4.0
-  const pos     = new THREE.Vector3(...position)
-  const offset  = side === 'right' ? lineOffset : -lineOffset
+  const pos = new THREE.Vector3(...position)
+  const offset = side === 'right' ? lineOffset : -lineOffset
   const lineEnd = new THREE.Vector3(position[0] + offset, position[1] + 0.04, position[2])
 
   return (

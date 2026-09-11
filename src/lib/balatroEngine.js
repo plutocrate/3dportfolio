@@ -258,32 +258,20 @@ export function mountSwirl(canvasEl, field, opts = {}) {
   // Chrome (unlike Firefox) enforces a fairly low hard cap on how many
   // WebGL contexts can be alive at once across the whole page — and this
   // engine creates a brand new one per mounted canvas (background,
-  // character aura, every "surface" button). Previously nothing here ever
-  // actually released a context back to the browser on unmount, only
-  // stopped drawing into it — so contexts quietly accumulated as the
-  // player moved around the site, and once Chrome hit its cap it started
-  // silently EVICTING one (firing 'webglcontextlost', which we didn't
-  // listen for). A lost context makes every draw call a silent no-op
-  // forever: no error, no visual, nothing. Two-part fix: actually release
-  // the context on destroy() (loseContext, below) so the budget doesn't
-  // leak, AND detect + recover from a loss — whether Chrome forced it, or
-  // (see below) we're recovering from our OWN release.
-  // NOTE: earlier versions of this function proactively released the
-  // context on unmount (WEBGL_lose_context.loseContext()) to stop Chrome's
-  // per-page context budget from leaking as canvases came and went. That
-  // is real and worth having, but React.StrictMode (dev only) doubles-back
-  // on every effect — mount, fake cleanup, mount again — on the SAME
-  // already-rendered <canvas>, and an extension-triggered loss does NOT
-  // auto-restore the way a real GPU-driver eviction does; getting that
-  // exactly right depends on precise timing around the (always-async)
-  // 'webglcontextlost' event that's genuinely fiddly to nail down for
-  // certain across engines. Given the choice between "leans on the
-  // browser's own GC to eventually reclaim contexts from canvases that
-  // are truly gone" (slightly less eager, but never wrong) and "reliably
-  // breaks the effect for good under StrictMode" (the last two rounds of
-  // this), this keeps ONLY the passive recovery below — which still fully
-  // protects against a genuine Chrome-forced eviction — and drops the
-  // proactive release.
+  // character aura, every "surface" button). Once that cap is hit, Chrome
+  // silently EVICTS one (firing 'webglcontextlost'), which makes every
+  // draw call into it a silent no-op forever unless something notices and
+  // recovers. Mobile is worse on two counts: a lower cap AND far more
+  // aggressive context suspension whenever the tab is backgrounded (app
+  // switch, screen lock) — so the recovery path below matters even more
+  // there. (An earlier version of this function also proactively released
+  // each context on unmount to stop the budget from leaking as canvases
+  // came and went — dropped because React.StrictMode's dev-only
+  // mount→cleanup→mount on the SAME canvas made that self-inflict a
+  // permanent loss; leaning on the browser's own GC to reclaim contexts
+  // from canvases that are truly gone is slightly less eager but never
+  // wrong.)
+  const loseCtxExt = gl.getExtension('WEBGL_lose_context');
   let contextLost = gl.isContextLost();
   if (!contextLost) {
     gl.enable(gl.BLEND);
@@ -313,6 +301,28 @@ export function mountSwirl(canvasEl, field, opts = {}) {
 
   canvasEl.addEventListener('webglcontextlost', onContextLost, false);
   canvasEl.addEventListener('webglcontextrestored', onContextRestored, false);
+
+  // Mobile browsers routinely suspend/discard WebGL resources for a
+  // backgrounded tab (app switch, screen lock) far more readily than
+  // desktop does, and that suspension doesn't always cleanly round-trip
+  // through the standard lost/restored event pair the way a desktop GPU
+  // eviction does. Belt-and-suspenders: whenever the page becomes visible
+  // again, if this context is (still) marked lost, explicitly ask for it
+  // back rather than just trusting an automatic restore that may not
+  // reliably arrive. restoreContext() is a documented no-op if a restore
+  // is already pending or unnecessary, so this is safe to call liberally.
+  function onVisibilityChange() {
+    if (document.visibilityState !== 'visible') return;
+    if (contextLost) {
+      loseCtxExt?.restoreContext();
+    } else if (field.isLive()) {
+      // Not lost, but a backgrounded mobile tab can also just leave the
+      // rAF loop stalled without ever formally losing the context —
+      // wake() is a safe no-op if it's already running.
+      wake();
+    }
+  }
+  document.addEventListener('visibilitychange', onVisibilityChange);
 
   let raf = null;
   let lastT = performance.now();
@@ -432,6 +442,7 @@ export function mountSwirl(canvasEl, field, opts = {}) {
       unregisterWaker();
       canvasEl.removeEventListener('webglcontextlost', onContextLost, false);
       canvasEl.removeEventListener('webglcontextrestored', onContextRestored, false);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       // Deliberately NOT calling WEBGL_lose_context.loseContext() here —
       // see the note above. The browser reclaims the context on its own
       // once this canvas is actually garbage collected.

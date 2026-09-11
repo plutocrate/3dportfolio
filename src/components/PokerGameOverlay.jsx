@@ -345,20 +345,19 @@ function PopupButton({ onClick, children }) {
   )
 }
 
-// Hand rankings shown in HelpOverlay, worst to best, each with a concrete
-// example and its base mult (kept in sync with pokerEngine's HAND_TABLE —
-// this is display-only text, not logic, so it can't silently drift out of
-// sync with real scoring the way a duplicated number could).
+// Hand rankings shown in HelpOverlay, worst to best (kept in sync with
+// pokerEngine's HAND_TABLE — display-only, so it can't drift from real
+// scoring the way a duplicated number could).
 const HAND_EXAMPLES = [
-  { name: 'High Card', mult: 1, example: 'K♠ 9♥ 6♦ 4♣ 2♠', note: 'no pattern at all — the lone highest card is what scores' },
-  { name: 'Pair', mult: 2, example: '9♠ 9♥ K♦ 4♣ 2♠', note: 'two cards of the same rank' },
-  { name: 'Two Pair', mult: 2, example: '9♠ 9♥ 4♦ 4♣ 2♠', note: 'two separate pairs' },
-  { name: 'Three of a Kind', mult: 3, example: '9♠ 9♥ 9♦ 4♣ 2♠', note: 'three cards of the same rank' },
-  { name: 'Straight', mult: 4, example: '5♠ 6♥ 7♦ 8♣ 9♠', note: 'five ranks in a row, any suits' },
-  { name: 'Flush', mult: 4, example: '2♠ 6♠ 9♠ J♠ K♠', note: 'five cards of the same suit, any ranks' },
-  { name: 'Full House', mult: 5, example: '9♠ 9♥ 9♦ 4♣ 4♠', note: 'a Three of a Kind plus a Pair' },
-  { name: 'Four of a Kind', mult: 7, example: '9♠ 9♥ 9♦ 9♣ 2♠', note: 'four cards of the same rank' },
-  { name: 'Straight Flush', mult: 10, example: '5♠ 6♠ 7♠ 8♠ 9♠', note: 'a straight, all in one suit' },
+  { name: 'High Card', mult: 1, example: 'K♠ 9♥ 6♦' },
+  { name: 'Pair', mult: 2, example: '9♠ 9♥ K♦' },
+  { name: 'Two Pair', mult: 2, example: '9♠9♥ 4♦4♣' },
+  { name: 'Three of a Kind', mult: 3, example: '9♠9♥9♦' },
+  { name: 'Straight', mult: 4, example: '5-6-7-8-9' },
+  { name: 'Flush', mult: 4, example: '5 same suit' },
+  { name: 'Full House', mult: 5, example: '9♠9♥9♦ 4♣4♠' },
+  { name: 'Four of a Kind', mult: 7, example: '9♠9♥9♦9♣' },
+  { name: 'Straight Flush', mult: 10, example: 'straight + flush' },
 ]
 
 function HelpOverlay({ open, onClose }) {
@@ -366,70 +365,34 @@ function HelpOverlay({ open, onClose }) {
   return (
     <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/60 p-3 sm:p-6" onClick={onClose}>
       <div
-        className="poker-glass-panel relative flex max-h-[88vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl px-5 py-5 sm:px-8 sm:py-7"
+        className="poker-glass-panel relative w-full max-w-sm rounded-2xl px-5 py-4"
         style={{ animation: 'poker-pop-in 260ms cubic-bezier(0.16,1,0.3,1)' }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
-          <div className="font-mono text-lg tracking-[0.15em] text-white">HOW TO PLAY</div>
+          <div className="font-mono text-sm tracking-[0.15em] text-white">HOW TO PLAY</div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full border border-white/25 px-3 py-1 font-mono text-[10px] tracking-[0.15em] text-white/70 transition-colors hover:border-white/50 hover:text-white"
+            className="rounded-full border border-white/25 px-2.5 py-0.5 font-mono text-[9px] tracking-[0.1em] text-white/70 transition-colors hover:border-white/50 hover:text-white"
           >
-            CLOSE (ESC)
+            ESC
           </button>
         </div>
 
-        <div className="mt-4 overflow-y-auto pr-1 font-mono text-white/85">
-          <section>
-            <h3 className="text-xs tracking-[0.2em] text-white/50">THE BASICS</h3>
-            <ul className="mt-2 space-y-1.5 text-[13px] leading-snug text-white/80">
-              <li>• Click cards in your hand to select up to 5. Selected cards pop up.</li>
-              <li>• <b className="text-white">PLAY HAND</b> scores your best 5-card poker hand from the selection, then deals replacements.</li>
-              <li>• <b className="text-white">DISCARD</b> swaps out selected cards for new ones instead of scoring them — you get a limited number per round.</li>
-              <li>• Each round has a target score and a limited number of hands. Reach the target before you run out of hands to clear the round.</li>
-              <li>• Clearing Round 1 or 2 lets you pick a Joker (two, if you score well above target) — a passive bonus that applies for the rest of the run.</li>
-              <li>• Win all 3 rounds, or run out of hands early — either way, the table clears itself and the site moves on.</li>
-            </ul>
-          </section>
+        <p className="mt-2 font-mono text-[11px] leading-snug text-white/75">
+          Select up to 5 cards. <b className="text-white">PLAY HAND</b> scores them,{' '}
+          <b className="text-white">DISCARD</b> swaps them. Hit the target before hands run out.
+        </p>
 
-          <section className="mt-5">
-            <h3 className="text-xs tracking-[0.2em] text-white/50">SCORING</h3>
-            <p className="mt-2 text-[13px] leading-snug text-white/80">
-              Every played hand scores as <b className="text-white">chips × mult</b>. Chips come from the value of
-              each scoring card — 2 through 10 are face value, J/Q/K are worth 10, and Aces are worth 11. Mult comes
-              from the hand type you formed (see below). A card that's selected but not part of the actual poker
-              hand — a dead kicker — doesn't add chips and isn't affected by Jokers either, same as if it wasn't
-              played at all. Owned Jokers can add flat chips, flat mult, multiply the mult, or even multiply the
-              whole score — shown in <span style={{ color: JOKER_COLOR }}>purple</span> in the scoring breakdown
-              so it's always clear what a Joker actually did.
-            </p>
-          </section>
-
-          <section className="mt-5">
-            <h3 className="text-xs tracking-[0.2em] text-white/50">POKER HANDS, WORST TO BEST</h3>
-            <div className="mt-2 space-y-2">
-              {HAND_EXAMPLES.map((h) => (
-                <div key={h.name} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-white/10 pb-2 text-[13px]">
-                  <div className="min-w-[140px]">
-                    <div className="text-white">{h.name}</div>
-                    <div className="text-[10px] text-white/45">{h.note}</div>
-                  </div>
-                  <div className="tabular-nums tracking-wide text-white/70">{h.example}</div>
-                  <div className="font-bold" style={{ color: '#f2a869' }}>×{h.mult}</div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="mt-5">
-            <h3 className="text-xs tracking-[0.2em] text-white/50">LEAVING</h3>
-            <p className="mt-2 text-[13px] leading-snug text-white/80">
-              Press <b className="text-white">Esc</b>, hit <b className="text-white">CHANGE MUSIC</b>, or just walk
-              away from the table — any of these ends the game.
-            </p>
-          </section>
+        <div className="mt-3 grid grid-cols-[1fr,auto,auto] gap-x-3 gap-y-1 border-t border-white/10 pt-2 font-mono text-[10px] text-white/70">
+          {HAND_EXAMPLES.map((h) => (
+            <>
+              <div key={`${h.name}-n`} className="text-white/85">{h.name}</div>
+              <div key={`${h.name}-e`} className="tabular-nums text-white/40">{h.example}</div>
+              <div key={`${h.name}-m`} className="text-right font-bold" style={{ color: '#f2a869' }}>×{h.mult}</div>
+            </>
+          ))}
         </div>
       </div>
     </div>
@@ -453,7 +416,7 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-6">
       <div
-        className="poker-glass-panel relative flex h-[94vh] w-full sm:w-[95vw] max-w-[1200px] flex-col overflow-hidden rounded-2xl sm:rounded-3xl px-3 py-3 sm:px-8 sm:py-6"
+        className="poker-glass-panel poker-panel-shell relative flex w-full sm:w-[95vw] max-w-[1200px] flex-col overflow-hidden rounded-2xl sm:rounded-3xl px-3 py-3 sm:px-8 sm:py-6"
         style={{ animation: 'poker-pop-in 320ms cubic-bezier(0.16,1,0.3,1)' }}
       >
         {/* Top bar */}

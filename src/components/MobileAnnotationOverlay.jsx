@@ -3,15 +3,14 @@ import * as THREE from 'three'
 import { ANNOTATIONS } from '@/data/portfolio'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
-import { SwirlSurface } from '@/components/SwirlSurface'
 import { cn } from '@/lib/utils'
 
 const _v = new THREE.Vector3()
 
-const BTN_W      = 104  // fixed width px — big enough to tap (1.3x)
-const BTN_H      = 42   // fixed height px (1.3x)
-const PAD_X      = 12   // min distance from left/right edge
-const PAD_TOP    = 64   // below name bar
+const BTN_W = 104  // fixed width px — big enough to tap (1.3x)
+const BTN_H = 42   // fixed height px (1.3x)
+const PAD_X = 12   // min distance from left/right edge
+const PAD_TOP = 64   // below name bar
 const PAD_BOTTOM = 90   // above uptime bar
 
 function computePositions(camera, size) {
@@ -20,8 +19,8 @@ function computePositions(camera, size) {
 
     if (_v.z > 1) return { id: ann.id, visible: false }
 
-    const sx = ( _v.x *  0.5 + 0.5) * size.width
-    const sy = (-_v.y *  0.5 + 0.5) * size.height
+    const sx = (_v.x * 0.5 + 0.5) * size.width
+    const sy = (-_v.y * 0.5 + 0.5) * size.height
 
     // Place button to the side of the projected point, then clamp inward
     let bx = ann.side === 'right'
@@ -38,11 +37,10 @@ function computePositions(camera, size) {
 
 export function MobileAnnotationOverlay({ onAnnotationClick }) {
   const activeSection = useSceneStore((s) => s.activeSection)
-  const isSwirlTrack  = useSceneStore((s) => s.isSwirlTrack)
-  const playClick     = useClickSound()
-  const posRef        = useRef([])
-  const rafRef        = useRef(null)
-  const [, tick]      = useState(0)
+  const playClick = useClickSound()
+  const posRef = useRef([])
+  const rafRef = useRef(null)
+  const [, tick] = useState(0)
 
   useEffect(() => {
     function loop() {
@@ -95,7 +93,11 @@ export function MobileAnnotationOverlay({ onAnnotationClick }) {
             }}
             onClick={() => { playClick(); onAnnotationClick(p.annotation) }}
           >
-            {isSwirlTrack && !isActive && <SwirlSurface intensity={1.15} baseOpacity={0.7} style={{ borderRadius: 2 }} />}
+            {/* No SwirlSurface here — every one of these buttons mounting
+                its own WebGL context (up to 6 at once) was almost
+                certainly what pushed phones over their WebGL context
+                budget, and the game's actual background swirl was paying
+                for it. Not worth it for a minor button flourish. */}
             <span style={{
               position: 'relative',
               zIndex: 1,

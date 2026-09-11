@@ -351,6 +351,26 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
+  /* `vh` on mobile is computed against the LARGEST possible viewport, as
+     if the browser's address bar and bottom nav bar were both hidden — so
+     "94vh" ends up taller than what's actually visible whenever those
+     bars ARE showing, clipping the game under them. `dvh` tracks the
+     viewport that's actually visible right now, live, as those bars show
+     and hide. Two declarations, not one: browsers that don't understand
+     `dvh` simply ignore that whole line and keep the `vh` value above it,
+     so this is a safe fallback rather than an all-or-nothing bet. */
+  .poker-panel-shell {
+    height: 94vh;
+    height: 94dvh;
+  }
+
+  @media (min-width: 640px) {
+    .poker-panel-shell {
+      height: 90vh;
+      height: 90dvh;
+    }
+  }
+
   /* Faint purple/pink wash + scanlines INSIDE the glass only, so it still
      reads as "this website's glass" rather than generic frosted UI. Kept as
      a pseudo-element so it never adds an actual background-color to the
@@ -446,7 +466,7 @@
     pointer-events: none;
   }
 
-  /* ── Jokers ───────────────────────────────────────────────���────────────
+  /* ── Jokers ────────────────────────────────────────────────────────────
      Deliberately the opposite of the clean white poker cards: dark,
      holographic, faintly grainy, a little crooked — "stranger, more
      abstract, more surreal" per the brief, while staying a one-glance read. */
@@ -564,5 +584,20 @@
     filter: blur(14px) saturate(0.8) brightness(0.55);
     transition: filter 0.6s ease;
     pointer-events: none;
+  }
+
+  /* Animating a gaussian blur over the full-screen 3D canvas is a genuinely
+     expensive per-frame recomposite — fine on a desktop GPU, but on many
+     mobile GPUs the browser can't keep the transition fed with fresh
+     frames, and shows a blank/white frame while it catches up (most
+     visible exiting the game, right as this filter animates back off).
+     Mobile gets a much cheaper version: no blur convolution at all (just
+     the two cheap single-pass adjustments) and a snappier transition. */
+  @media (max-width: 768px),
+  (pointer: coarse) {
+    .poker-blurred-site {
+      filter: saturate(0.8) brightness(0.55);
+      transition: filter 0.2s ease;
+    }
   }
 }
