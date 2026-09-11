@@ -10,7 +10,6 @@ import { HelpCircle } from 'lucide-react'
 import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
 
 const SWIRL_TRACK_PATTERN = /-b\.[a-z0-9]+$/i
-const MET_GAME_KEY = 'poker.hasMet.v1'
 const TRIGGER_DELAY_MS = 900
 const LEAVE_MS = 260   // played/discarded cards drift out before the swap
 const ENTER_MS = 420   // replacement cards drift in after the swap
@@ -27,9 +26,6 @@ export function PokerGameOverlay({
   onActiveChange,
 }) {
   const [stage, setStage] = useState('hidden') // hidden | intro | noSlap | game
-  const [hasMetGame, setHasMetGame] = useState(() => {
-    try { return localStorage.getItem(MET_GAME_KEY) === '1' } catch (e) { return false }
-  })
   // `wasSwirl` drives the "want to play?" trigger — gated on actual playback
   // (isSwirlTrack), since a swirl track sitting paused shouldn't pop the
   // prompt. `wasTrackSwirl` drives the "player walked away" close check —
@@ -57,12 +53,6 @@ export function PokerGameOverlay({
   const prevHandIdsRef = useRef(new Set())
   const enterTimerRef = useRef(null)
 
-  const markMet = useCallback(() => {
-    if (hasMetGame) return
-    setHasMetGame(true)
-    try { localStorage.setItem(MET_GAME_KEY, '1') } catch (e) { /* ignore */ }
-  }, [hasMetGame])
-
   const active = stage !== 'hidden'
   useEffect(() => { onActiveChange?.(active) }, [active, onActiveChange])
 
@@ -87,7 +77,6 @@ export function PokerGameOverlay({
     if (!trackIsSwirl && wasTrackSwirl.current && stage !== 'hidden') {
       clearTimeout(triggerTimer.current)
       clearTimeout(noSlapTimer.current)
-      markMet()
       setStage('hidden')
       setHelpOpen(false) // don't leave help floating over a game that just closed
       ambientMusic.setTrackEndBehavior(null)
@@ -117,13 +106,11 @@ export function PokerGameOverlay({
   }, [stage])
 
   const handleYes = () => {
-    markMet()
     game.beginGame()
     setStage('game')
   }
 
   const handleNo = () => {
-    markMet()
     setStage('noSlap')
     noSlapTimer.current = setTimeout(() => {
       game.beginGame()
@@ -132,7 +119,6 @@ export function PokerGameOverlay({
   }
 
   const handleChangeMusic = () => {
-    markMet()
     ambientMusic.next()
     // the "walked away" close effect above will dismiss the game once the
     // new track's identity is reflected (it may itself be another "-b"
@@ -279,7 +265,7 @@ export function PokerGameOverlay({
     <>
       <PlayCardsButton
         ref={playCardsAnchorRef}
-        visible={hasMetGame && stage === 'hidden'}
+        visible={stage === 'hidden'}
         onClick={handlePlayCardsButton}
       />
 
