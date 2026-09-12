@@ -8,13 +8,16 @@ import { cn } from '@/lib/utils'
 const _v = new THREE.Vector3()
 
 // Base size these annotation buttons render at before SIZE_SCALE below.
-// (An earlier pass bumped this up 1.15x on the theory that bigger was more
-// tappable — turned out to just look bulky and cluttered next to the
-// character. SIZE_SCALE now goes the other way, below the original 104x42
-// baseline, for a visibly cleaner/smaller footprint.)
+// (Went too far small last pass — this settles back near the original
+// footprint but keeps the text a touch smaller than the box, below, so
+// there's visibly more breathing room/padding around the label instead of
+// text-to-edge cramping.)
 const BASE_BTN_W = 104
 const BASE_BTN_H = 42
-const SIZE_SCALE = 0.8
+const SIZE_SCALE = 1.0
+// Font scales separately, and a bit below SIZE_SCALE — bigger box, but not
+// a proportionally bigger label, is exactly what reads as "more padding".
+const FONT_SCALE = 0.92
 
 const PAD_X = 12   // min distance from left/right edge
 const PAD_TOP = 64   // below name bar
@@ -28,7 +31,7 @@ const clampNum = (min, val, max) => Math.max(min, Math.min(max, val))
 // applied. Height follows the same aspect ratio as the base size.
 function dynamicButtonSize(viewportWidth) {
   const w = Math.round(
-    clampNum(BASE_BTN_W * 0.82, viewportWidth * 0.21, BASE_BTN_W * 1.2) * SIZE_SCALE
+    clampNum(BASE_BTN_W * 0.85, viewportWidth * 0.25, BASE_BTN_W * 1.25) * SIZE_SCALE
   )
   const h = Math.round(w * (BASE_BTN_H / BASE_BTN_W))
   return { w, h }
@@ -124,7 +127,7 @@ export function MobileAnnotationOverlay({ onAnnotationClick }) {
               position: 'relative',
               zIndex: 1,
               fontFamily: 'monospace',
-              fontSize: Math.round(11.5 * SIZE_SCALE * 10) / 10,
+              fontSize: Math.round(11.5 * FONT_SCALE * 10) / 10,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
               color: isActive ? '#000' : 'rgba(255,255,255,0.92)',
