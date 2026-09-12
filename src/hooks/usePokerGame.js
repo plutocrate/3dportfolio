@@ -62,13 +62,26 @@ export function usePokerGame() {
   }, [])
 
   // Draw fresh cards to refill the hand up to HAND_SIZE, reshuffling a
-  // discard-free fresh deck if we ever run low (the round is short enough
-  // this is mostly a safety net, not something players will hit often).
+  // fresh deck if we ever run low. Under the current numbers (9-card hand,
+  // 4 hands, 3 discards per round, all fully used) a round's own 52-card
+  // shuffle never actually runs out — 35 possible replacement draws
+  // against 43 cards left after the initial deal — so this is a safety
+  // net, not something players will hit. It's still hand-aware on
+  // purpose: a naive `shuffle(createDeck())` here would build a totally
+  // fresh 52, and since every card gets a new unique `id` per createDeck()
+  // call (see makeCard), that fresh deck could contain a card of the same
+  // rank+suit as one already sitting in the player's hand — a logical
+  // duplicate (two "K♠", just with different internal ids) even though no
+  // single `id` ever collides. Filtering the fresh deck by rank+suit
+  // against the current hand rules that out entirely.
   // The resulting hand is always kept sorted highest-to-lowest by rank —
   // purely a display/scanning convenience, doesn't touch scoring at all.
   const drawUpTo = useCallback((deckIn, handIn, count) => {
     let d = deckIn
-    if (d.length < count) d = shuffle(createDeck())
+    if (d.length < count) {
+      const inHand = new Set(handIn.map((c) => `${c.rank}-${c.suit}`))
+      d = shuffle(createDeck().filter((c) => !inHand.has(`${c.rank}-${c.suit}`)))
+    }
     const drawn = d.slice(0, count)
     const rest = d.slice(count)
     pokerSfx.draw()
@@ -280,6 +293,7 @@ export function usePokerGame() {
     currentRound,
     phase,
     hand,
+    deckCount: deck.length,
     selectedIds,
     selectedCards,
     previewHand,

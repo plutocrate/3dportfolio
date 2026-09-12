@@ -6,7 +6,7 @@ import { usePokerGame } from '@/hooks/usePokerGame'
 import { pokerSfx } from '@/lib/pokerSfx'
 import { jokerVisual } from '@/lib/jokerVisuals'
 import { cn } from '@/lib/utils'
-import { HelpCircle } from 'lucide-react'
+import { HelpCircle, Layers } from 'lucide-react'
 import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
 import { useDetailOverlay } from '@/hooks/useDetailOverlay'
 
@@ -382,7 +382,7 @@ function HelpOverlay({ open, onClose }) {
 function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSelect, onPlayHand, onDiscard, onChangeMusic, onHelp }) {
   const {
     currentRound, roundIndex, phase, hand, selectedIds, previewHand,
-    score, runTotal, handsLeft, discardsLeft, message,
+    score, runTotal, handsLeft, discardsLeft, deckCount, message,
     advanceRound, stats, highScore, isNewHighScore,
     ownedJokers, jokerOffer, chaosBuff, chooseJoker, exceptionalWin,
   } = game
@@ -418,15 +418,24 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
           </div>
         </div>
 
-        {/* Target progress bar */}
-        <div className="mt-[clamp(3px,0.8dvh,10px)] h-[3px] w-full shrink-0 overflow-hidden rounded-full bg-white/10">
-          <div
-            className="h-full rounded-full transition-all duration-500"
-            style={{
-              width: `${Math.min(100, (score / currentRound.target) * 100)}%`,
-              background: 'linear-gradient(90deg, #7c6ce0, #f2769a)',
-            }}
-          />
+        {/* Target progress bar, with the deck's own remaining-card count
+            riding along on the same line (icon + N/52) — genuinely useful
+            info (how much of the deck is left to draw from this round),
+            but not worth a whole extra row of its own. */}
+        <div className="mt-[clamp(3px,0.8dvh,10px)] flex shrink-0 items-center gap-2">
+          <div className="h-[3px] w-full flex-1 overflow-hidden rounded-full bg-white/10">
+            <div
+              className="h-full rounded-full transition-all duration-500"
+              style={{
+                width: `${Math.min(100, (score / currentRound.target) * 100)}%`,
+                background: 'linear-gradient(90deg, #7c6ce0, #f2769a)',
+              }}
+            />
+          </div>
+          <div className="flex shrink-0 items-center gap-1 font-mono text-[9px] tabular-nums tracking-[0.1em] text-white/40">
+            <Layers size={10} strokeWidth={2} />
+            {deckCount}/52
+          </div>
         </div>
 
         {message && (phase === 'playing' || phase === 'jokerSelect') && (
