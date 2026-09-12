@@ -398,24 +398,28 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
         className="poker-glass-panel poker-panel-shell relative flex w-full sm:w-[95vw] max-w-[1200px] min-h-0 flex-col overflow-hidden rounded-2xl sm:rounded-3xl px-3 py-3 sm:px-8 sm:py-6"
         style={{ animation: 'poker-pop-in 320ms cubic-bezier(0.16,1,0.3,1)' }}
       >
-        {/* Top bar */}
+        {/* Top bar — HANDS/DISCARDS collapsed from stacked label+value
+            blocks into single compact lines (they're secondary readouts,
+            not worth the vertical real estate a big number was taking),
+            freeing up height for the part that actually matters: the
+            cards and the score math below. */}
         <div className="poker-topbar flex flex-wrap items-start justify-between gap-2 sm:gap-3 font-mono text-white/85">
           <div>
             <div className="text-[10px] sm:text-[11px] tracking-[0.3em] text-white/50">ROUND {currentRound.round} / 3</div>
-            <div className="poker-topbar-round mt-1 text-xl sm:text-3xl tracking-wide">TARGET: {currentRound.target}</div>
+            <div className="poker-topbar-round mt-0.5 text-lg sm:text-3xl tracking-wide">TARGET: {currentRound.target}</div>
           </div>
           <div className="text-right">
             <div className="text-[10px] sm:text-[11px] tracking-[0.3em] text-white/50">SCORE</div>
-            <div className="poker-topbar-score mt-1 text-xl sm:text-3xl tabular-nums tracking-wide">{score}</div>
+            <div className="poker-topbar-score mt-0.5 text-lg sm:text-3xl tabular-nums tracking-wide">{score}</div>
           </div>
-          <div className="flex gap-4 sm:gap-6 text-sm">
+          <div className="flex flex-col items-end gap-0.5 sm:gap-1">
             <Stat label="HANDS" value={handsLeft} />
             <Stat label="DISCARDS" value={discardsLeft} />
           </div>
         </div>
 
         {/* Target progress bar */}
-        <div className="mt-[clamp(4px,1dvh,12px)] h-[3px] w-full shrink-0 overflow-hidden rounded-full bg-white/10">
+        <div className="mt-[clamp(3px,0.8dvh,10px)] h-[3px] w-full shrink-0 overflow-hidden rounded-full bg-white/10">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{
@@ -426,11 +430,11 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
         </div>
 
         {message && (phase === 'playing' || phase === 'jokerSelect') && (
-          <div className="mt-[clamp(3px,0.8dvh,12px)] shrink-0 text-center font-mono text-xs sm:text-sm italic tracking-wide text-white/55">{message}</div>
+          <div className="mt-[clamp(2px,0.6dvh,10px)] shrink-0 text-center font-mono text-xs sm:text-sm italic tracking-wide text-white/55">{message}</div>
         )}
 
         {ownedJokers.length > 0 && (
-          <div className="mt-[clamp(3px,0.7dvh,8px)] flex shrink-0 flex-wrap items-center justify-center gap-2">
+          <div className="mt-[clamp(2px,0.6dvh,7px)] flex shrink-0 flex-wrap items-center justify-center gap-2">
             {ownedJokers.map((j) => (
               <OwnedJokerBadge key={j.id} joker={j} />
             ))}
@@ -438,11 +442,17 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
         )}
 
         {/* Center content: cards + preview, or round transition messages.
-            No overflow/scroll here on purpose — everything inside (the
+            `justify-start` (not centered) so this content sits right below
+            the compacted header above instead of floating mid-panel —
+            "push everything upward" — which is also what leaves a
+            reliable, guaranteed-size gap before the action buttons
+            (margin-top on that row, below) instead of a squeeze that a
+            lifted/scaled selected card could ever overlap. No
+            overflow/scroll here on purpose — everything inside (the
             preview, the card row, PokerCard's own dimensions) scales off
             dvh precisely so the whole panel's contents always fit the
             actual viewport without ever needing to scroll OR clip. */}
-        <div className="relative mt-[clamp(4px,1.2dvh,16px)] flex min-h-0 flex-1 flex-col items-center justify-center gap-[clamp(4px,1dvh,16px)] py-1">
+        <div className="relative mt-[clamp(3px,1dvh,14px)] flex min-h-0 flex-1 flex-col items-center justify-start gap-[clamp(3px,0.9dvh,14px)] py-1">
           {phase === 'playing' && (
             <>
               {chaosBuff && (
@@ -472,59 +482,79 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
             </>
           )}
 
+          {/* These four screens aren't affected by the card-lift overlap
+              issue and read better centered — wrapped in their own
+              self-centering box so they stay that way regardless of the
+              parent's justify-start above. */}
           {phase === 'roundClear' && (
-            <RoundTransition
-              title="TARGET REACHED"
-              subtitle="ROUND CLEAR"
-              lines={[`FINAL SCORE`, `${score} / ${currentRound.target}`]}
-              actionLabel={
-                roundIndex >= 2
-                  ? 'FINISH'
-                  : score >= currentRound.bonusThreshold
-                    ? 'CHOOSE TWO JOKERS'
-                    : 'CHOOSE A JOKER'
-              }
-              onAction={advanceRound}
-            />
+            <div className="flex w-full flex-1 flex-col items-center justify-center">
+              <RoundTransition
+                title="TARGET REACHED"
+                subtitle="ROUND CLEAR"
+                lines={[`FINAL SCORE`, `${score} / ${currentRound.target}`]}
+                actionLabel={
+                  roundIndex >= 2
+                    ? 'FINISH'
+                    : score >= currentRound.bonusThreshold
+                      ? 'CHOOSE TWO JOKERS'
+                      : 'CHOOSE A JOKER'
+                }
+                onAction={advanceRound}
+              />
+            </div>
           )}
 
           {phase === 'jokerSelect' && jokerOffer && (
-            <JokerSelectPanel
-              currentRound={currentRound}
-              score={score}
-              jokerOffer={jokerOffer}
-              onChoose={chooseJoker}
-            />
+            <div className="flex w-full flex-1 flex-col items-center justify-center">
+              <JokerSelectPanel
+                currentRound={currentRound}
+                score={score}
+                jokerOffer={jokerOffer}
+                onChoose={chooseJoker}
+              />
+            </div>
           )}
 
           {phase === 'roundFailed' && (
-            <RoundTransition
-              title="ROUND FAILED"
-              subtitle={`${score} / ${currentRound.target}`}
-              lines={['close.']}
-              autoNote="· the table clears itself ·"
-              dry
-            />
+            <div className="flex w-full flex-1 flex-col items-center justify-center">
+              <RoundTransition
+                title="ROUND FAILED"
+                subtitle={`${score} / ${currentRound.target}`}
+                lines={['close.']}
+                autoNote="· the table clears itself ·"
+                dry
+              />
+            </div>
           )}
 
           {phase === 'gameWon' && (
-            <RoundTransition
-              title="YOU WON."
-              subtitle={exceptionalWin ? "you didn't need that much." : 'for now.'}
-              lines={[
-                `FINAL SCORE: ${runTotal}`,
-                `HANDS PLAYED: ${stats.handsPlayed}`,
-                `BEST HAND: ${stats.bestHand || '—'}`,
-                `BEST RUN: ${highScore.bestRunScore}${isNewHighScore ? '  (new high score)' : ''}`,
-              ]}
-              autoNote="· the table clears itself ·"
-            />
+            <div className="flex w-full flex-1 flex-col items-center justify-center">
+              <RoundTransition
+                title="YOU WON."
+                subtitle={exceptionalWin ? "you didn't need that much." : 'for now.'}
+                lines={[
+                  `FINAL SCORE: ${runTotal}`,
+                  `HANDS PLAYED: ${stats.handsPlayed}`,
+                  `BEST HAND: ${stats.bestHand || '—'}`,
+                  `BEST RUN: ${highScore.bestRunScore}${isNewHighScore ? '  (new high score)' : ''}`,
+                ]}
+                autoNote="· the table clears itself ·"
+              />
+            </div>
           )}
         </div>
 
-        {/* Actions */}
+        {/* Actions — the gap above is deliberately NOT allowed to compress
+            below 24px (unlike most other spacing in this panel, which is
+            free to shrink toward ~0 on a short viewport): a selected card
+            lifts up to 18px and grows slightly via scale(), and a
+            too-tight gap here is exactly what let a lifted card visually
+            overlap this row on short/cramped screens. This row and the
+            footer below are also pinned to the bottom of the panel by the
+            center content above being the only flex-1 (growing/shrinking)
+            piece — these two never compete for space with it. */}
         {phase === 'playing' && (
-          <div className="mt-[clamp(4px,1.2dvh,16px)] flex shrink-0 items-center justify-center gap-2 sm:gap-3">
+          <div className="mt-[clamp(24px,3dvh,32px)] flex shrink-0 items-center justify-center gap-2 sm:gap-3">
             <button
               type="button"
               disabled={selectedIds.length === 0 || busy}
@@ -545,7 +575,7 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
         )}
 
         {/* Quiet footer: the only ways out are musical, not a QUIT button */}
-        <div className="mt-[clamp(3px,1dvh,12px)] flex shrink-0 flex-wrap items-center justify-center gap-2 sm:gap-4 text-center font-mono text-[10px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.2em] text-white/55">
+        <div className="mt-[clamp(6px,1dvh,12px)] flex shrink-0 flex-wrap items-center justify-center gap-2 sm:gap-4 text-center font-mono text-[10px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.2em] text-white/55">
           <button
             type="button"
             onClick={onChangeMusic}
@@ -569,9 +599,9 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
 
 function Stat({ label, value }) {
   return (
-    <div className="text-right">
-      <div className="text-[10px] tracking-[0.3em] text-white/40">{label}</div>
-      <div className="text-lg tabular-nums">{value}</div>
+    <div className="flex items-baseline gap-1.5">
+      <div className="text-[9px] tracking-[0.25em] text-white/40">{label}</div>
+      <div className="text-sm sm:text-base font-semibold tabular-nums">{value}</div>
     </div>
   )
 }

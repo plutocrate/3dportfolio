@@ -176,8 +176,8 @@ export function scoreHand(cards, jokerCtx = {}) {
 // from the seeded Joker offers rather than jittered targets.
 export const ROUND_CONFIG = [
   { round: 1, target: 300, hands: 4, discards: 3, bonusThreshold: 400 },
-  { round: 2, target: 800, hands: 4, discards: 2, bonusThreshold: 1000 },
-  { round: 3, target: 1200, hands: 4, discards: 1, bonusThreshold: 1500 },
+  { round: 2, target: 800, hands: 4, discards: 3, bonusThreshold: 1000 },
+  { round: 3, target: 1200, hands: 4, discards: 3, bonusThreshold: 1500 },
 ]
 
 export function generateRounds() {
