@@ -24,7 +24,7 @@ export const RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K
 
 // Numeric rank used for straight detection (2 low, Ace high — plus the
 // wheel/A-2-3-4-5 case handled separately below).
-const RANK_ORDER = Object.fromEntries(RANKS.map((r, i) => [r, i + 2]))
+export const RANK_ORDER = Object.fromEntries(RANKS.map((r, i) => [r, i + 2]))
 
 // Chip value each rank contributes when played (face cards = 10, Ace = 11).
 const RANK_CHIPS = {

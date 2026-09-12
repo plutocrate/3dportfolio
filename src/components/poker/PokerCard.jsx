@@ -29,11 +29,11 @@ export function PokerCard({ card, selected, dead, onClick, size = 'md', style, d
       cornerSmall: 'clamp(12px, 3vw, 17px)',
     }
     : {
-      w: 'clamp(58px, 16vw, 100px)',
-      h: 'clamp(81px, 22.4vw, 140px)',
-      font: 'clamp(22px, 5.8vw, 33px)',
-      corner: 'clamp(12px, 3vw, 16px)',
-      cornerSmall: 'clamp(10px, 2.6vw, 14px)',
+      w: 'clamp(68px, 17.5vw, 112px)',
+      h: 'clamp(95px, 24.5vw, 157px)',
+      font: 'clamp(25px, 6.4vw, 37px)',
+      corner: 'clamp(13px, 3.3vw, 18px)',
+      cornerSmall: 'clamp(11px, 2.9vw, 16px)',
     }
 
   // The lift is purely a "this card is selected" indication — it must fire

@@ -1,10 +1,10 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { createDeck, shuffle, evaluateHand, scoreHand, generateRounds } from '@/lib/pokerEngine'
+import { createDeck, shuffle, evaluateHand, scoreHand, generateRounds, RANK_ORDER } from '@/lib/pokerEngine'
 import { jokerPoolFor, pickJokers } from '@/lib/jokers'
 import { mulberry32, makeSeed } from '@/lib/rng'
 import { pokerSfx } from '@/lib/pokerSfx'
 
-const HAND_SIZE = 8
+const HAND_SIZE = 9
 const HIGH_SCORE_KEY = 'poker.highscore.v1'
 
 function loadHighScore() {
@@ -64,13 +64,16 @@ export function usePokerGame() {
   // Draw fresh cards to refill the hand up to HAND_SIZE, reshuffling a
   // discard-free fresh deck if we ever run low (the round is short enough
   // this is mostly a safety net, not something players will hit often).
+  // The resulting hand is always kept sorted highest-to-lowest by rank —
+  // purely a display/scanning convenience, doesn't touch scoring at all.
   const drawUpTo = useCallback((deckIn, handIn, count) => {
     let d = deckIn
     if (d.length < count) d = shuffle(createDeck())
     const drawn = d.slice(0, count)
     const rest = d.slice(count)
     pokerSfx.draw()
-    return { deck: rest, hand: [...handIn, ...drawn] }
+    const newHand = [...handIn, ...drawn].sort((a, b) => RANK_ORDER[b.rank] - RANK_ORDER[a.rank])
+    return { deck: rest, hand: newHand }
   }, [])
 
   const startRound = useCallback((idx, roundsArr, ownedOverride) => {
