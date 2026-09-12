@@ -20,20 +20,26 @@ export function PokerCard({ card, selected, dead, onClick, size = 'md', style, d
   // Viewport-relative sizing (via clamp) instead of fixed pixel dims, so
   // cards scale down gracefully on narrow/mobile screens instead of
   // overflowing the hand row or forcing it into many cramped wrapped lines.
+  // The preferred term combines vw AND dvh via min() — on a normal
+  // portrait screen the vw term is what actually binds, but on a SHORT
+  // viewport (landscape phone, a small laptop window, browser chrome
+  // eating into the visible height) the dvh term takes over and shrinks
+  // the card to whatever actually fits vertically, which is what keeps
+  // the whole game panel scroll-free without ever having to clip anything.
   const dims = size === 'lg'
     ? {
-      w: 'clamp(78px, 19vw, 116px)',
-      h: 'clamp(109px, 26.6vw, 162px)',
-      font: 'clamp(26px, 6.6vw, 38px)',
-      corner: 'clamp(14px, 3.4vw, 19px)',
-      cornerSmall: 'clamp(12px, 3vw, 17px)',
+      w: 'clamp(66px, min(19vw, 15.3dvh), 116px)',
+      h: 'clamp(92px, min(26.6vw, 21.4dvh), 162px)',
+      font: 'clamp(22px, min(6.6vw, 5.3dvh), 38px)',
+      corner: 'clamp(12px, min(3.4vw, 2.8dvh), 19px)',
+      cornerSmall: 'clamp(10px, min(3vw, 2.4dvh), 17px)',
     }
     : {
-      w: 'clamp(68px, 17.5vw, 112px)',
-      h: 'clamp(95px, 24.5vw, 157px)',
-      font: 'clamp(25px, 6.4vw, 37px)',
-      corner: 'clamp(13px, 3.3vw, 18px)',
-      cornerSmall: 'clamp(11px, 2.9vw, 16px)',
+      w: 'clamp(58px, min(17.5vw, 13.2dvh), 112px)',
+      h: 'clamp(81px, min(24.5vw, 18.5dvh), 157px)',
+      font: 'clamp(21px, min(6.4vw, 4.8dvh), 37px)',
+      corner: 'clamp(11px, min(3.3vw, 2.5dvh), 18px)',
+      cornerSmall: 'clamp(9px, min(2.9vw, 2.2dvh), 16px)',
     }
 
   // The lift is purely a "this card is selected" indication — it must fire

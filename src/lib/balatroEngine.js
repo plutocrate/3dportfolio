@@ -18,6 +18,14 @@
 //      again once setActive(true) explicitly calls it — so "not showing
 //      the swirl" now genuinely means zero per-frame cost, not just zero
 //      draw calls.
+//   5. Weak/old GPUs (or software renderers) get detected once per session
+//      (isLowPowerDevice, below) and are given a completely static swirl
+//      instead of an animated one — draw exactly one real frame, then
+//      freeze on it forever, still fading in/out via CSS opacity like
+//      normal. A device with no WebGL at all was already skipped entirely
+//      (getContext returns null); this is the middle tier, for devices
+//      that technically have a GPU path but can't comfortably animate a
+//      shader on it every frame.
 // ─────────────────────────────────────────────────────────────────────────
 
 const VERTEX_SRC = `
@@ -141,6 +149,34 @@ function compile(gl, type, src) {
     console.error('Balatro swirl shader error:', gl.getShaderInfoLog(s));
   }
   return s;
+}
+
+// ── Device capability detection, computed once and cached ──────────────────
+// A device with NO WebGL at all is already handled per-canvas — getContext
+// returns null and mountSwirl just skips the effect entirely for that
+// canvas (see below). This covers the middle case: a context DOES exist,
+// but the underlying renderer is a known software/emulated one, or the
+// device just looks generally weak. Rather than skip the swirl outright
+// there, it still renders — exactly once — and then freezes on that single
+// frame instead of animating forever (see the `lowPower` flag in
+// mountSwirl), which keeps the visual (a static, painterly swirl) at
+// effectively zero ongoing GPU cost instead of no visual at all.
+let _lowPowerCache = null;
+function isLowPowerDevice(gl) {
+  if (_lowPowerCache !== null) return _lowPowerCache;
+  let result = false;
+  try {
+    const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+    const renderer = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || '') : '';
+    const isSoftwareRenderer = /swiftshader|llvmpipe|software|microsoft basic render|mesa\s*offscreen/i.test(renderer);
+    const fewCores = typeof navigator !== 'undefined' && !!navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2;
+    const lowMemory = typeof navigator !== 'undefined' && !!navigator.deviceMemory && navigator.deviceMemory <= 2;
+    result = isSoftwareRenderer || (fewCores && lowMemory);
+  } catch (e) {
+    result = false;
+  }
+  _lowPowerCache = result;
+  return result;
 }
 
 function buildProgram(gl) {
@@ -278,6 +314,13 @@ export function mountSwirl(canvasEl, field, opts = {}) {
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
   }
 
+  // On a weak/old GPU (or a software renderer), draw exactly one real
+  // frame and then freeze on it — a static swirl instead of a moving one,
+  // at effectively zero ongoing cost. `hasDrawnOnce` is what the freeze
+  // actually hinges on; see the draw branch in loop() below.
+  const lowPower = !contextLost && isLowPowerDevice(gl);
+  let hasDrawnOnce = false;
+
   let u = contextLost ? null : buildProgram(gl);
 
   function onContextLost(e) {
@@ -291,6 +334,7 @@ export function mountSwirl(canvasEl, field, opts = {}) {
 
   function onContextRestored() {
     contextLost = false;
+    hasDrawnOnce = false; // the old frame was wiped along with everything else
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     u = buildProgram(gl); // program/buffers were wiped by the loss, rebuild them
@@ -386,6 +430,19 @@ export function mountSwirl(canvasEl, field, opts = {}) {
       raf = requestAnimationFrame(loop);
       return;
     }
+
+    // Weak/old GPU: the pattern was already drawn once and is just sitting
+    // in the canvas's backing buffer — deliberately never touched again on
+    // a low-power device, only the CSS opacity (still updated every frame
+    // below, so fade in/out keeps working, and that costs nothing to
+    // animate). A resize while the window is this static won't redraw it,
+    // but that's a desktop-only edge case worth trading away for a device
+    // that can't comfortably afford a live shader at all.
+    if (lowPower && hasDrawnOnce) {
+      canvasEl.style.opacity = String(field.opacity * baseOpacity);
+      raf = requestAnimationFrame(loop);
+      return;
+    }
     lastDrawT = now;
 
     resize(); // cheap no-op unless size actually changed
@@ -413,6 +470,7 @@ export function mountSwirl(canvasEl, field, opts = {}) {
     gl.uniform1f(u.uIntensity, intensity);
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);
+    hasDrawnOnce = true;
 
     canvasEl.style.opacity = String(field.opacity * baseOpacity);
 

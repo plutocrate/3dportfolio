@@ -14,12 +14,12 @@ import {
 } from '@/components/sections'
 
 const SECTION_MAP = {
-  about:      AboutSection,
-  academia:   AcademiaSection,
-  talk:       TalkSection,
+  about: AboutSection,
+  academia: AcademiaSection,
+  talk: TalkSection,
   chronicles: ChroniclesSection,
-  cabinet:    CabinetSection,
-  blog:       BlogSection,
+  cabinet: CabinetSection,
+  blog: BlogSection,
 }
 
 // Default panel width — roughly half the viewport on desktop, capped so it
@@ -32,21 +32,28 @@ const MIN_WIDTH = 320
 const getMaxWidth = () => (typeof window !== 'undefined' ? Math.min(1200, window.innerWidth - 80) : 1200)
 
 export function SectionPanel({ onClose }) {
-  const panelOpen        = useSceneStore((s) => s.panelOpen)
-  const activeSection    = useSceneStore((s) => s.activeSection)
-  const closeSection     = useSceneStore((s) => s.closeSection)
-  const pendingScrollId  = useSceneStore((s) => s.pendingScrollId)
+  const panelOpen = useSceneStore((s) => s.panelOpen)
+  const activeSection = useSceneStore((s) => s.activeSection)
+  const closeSection = useSceneStore((s) => s.closeSection)
+  const pendingScrollId = useSceneStore((s) => s.pendingScrollId)
   const clearPendingScroll = useSceneStore((s) => s.clearPendingScroll)
-  const panelRef      = useRef()
-  const contentRef    = useRef()
-  const playClick     = useClickSound()
+  const panelRef = useRef()
+  const contentRef = useRef()
+  const playClick = useClickSound()
 
-  const [width, setWidth]       = useState(getDefaultWidth)
+  const [width, setWidth] = useState(getDefaultWidth)
   const [maxWidth, setMaxWidth] = useState(getMaxWidth)
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
-  const dragging       = useRef(false)
-  const startX         = useRef(0)
-  const startW         = useRef(0)
+  // < 1024 (not the usual 768) so tablets get the same full-screen
+  // treatment as phones — a ~50%-width side panel with the 3D scene still
+  // visible in the remaining space reads fine on a real desktop monitor,
+  // but on a tablet that gap is either awkwardly narrow or leaves half
+  // the readable content squeezed while showing very little of the scene
+  // either. Full-screen is just the better call up to a real desktop
+  // viewport.
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1024)
+  const dragging = useRef(false)
+  const startX = useRef(0)
+  const startW = useRef(0)
   const hasCustomWidth = useRef(false) // true once the user manually drag-resizes
 
   // Track mobile breakpoint + keep width tied to the CURRENT viewport size.
@@ -58,7 +65,7 @@ export function SectionPanel({ onClose }) {
   // viewport that's since gotten smaller.
   useEffect(() => {
     const handler = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(window.innerWidth < 1024)
       const nextMax = getMaxWidth()
       setMaxWidth(nextMax)
       if (!hasCustomWidth.current) {
@@ -109,9 +116,9 @@ export function SectionPanel({ onClose }) {
   const onMouseDown = useCallback((e) => {
     dragging.current = true
     hasCustomWidth.current = true
-    startX.current   = e.clientX
-    startW.current   = width
-    document.body.style.cursor    = 'ew-resize'
+    startX.current = e.clientX
+    startW.current = width
+    document.body.style.cursor = 'ew-resize'
     document.body.style.userSelect = 'none'
   }, [width])
 
@@ -119,20 +126,20 @@ export function SectionPanel({ onClose }) {
     const onMouseMove = (e) => {
       if (!dragging.current) return
       const delta = startX.current - e.clientX   // dragging left = wider
-      const next  = Math.max(MIN_WIDTH, Math.min(maxWidth, startW.current + delta))
+      const next = Math.max(MIN_WIDTH, Math.min(maxWidth, startW.current + delta))
       setWidth(next)
     }
     const onMouseUp = () => {
       if (!dragging.current) return
       dragging.current = false
-      document.body.style.cursor    = ''
+      document.body.style.cursor = ''
       document.body.style.userSelect = ''
     }
     window.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('mouseup',   onMouseUp)
+    window.addEventListener('mouseup', onMouseUp)
     return () => {
       window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('mouseup',   onMouseUp)
+      window.removeEventListener('mouseup', onMouseUp)
     }
   }, [maxWidth])
 
@@ -140,28 +147,28 @@ export function SectionPanel({ onClose }) {
   const onTouchStart = useCallback((e) => {
     dragging.current = true
     hasCustomWidth.current = true
-    startX.current   = e.touches[0].clientX
-    startW.current   = width
+    startX.current = e.touches[0].clientX
+    startW.current = width
   }, [width])
 
   useEffect(() => {
     const onTouchMove = (e) => {
       if (!dragging.current) return
       const delta = startX.current - e.touches[0].clientX
-      const next  = Math.max(MIN_WIDTH, Math.min(maxWidth, startW.current + delta))
+      const next = Math.max(MIN_WIDTH, Math.min(maxWidth, startW.current + delta))
       setWidth(next)
     }
     const onTouchEnd = () => { dragging.current = false }
     window.addEventListener('touchmove', onTouchMove)
-    window.addEventListener('touchend',  onTouchEnd)
+    window.addEventListener('touchend', onTouchEnd)
     return () => {
       window.removeEventListener('touchmove', onTouchMove)
-      window.removeEventListener('touchend',  onTouchEnd)
+      window.removeEventListener('touchend', onTouchEnd)
     }
   }, [maxWidth])
 
   const SectionContent = activeSection ? SECTION_MAP[activeSection] : null
-  const panelWidth     = isMobile ? '100%' : width
+  const panelWidth = isMobile ? '100%' : width
 
   const handleCloseClick = () => { playClick(); onClose ? onClose() : closeSection() }
 
@@ -180,77 +187,77 @@ export function SectionPanel({ onClose }) {
       />
 
       <div
-      ref={panelRef}
-      className="fixed top-0 right-0 h-full z-50 pointer-events-auto"
-      style={{
-        width: panelWidth,
-        transform: 'translateX(100%)',
-        transition: 'transform 0.38s cubic-bezier(0.22,1,0.36,1)',
-        willChange: 'transform',
-      }}
-    >
-      {/* Background */}
-      <div
-        className="absolute inset-0 border-l border-white/8"
-        style={{ background: 'rgba(7,7,7,0.96)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)' }}
-      />
-
-      {/* ── Drag handle (desktop only) ── */}
-      {!isMobile && (
+        ref={panelRef}
+        className="fixed top-0 right-0 h-full z-50 pointer-events-auto"
+        style={{
+          width: panelWidth,
+          transform: 'translateX(100%)',
+          transition: 'transform 0.38s cubic-bezier(0.22,1,0.36,1)',
+          willChange: 'transform',
+        }}
+      >
+        {/* Background */}
         <div
-          onMouseDown={onMouseDown}
-          onTouchStart={onTouchStart}
-          className="absolute left-0 top-0 bottom-0 w-4 z-20 flex items-center justify-center group"
-          style={{ cursor: 'ew-resize', touchAction: 'none' }}
-        >
-          {/* Thin visible grip line */}
+          className="absolute inset-0 border-l border-white/8"
+          style={{ background: 'rgba(7,7,7,0.96)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)' }}
+        />
+
+        {/* ── Drag handle (desktop only) ── */}
+        {!isMobile && (
           <div
-            className="w-px h-16 rounded-full transition-all duration-150 group-hover:h-24 group-active:bg-white/50"
-            style={{ background: 'rgba(255,255,255,0.12)', transition: 'background 0.15s, height 0.15s' }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.35)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.12)'}
-          />
-          {/* Section label */}
-          <div
-            className="absolute font-mono text-[clamp(11px,calc(10.08px+0.24vw),14px)] text-white/49 uppercase tracking-[0.4em] select-none pointer-events-none"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            onMouseDown={onMouseDown}
+            onTouchStart={onTouchStart}
+            className="absolute left-0 top-0 bottom-0 w-4 z-20 flex items-center justify-center group"
+            style={{ cursor: 'ew-resize', touchAction: 'none' }}
           >
-            {activeSection}
+            {/* Thin visible grip line */}
+            <div
+              className="w-px h-16 rounded-full transition-all duration-150 group-hover:h-24 group-active:bg-white/50"
+              style={{ background: 'rgba(255,255,255,0.12)', transition: 'background 0.15s, height 0.15s' }}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.35)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.12)'}
+            />
+            {/* Section label */}
+            <div
+              className="absolute font-mono text-[clamp(11px,calc(10.08px+0.24vw),14px)] text-white/49 uppercase tracking-[0.4em] select-none pointer-events-none"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              {activeSection}
+            </div>
+          </div>
+        )}
+
+        {/* Close button — always visible, top-right */}
+        <div
+          className="absolute top-6 z-10 flex items-center"
+          style={{ right: 16 }}
+        >
+          <button
+            onClick={handleCloseClick}
+            className={isMobile
+              ? 'w-[47px] h-[47px] flex items-center justify-center border border-white/15 text-white/78 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-[23px]'
+              : 'w-9 h-9 flex items-center justify-center border border-white/15 text-white/78 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-lg'}
+            aria-label="Close"
+          >×</button>
+        </div>
+
+        {/* Scrollable content */}
+        <div className="relative h-full overflow-y-auto pb-12 pl-6 pr-6 sm:pl-10 sm:pr-10" style={{ paddingTop: 52 }}>
+          <div ref={contentRef}>
+            {SectionContent && <SectionContent />}
           </div>
         </div>
-      )}
 
-      {/* Close button — always visible, top-right */}
-      <div
-        className="absolute top-6 z-10 flex items-center"
-        style={{ right: 16 }}
-      >
-        <button
-          onClick={handleCloseClick}
-          className={isMobile
-            ? 'w-[47px] h-[47px] flex items-center justify-center border border-white/15 text-white/78 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-[23px]'
-            : 'w-9 h-9 flex items-center justify-center border border-white/15 text-white/78 hover:text-white hover:border-white/50 transition-all duration-200 font-mono text-lg'}
-          aria-label="Close"
-        >×</button>
-      </div>
-
-      {/* Scrollable content */}
-      <div className="relative h-full overflow-y-auto pb-12 pl-6 pr-6 sm:pl-10 sm:pr-10" style={{ paddingTop: 52 }}>
-        <div ref={contentRef}>
-          {SectionContent && <SectionContent />}
+        {/* Footer */}
+        <div className="absolute bottom-0 left-px right-0 border-t border-white/8 px-6 sm:px-8 py-3 flex items-center justify-between">
+          <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/51 uppercase tracking-widest">
+            prathamis.cool
+          </span>
+          <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/51 tabular-nums">
+            {new Date().getFullYear()}
+          </span>
         </div>
       </div>
-
-      {/* Footer */}
-      <div className="absolute bottom-0 left-px right-0 border-t border-white/8 px-6 sm:px-8 py-3 flex items-center justify-between">
-        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/51 uppercase tracking-widest">
-          prathamis.cool
-        </span>
-        <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/51 tabular-nums">
-          {new Date().getFullYear()}
-        </span>
-      </div>
-    </div>
     </>
   )
 }

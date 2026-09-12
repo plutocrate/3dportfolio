@@ -40,7 +40,18 @@ export function MainScene({ onAnnotationClick, onModelLoaded, isMobile, characte
       <SceneLighting />
       <SceneEnvironment />
       <Suspense fallback={null}>
-        <CharacterModel onLoaded={onModelLoaded} auraRef={characterAuraRef} />
+        {/* "bring the model a little lower" — the annotation coordinates
+            in portfolio.js are shifted by the same amount (see there), so
+            the character and every marker/line/button anchored to it move
+            down together. Wrapping ONLY the model here (not the
+            annotations) matters because MobileAnnotationOverlay projects
+            straight from that raw position data via the camera, entirely
+            bypassing this scene graph — a group wrapping the annotations
+            too would shift the desktop markers correctly but leave mobile
+            ones pointing at the character's old spot. */}
+        <group position={[0, -0.1, 0]}>
+          <CharacterModel onLoaded={onModelLoaded} auraRef={characterAuraRef} />
+        </group>
         <AnnotationLayer onAnnotationClick={onAnnotationClick} isMobile={isMobile} />
       </Suspense>
     </Canvas>

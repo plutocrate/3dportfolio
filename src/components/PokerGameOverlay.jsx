@@ -26,7 +26,7 @@ export function PokerGameOverlay({
   playCardsAnchorRef,
   onActiveChange,
 }) {
-  const [stage, setStage] = useState('hidden') // hidden | intro | noSlap | game
+  const [stage, setStage] = useState('hidden') // hidden | intro | game
   // `wasSwirl` drives the "want to play?" trigger — gated on actual playback
   // (isSwirlTrack), since a swirl track sitting paused shouldn't pop the
   // prompt. `wasTrackSwirl` drives the "player walked away" close check —
@@ -37,7 +37,6 @@ export function PokerGameOverlay({
   const wasTrackSwirl = useRef(false)
   const trackIsSwirl = SWIRL_TRACK_PATTERN.test(currentTrackUrl || '')
   const triggerTimer = useRef(null)
-  const noSlapTimer = useRef(null)
   const game = usePokerGame()
   const [scoreAnim, setScoreAnim] = useState(null) // drives the scoring build-up
   const [helpOpen, setHelpOpen] = useState(false)
@@ -77,7 +76,6 @@ export function PokerGameOverlay({
   useEffect(() => {
     if (!trackIsSwirl && wasTrackSwirl.current && stage !== 'hidden') {
       clearTimeout(triggerTimer.current)
-      clearTimeout(noSlapTimer.current)
       setStage('hidden')
       setHelpOpen(false) // don't leave help floating over a game that just closed
       ambientMusic.setTrackEndBehavior(null)
@@ -112,11 +110,11 @@ export function PokerGameOverlay({
   }
 
   const handleNo = () => {
-    setStage('noSlap')
-    noSlapTimer.current = setTimeout(() => {
-      game.beginGame()
-      setStage('game')
-    }, 1400)
+    // A real "no" now: just close and hand the site back, with the swirl
+    // track left exactly where it is — no skipping ahead, no forcing the
+    // game open anyway. (It used to fake-comply and start the game after
+    // a beat regardless of the answer; that's gone.)
+    setStage('hidden')
   }
 
   const handleChangeMusic = () => {
@@ -280,12 +278,6 @@ export function PokerGameOverlay({
         </GamePopup>
       )}
 
-      {stage === 'noSlap' && (
-        <GamePopup>
-          <p className="font-mono text-lg tracking-wide text-white/90">fuck it. we&rsquo;re playing anyway.</p>
-        </GamePopup>
-      )}
-
       {stage === 'game' && (
         <GameStage
           game={game}
@@ -403,7 +395,7 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-6">
       <div
-        className="poker-glass-panel poker-panel-shell relative flex w-full sm:w-[95vw] max-w-[1200px] flex-col overflow-hidden rounded-2xl sm:rounded-3xl px-3 py-3 sm:px-8 sm:py-6"
+        className="poker-glass-panel poker-panel-shell relative flex w-full sm:w-[95vw] max-w-[1200px] min-h-0 flex-col overflow-hidden rounded-2xl sm:rounded-3xl px-3 py-3 sm:px-8 sm:py-6"
         style={{ animation: 'poker-pop-in 320ms cubic-bezier(0.16,1,0.3,1)' }}
       >
         {/* Top bar */}
@@ -423,7 +415,7 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
         </div>
 
         {/* Target progress bar */}
-        <div className="mt-3 h-[3px] w-full overflow-hidden rounded-full bg-white/10">
+        <div className="mt-[clamp(4px,1dvh,12px)] h-[3px] w-full shrink-0 overflow-hidden rounded-full bg-white/10">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{
@@ -434,19 +426,23 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
         </div>
 
         {message && (phase === 'playing' || phase === 'jokerSelect') && (
-          <div className="mt-3 text-center font-mono text-xs sm:text-sm italic tracking-wide text-white/55">{message}</div>
+          <div className="mt-[clamp(3px,0.8dvh,12px)] shrink-0 text-center font-mono text-xs sm:text-sm italic tracking-wide text-white/55">{message}</div>
         )}
 
         {ownedJokers.length > 0 && (
-          <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
+          <div className="mt-[clamp(3px,0.7dvh,8px)] flex shrink-0 flex-wrap items-center justify-center gap-2">
             {ownedJokers.map((j) => (
               <OwnedJokerBadge key={j.id} joker={j} />
             ))}
           </div>
         )}
 
-        {/* Center content: cards + preview, or round transition messages */}
-        <div className="relative mt-3 sm:mt-4 flex flex-1 flex-col items-center justify-center gap-3 sm:gap-4 overflow-y-auto overflow-x-hidden py-1">
+        {/* Center content: cards + preview, or round transition messages.
+            No overflow/scroll here on purpose — everything inside (the
+            preview, the card row, PokerCard's own dimensions) scales off
+            dvh precisely so the whole panel's contents always fit the
+            actual viewport without ever needing to scroll OR clip. */}
+        <div className="relative mt-[clamp(4px,1.2dvh,16px)] flex min-h-0 flex-1 flex-col items-center justify-center gap-[clamp(4px,1dvh,16px)] py-1">
           {phase === 'playing' && (
             <>
               {chaosBuff && (
@@ -528,12 +524,12 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
 
         {/* Actions */}
         {phase === 'playing' && (
-          <div className="mt-3 sm:mt-4 flex items-center justify-center gap-2 sm:gap-3">
+          <div className="mt-[clamp(4px,1.2dvh,16px)] flex shrink-0 items-center justify-center gap-2 sm:gap-3">
             <button
               type="button"
               disabled={selectedIds.length === 0 || busy}
               onClick={onPlayHand}
-              className="rounded-full border border-white/40 bg-white/15 px-5 sm:px-8 py-2 sm:py-2.5 font-mono text-[11px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.25em] text-white transition-all duration-150 hover:bg-white/25 disabled:cursor-not-allowed disabled:opacity-30"
+              className="rounded-full border border-white/40 bg-white/15 px-5 py-[clamp(6px,1.1dvh,10px)] sm:px-8 font-mono text-[11px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.25em] text-white transition-all duration-150 hover:bg-white/25 disabled:cursor-not-allowed disabled:opacity-30"
             >
               PLAY HAND
             </button>
@@ -541,7 +537,7 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
               type="button"
               disabled={selectedIds.length === 0 || discardsLeft <= 0 || busy}
               onClick={onDiscard}
-              className="rounded-full border border-white/30 bg-transparent px-5 sm:px-8 py-2 sm:py-2.5 font-mono text-[11px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.25em] text-white/90 transition-all duration-150 hover:border-white/60 hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+              className="rounded-full border border-white/30 bg-transparent px-5 py-[clamp(6px,1.1dvh,10px)] sm:px-8 font-mono text-[11px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.25em] text-white/90 transition-all duration-150 hover:border-white/60 hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
             >
               DISCARD
             </button>
@@ -549,7 +545,7 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
         )}
 
         {/* Quiet footer: the only ways out are musical, not a QUIT button */}
-        <div className="mt-3 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-center font-mono text-[10px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.2em] text-white/55">
+        <div className="mt-[clamp(3px,1dvh,12px)] flex shrink-0 flex-wrap items-center justify-center gap-2 sm:gap-4 text-center font-mono text-[10px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.2em] text-white/55">
           <button
             type="button"
             onClick={onChangeMusic}
@@ -589,14 +585,14 @@ const JOKER_COLOR = '#c9a6ff'
 
 function HandPreview({ previewHand, scoreAnim }) {
   if (!previewHand && !scoreAnim) {
-    return <div className="h-[64px] font-mono text-sm tracking-widest text-white/55">select up to 5 cards</div>
+    return <div className="h-[clamp(36px,7dvh,64px)] font-mono text-sm tracking-widest text-white/55 flex items-center justify-center">select up to 5 cards</div>
   }
 
   if (scoreAnim) {
     const { result, step } = scoreAnim
     const big = ['Full House', 'Four of a Kind', 'Straight Flush'].includes(result.handName)
     return (
-      <div className="flex min-h-[64px] flex-col items-center justify-center font-mono">
+      <div className="flex min-h-[clamp(36px,7dvh,64px)] shrink-0 flex-col items-center justify-center font-mono">
         <div className={cn('tracking-[0.2em] text-white/80', big ? 'text-base' : 'text-xs')}>{result.handName}</div>
         <ScoreMath result={result} revealStep={step} big={big} />
         {step >= 1 && <JokerEffectsList triggered={result.jokersTriggered} />}
@@ -605,7 +601,7 @@ function HandPreview({ previewHand, scoreAnim }) {
   }
 
   return (
-    <div className="flex min-h-[64px] flex-col items-center justify-center font-mono">
+    <div className="flex min-h-[clamp(36px,7dvh,64px)] shrink-0 flex-col items-center justify-center font-mono">
       <div className="text-xs tracking-[0.2em] text-white/70">{previewHand.name}</div>
       <ScoreMath result={previewHand} />
       <JokerEffectsList triggered={previewHand.jokersTriggered} />

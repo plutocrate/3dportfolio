@@ -7,13 +7,35 @@ import { cn } from '@/lib/utils'
 
 const _v = new THREE.Vector3()
 
-const BTN_W = 104  // fixed width px — big enough to tap (1.3x)
-const BTN_H = 42   // fixed height px (1.3x)
+// Base size these annotation buttons render at before SIZE_SCALE below.
+// (An earlier pass bumped this up 1.15x on the theory that bigger was more
+// tappable — turned out to just look bulky and cluttered next to the
+// character. SIZE_SCALE now goes the other way, below the original 104x42
+// baseline, for a visibly cleaner/smaller footprint.)
+const BASE_BTN_W = 104
+const BASE_BTN_H = 42
+const SIZE_SCALE = 0.8
+
 const PAD_X = 12   // min distance from left/right edge
 const PAD_TOP = 64   // below name bar
 const PAD_BOTTOM = 90   // above uptime bar
 
+const clampNum = (min, val, max) => Math.max(min, Math.min(max, val))
+
+// Dynamic, not fixed: the button scales with the actual viewport width
+// (bounded to a sane range so it doesn't balloon on a tablet or shrink to
+// nothing on a tiny phone), then the whole result gets the SIZE_SCALE
+// applied. Height follows the same aspect ratio as the base size.
+function dynamicButtonSize(viewportWidth) {
+  const w = Math.round(
+    clampNum(BASE_BTN_W * 0.82, viewportWidth * 0.21, BASE_BTN_W * 1.2) * SIZE_SCALE
+  )
+  const h = Math.round(w * (BASE_BTN_H / BASE_BTN_W))
+  return { w, h }
+}
+
 function computePositions(camera, size) {
+  const { w: BTN_W, h: BTN_H } = dynamicButtonSize(size.width)
   return ANNOTATIONS.map((ann) => {
     _v.set(...ann.position).project(camera)
 
@@ -31,7 +53,7 @@ function computePositions(camera, size) {
 
     const by = Math.max(PAD_TOP, Math.min(size.height - PAD_BOTTOM - BTN_H, sy - BTN_H / 2))
 
-    return { id: ann.id, label: ann.label, annotation: ann, bx, by, visible: true }
+    return { id: ann.id, label: ann.label, annotation: ann, bx, by, btnW: BTN_W, btnH: BTN_H, visible: true }
   })
 }
 
@@ -67,8 +89,8 @@ export function MobileAnnotationOverlay({ onAnnotationClick }) {
               position: 'absolute',
               left: p.bx,
               top: p.by,
-              width: BTN_W,
-              height: BTN_H,
+              width: p.btnW,
+              height: p.btnH,
               overflow: 'hidden',
               pointerEvents: 'auto',
               willChange: 'left, top',
@@ -102,7 +124,7 @@ export function MobileAnnotationOverlay({ onAnnotationClick }) {
               position: 'relative',
               zIndex: 1,
               fontFamily: 'monospace',
-              fontSize: 11.5,
+              fontSize: Math.round(11.5 * SIZE_SCALE * 10) / 10,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
               color: isActive ? '#000' : 'rgba(255,255,255,0.92)',

@@ -204,7 +204,7 @@ export function AnnotationMarker({ annotation, onClick }) {
           <div className={cn(
             'font-mono uppercase border whitespace-nowrap transition-all duration-200',
             'relative isolate overflow-hidden',
-            'px-2.5 py-1 text-[clamp(10px,calc(9.6px+0.16vw),12px)] tracking-[0.18em]',
+            'px-[8.5px] py-[3.4px] text-[clamp(8.5px,calc(8.16px+0.136vw),10.2px)] tracking-[0.16em]',
             isActive
               ? 'bg-white text-black border-white'
               : 'bg-black/85 text-white/76 border-white/20',
@@ -214,7 +214,7 @@ export function AnnotationMarker({ annotation, onClick }) {
             <span className="relative z-10">{label}</span>
           </div>
           <div className={cn(
-            'font-mono text-[clamp(9px,calc(8.6px+0.13vw),11px)] mt-0.5 transition-colors duration-200 whitespace-nowrap',
+            'font-mono text-[clamp(7.65px,calc(7.31px+0.11vw),9.35px)] mt-0.5 transition-colors duration-200 whitespace-nowrap',
             isActive ? 'text-white/73' : 'text-white/53',
             side === 'right' ? 'pl-0.5' : 'pr-0.5'
           )}>
