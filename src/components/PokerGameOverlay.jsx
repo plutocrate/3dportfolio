@@ -8,6 +8,7 @@ import { jokerVisual } from '@/lib/jokerVisuals'
 import { cn } from '@/lib/utils'
 import { HelpCircle } from 'lucide-react'
 import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
+import { useDetailOverlay } from '@/hooks/useDetailOverlay'
 
 const SWIRL_TRACK_PATTERN = /-b\.[a-z0-9]+$/i
 const TRIGGER_DELAY_MS = 900
@@ -698,10 +699,11 @@ function JokerEffectsList({ triggered }) {
 // on hover (desktop) or tap (anywhere on the chip; it's not a choose
 // action here, so no separate "i" badge is needed).
 function OwnedJokerBadge({ joker }) {
-  const [open, setOpen] = useState(false)
+  const { open, setOpen, containerRef } = useDetailOverlay()
   const { Icon, label, accent } = jokerVisual(joker)
   return (
     <span
+      ref={containerRef}
       className="group relative"
       onClick={() => setOpen((o) => !o)}
       role="button"

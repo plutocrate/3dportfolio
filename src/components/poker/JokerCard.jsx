@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { jokerVisual } from '@/lib/jokerVisuals'
+import { useDetailOverlay } from '@/hooks/useDetailOverlay'
 
 // Jokers deliberately look NOTHING like the poker cards: an asymmetric
 // notched shape, a dark holographic gradient instead of white card stock.
@@ -10,11 +10,12 @@ import { jokerVisual } from '@/lib/jokerVisuals'
 // text. Hovering (or tapping the small "i" badge on touch) reveals a full
 // detail overlay spelling out exactly what the Joker does.
 export function JokerCard({ joker, onClick, locked, disabled, tilt = 0 }) {
-  const [detailOpen, setDetailOpen] = useState(false)
+  const { open: detailOpen, setOpen: setDetailOpen, containerRef } = useDetailOverlay()
   const { Icon, label, accent } = jokerVisual(joker)
 
   return (
     <button
+      ref={containerRef}
       type="button"
       onClick={() => !disabled && !locked && onClick?.(joker.id)}
       disabled={disabled}

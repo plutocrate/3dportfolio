@@ -7,11 +7,13 @@
 // the two genuinely special ones (Chaos Theory, The Gambler) which depend on
 // a die roll supplied from outside.
 //
-// Per-card Jokers (Lucky Seven, Ace Up, The Collector, ...) only look at a
-// hand's SCORING cards — the same cards that contribute chips to the base
-// hand. A kicker that doesn't participate in the poker hand is inert
-// everywhere, Jokers included, for the same reason it doesn't score chips:
-// if it's not part of the hand, it was never really "played".
+// Per-card Jokers (Lucky Seven, Ace Up, The Collector, ...) look at EVERY
+// card you played — not just the subset that ended up part of the
+// recognized poker hand. "Each face card played gives +5 Chips" means
+// each one, full stop: a King sitting as a dead kicker next to an
+// unrelated pair still is a face card you played, and still fires. (Only
+// the hand's own BASE chip total stays restricted to scoring cards — that
+// part is just how poker hands work, separate from what a Joker does.)
 // ─────────────────────────────────────────────────────────────────────────────
 
 const isFace = (c) => c.rank === 'J' || c.rank === 'Q' || c.rank === 'K'
@@ -77,7 +79,7 @@ export function pickJokers(pool, ownedIds, rngFn, count = 3) {
 // can show exactly what fired ("cleanly and visibly", per the Gambler spec).
 export function applyJokers({
   ownedJokers = [],
-  scoringCards = [],
+  playedCards = [],
   playedCardsCount = 0,
   handName,
   handsLeftBeforePlay = Infinity,
@@ -92,7 +94,7 @@ export function applyJokers({
 
   for (const j of ownedJokers) {
     if (j.perCard) {
-      const count = scoringCards.reduce((n, c) => n + (j.perCard.test(c) ? 1 : 0), 0)
+      const count = playedCards.reduce((n, c) => n + (j.perCard.test(c) ? 1 : 0), 0)
       if (count > 0) {
         if (j.perCard.chips) {
           const add = j.perCard.chips * count

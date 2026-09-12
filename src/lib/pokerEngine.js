@@ -142,7 +142,7 @@ export function scoreHand(cards, jokerCtx = {}) {
 
   const fx = applyJokers({
     ownedJokers: jokerCtx.ownedJokers || [],
-    scoringCards,
+    playedCards: cards,
     playedCardsCount: cards.length,
     handName: name,
     handsLeftBeforePlay: jokerCtx.handsLeftBeforePlay ?? Infinity,
