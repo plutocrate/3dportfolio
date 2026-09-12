@@ -88,7 +88,7 @@ export const CHRONICLES = [
     status: "In Progress",
     coverImage: "/gallery/faa.jpg",
     coverPosition: "top",
-    music: "/music/inter.mp3",
+    music: "/music/sfx/inter.mp3",
     body: [
       "I've started reading a little about Advaita Vedanta, and the more I think about it, the more I realize that the question isn't really asking for another label. It is asking me to investigate the person who is doing the labeling in the first place.",
 
@@ -232,7 +232,7 @@ export const CHRONICLES = [
     status: "In Progress",
     coverImage: "/gallery/stoic_banner.jpg",
     coverPosition: "center",
-    music: "/music/greatgig.mp3",
+    music: "/music/sfx/greatgig.mp3",
     body: [
       "The space between what happens and what I do",
 
@@ -306,7 +306,7 @@ export const CHRONICLES = [
     status: "In Progress",
     coverImage: "/gallery/Stalker.jpg",
     coverPosition: "",
-    music: "/music/stalker.mp3",
+    music: "/music/sfx/stalker.mp3",
     body: [
       "The world did not end when the dead began walking. For a while, people believed that was the end. They watched hospitals overflow, watched soldiers fire into crowds that refused to stay dead, watched entire neighbourhoods sealed behind concrete and fire. Governments appeared on television promising containment until there was no television left. Cities lost electricity one district at a time. Water stopped coming through pipes. Food stopped arriving at stores. The dead became a problem, then a fact of life, and eventually just another thing people learned to avoid. What finally killed the old world was not the infection. It was the realization that nobody was coming to fix anything. There would be no cure announced on the radio. No army large enough to reclaim the country. No government capable of feeding millions of people forever. Civilization did not collapse in a single night. It simply became smaller every day, until one morning people realized they were no longer citizens of a country. They were survivors of whatever happened to be behind the nearest wall.",
 
