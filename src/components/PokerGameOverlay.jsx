@@ -6,7 +6,7 @@ import { usePokerGame } from '@/hooks/usePokerGame'
 import { pokerSfx } from '@/lib/pokerSfx'
 import { jokerVisual } from '@/lib/jokerVisuals'
 import { cn } from '@/lib/utils'
-import { HelpCircle, Layers } from 'lucide-react'
+import { HelpCircle, Layers, X } from 'lucide-react'
 import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
 import { useDetailOverlay } from '@/hooks/useDetailOverlay'
 
@@ -553,17 +553,21 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
           )}
         </div>
 
-        {/* Actions — the gap above is deliberately NOT allowed to compress
-            below 24px (unlike most other spacing in this panel, which is
-            free to shrink toward ~0 on a short viewport): a selected card
-            lifts up to 18px and grows slightly via scale(), and a
-            too-tight gap here is exactly what let a lifted card visually
-            overlap this row on short/cramped screens. This row and the
-            footer below are also pinned to the bottom of the panel by the
-            center content above being the only flex-1 (growing/shrinking)
-            piece — these two never compete for space with it. */}
+        {/* Actions — z-30 (and `relative`, which is required for z-index to
+            do anything) so these always paint above the card row, no
+            matter what: with a 9-card hand now wrapping into 2-3 rows,
+            plus Jokers adding extra lines to the score readout above, the
+            card area can genuinely run out of the vertical room the
+            "safe gap" below assumes, and a card ending up visually
+            level with this row must never make PLAY HAND/DISCARD
+            untappable. The gap above is separately still held to a 24px
+            floor for the same reason (a selected card also lifts+grows).
+            This row and the footer below are pinned to the bottom of the
+            panel by the center content above being the only flex-1
+            (growing/shrinking) piece — these two never compete with it
+            for space. */}
         {phase === 'playing' && (
-          <div className="mt-[clamp(24px,3dvh,32px)] flex shrink-0 items-center justify-center gap-2 sm:gap-3">
+          <div className="relative z-30 mt-[clamp(24px,3dvh,32px)] flex shrink-0 items-center justify-center gap-2 sm:gap-3">
             <button
               type="button"
               disabled={selectedIds.length === 0 || busy}
@@ -583,23 +587,32 @@ function GameStage({ game, scoreAnim, leavingIds, enteringIds, busy, onToggleSel
           </div>
         )}
 
-        {/* Quiet footer: the only ways out are musical, not a QUIT button */}
-        <div className="mt-[clamp(6px,1dvh,12px)] flex shrink-0 flex-wrap items-center justify-center gap-2 sm:gap-4 text-center font-mono text-[10px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.2em] text-white/55">
+        {/* Quiet footer, now two small well-highlighted icon buttons
+            instead of text + a caption line — same actions (X ends the
+            game exactly like CHANGE MUSIC always did; ? opens HOW TO
+            PLAY), just far more compact, and also z-30/relative for the
+            same overlap-proofing as the row above. */}
+        <div className="relative z-30 mt-[clamp(16px,2.5dvh,28px)] flex shrink-0 items-center justify-center gap-3">
           <button
             type="button"
             onClick={onChangeMusic}
-            className="rounded-full border px-3 py-1 transition-colors hover:text-white"
-            style={{ borderColor: 'rgba(201, 166, 255, 0.35)' }}
+            title="End game"
+            aria-label="End game"
+            className="flex h-7 w-7 items-center justify-center rounded-full border transition-colors hover:bg-white/10"
+            style={{ borderColor: 'rgba(255, 140, 140, 0.55)', color: 'rgba(255, 160, 160, 0.9)' }}
           >
-            CHANGE MUSIC
+            <X size={14} strokeWidth={2.25} />
           </button>
-          <span className="opacity-50">·</span>
-          <button type="button" onClick={onHelp} className="flex items-center gap-1 transition-colors hover:text-white">
-            <HelpCircle size={11} strokeWidth={2} />
-            HOW TO PLAY
+          <button
+            type="button"
+            onClick={onHelp}
+            title="How to play"
+            aria-label="How to play"
+            className="flex h-7 w-7 items-center justify-center rounded-full border transition-colors hover:bg-white/10"
+            style={{ borderColor: 'rgba(201, 166, 255, 0.55)', color: 'rgba(201, 166, 255, 0.9)' }}
+          >
+            <HelpCircle size={14} strokeWidth={2.25} />
           </button>
-          <span className="opacity-50">·</span>
-          <span>esc or walk away from the table to leave</span>
         </div>
       </div>
     </div>
