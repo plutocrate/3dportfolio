@@ -105,9 +105,7 @@ export const EXPERIENCE = [
     company: "Genesis Technologies",
     location: "Indore, MP, India",
     period: "June 2026 - present",
-    highlights: [
-      "Currently on traninig period",
-    ],
+    highlights: ["Currently on traninig period"],
   },
   {
     id: "inviolate",
@@ -235,12 +233,21 @@ export const LINK_COLLECTIONS = [
     label: "Wiki Trails",
     heading: "Favorite Wikipedia Links",
     links: [
-      { label: "Simulation Hypothesis", href: "https://en.wikipedia.org/wiki/Simulation_hypothesis" },
+      {
+        label: "Simulation Hypothesis",
+        href: "https://en.wikipedia.org/wiki/Simulation_hypothesis",
+      },
       { label: "Ship of Theseus", href: "https://en.wikipedia.org/wiki/Ship_of_Theseus" },
-      { label: "Dunning–Kruger Effect", href: "https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect" },
+      {
+        label: "Dunning–Kruger Effect",
+        href: "https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect",
+      },
       { label: "Occam's Razor", href: "https://en.wikipedia.org/wiki/Occam%27s_razor" },
       { label: "The Trolley Problem", href: "https://en.wikipedia.org/wiki/Trolley_problem" },
-      { label: "Conway's Game of Life", href: "https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" },
+      {
+        label: "Conway's Game of Life",
+        href: "https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life",
+      },
       { label: "The Absurd (Camus)", href: "https://en.wikipedia.org/wiki/Absurdism" },
       { label: "Fermi Paradox", href: "https://en.wikipedia.org/wiki/Fermi_paradox" },
     ],
@@ -256,7 +263,10 @@ export const LINK_COLLECTIONS = [
       { label: "Byzantine Fault Tolerance", href: "https://en.wikipedia.org/wiki/Byzantine_fault" },
       { label: "Big O Notation", href: "https://en.wikipedia.org/wiki/Big_O_notation" },
       { label: "The Halting Problem", href: "https://en.wikipedia.org/wiki/Halting_problem" },
-      { label: "Two Generals' Problem", href: "https://en.wikipedia.org/wiki/Two_Generals%27_Problem" },
+      {
+        label: "Two Generals' Problem",
+        href: "https://en.wikipedia.org/wiki/Two_Generals%27_Problem",
+      },
       { label: "Rice's Theorem", href: "https://en.wikipedia.org/wiki/Rice%27s_theorem" },
     ],
   },
@@ -278,6 +288,27 @@ export const LINK_COLLECTIONS = [
 // -------------------------------------
 // BLOG
 export const BLOG_POSTS = [
+  {
+    id: "23th-blog",
+    title: "Yet I Live Anyways.",
+    subtitle: "I really need a change.",
+    date: "0210, 4 Oct 2026",
+    categories: ["venting"],
+    body: [
+      "Lately I keep getting glimpses of my past. My morale is fucking low. I'm not living the life I wanted, and I'm drowning in my own habits.",
+      "My sleep is getting better, but I still wake up and waste the fucking day. I know I'm capable of much more. Way more.",
+      "At night I think about everything I've lost. People, time, pride, myself. I see how lonely I've become and how much of my life I've spent trapped inside my own head.",
+      "I'm 24 and unemployed. I haven't even properly started. I don't have the fucking luxury to fuck around and find out anymore. I need a change. I really fucking need a change.",
+      "For years I've wanted to make games. I've obsessed over ideas, over plans, over what I could become. And somehow the obsession itself became the trap. I turned it into one. Years passed and I barely moved.",
+      "People close to me think I'm smart and capable. Maybe I am. But the truth is, right now I'm just an unemployed guy who isn't doing enough. And that truth fucking hurts.",
+      "I've spent years blaming the place, the situation, the people around me. I'm done with that. I have to live with where I am. Complaining only destroys me further.",
+      "I'll make peace with my surroundings. I'll stop fighting everything. I'll try not to fall back into that fucking ocean inside my head.",
+      "Fuck this journaling too. I must fucking move. I need to move on instead of constantly going back down memory lane. I'm not even making new memories anymore.",
+      "Yet I live anyways.",
+    ],
+    media: ["gallery/dreaming.jpg"],
+    link: "",
+  },
   {
     id: "22th-blog",
     title: "These Motherfuckers at Github suck.",
@@ -314,8 +345,7 @@ export const BLOG_POSTS = [
 
       "And yeah, I still want to make fucking money. I want to earn good, be materialistic as hell. I want a home made of marble, fucking amazing premium stuff everywhere, weird esoteric shit that I find beautiful, a fucking good bike, an expensive cruiser, a beautiful place to live. I want all of it. I'm not going to pretend I don't.",
 
-      "But maybe that's the point. I don't need a job just to feel alive anymore. I want to work because I want to build a fucking life I actually like living."
-
+      "But maybe that's the point. I don't need a job just to feel alive anymore. I want to work because I want to build a fucking life I actually like living.",
     ],
     media: ["/gallery/space.jpg"],
     link: "",
@@ -333,7 +363,7 @@ export const BLOG_POSTS = [
 
       "So then the question becomes: if I can observe all these things, what exactly is the thing that is observing them? I don't know yet. That's what I want to understand.",
 
-      "I don't want to jump straight into big words or make it spiritual for the sake of it. I want to study it properly. I'll start with the Upanishads and the Bhagavad Gita, and then read Shankara. For now, I just want to understand this one question: who is the one experiencing all of this?"
+      "I don't want to jump straight into big words or make it spiritual for the sake of it. I want to study it properly. I'll start with the Upanishads and the Bhagavad Gita, and then read Shankara. For now, I just want to understand this one question: who is the one experiencing all of this?",
     ],
     media: ["/gallery/adv.jpg"],
     link: "",
@@ -626,7 +656,6 @@ export const BLOG_POSTS = [
       "A lot.",
 
       ":(",
-
     ],
     media: ["/gallery/mj.jpg"],
     link: "",
@@ -642,7 +671,7 @@ export const BLOG_POSTS = [
       "But last night I remembered something. Whenever I was actually changing, I used to look far. Trees, mountains, random cars, people, building tops, the sky. Even when listening to music, I'd just stare at the ceiling.",
       "There was even a phase where I'd just look at the moon in freezing Himachali nights. Mouth shut. Just looking.",
       "So I started doing it again.",
-      "Idk, maybe it means nothing. It just made sense to me."
+      "Idk, maybe it means nothing. It just made sense to me.",
     ],
     media: ["/gallery/far.jpg"],
     link: "",
@@ -659,7 +688,7 @@ export const BLOG_POSTS = [
       "Now I'm detached from almost everything. People leave, places change, life moves, and I barely react. Even when I dream of those moments, I wake up and analyse the dream instead of missing what I lost.",
       "I don't think I want that anymore. I don't want absence, I want presence. I like people. I like what's around me. I just keep switching lives before I ever become part of one.",
       "I don't want to end up as just another thinker. I want to make games. I want characters that feel painfully human.",
-      "The dream wasn't even about this. This is just what I got out of it. Lol."
+      "The dream wasn't even about this. This is just what I got out of it. Lol.",
     ],
     media: ["/gallery/gorilla.jpg"],
     link: "",
@@ -693,7 +722,7 @@ export const BLOG_POSTS = [
       "What do humans like me do? Death isn't a cool option. I have stories in my head. I daydream them. I lucid dream them.",
       "I want to tell those stories in my own way. The question is when? Play safe, make life stable, or use what you've already got and just fucking create.",
       "What if nobody likes what I create? Then ask yourself, did you do all this for validation?",
-      "Play safe then. Idk man, I don't have the answers right now."
+      "Play safe then. Idk man, I don't have the answers right now.",
     ],
     media: ["/gallery/letgo.jpg"],
     link: "",
@@ -744,7 +773,7 @@ export const BLOG_POSTS = [
       "That constant discovery of yourself makes you lonelier, and difficult to adapt the innocence around you.",
       "People are naive, they are pre-made, but you're not, that's where your ego kicks in, the worst form of ego; arrogance of justifying your sick life as discovery.",
       "Life is meant to be understood slowly, that's where the fun lies in. Big brain too early... What will you do now? How will you adjust within yourself, when you've known there's no God, or if there is, you do not care?",
-      "What will you do now? If you take my advise, live with the rules of society, and nature. You'll be okay again, and trust me you will not loose your 'years of deep research'."
+      "What will you do now? If you take my advise, live with the rules of society, and nature. You'll be okay again, and trust me you will not loose your 'years of deep research'.",
     ],
     media: ["/gallery/buddhamonkey.jpg"],
     link: "",
@@ -787,7 +816,7 @@ export const ANNOTATIONS = [
     id: "about",
     label: "ABOUT",
     description: "Identity & Summary",
-    position: [-0.12, 1.60, 0.22],
+    position: [-0.12, 1.6, 0.22],
     cameraTarget: [0, 1.52, 0],
     cameraPosition: [-1.6, 1.65, 1.6],
     side: "left",
@@ -820,7 +849,7 @@ export const ANNOTATIONS = [
     id: "chronicles",
     label: "CHRONICLES",
     description: "Long-form essays",
-    position: [0.12, 1.60, 0.22],
+    position: [0.12, 1.6, 0.22],
     cameraTarget: [0, 1.52, 0],
     cameraPosition: [1.6, 1.65, 1.6],
     side: "right",
