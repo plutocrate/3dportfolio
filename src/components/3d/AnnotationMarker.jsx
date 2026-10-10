@@ -1,38 +1,38 @@
-import { useRef, useState, useEffect } from 'react'
-import { Html, Line } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
-import * as THREE from 'three'
-import { useSceneStore } from '@/hooks/useSceneStore'
-import { useClickSound } from '@/hooks/useClickSound'
-import { SwirlSurface } from '@/components/SwirlSurface'
-import { cn } from '@/lib/utils'
+import { useRef, useState, useEffect } from "react";
+import { Html, Line } from "@react-three/drei";
+import { useFrame, useThree } from "@react-three/fiber";
+import * as THREE from "three";
+import { useSceneStore } from "@/hooks/useSceneStore";
+import { useClickSound } from "@/hooks/useClickSound";
+import { SwirlSurface } from "@/components/SwirlSurface";
+import { cn } from "@/lib/utils";
 
 // ── Mobile button: projects 3D world pos → screen px each frame,
 // renders as a fixed-size DOM button clamped inside safe screen bounds.
 // Shine sweep period, in seconds — kept in sync with the desktop CSS version
 // (see shine-sweep-x in index.css) so both feel like the same calm animation.
-const GLOW_SWEEP_PERIOD = 6.5
+const GLOW_SWEEP_PERIOD = 6.5;
 
 function MobileButton({ annotation, onClick }) {
-  const { id, label, position, side } = annotation
-  const activeSection = useSceneStore((s) => s.activeSection)
-  const isActive = activeSection === id
-  const playClick = useClickSound()
-  const { camera, size } = useThree()
-  const [pos, setPos] = useState({ x: -999, y: -999, visible: false })
+  const { id, label, position, side } = annotation;
+  const activeSection = useSceneStore((s) => s.activeSection);
+  const isActive = activeSection === id;
+  const playClick = useClickSound();
+  const { camera, size } = useThree();
+  const [pos, setPos] = useState({ x: -999, y: -999, visible: false });
 
-  const worldPos = useRef(new THREE.Vector3(...position))
-  const glowBarRef = useRef(null)
+  const worldPos = useRef(new THREE.Vector3(...position));
+  const glowBarRef = useRef(null);
 
-  const showGlow = !isActive && (id === 'blog' || id === 'chronicles')
+  const showGlow = !isActive && (id === "blog" || id === "chronicles");
 
   useFrame(({ clock }) => {
-    const v = worldPos.current.clone().project(camera)
+    const v = worldPos.current.clone().project(camera);
     // NDC → pixels
-    const x = (v.x * 0.5 + 0.5) * size.width
-    const y = (-v.y * 0.5 + 0.5) * size.height
+    const x = (v.x * 0.5 + 0.5) * size.width;
+    const y = (-v.y * 0.5 + 0.5) * size.height;
     // Only show if in front of camera
-    setPos({ x, y, visible: v.z < 1 })
+    setPos({ x, y, visible: v.z < 1 });
 
     // ── Glow sweep, driven imperatively (not CSS @keyframes) ────────────────
     // This button lives inside a drei <Html> portal whose wrapper div gets a
@@ -44,48 +44,59 @@ function MobileButton({ annotation, onClick }) {
     // sweep bar's inline transform directly here, in lockstep with the
     // position updates we already know render fine on mobile.
     if (glowBarRef.current) {
-      const t = clock.getElapsedTime()
-      const progress = (t % GLOW_SWEEP_PERIOD) / GLOW_SWEEP_PERIOD // 0 → 1
-      const xPercent = -120 + progress * 340 // -120% → 220%, matches shine-sweep-x
-      glowBarRef.current.style.transform = `translateX(${xPercent}%)`
+      const t = clock.getElapsedTime();
+      const progress = (t % GLOW_SWEEP_PERIOD) / GLOW_SWEEP_PERIOD; // 0 → 1
+      const xPercent = -120 + progress * 340; // -120% → 220%, matches shine-sweep-x
+      glowBarRef.current.style.transform = `translateX(${xPercent}%)`;
     }
-  })
+  });
 
-  if (!pos.visible) return null
+  if (!pos.visible) return null;
 
   // Button dimensions (approximate)
-  const BTN_W = label.length * 7 + 20
-  const BTN_H = 24
+  const BTN_W = label.length * 7 + 20;
+  const BTN_H = 24;
 
   // Clamp to screen with 8px edge padding
-  const PAD = 8
-  let bx = side === 'right' ? pos.x + 6 : pos.x - BTN_W - 6
-  bx = Math.max(PAD, Math.min(size.width - BTN_W - PAD, bx))
-  const by = Math.max(PAD + 50, Math.min(size.height - BTN_H - PAD - 80, pos.y - BTN_H / 2))
+  const PAD = 8;
+  let bx = side === "right" ? pos.x + 6 : pos.x - BTN_W - 6;
+  bx = Math.max(PAD, Math.min(size.width - BTN_W - PAD, bx));
+  const by = Math.max(PAD + 50, Math.min(size.height - BTN_H - PAD - 80, pos.y - BTN_H / 2));
 
   return (
     <Html
-      style={{ position: 'fixed', top: 0, left: 0, width: 0, height: 0, overflow: 'visible', pointerEvents: 'none' }}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: 0,
+        height: 0,
+        overflow: "visible",
+        pointerEvents: "none",
+      }}
       zIndexRange={[10, 100]}
     >
       <div
         style={{
-          position: 'fixed',
+          position: "fixed",
           left: bx,
           top: by,
-          pointerEvents: 'auto',
-          userSelect: 'none',
-          whiteSpace: 'nowrap',
+          pointerEvents: "auto",
+          userSelect: "none",
+          whiteSpace: "nowrap",
         }}
         className={cn(
-          'relative overflow-hidden font-mono uppercase border cursor-pointer transition-all duration-200',
-          'px-1.5 py-0.5 text-[clamp(9px,calc(8.6px+0.13vw),11px)] tracking-[0.10em]',
+          "relative overflow-hidden font-mono uppercase border cursor-pointer transition-all duration-200",
+          "px-1.5 py-0.5 text-[clamp(9px,calc(8.6px+0.13vw),11px)] tracking-[0.10em]",
           isActive
-            ? 'bg-white text-black border-white'
-            : 'bg-black/85 text-white/76 border-white/20',
-          showGlow && 'glow-static'
+            ? "bg-white text-black border-white"
+            : "bg-black/85 text-white/76 border-white/20",
+          showGlow && "glow-static",
         )}
-        onClick={() => { playClick(); onClick(annotation) }}
+        onClick={() => {
+          playClick();
+          onClick(annotation);
+        }}
       >
         {/* No SwirlSurface here (unlike the desktop marker below) — every
             mobile annotation button mounting its own WebGL context, on
@@ -103,62 +114,65 @@ function MobileButton({ annotation, onClick }) {
             aria-hidden="true"
             style={{
               content: '""',
-              position: 'absolute',
+              position: "absolute",
               top: 0,
               left: 0,
-              width: '60%',
-              height: '100%',
-              backgroundImage: 'linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.20) 50%, transparent 100%)',
-              filter: 'blur(5px)',
-              pointerEvents: 'none',
+              width: "60%",
+              height: "100%",
+              backgroundImage:
+                "linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.20) 50%, transparent 100%)",
+              filter: "blur(5px)",
+              pointerEvents: "none",
             }}
           />
         )}
       </div>
     </Html>
-  )
+  );
 }
 
 // ── Desktop marker: original lines + dots + label
 export function AnnotationMarker({ annotation, onClick }) {
-  const { id, label, description, position, side } = annotation
-  const activeSection = useSceneStore((s) => s.activeSection)
-  const hoveredAnnotation = useSceneStore((s) => s.hoveredAnnotation)
-  const setHovered = useSceneStore((s) => s.setHovered)
-  const isSwirlTrack = useSceneStore((s) => s.isSwirlTrack)
-  const isActive = activeSection === id
-  const isHovered = hoveredAnnotation === id
-  const playClick = useClickSound()
-  const { size } = useThree()
+  const { id, label, description, position, side } = annotation;
+  const activeSection = useSceneStore((s) => s.activeSection);
+  const hoveredAnnotation = useSceneStore((s) => s.hoveredAnnotation);
+  const setHovered = useSceneStore((s) => s.setHovered);
+  const isSwirlTrack = useSceneStore((s) => s.isSwirlTrack);
+  const isActive = activeSection === id;
+  const isHovered = hoveredAnnotation === id;
+  const playClick = useClickSound();
+  const { size } = useThree();
 
-  const isMobile = size.width < 1024
+  const isMobile = size.width < 1024;
 
-  const pulseRef = useRef()
+  const pulseRef = useRef();
   useFrame(({ clock }) => {
-    if (!pulseRef.current) return
-    const t = clock.getElapsedTime()
-    const base = isActive ? 1.4 : isHovered ? 1.2 : 1.0
+    if (!pulseRef.current) return;
+    const t = clock.getElapsedTime();
+    const base = isActive ? 1.4 : isHovered ? 1.2 : 1.0;
     // Slow, calm flowing breathe instead of a fast pulse
-    pulseRef.current.scale.setScalar(base + Math.sin(t * 0.7) * 0.05)
-  })
+    pulseRef.current.scale.setScalar(base + Math.sin(t * 0.7) * 0.05);
+  });
 
   // Mobile: use screen-projected button component
   if (isMobile) {
-    return <MobileButton annotation={annotation} onClick={onClick} />
+    return <MobileButton annotation={annotation} onClick={onClick} />;
   }
 
   // Desktop: original behaviour
-  const lineOffset = 0.72
-  const distFactor = 4.0
-  const pos = new THREE.Vector3(...position)
-  const offset = side === 'right' ? lineOffset : -lineOffset
-  const lineEnd = new THREE.Vector3(position[0] + offset, position[1] + 0.04, position[2])
+  // How far (world units) the label sits sideways from its dot. Smaller =
+  // buttons hug the model more. Was 0.72.
+  const lineOffset = 0.42;
+  const distFactor = 4.0;
+  const pos = new THREE.Vector3(...position);
+  const offset = side === "right" ? lineOffset : -lineOffset;
+  const lineEnd = new THREE.Vector3(position[0] + offset, position[1] + 0.04, position[2]);
 
   return (
     <group>
       <Line
         points={[pos, lineEnd]}
-        color={isActive ? '#ffffff' : isHovered ? '#cccccc' : '#383838'}
+        color={isActive ? "#ffffff" : isHovered ? "#cccccc" : "#383838"}
         lineWidth={isActive ? 1.4 : 0.8}
         dashed={!isActive}
         dashScale={isActive ? 0 : 50}
@@ -168,15 +182,15 @@ export function AnnotationMarker({ annotation, onClick }) {
         <mesh ref={pulseRef}>
           <ringGeometry args={[0.016, 0.024, 24]} />
           <meshBasicMaterial
-            color={isActive ? '#ffffff' : '#666666'}
+            color={isActive ? "#ffffff" : "#666666"}
             transparent
             opacity={isActive ? 0.9 : isHovered ? 0.65 : 0.35}
             side={THREE.DoubleSide}
           />
         </mesh>
         <mesh>
-          <circleGeometry args={[0.010, 24]} />
-          <meshBasicMaterial color={isActive ? '#ffffff' : '#888888'} side={THREE.DoubleSide} />
+          <circleGeometry args={[0.01, 24]} />
+          <meshBasicMaterial color={isActive ? "#ffffff" : "#888888"} side={THREE.DoubleSide} />
         </mesh>
       </group>
 
@@ -187,41 +201,48 @@ export function AnnotationMarker({ annotation, onClick }) {
         zIndexRange={[10, 100]}
         occlude={false}
         style={{
-          transform: side === 'right' ? 'translateX(4px)' : 'translateX(calc(-100% - 4px))',
-          pointerEvents: 'auto',
-          userSelect: 'none',
+          transform: side === "right" ? "translateX(4px)" : "translateX(calc(-100% - 4px))",
+          pointerEvents: "auto",
+          userSelect: "none",
         }}
       >
         <div
           className={cn(
-            'cursor-pointer transition-all duration-200 select-none flex flex-col',
-            side === 'right' ? 'items-start' : 'items-end'
+            "cursor-pointer transition-all duration-200 select-none flex flex-col",
+            side === "right" ? "items-start" : "items-end",
           )}
-          onClick={() => { playClick(); onClick(annotation) }}
+          onClick={() => {
+            playClick();
+            onClick(annotation);
+          }}
           onPointerEnter={() => setHovered(id)}
           onPointerLeave={() => setHovered(null)}
         >
-          <div className={cn(
-            'font-mono uppercase border whitespace-nowrap transition-all duration-200',
-            'relative isolate overflow-hidden',
-            'px-[8.5px] py-[3.4px] text-[clamp(8.5px,calc(8.16px+0.136vw),10.2px)] tracking-[0.16em]',
-            isActive
-              ? 'bg-white text-black border-white'
-              : 'bg-black/85 text-white/76 border-white/20',
-            !isActive && (id === 'blog' || id === 'chronicles') && 'flow-glow'
-          )}>
+          <div
+            className={cn(
+              "font-mono uppercase border whitespace-nowrap transition-all duration-200",
+              "relative isolate overflow-hidden",
+              "px-[8.5px] py-[3.4px] text-[clamp(8.5px,calc(8.16px+0.136vw),10.2px)] tracking-[0.16em]",
+              isActive
+                ? "bg-white text-black border-white"
+                : "bg-black/85 text-white/76 border-white/20",
+              !isActive && (id === "blog" || id === "chronicles") && "flow-glow",
+            )}
+          >
             {isSwirlTrack && !isActive && <SwirlSurface intensity={1.2} baseOpacity={0.75} />}
             <span className="relative z-10">{label}</span>
           </div>
-          <div className={cn(
-            'font-mono text-[clamp(7.65px,calc(7.31px+0.11vw),9.35px)] mt-0.5 transition-colors duration-200 whitespace-nowrap',
-            isActive ? 'text-white/73' : 'text-white/53',
-            side === 'right' ? 'pl-0.5' : 'pr-0.5'
-          )}>
+          <div
+            className={cn(
+              "font-mono text-[clamp(7.65px,calc(7.31px+0.11vw),9.35px)] mt-0.5 transition-colors duration-200 whitespace-nowrap",
+              isActive ? "text-white/73" : "text-white/53",
+              side === "right" ? "pl-0.5" : "pr-0.5",
+            )}
+          >
             {description}
           </div>
         </div>
       </Html>
     </group>
-  )
+  );
 }
