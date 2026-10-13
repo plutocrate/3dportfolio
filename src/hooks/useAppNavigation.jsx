@@ -46,6 +46,11 @@ export function NavigationProvider({ enabled, children }) {
 
     applyRoute(parsePath(path))
 
+    const toHistoryPath = (p) => {
+      const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '')
+      return `${base}${p}` || '/'
+    }
+
     // Deep links start with only that URL on the stack. Seed ancestors underneath
     // once so Back from any content URL returns through the correct parent steps
     // back to the 3D home.
@@ -54,9 +59,9 @@ export function NavigationProvider({ enabled, children }) {
       seeding.current = true
       const ancestors = getAncestors(path)
       if (ancestors.length > 0) {
-        window.history.replaceState(null, '', ancestors[0])
+        window.history.replaceState(null, '', toHistoryPath(ancestors[0]))
         for (let i = 1; i < ancestors.length; i++) {
-          window.history.pushState(null, '', ancestors[i])
+          window.history.pushState(null, '', toHistoryPath(ancestors[i]))
         }
         navigate(path + (location.search || ''), { replace: false })
       }
@@ -70,11 +75,16 @@ export function NavigationProvider({ enabled, children }) {
     const current = normalizePath(location.pathname)
     if (target === current) return
 
+    const toHistoryPath = (p) => {
+      const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '')
+      return `${base}${p}` || '/'
+    }
+
     const ancestors = getAncestors(target)
     if (ancestors.length > 0) {
-      window.history.replaceState(null, '', ancestors[0])
+      window.history.replaceState(null, '', toHistoryPath(ancestors[0]))
       for (let i = 1; i < ancestors.length; i++) {
-        window.history.pushState(null, '', ancestors[i])
+        window.history.pushState(null, '', toHistoryPath(ancestors[i]))
       }
     }
     navigate(target + (location.search || ''), { replace: false })

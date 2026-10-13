@@ -6,11 +6,11 @@ Currently a UI/UX Developer (training) at Genesis Technologies, Indore. Previous
 
 ## Sections
 
-- [About](https://prathamis.cool/about): Identity, summary, availability status, project gallery, and links.
-- [Academia](https://prathamis.cool/academia): Projects, work experience, technical skills, and education in one place.
-- [Chronicles](https://prathamis.cool/chronicles): Long-form essays on software, games, and the ideas behind them.
-- [Journal](https://prathamis.cool/blog): Shorter thoughts and write-ups.
-- [Talk](https://prathamis.cool/talk): Contact form; open to full-time roles and freelance work.
+- [About](https://plutocrate.github.io/3dportfolio/about): Identity, summary, availability status, project gallery, and links.
+- [Academia](https://plutocrate.github.io/3dportfolio/academia): Projects, work experience, technical skills, and education in one place.
+- [Chronicles](https://plutocrate.github.io/3dportfolio/chronicles): Long-form essays on software, games, and the ideas behind them.
+- [Journal](https://plutocrate.github.io/3dportfolio/blog): Shorter thoughts and write-ups.
+- [Talk](https://plutocrate.github.io/3dportfolio/talk): Contact form; open to full-time roles and freelance work.
 
 ## Projects
 
@@ -29,9 +29,9 @@ JavaScript/TypeScript, React, Three.js/WebGL, HTML5/CSS3/Tailwind CSS, Node.js/E
 - Email: prathampurohitonline@outlook.com
 - LinkedIn: https://linkedin.com/in/prathammpurohit
 - GitHub: https://github.com/plutocrate
-- Website: https://prathamis.cool
+- Website: https://plutocrate.github.io/3dportfolio
 
 ## Optional
 
-- [Full site details](https://prathamis.cool/llms-full.txt): a longer plain-text summary covering experience, education, and every project in more detail.
-- [Sitemap](https://prathamis.cool/sitemap.xml)
+- [Full site details](https://plutocrate.github.io/3dportfolio/llms-full.txt): a longer plain-text summary covering experience, education, and every project in more detail.
+- [Sitemap](https://plutocrate.github.io/3dportfolio/sitemap.xml)

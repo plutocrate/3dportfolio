@@ -5,6 +5,7 @@ import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
 import { useHistoryOverlay } from '@/hooks/useHistoryOverlay'
 import { pauseMusicForVideo, resumeMusicAfterVideo } from '@/hooks/useMusicBridge'
+import { withBase } from '@/lib/utils'
 
 // ── Global image lightbox ────────────────────────────────────────────────────
 // Mounted once at the App root. Any image anywhere in the site can trigger it

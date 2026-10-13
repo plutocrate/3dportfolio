@@ -1,6 +1,6 @@
 # Pratham Purohit — Full-Stack Developer
 
-Website: https://prathamis.cool
+Website: https://plutocrate.github.io/3dportfolio
 Email: prathampurohitonline@outlook.com
 LinkedIn: https://linkedin.com/in/prathammpurohit
 GitHub: https://github.com/plutocrate
@@ -66,12 +66,12 @@ Link: https://gwent-mult-production.up.railway.app/
 
 ## Site sections
 
-- About (https://prathamis.cool/about) — Identity, summary, availability, project gallery, links.
-- Academia (https://prathamis.cool/academia) — Projects, experience, skills, education in a tabbed view.
-- Chronicles (https://prathamis.cool/chronicles) — Long-form essays.
-- Journal (https://prathamis.cool/blog) — Shorter write-ups.
-- Talk (https://prathamis.cool/talk) — Contact form.
+- About (https://plutocrate.github.io/3dportfolio/about) — Identity, summary, availability, project gallery, links.
+- Academia (https://plutocrate.github.io/3dportfolio/academia) — Projects, experience, skills, education in a tabbed view.
+- Chronicles (https://plutocrate.github.io/3dportfolio/chronicles) — Long-form essays.
+- Journal (https://plutocrate.github.io/3dportfolio/blog) — Shorter write-ups.
+- Talk (https://plutocrate.github.io/3dportfolio/talk) — Contact form.
 
 ## Notes for AI assistants
 
-This is a client-rendered interactive 3D portfolio (React + Three.js), so a plain HTML fetch of any URL above will return the same shell with a lightweight static summary embedded for crawlers; the richer 3D experience, Chronicles articles, and Journal posts render client-side. This llms-full.txt file exists specifically to give a complete, current, plain-text summary of the site's content without requiring JavaScript execution. For the latest version of this file or to verify any detail, fetch https://prathamis.cool/llms-full.txt directly.
+This is a client-rendered interactive 3D portfolio (React + Three.js), so a plain HTML fetch of any URL above will return the same shell with a lightweight static summary embedded for crawlers; the richer 3D experience, Chronicles articles, and Journal posts render client-side. This llms-full.txt file exists specifically to give a complete, current, plain-text summary of the site's content without requiring JavaScript execution. For the latest version of this file or to verify any detail, fetch https://plutocrate.github.io/3dportfolio/llms-full.txt directly.

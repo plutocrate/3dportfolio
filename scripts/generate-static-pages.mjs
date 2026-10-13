@@ -14,7 +14,7 @@ import {
 import { listAllPaths, parsePath } from '../src/lib/routes.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const SITE_URL = 'https://prathamis.cool'
+const SITE_URL = 'https://plutocrate.github.io/3dportfolio'
 const DIST_DIR = resolve(__dirname, '../dist')
 const INDEX_PATH = resolve(DIST_DIR, 'index.html')
 
@@ -46,28 +46,28 @@ function applyMeta(html, { url, title, description, image, ogType }) {
   out = replaceOnce(out, '<title>Pratham Purohit — Full-Stack Developer & Software Engineer</title>', `<title>${escTitle}</title>`)
   out = replaceOnce(
     out,
-    '<meta name="description" content="Pratham Purohit — Full-Stack Developer based in India. Expert in React, Three.js, Node.js, TypeScript & WebGL. Built real-time apps, 3D browser experiences & multiplayer games. View portfolio, projects & blog at prathamis.cool." />',
+    '<meta name="description" content="Pratham Purohit — Full-Stack Developer based in India. Expert in React, Three.js, Node.js, TypeScript & WebGL. Built real-time apps, 3D browser experiences & multiplayer games. View portfolio, projects & blog at plutocrate.github.io/3dportfolio." />',
     `<meta name="description" content="${escDesc}" />`
   )
-  out = replaceOnce(out, '<link rel="canonical" href="https://prathamis.cool/" />', `<link rel="canonical" href="${url}" />`)
+  out = replaceOnce(out, '<link rel="canonical" href="https://plutocrate.github.io/3dportfolio/" />', `<link rel="canonical" href="${url}" />`)
   if (ogType === 'article') {
     out = replaceOnce(out, '<meta property="og:type" content="website" />', '<meta property="og:type" content="article" />')
   }
-  out = replaceOnce(out, '<meta property="og:url" content="https://prathamis.cool/" />', `<meta property="og:url" content="${url}" />`)
+  out = replaceOnce(out, '<meta property="og:url" content="https://plutocrate.github.io/3dportfolio/" />', `<meta property="og:url" content="${url}" />`)
   out = replaceOnce(out, '<meta property="og:title" content="Pratham Purohit — Full-Stack Developer" />', `<meta property="og:title" content="${escTitle}" />`)
   out = replaceOnce(
     out,
     '<meta property="og:description" content="Pratham Purohit — Full-Stack Developer. React, Three.js, Node.js, TypeScript & WebGL specialist. Interactive 3D portfolio showcasing real-world projects and experience." />',
     `<meta property="og:description" content="${escDesc}" />`
   )
-  out = replaceOnce(out, '<meta property="og:image" content="https://prathamis.cool/og-image.jpg" />', `<meta property="og:image" content="${image}" />`)
+  out = replaceOnce(out, '<meta property="og:image" content="https://plutocrate.github.io/3dportfolio/og-image.jpg" />', `<meta property="og:image" content="${image}" />`)
   out = replaceOnce(out, '<meta name="twitter:title" content="Pratham Purohit — Full-Stack Developer" />', `<meta name="twitter:title" content="${escTitle}" />`)
   out = replaceOnce(
     out,
     '<meta name="twitter:description" content="Full-Stack Developer specialising in React, Three.js, and Node.js. Interactive 3D portfolio." />',
     `<meta name="twitter:description" content="${escDesc}" />`
   )
-  out = replaceOnce(out, '<meta name="twitter:image" content="https://prathamis.cool/og-image.jpg" />', `<meta name="twitter:image" content="${image}" />`)
+  out = replaceOnce(out, '<meta name="twitter:image" content="https://plutocrate.github.io/3dportfolio/og-image.jpg" />', `<meta name="twitter:image" content="${image}" />`)
   return out
 }
 

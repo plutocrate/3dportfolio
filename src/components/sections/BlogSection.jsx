@@ -17,6 +17,7 @@ import { Separator } from '@/components/ui/separator'
 import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
 import { useGo } from '@/hooks/useAppNavigation'
+import { withBase } from '@/lib/utils'
 
 // ─── Detect media type from path ─────────────────────────────────────────────
 function getMediaType(src) {
@@ -67,7 +68,7 @@ function MediaItem({ src }) {
           {type === 'image' ? (
             <>
               <img
-                src={src}
+                src={withBase(src)}
                 alt=""
                 loading="lazy"
                 decoding="async"
@@ -80,7 +81,7 @@ function MediaItem({ src }) {
             <>
               <video
                 ref={videoRef}
-                src={src}
+                src={withBase(src)}
                 className="w-full h-full object-cover"
                 style={{ display: 'block' }}
                 loop

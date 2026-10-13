@@ -5,7 +5,7 @@ import { CHRONICLES } from '../src/data/chronicles.js'
 import { listAllPaths } from '../src/lib/routes.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const SITE_URL = 'https://prathamis.cool'
+const SITE_URL = 'https://plutocrate.github.io/3dportfolio'
 const OUT_PATH = resolve(__dirname, '../public/sitemap.xml')
 
 const today = new Date().toISOString().slice(0, 10)

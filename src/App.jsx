@@ -226,7 +226,11 @@ export default function App() {
 
   const handleEntered = () => {
     setLoading(false)
-    const path = window.location.pathname.replace(/\/+$/, '') || '/'
+    const rawPath = window.location.pathname.replace(/\/+$/, '') || '/'
+    const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '')
+    const path = (base && rawPath.startsWith(base))
+      ? rawPath.slice(base.length) || '/'
+      : rawPath
     if (path === '/') {
       setTimeout(() => {
         setShowHint(true)

@@ -12,6 +12,7 @@ import {
   ChroniclesSection,
   CabinetSection,
 } from '@/components/sections'
+import { PERSONAL } from '@/data/portfolio'
 
 const SECTION_MAP = {
   about: AboutSection,
@@ -251,7 +252,7 @@ export function SectionPanel({ onClose }) {
         {/* Footer */}
         <div className="absolute bottom-0 left-px right-0 border-t border-white/8 px-6 sm:px-8 py-3 flex items-center justify-between">
           <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/51 uppercase tracking-widest">
-            prathamis.cool
+            {PERSONAL.website}
           </span>
           <span className="font-mono text-[clamp(10px,calc(9.6px+0.16vw),12px)] text-white/51 tabular-nums">
             {new Date().getFullYear()}

@@ -50,4 +50,4 @@ Allow: /
 User-agent: Amazonbot
 Allow: /
 
-Sitemap: https://prathamis.cool/sitemap.xml
+Sitemap: https://plutocrate.github.io/3dportfolio/sitemap.xml
