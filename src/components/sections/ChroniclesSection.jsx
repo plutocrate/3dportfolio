@@ -4,6 +4,7 @@ import { Separator } from '@/components/ui/separator'
 import { useClickSound } from '@/hooks/useClickSound'
 import { useGo } from '@/hooks/useAppNavigation'
 import { slugify } from '@/lib/routes'
+import { withBase } from '@/lib/utils'
 
 export function CategoryChip({ label }) {
   return (
@@ -40,7 +41,7 @@ export function ChronicleCard({ chronicle }) {
           style={{ paddingTop: '42%', position: 'relative', background: '#0a0a0a' }}
         >
           <img
-            src={chronicle.coverImage}
+            src={withBase(chronicle.coverImage)}
             alt=""
             loading="lazy"
             className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-95 group-hover:scale-[1.02] transition-all duration-500"
@@ -102,7 +103,7 @@ function ChronicleHeading({ category, items }) {
           style={{ paddingTop: '42%', position: 'relative', background: '#0a0a0a' }}
         >
           <img
-            src={preview.coverImage}
+            src={withBase(preview.coverImage)}
             alt=""
             loading="lazy"
             className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-95 group-hover:scale-[1.02] transition-all duration-500"

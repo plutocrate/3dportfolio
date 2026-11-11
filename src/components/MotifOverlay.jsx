@@ -6,6 +6,7 @@ import { useClickSound } from '@/hooks/useClickSound'
 import { useGo } from '@/hooks/useAppNavigation'
 import { pauseMusicForVideo, resumeMusicAfterVideo } from '@/hooks/useMusicBridge'
 import { MOTIFS } from '@/data/motifs'
+import { withBase } from '@/lib/utils'
 
 // A single vinyl disc. No dedicated disc/vinyl image exists in the project's
 // assets, so the disc itself is drawn with CSS (grooves via a repeating
@@ -30,7 +31,7 @@ function MotifDisc({ motif, isPlaying, onToggle }) {
           {/* Label / art circle at the center of the record */}
           <div className="absolute rounded-full overflow-hidden border border-white/15" style={{ inset: '30%', background: '#050505' }}>
             {motif.art && (
-              <img src={motif.art} alt="" draggable={false} className="w-full h-full object-cover opacity-85" />
+              <img src={withBase(motif.art)} alt="" draggable={false} className="w-full h-full object-cover opacity-85" />
             )}
           </div>
           {/* Spindle hole */}
@@ -93,7 +94,11 @@ export function MotifOverlay() {
 
   const handleToggle = (motif) => {
     playClick()
-    if (!audioRef.current) audioRef.current = new Audio()
+    if (!audioRef.current) {
+      const a = new Audio()
+      a.addEventListener('ended', () => setPlayingId(null))
+      audioRef.current = a
+    }
     const audio = audioRef.current
 
     if (playingId === motif.id) {
@@ -102,7 +107,10 @@ export function MotifOverlay() {
       return
     }
 
-    if (audio.src !== motif.src) audio.src = motif.src
+    const targetSrc = withBase(motif.src)
+    if (!audio.src.endsWith(targetSrc) && audio.src !== targetSrc) {
+      audio.src = targetSrc
+    }
     audio.play().catch(() => {})
     setPlayingId(motif.id)
   }

@@ -5,6 +5,7 @@ import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
 import { useGo } from '@/hooks/useAppNavigation'
 import { GALLERY_IMAGES } from '@/data/gallery'
+import { withBase } from '@/lib/utils'
 
 // ── Full Gallery overlay ─────────────────────────────────────────────────────
 // Same glassmorphism "reader" chrome as ChronicleOverlay (backdrop blur, card,
@@ -20,7 +21,7 @@ function GalleryGridTile({ item, onOpen }) {
     >
       {item.type === 'video' ? (
         <video
-          src={item.src}
+          src={withBase(item.src)}
           autoPlay
           muted
           loop
@@ -30,7 +31,7 @@ function GalleryGridTile({ item, onOpen }) {
         />
       ) : (
         <img
-          src={item.src}
+          src={withBase(item.src)}
           alt={item.caption}
           loading="lazy"
           draggable={false}

@@ -11,6 +11,7 @@ import {
   pauseAllVideos,
   getUserWantsMusic,
 } from '@/hooks/useMusicBridge'
+import { withBase } from '@/lib/utils'
 
 function MediaBlock({ item }) {
   const openLightbox = useSceneStore((s) => s.openLightbox)
@@ -32,7 +33,7 @@ function MediaBlock({ item }) {
       >
         {isVideo ? (
           <video
-            src={item.src}
+            src={withBase(item.src)}
             controls
             playsInline
             loop
@@ -44,7 +45,7 @@ function MediaBlock({ item }) {
           />
         ) : (
           <img
-            src={item.src}
+            src={withBase(item.src)}
             alt={item.caption || ''}
             loading="lazy"
             onClick={handleOpen}
@@ -96,7 +97,7 @@ export function ChronicleOverlay() {
     setMusicOn(autoplay)
 
     if (chronicle.music) {
-      const a = new Audio(chronicle.music)
+      const a = new Audio(withBase(chronicle.music))
       a.loop = true
       a.volume = 0.4
       if (autoplay) a.play().catch(() => {})
@@ -201,7 +202,7 @@ export function ChronicleOverlay() {
                 style={{ background: '#0a0a0a', aspectRatio: chronicle.coverAspect || '16 / 9' }}
               >
                 <img
-                  src={chronicle.coverImage}
+                  src={withBase(chronicle.coverImage)}
                   alt=""
                   onClick={() => { playClick(); openLightbox(chronicle.coverImage, chronicle.title || '') }}
                   className="absolute inset-0 w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity duration-200"

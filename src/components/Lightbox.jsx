@@ -76,7 +76,7 @@ export function Lightbox() {
       >
         {isVideo ? (
           <video
-            src={src}
+            src={withBase(src)}
             controls
             autoPlay
             playsInline
@@ -88,7 +88,7 @@ export function Lightbox() {
           />
         ) : (
           <img
-            src={src}
+            src={withBase(src)}
             alt={caption || ''}
             className="max-w-[92vw] max-h-[78vh] w-auto h-auto object-contain border border-white/10"
             style={{ background: '#0a0a0a' }}

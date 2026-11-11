@@ -5,6 +5,7 @@ import { useSceneStore } from '@/hooks/useSceneStore'
 import { useClickSound } from '@/hooks/useClickSound'
 import { useGo } from '@/hooks/useAppNavigation'
 import { EVIDENCE_ITEMS } from '@/data/evidence'
+import { withBase } from '@/lib/utils'
 
 // ── Evidence Locker overlay ──────────────────────────────────────────────────
 // Cabinet → Evidence Locker. Same glassmorphism "reader" chrome as the other
@@ -21,7 +22,7 @@ function EvidenceTile({ item, onOpen }) {
     >
       <div className="relative w-full overflow-hidden" style={{ paddingTop: '75%' }}>
         <img
-          src={item.src}
+          src={withBase(item.src)}
           alt={item.text}
           loading="lazy"
           draggable={false}

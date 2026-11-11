@@ -298,7 +298,7 @@ export const BLOG_POSTS = [
       "Fuck this journaling too. I must fucking move. I need to move on instead of constantly going back down memory lane. I'm not even making new memories anymore.",
       "Yet I live anyways.",
     ],
-    media: ["gallery/dreaming.jpg"],
+    media: ["/gallery/dreaming.jpg"],
     link: "",
   },
   {
